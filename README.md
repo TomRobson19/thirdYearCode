@@ -1,2 +1,2 @@
 # thirdYearCode
-Code for CompSci Third Year 
+Code for Durham Computer Science Third Year 
