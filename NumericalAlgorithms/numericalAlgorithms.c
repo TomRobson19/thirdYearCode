@@ -27,7 +27,7 @@ const int N = 2; //number of particles
 const double timeStepSize = pow(10,12);
 const int timeSteps = 2000;
 const int plotEveryKthStep = 1;
-const double a = pow(10,-5);
+const double a = pow(10,-5); //constant value of a and s
 
 double x[N][3];
 double v[N][3];
