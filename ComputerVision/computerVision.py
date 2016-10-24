@@ -40,16 +40,21 @@ for filename in os.listdir(directory_to_cycle):
         height = img.shape[0]
         img = img[(int)(height/2):height,0:img.shape[1]]
 
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-        
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #this or hsv?
 
         canny = cv2.Canny(gray, 100, 200)
 
+        data = cv2.findNonZero(canny)
 
 
 
-        canny = cv2.cvtColor(canny,cv2.COLOR_GRAY2RGB)
+
+
+
+
+
+
+        canny = cv2.cvtColor(canny,cv2.COLOR_GRAY2BGR)
         out = np.concatenate((img,canny),axis=1)
 
         cv2.imshow('image',out)
@@ -63,4 +68,3 @@ for filename in os.listdir(directory_to_cycle):
 cv2.destroyAllWindows()
 
 #####################################################################
-
