@@ -58,7 +58,7 @@ void setUp(int N) //support arbitrary number of particles
 void printCSVFile(int counter) 
 {
   std::stringstream filename;
-  filename << "result-" << counter <<  ".csv";
+  filename << "results/result-" << counter <<  ".csv";
   std::ofstream out( filename.str().c_str() );
 
   out << "x, y, z" << std::endl;
