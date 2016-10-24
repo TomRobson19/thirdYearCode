@@ -1,10 +1,10 @@
-// Translate this file with
+// Compile this file with
 //
-// g++ -O3 spaceboddies.c -o spaceboddies
+// g++ -O3 numericalAlgorithms.c -o argon
 //
 // Run it with
 //
-// ./spaceboddies
+// ./argon
 //
 // Open Paraview (www.paraview.org) and do the following:
 // - Select File/open and select all the results files. Press the Apply button.
@@ -16,14 +16,14 @@
 // - For some Paraview versions, you have to mark your TableToPoints item (usually called TableToPoints1) and explicitly select that X Column is x, Y Column is y, and Z Column is z.
 // - What is pretty cool is the Filter TemporalParticlesToPathlines. If you set Mask Points to 1, you see a part of the traiactory.
 //
-// (C) 2015 Tobias Weinzierl
+// Based on spaceboddies.c, (C) 2015 Tobias Weinzierl
 
 #include <fstream>
 #include <sstream>
 #include <stdlib.h>
 #include <math.h>
 
-const int N = 2; //number of particles
+const int N = 100; //number of particles
 const double timeStepSize = pow(10,12);
 const int timeSteps = 2000;
 const int plotEveryKthStep = 1;
@@ -32,7 +32,8 @@ const double a = pow(10,-5); //constant value of a and s
 double x[N][3];
 double v[N][3];
 
-void setUp(int N) { //support arbitrary number of particles
+void setUp(int N) //support arbitrary number of particles
+{ 
 
   x[0][0] = 0.4;
   x[0][1] = 0.0;
@@ -54,15 +55,16 @@ void setUp(int N) { //support arbitrary number of particles
   }
 }
 
-
-void printCSVFile(int counter) {
+void printCSVFile(int counter) 
+{
   std::stringstream filename;
   filename << "result-" << counter <<  ".csv";
   std::ofstream out( filename.str().c_str() );
 
   out << "x, y, z" << std::endl;
 
-  for (int i=0; i<N; i++) {
+  for (int i=0; i<N; i++) 
+  {
     out << x[i][0]
         << ","
         << x[i][1]
@@ -72,10 +74,8 @@ void printCSVFile(int counter) {
   }
 }
 
-
-
-void updateBody(int N) {
-  
+void updateBody(int N) 
+{  
   for (int i=0; i<N; i++)
   {
     double force[3];
@@ -83,7 +83,8 @@ void updateBody(int N) {
     force[1] = 0.0;
     force[2] = 0.0;
 
-    for (int j=0; j<N; j++) {
+    for (int j=0; j<N; j++) 
+    {
       if (i != j)
       {
         const double distance = sqrt(
@@ -96,7 +97,7 @@ void updateBody(int N) {
 
         for (int k=0; k<3; k++) //calculate force and velocity in each plane
         {
-          force[k] += (x[j][k]-x[i][k]) * f / distance;
+          force[k] += (x[i][k]-x[j][k]) * f / distance;
           v[i][k] += timeStepSize * force[k];
         }
       } 
@@ -111,25 +112,18 @@ void updateBody(int N) {
         x[i][l] -= floor(x[i][l])/1;
       }
     }
-    
-    
-    //need to keep within box
-
   }
 }
 
-
-int main() {
-
+int main() 
+{
   setUp(N);
   printCSVFile(0);
-
   for (int i=0; i<timeSteps; i++) {
     updateBody(N);
     if (i%plotEveryKthStep==0) {
       printCSVFile(i/plotEveryKthStep+1); // Please switch off all IO if you do performance tests.
     }
   }
-
   return 0;
 }

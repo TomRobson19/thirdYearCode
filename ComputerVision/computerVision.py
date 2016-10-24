@@ -18,8 +18,9 @@
 
 import cv2
 import os
+import numpy as np
 
-directory_to_cycle = "directory-name-goes-here" # edit this
+directory_to_cycle = "road-images2016-DURHAM"
 
 #####################################################################
 
@@ -35,8 +36,24 @@ for filename in os.listdir(directory_to_cycle):
         # read it and display in a window
 
         img = cv2.imread(os.path.join(directory_to_cycle, filename), cv2.IMREAD_COLOR)
-        cv2.imshow('the image',img)
-        key = cv2.waitKey(200) # wait 200ms
+
+        height = img.shape[0]
+        img = img[(int)(height/2):height,0:img.shape[1]]
+
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        
+
+        canny = cv2.Canny(gray, 100, 200)
+
+
+
+
+        canny = cv2.cvtColor(canny,cv2.COLOR_GRAY2RGB)
+        out = np.concatenate((img,canny),axis=1)
+
+        cv2.imshow('image',out)
+        key = cv2.waitKey(1000000000) # wait for this long or until any key press
         if (key == ord('x')):
             break
 
