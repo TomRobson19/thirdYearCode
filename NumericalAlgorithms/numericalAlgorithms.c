@@ -23,7 +23,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-const int N = 100; //number of particles
+const int N = 2; //number of particles
 const double timeStepSize = pow(10,12);
 const int timeSteps = 2000;
 const int plotEveryKthStep = 1;
@@ -97,7 +97,7 @@ void updateBody(int N)
 
         for (int k=0; k<3; k++) //calculate force and velocity in each plane
         {
-          force[k] += (x[i][k]-x[j][k]) * f / distance;
+          force[k] += (x[i][k]-x[j][k]) * f;
           v[i][k] += timeStepSize * force[k];
         }
       } 
