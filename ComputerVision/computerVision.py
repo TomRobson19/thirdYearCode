@@ -45,11 +45,7 @@ for filename in os.listdir(directory_to_cycle):
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
         #can convert to grayscale using weighted sum of just h and s
-
-
-
-
-
+        #stuff with histograms worked well
 
         smoothed = cv2.GaussianBlur(hsv,(5,5),0)
 
