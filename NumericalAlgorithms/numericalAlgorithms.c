@@ -14,13 +14,13 @@
 #include <math.h>
 
 const int N = 2; //number of particles
-const long double timeStepSize = 5000000;
+const double timeStepSize = 5000000;
 const int timeSteps = 2000;
 const int plotEveryKthStep = 1000;
-const long double a = pow(10,-5); //constant value of a and s
+const double a = pow(10,-5); //constant value of a and s
 
-long double x[N][3];
-long double v[N][3];
+double x[N][3];
+double v[N][3];
 
 void setUp(int N) //support arbitrary number of particles
 { 
@@ -68,7 +68,7 @@ void updateBody(int N)
 {  
   for (int i=0; i<N; i++) //chooses particle we are examining
   {
-    long double force[3];
+    double force[3];
     force[0] = 0.0;
     force[1] = 0.0;
     force[2] = 0.0;
@@ -77,24 +77,58 @@ void updateBody(int N)
     {
       if (i != j)
       {
-        const long double distance = sqrt(
-          (x[i][0]-x[j][0]) * (x[i][0]-x[j][0]) +
-          (x[i][1]-x[j][1]) * (x[i][1]-x[j][1]) +
-          (x[i][2]-x[j][2]) * (x[i][2]-x[j][2])
-        );
-        printf("distance = %LE \n",distance);
+        double xDist = x[i][0]-x[j][0];
+        double yDist = x[i][1]-x[j][1];
+        double zDist = x[i][2]-x[j][2];
 
-        long double f = (4*a*((12*powl(a,12))/powl(distance, 13) - (6*powl(a,6))/powl(distance, 7)));
+        const double distance = sqrt(xDist * xDist + yDist * yDist + zDist * zDist);
+
+        double f = (4*a*((12*pow(a,12))/pow(distance, 13) - (6*pow(a,6))/pow(distance, 7)));
+       
+        force[0] += (xDist)/distance * f;
+        force[1] += (yDist)/distance * f;
+        force[2] += (zDist)/distance * f;
         
-        printf("Force = %LE \n",f);
-        printf("F = %LE \n",(12*powl(a,12))/powl(distance, 13));
-        printf("F = %LE \n",(6*powl(a,6))/powl(distance, 7));
+        double newX;
+        double newY;
+        double newZ;
 
-        for (int k=0; k<3; k++) //calculate force and velocity in each plane
+        if (xDist < 0)
         {
-          force[k] += (x[i][k]-x[j][k]) * f;
-          v[i][k] += timeStepSize * force[k];
+          newX = -1 + xDist;
         }
+        else if (xDist > 0)
+        {
+          newX = 1 + xDist;
+        }
+        if (yDist < 0)
+        {
+          newY = -1 + yDist;
+        }
+        else if (yDist > 0)
+        {
+          newY = 1 + yDist;
+        }
+        if (zDist < 0)
+        {
+          newZ = -1 + zDist;
+        }
+        else if (zDist > 0)
+        {
+          newZ = 1 + zDist;
+        }
+        
+        const double newDistance = sqrt(newX * newX + newY * newY + newZ * newZ);
+        
+        double newF = (4*a*((12*pow(a,12))/pow(newDistance, 13) - (6*pow(a,6))/pow(newDistance, 7)));
+
+        force[0] += (newX)/newDistance * newF;
+        force[1] += (newY)/newDistance * newF;
+        force[2] += (newZ)/newDistance * newF;
+
+        v[i][0] += timeStepSize * force[0];
+        v[i][1] += timeStepSize * force[1];
+        v[i][2] += timeStepSize * force[2];
       } 
     }
 
