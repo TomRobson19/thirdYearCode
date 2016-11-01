@@ -43,13 +43,22 @@ for filename in os.listdir(directory_to_cycle):
         img = img[(int)(6*height/10):height,0:img.shape[1]]
 
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        gray = np.zeros((hsv.shape[0],hsv.shape[1]), np.uint8)
 
-        #can convert to grayscale using weighted sum of just h and s
-        #stuff with histograms worked well
+        for i in range(hsv.shape[0]):
+            for j in range(hsv.shape[1]):
+                gray[i][j] = (0.5*(hsv[i][j][0]))+(0.5*(hsv[i][j][1]))
 
-        smoothed = cv2.GaussianBlur(hsv,(5,5),0)
+        smoothed = cv2.GaussianBlur(gray,(3,3),0)
 
-        canny = cv2.Canny(hsv, 100, 200)
+        #pick median intensity, thresholds at 0.33 and 0.66
+        median = np.median(gray)
+ 
+        # apply Canny edge detection using the computed median
+        lower = int(max(0, (1.0 - 0.33) * median))
+        upper = int(min(255, (1.0 + 0.33) * median))
+
+        canny = cv2.Canny(gray, lower, upper)
 
         data = cv2.findNonZero(canny)
 
@@ -64,6 +73,8 @@ for filename in os.listdir(directory_to_cycle):
             r2 = random.randint(0,len(data)-1)
 
             points = [data[r1][0],data[r2][0]] #select points from non zeros
+            
+            gradient = (points[0][0]-points[1][0])/(points[0][1]-points[1][1])
 
             lines = np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
             lines = cv2.line(lines,(points[0][0],points[0][1]),(points[1][0],points[1][1]),255,2)
@@ -76,10 +87,6 @@ for filename in os.listdir(directory_to_cycle):
 
             if (len(pixels) > v):
                 img = cv2.line(img,(points[0][0],points[0][1]),(points[1][0],points[1][1]),(0,0,255))
-
-            #gradient = (points[0][0]-points[1][0])/(points[0][1]-points[1][1])
-
-
 
 
         canny = cv2.cvtColor(canny,cv2.COLOR_GRAY2BGR)
