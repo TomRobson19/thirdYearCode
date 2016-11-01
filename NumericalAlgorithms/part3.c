@@ -19,7 +19,6 @@ const int timeSteps = 200000;
 const int plotEveryKthStep = 100;
 const double a = 0.1; //constant value of a and s
 const double s = 0.1; 
-const double R = 2.5*s;
 
 double x[N][3];
 double v[N][3];
