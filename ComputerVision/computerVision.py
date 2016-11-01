@@ -74,7 +74,7 @@ for filename in os.listdir(directory_to_cycle):
 
             points = [data[r1][0],data[r2][0]] #select points from non zeros
             
-            gradient = (points[0][0]-points[1][0])/(points[0][1]-points[1][1])
+            #gradient = (points[0][0]-points[1][0])/(points[0][1]-points[1][1])
 
             lines = np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
             lines = cv2.line(lines,(points[0][0],points[0][1]),(points[1][0],points[1][1]),255,2)
