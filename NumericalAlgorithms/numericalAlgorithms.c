@@ -13,11 +13,12 @@
 #include <stdlib.h>
 #include <math.h>
 
-const int N = 2; //number of particles
+const int N = 10; //number of particles
 const double timeStepSize = pow(10,-4);
-const int timeSteps = 2000000;
+const int timeSteps = 200000;
 const int plotEveryKthStep = 100;
 const double a = 0.1; //constant value of a and s
+const double s = 0.1; 
 
 double x[N][3];
 double v[N][3];
@@ -25,19 +26,19 @@ double v[N][3];
 void setUp(int N) //support arbitrary number of particles
 { 
 
-  x[0][0] = 0.4;
-  x[0][1] = 0.5;
-  x[0][2] = 0.5;
+  // x[0][0] = 0.4;
+  // x[0][1] = 0.5;
+  // x[0][2] = 0.5;
 
-  x[1][0] = 0.6;
-  x[1][1] = 0.5;
-  x[1][2] = 0.5;
+  // x[1][0] = 0.6;
+  // x[1][1] = 0.5;
+  // x[1][2] = 0.5;
 
   for (int i=0; i<N; i++)
   {
-    // x[i][0] = (long double)rand()/(long double)RAND_MAX;
-    // x[i][1] = (long double)rand()/(long double)RAND_MAX;
-    // x[i][2] = (long double)rand()/(long double)RAND_MAX;
+    x[i][0] = (long double)rand()/(long double)RAND_MAX;
+    x[i][1] = (long double)rand()/(long double)RAND_MAX;
+    x[i][2] = (long double)rand()/(long double)RAND_MAX;
 
     v[i][0] = 0.0;
     v[i][1] = 0.0;
@@ -83,7 +84,7 @@ void updateBody(int N)
 
         double distance = sqrt((xDist*xDist) + (yDist*yDist) + (zDist*zDist));
 
-        double f = (4*a*(((12*pow(a,12))/pow(distance, 13)) - ((6*pow(a,6))/pow(distance, 7))));
+        double f = (4*a*(((12*pow(s,12))/pow(distance, 13)) - ((6*pow(s,6))/pow(distance, 7))));
        
         force[0] += xDist/distance * f;
         force[1] += yDist/distance * f;
@@ -132,7 +133,7 @@ void updateBody(int N)
         
         double newDistance = sqrt((newX*newX) + (newY*newY) + (newZ*newZ));
         
-        double newF = (4*a*(((12*pow(a,12))/pow(newDistance, 13)) - ((6*pow(a,6))/pow(newDistance, 7))));
+        double newF = (4*a*(((12*pow(s,12))/pow(newDistance, 13)) - ((6*pow(s,6))/pow(newDistance, 7))));
 
         force[0] += newX/newDistance * newF;
         force[1] += newY/newDistance * newF;
