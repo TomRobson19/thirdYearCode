@@ -1,0 +1,126 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+Report (max.
+ 750 words!, remember - it can always be shorter than this) detailing your
+\end_layout
+
+\begin_layout Standard
+approach to the problem and the success of your solution in the task specified.
+ Provide any
+\end_layout
+
+\begin_layout Standard
+illustrative images (as many as you feel necessary) of the intermediate
+ results of the system
+\end_layout
+
+\begin_layout Standard
+you produce (overlays, results of processing stages etc.) Remember that any
+ titles, captions,
+\end_layout
+
+\begin_layout Standard
+tables, references, and graphs do not count towards the total word count
+ of the report.
+\end_layout
+
+\begin_layout Section*
+Things tried
+\end_layout
+
+\begin_layout Itemize
+converting to hsv and removing v colour channel (setting to one value)
+\end_layout
+
+\begin_layout Itemize
+converting to grayscale
+\end_layout
+
+\begin_layout Itemize
+using opening and closing (erosion and dilation, morphology)
+\end_layout
+
+\begin_layout Itemize
+Both gaussian and bilateral filtering
+\end_layout
+
+\begin_layout Itemize
+Set pixels dominated by red and green to zero as blue seems to be the dominant
+ colour
+\end_layout
+
+\begin_layout Itemize
+Could try using a mask in the bottom middle of the image to determine road
+\end_layout
+
+\end_body
+\end_document

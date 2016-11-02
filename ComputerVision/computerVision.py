@@ -42,23 +42,43 @@ for filename in os.listdir(directory_to_cycle):
         height = img.shape[0]
         img = img[(int)(6*height/10):height,0:img.shape[1]]
 
+        for i in range(img.shape[0]):
+            for j in range(img.shape[1]):
+                if (img[i][j][1]>=img[i][j][0]) and (img[i][j][1]>=img[i][j][2]):
+                    img[i][j][0] = 0
+                    img[i][j][1] = 0
+                    img[i][j][2] = 0
+                if (img[i][j][2]>img[i][j][0]):
+                    img[i][j][0] = 0
+                    img[i][j][1] = 0
+                    img[i][j][2] = 0
+
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-        gray = np.zeros((hsv.shape[0],hsv.shape[1]), np.uint8)
 
-        for i in range(hsv.shape[0]):
-            for j in range(hsv.shape[1]):
-                gray[i][j] = (0.5*(hsv[i][j][0]))+(0.5*(hsv[i][j][1]))
+        #gray = np.zeros((hsv.shape[0],hsv.shape[1]), np.uint8)
 
-        smoothed = cv2.GaussianBlur(gray,(3,3),0)
+        
+        #for i in range(hsv.shape[0]):
+         #   for j in range(hsv.shape[1]):
+          #      hsv[i][j][2] = 255
+                #gray[i][j] = (0.5*(hsv[i][j][0]))+(0.5*(hsv[i][j][1]))
+                #gray[i][j] = ((hsv[i][j][2]))
 
-        #pick median intensity, thresholds at 0.33 and 0.66
-        median = np.median(gray)
- 
+        bgr = cv2.cvtColor(hsv,cv2.COLOR_HSV2BGR)
+        gray = cv2.cvtColor(bgr,cv2.COLOR_BGR2GRAY)
+
+        filtered = cv2.bilateralFilter(gray,9,75,75)
+
+        median = np.median(filtered)
         # apply Canny edge detection using the computed median
         lower = int(max(0, (1.0 - 0.33) * median))
         upper = int(min(255, (1.0 + 0.33) * median))
 
-        canny = cv2.Canny(gray, lower, upper)
+        canny = cv2.Canny(filtered, lower, upper)
+
+        #canny = cv2.morphologyEx(canny, cv2.MORPH_OPEN, (5,5))
+
+        #canny = cv2.morphologyEx(canny, cv2.MORPH_CLOSE, (5,5))
 
         data = cv2.findNonZero(canny)
 
@@ -68,7 +88,6 @@ for filename in os.listdir(directory_to_cycle):
         points = []
         #random.seed(53)#seed random generator for testing
         for i in range(trials):
-            
             r1 = random.randint(0,len(data)-1)
             r2 = random.randint(0,len(data)-1)
 
