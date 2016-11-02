@@ -119,7 +119,8 @@ Set pixels dominated by red and green to zero as blue seems to be the dominant
 \end_layout
 
 \begin_layout Itemize
-Could try using a mask in the bottom middle of the image to determine road
+Could try using a mask in the bottom middle of the image to determine road,
+ then look into flood fill
 \end_layout
 
 \end_body

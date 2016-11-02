@@ -76,6 +76,8 @@ for filename in os.listdir(directory_to_cycle):
 
         canny = cv2.Canny(filtered, lower, upper)
 
+        contours = cv2.findContours(canny,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_NONE)
+
         #canny = cv2.morphologyEx(canny, cv2.MORPH_OPEN, (5,5))
 
         #canny = cv2.morphologyEx(canny, cv2.MORPH_CLOSE, (5,5))
