@@ -80,7 +80,7 @@ for filename in os.listdir(directory_to_cycle):
 
         #canny = cv2.morphologyEx(canny, cv2.MORPH_OPEN, (5,5))
 
-        #canny = cv2.morphologyEx(canny, cv2.MORPH_CLOSE, (5,5))
+        canny = cv2.morphologyEx(canny, cv2.MORPH_CLOSE, (5,5))
 
         data = cv2.findNonZero(canny)
 

@@ -123,5 +123,10 @@ Could try using a mask in the bottom middle of the image to determine road,
  then look into flood fill
 \end_layout
 
+\begin_layout Itemize
+RANSAC - try not allowing points to be too close, both when making lines
+ and comparing to existing lines
+\end_layout
+
 \end_body
 \end_document
