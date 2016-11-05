@@ -1,5 +1,6 @@
 from scipy.linalg import svd
 from scipy.cluster import vq
+from scipy.spatial import distance
 
 from math import log
 
@@ -101,24 +102,52 @@ class LSA(object):
 			coordinates[i][0] = vx[i]
 			coordinates[i][1] = vy[i]
 
-
+		#determine number of clusters
 		numberOfClusters = int((self.A.shape[0] * self.A.shape[1]) / (np.count_nonzero(self.A)))  
 
-		centres,labels = vq.kmeans2(coordinates[: , 0:2],numberOfClusters)
+		attempts = 100
+		bestCentres = []
+		bestLabels = []
+		bestRadii = []
+		minimumSSE = 0
 
-		for i in range(0,len(coordinates)):
-			coordinates[i][2] = labels[i]
+		for a in range (0, attempts):
 
-		x = centres[:, 0:1]
-		y = centres[:, 1:2]
-		
-		for i in range(0,len(x)):
-			circle = plt.Circle((x[i],y[i]),0.2,fc='y')
-			plt.gca().add_patch(circle)
+			centres,labels = vq.kmeans2(coordinates[: , 0:2],numberOfClusters)
+			radii = []
+			sse = 0
+
+			for i in range(0,len(coordinates)):
+				coordinates[i][2] = labels[i]
+
+			x = centres[:, 0:1]
+			y = centres[:, 1:2]
+
+			for i in range(0,numberOfClusters):
+				radii.append(0)
+				for j in range(0,len(labels)):
+					if (labels[j] == i):
+						possibleRadius = distance.euclidean((x[i],y[i]),(coordinates[j][0],coordinates[j][1]))
+						sse += possibleRadius**2
+						if (possibleRadius > radii[i]):
+							radii[i] = possibleRadius
+
+			if minimumSSE == 0 or sse < minimumSSE:
+				minimumSSE = sse
+				bestCentres = centres
+				bestLabels = labels
+				bestRadii = radii
+
+
+		x = bestCentres[:, 0:1]
+		y = bestCentres[:, 1:2]
+		for i in range(0,numberOfClusters):
+			plt.gca().add_patch(plt.Circle((x[i],y[i]),bestRadii[i],fc='y'))
+
 
 		#need heuristic to determine quality of cluster
+		#radius giving wierd results, optimise kmeans with heuristic and then experiment again
 
-		#radius of circle must accomodate all points that should be in cluster
 
 		plt.show()
 
@@ -127,10 +156,10 @@ def main():
 	for t in titles:
 		mylsa.parse(t)
 	mylsa.build()
-	mylsa.printA()
+	#mylsa.printA()
 	#mylsa.TFIDF()
 	mylsa.calc()
-	mylsa.printSVD()
+	#mylsa.printSVD()
 	mylsa.plot()
 
 

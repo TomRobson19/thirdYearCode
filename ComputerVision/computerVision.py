@@ -78,6 +78,8 @@ for filename in os.listdir(directory_to_cycle):
 
         contours = cv2.findContours(canny,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_NONE)
 
+        #Find connected components within the canny results
+
         #canny = cv2.morphologyEx(canny, cv2.MORPH_OPEN, (5,5))
 
         canny = cv2.morphologyEx(canny, cv2.MORPH_CLOSE, (5,5))
@@ -85,7 +87,7 @@ for filename in os.listdir(directory_to_cycle):
         data = cv2.findNonZero(canny)
 
         t = 2
-        v = 300
+        v = 300 #try dividing threshold by line length
         trials = 10000 #try only counting as a trial if long enough
         points = []
         #random.seed(53)#seed random generator for testing
