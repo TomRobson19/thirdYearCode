@@ -40,18 +40,20 @@ for filename in os.listdir(directory_to_cycle):
 
         #remove the top 60% of the image to focus on the roads
         height = img.shape[0]
-        img = img[(int)(6*height/10):height,0:img.shape[1]]
+        img = img[(int)(7*height/10):height,0:img.shape[1]]
 
-        for i in range(img.shape[0]):
-            for j in range(img.shape[1]):
-                if (img[i][j][1]>=img[i][j][0]) and (img[i][j][1]>=img[i][j][2]):
-                    img[i][j][0] = 0
-                    img[i][j][1] = 0
-                    img[i][j][2] = 0
-                if (img[i][j][2]>img[i][j][0]):
-                    img[i][j][0] = 0
-                    img[i][j][1] = 0
-                    img[i][j][2] = 0
+
+        # remove all non-blue dominant pixels
+        # for i in range(img.shape[0]):
+        #     for j in range(img.shape[1]):
+        #         if (img[i][j][1]>=img[i][j][0]) and (img[i][j][1]>=img[i][j][2]):
+        #             img[i][j][0] = 0
+        #             img[i][j][1] = 0
+        #             img[i][j][2] = 0
+        #         if (img[i][j][2]>img[i][j][0]):
+        #             img[i][j][0] = 0
+        #             img[i][j][1] = 0
+        #             img[i][j][2] = 0
 
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
@@ -76,18 +78,18 @@ for filename in os.listdir(directory_to_cycle):
 
         canny = cv2.Canny(filtered, lower, upper)
 
-        contours = cv2.findContours(canny,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_NONE)
+        #contours = cv2.findContours(canny,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_NONE)
 
         #Find connected components within the canny results
 
         #canny = cv2.morphologyEx(canny, cv2.MORPH_OPEN, (5,5))
 
-        canny = cv2.morphologyEx(canny, cv2.MORPH_CLOSE, (5,5))
+        #canny = cv2.morphologyEx(canny, cv2.MORPH_CLOSE, (5,5))
 
         data = cv2.findNonZero(canny)
 
         t = 2
-        v = 300 #try dividing threshold by line length
+        v = 200 #try dividing threshold by line length
         trials = 10000 #try only counting as a trial if long enough
         points = []
         #random.seed(53)#seed random generator for testing
