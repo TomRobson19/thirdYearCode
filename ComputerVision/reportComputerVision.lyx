@@ -98,6 +98,10 @@ Things tried
 \end_layout
 
 \begin_layout Itemize
+cut top 70% off 
+\end_layout
+
+\begin_layout Itemize
 converting to hsv and removing v colour channel (setting to one value)
 \end_layout
 
@@ -126,6 +130,15 @@ Could try using a mask in the bottom middle of the image to determine road,
 \begin_layout Itemize
 RANSAC - try not allowing points to be too close, both when making lines
  and comparing to existing lines
+\end_layout
+
+\begin_layout Itemize
+picking only white and yellow
+\end_layout
+
+\begin_layout Itemize
+using mask https://github.com/georgesung/road_lane_line_detection/blob/master/lan
+e_lines.py
 \end_layout
 
 \end_body

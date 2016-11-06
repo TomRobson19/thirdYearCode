@@ -82,14 +82,14 @@ for filename in os.listdir(directory_to_cycle):
 
         #Find connected components within the canny results
 
-        #canny = cv2.morphologyEx(canny, cv2.MORPH_OPEN, (5,5))
+        canny = cv2.morphologyEx(canny, cv2.MORPH_OPEN, (5,5))
 
-        #canny = cv2.morphologyEx(canny, cv2.MORPH_CLOSE, (5,5))
+        canny = cv2.morphologyEx(canny, cv2.MORPH_CLOSE, (10,10))
 
         data = cv2.findNonZero(canny)
 
         t = 2
-        v = 200 #try dividing threshold by line length
+        v = 150 #try dividing threshold by line length
         trials = 10000 #try only counting as a trial if long enough
         points = []
         #random.seed(53)#seed random generator for testing
