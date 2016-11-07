@@ -101,6 +101,25 @@ Part 2
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+WE ARE ALLOWED TO CHANGE A AND S FOR THE EXPERIMENTS WITH 2 PARTICLES IF
+ I EXPLAIN IT
+\end_layout
+
+\begin_layout Plain Layout
+MENTION ABOUT EDGE CASE E.G.
+ IF Y IS 0.500001 AND 0.5
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Per setup: Result is correct qualitatively (2 marks), convergence rate is
  reasonable w.r.t.
  time step size (4 marks), description is accurate and precise (2 marks),
