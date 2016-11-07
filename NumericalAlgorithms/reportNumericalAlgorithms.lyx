@@ -157,6 +157,22 @@ Part 3
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Idea - struct contaning the coordinates of each particle and an array of
+ all others within radius by calculating how far away the box would go in
+ every direction and looping through the particles and adding if they meet
+ the constraints (be careful of wraparound)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Brief description of step 3 is precise and clear (5 marks).
  Runtime impact is experimentally determined and explanation for runtime
  behaviour is given (5 marks).
