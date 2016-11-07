@@ -133,12 +133,20 @@ RANSAC - try not allowing points to be too close, both when making lines
 \end_layout
 
 \begin_layout Itemize
-picking only white and yellow
+picking only white and yellow - didn't work
 \end_layout
 
 \begin_layout Itemize
 using mask https://github.com/georgesung/road_lane_line_detection/blob/master/lan
 e_lines.py
+\end_layout
+
+\begin_layout Itemize
+removed horizontal lines (-0.5<grad<0.5)
+\end_layout
+
+\begin_layout Itemize
+only count line if above certain length (yet to be decided)
 \end_layout
 
 \end_body

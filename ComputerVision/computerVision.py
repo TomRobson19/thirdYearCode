@@ -20,6 +20,7 @@ import cv2
 import os
 import numpy as np
 import random
+import math
 
 directory_to_cycle = "road-images2016-DURHAM"
 
@@ -55,7 +56,7 @@ for filename in os.listdir(directory_to_cycle):
         #             img[i][j][1] = 0
         #             img[i][j][2] = 0
 
-        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        #hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
         #gray = np.zeros((hsv.shape[0],hsv.shape[1]), np.uint8)
 
@@ -66,8 +67,8 @@ for filename in os.listdir(directory_to_cycle):
                 #gray[i][j] = (0.5*(hsv[i][j][0]))+(0.5*(hsv[i][j][1]))
                 #gray[i][j] = ((hsv[i][j][2]))
 
-        bgr = cv2.cvtColor(hsv,cv2.COLOR_HSV2BGR)
-        gray = cv2.cvtColor(bgr,cv2.COLOR_BGR2GRAY)
+        #bgr = cv2.cvtColor(hsv,cv2.COLOR_HSV2BGR)
+        gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
         filtered = cv2.bilateralFilter(gray,9,75,75)
 
@@ -84,34 +85,42 @@ for filename in os.listdir(directory_to_cycle):
 
         canny = cv2.morphologyEx(canny, cv2.MORPH_OPEN, (5,5))
 
-        canny = cv2.morphologyEx(canny, cv2.MORPH_CLOSE, (10,10))
+        canny = cv2.morphologyEx(canny, cv2.MORPH_CLOSE, (5,5))
 
         data = cv2.findNonZero(canny)
 
         t = 2
-        v = 150 #try dividing threshold by line length
+        v = 100 #try dividing threshold by line length
         trials = 10000 #try only counting as a trial if long enough
         points = []
         #random.seed(53)#seed random generator for testing
-        for i in range(trials):
+        for counter in range(trials):
             r1 = random.randint(0,len(data)-1)
             r2 = random.randint(0,len(data)-1)
 
             points = [data[r1][0],data[r2][0]] #select points from non zeros
             
-            #gradient = (points[0][0]-points[1][0])/(points[0][1]-points[1][1])
+            gradient = (points[0][1]-points[1][1])/float(points[0][0]-points[1][0])
 
-            lines = np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
-            lines = cv2.line(lines,(points[0][0],points[0][1]),(points[1][0],points[1][1]),255,2)
+            length = math.sqrt(abs(points[0][0]-points[1][0])**2 + abs(points[0][1]-points[1][1])**2)
+
+            #print gradient
+            #print length
+
+            if abs(gradient) < 0.5:
+                counter -= 1
+            else:
+                lines = np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
+                lines = cv2.line(lines,(points[0][0],points[0][1]),(points[1][0],points[1][1]),255,2)
 
 
-            compare =  np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
-            compare = cv2.bitwise_and(canny,lines)
+                compare =  np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
+                compare = cv2.bitwise_and(canny,lines)
 
-            pixels = cv2.findNonZero(compare)
+                pixels = cv2.findNonZero(compare)
 
-            if (len(pixels) > v):
-                img = cv2.line(img,(points[0][0],points[0][1]),(points[1][0],points[1][1]),(0,0,255))
+                if (len(pixels) > v):
+                    img = cv2.line(img,(points[0][0],points[0][1]),(points[1][0],points[1][1]),(0,0,255))
 
 
         canny = cv2.cvtColor(canny,cv2.COLOR_GRAY2BGR)
