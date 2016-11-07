@@ -27,11 +27,11 @@ double v[N][3];
 void setUp(int N) //support arbitrary number of particles
 { 
 
-  // x[0][0] = 0.4;
+  // x[0][0] = 0.1;
   // x[0][1] = 0.5;
   // x[0][2] = 0.5;
 
-  // x[1][0] = 0.6;
+  // x[1][0] = 0.9;
   // x[1][1] = 0.5;
   // x[1][2] = 0.5;
 
@@ -149,29 +149,17 @@ void updateBody(int N)
     x[i][1] += timeStepSize * v[i][1];
     x[i][2] += timeStepSize * v[i][2];
     
-    if(x[i][0]<=0)
+    if(x[i][0]<=0 || x[i][0]>1)
     {
-      x[i][0] = 1;
+      x[i][0] -= floor(x[i][0]);
     }
-    if(x[i][0]>1)
+    if(x[i][1]<=0 || x[i][1]>1)
     {
-      x[i][0] = 0;
+      x[i][1] -= floor(x[i][1]);
     }
-    if(x[i][1]<=0)
+    if(x[i][2]<=0 || x[i][2]>1)
     {
-      x[i][1] = 1;
-    }
-    if(x[i][1]>1)
-    {
-      x[i][1] = 0;
-    }
-    if(x[i][2]<=0)
-    {
-      x[i][2] = 1;
-    }
-    if(x[i][2]>1)
-    {
-      x[i][2] = 0;
+      x[i][2] -= floor(x[i][2]);
     }
   }
 }
