@@ -104,6 +104,8 @@ for filename in os.listdir(directory_to_cycle):
 
             length = math.sqrt(abs(points[0][0]-points[1][0])**2 + abs(points[0][1]-points[1][1])**2)
 
+            c = (points[0][1])/float(gradient*points[0][0])
+
             #print gradient
             #print length
 
@@ -115,6 +117,9 @@ for filename in os.listdir(directory_to_cycle):
                 lines = np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
                 lines = cv2.line(lines,(points[0][0],points[0][1]),(points[1][0],points[1][1]),255,2)
 
+                #lines = cv2.line(lines,(int(-c/(gradient)),0),(int((img.shape[0]-c)/(gradient)),img.shape[0]),255,2)
+
+                cv2.imshow('lines',lines)
 
                 compare =  np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
                 compare = cv2.bitwise_and(canny,lines)
