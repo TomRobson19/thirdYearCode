@@ -7,6 +7,8 @@
 // ./argon
 //
 // Based on spaceboddies.c, (C) 2015 Tobias Weinzierl
+//
+// TRY ADDING PRAGMAS
 
 #include <fstream>
 #include <sstream>
@@ -144,7 +146,9 @@ void updateBody(int N)
     v[i][0] += timeStepSize * force[0];
     v[i][1] += timeStepSize * force[1];
     v[i][2] += timeStepSize * force[2];
-
+  }
+  for(int i = 0; i<N; i++)
+  {
     x[i][0] += timeStepSize * v[i][0];
     x[i][1] += timeStepSize * v[i][1];
     x[i][2] += timeStepSize * v[i][2];
