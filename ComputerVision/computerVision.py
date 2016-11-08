@@ -107,7 +107,9 @@ for filename in os.listdir(directory_to_cycle):
             #print gradient
             #print length
 
-            if abs(gradient) < 0.5:
+            if (abs(gradient) < 0.5):
+                counter -= 1
+            elif (length < 100):
                 counter -= 1
             else:
                 lines = np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
