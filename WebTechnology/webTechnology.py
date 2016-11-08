@@ -103,7 +103,7 @@ class LSA(object):
 			coordinates[i][1] = vy[i]
 
 		#determine number of clusters
-		numberOfClusters = int((self.A.shape[0] * self.A.shape[1]) / (np.count_nonzero(self.A)))  
+		numberOfClusters = round((self.A.shape[0] * self.A.shape[1]) / (np.count_nonzero(self.A)))  
 
 		attempts = 100
 		bestCentres = []
