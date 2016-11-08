@@ -91,9 +91,12 @@ for filename in os.listdir(directory_to_cycle):
 
         t = 2
         v = 100 #try dividing threshold by line length
-        trials = 10000 #try only counting as a trial if long enough
+        trials = 100 #try only counting as a trial if long enough
         points = []
-        #random.seed(53)#seed random generator for testing
+        lineArray = []
+        gradientBound = 0.1
+        similarityBound = 5
+
         for counter in range(trials):
             r1 = random.randint(0,len(data)-1)
             r2 = random.randint(0,len(data)-1)
@@ -106,9 +109,6 @@ for filename in os.listdir(directory_to_cycle):
 
             c = (points[0][1])/float(gradient*points[0][0])
 
-            #print gradient
-            #print length
-
             if (abs(gradient) < 0.5):
                 counter -= 1
             elif (length < 100):
@@ -119,15 +119,26 @@ for filename in os.listdir(directory_to_cycle):
 
                 #lines = cv2.line(lines,(int(-c/(gradient)),0),(int((img.shape[0]-c)/(gradient)),img.shape[0]),255,2)
 
-                cv2.imshow('lines',lines)
-
                 compare =  np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
                 compare = cv2.bitwise_and(canny,lines)
 
                 pixels = cv2.findNonZero(compare)
 
                 if (len(pixels) > v):
-                    img = cv2.line(img,(points[0][0],points[0][1]),(points[1][0],points[1][1]),(0,0,255))
+                    lineArray.append([(points[0][0],points[0][1]),(points[1][0],points[1][1]),gradient])
+                    draw = True
+                    for i in range (0,len(lineArray)-1):
+                        if  (lineArray[i][2] - gradientBound <= gradient <= lineArray[i][2] + gradientBound) or \
+                            (lineArray[i][0][0] < points[0][0] and lineArray[i][1][0] > points[1][0]) or \
+                            (lineArray[i][0][0] > points[0][0] and lineArray[i][1][0] < points[1][0]) or \
+                            (lineArray[i][0][0] - similarityBound <= points[0][0] <= lineArray[i][0][0] + similarityBound) or\
+                            (lineArray[i][1][0] - similarityBound <= points[0][0] <= lineArray[i][1][0] + similarityBound) or\
+                            (lineArray[i][0][0] - similarityBound <= points[1][0] <= lineArray[i][0][0] + similarityBound) or\
+                            (lineArray[i][1][0] - similarityBound <= points[1][0] <= lineArray[i][1][0] + similarityBound):
+                                draw = False
+                                break
+                    if draw == True:
+                        img = cv2.line(img,(points[0][0],points[0][1]),(points[1][0],points[1][1]),(0,0,255))
 
 
         canny = cv2.cvtColor(canny,cv2.COLOR_GRAY2BGR)
