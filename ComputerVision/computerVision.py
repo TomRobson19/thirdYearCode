@@ -1,21 +1,5 @@
 #####################################################################
 
-# Example : load and display a set of images from a directory
-# basic illustrative python script
-
-# For use with provided test / training datasets
-
-# Author : Toby Breckon, toby.breckon@durham.ac.uk
-
-# Copyright (c) 2015 / 2016 School of Engineering & Computing Science,
-#                    Durham University, UK
-# License : LGPL - http://www.gnu.org/licenses/lgpl.html
-
-# version: 0.2 (bug fix on waitKey() usage - line 39)
-# version: 0.3 (python 3 - line 33)
-
-#####################################################################
-
 import cv2
 import os
 import numpy as np
@@ -90,12 +74,12 @@ for filename in os.listdir(directory_to_cycle):
         data = cv2.findNonZero(canny)
 
         t = 2
-        v = 100 #try dividing threshold by line length
-        trials = 100 #try only counting as a trial if long enough
+        v = 100 
+        trials = 10000
         points = []
         lineArray = []
         gradientBound = 0.1
-        similarityBound = 5
+        similarityBound = 2
 
         for counter in range(trials):
             r1 = random.randint(0,len(data)-1)
@@ -103,21 +87,22 @@ for filename in os.listdir(directory_to_cycle):
 
             points = [data[r1][0],data[r2][0]] #select points from non zeros
             
-            gradient = (points[0][1]-points[1][1])/float(points[0][0]-points[1][0])
+            if (points[0][0]-points[1][0] != 0):
+                gradient = (points[0][1]-points[1][1])/float(points[0][0]-points[1][0])
+            else:
+                gradient = (points[0][1]-points[1][1])/float((points[0][0]-points[1][0])+1)
 
             length = math.sqrt(abs(points[0][0]-points[1][0])**2 + abs(points[0][1]-points[1][1])**2)
 
-            c = (points[0][1])/float(gradient*points[0][0])
-
             if (abs(gradient) < 0.5):
                 counter -= 1
-            elif (length < 100):
+            elif (length < 10):
                 counter -= 1
             else:
                 lines = np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
                 lines = cv2.line(lines,(points[0][0],points[0][1]),(points[1][0],points[1][1]),255,2)
 
-                #lines = cv2.line(lines,(int(-c/(gradient)),0),(int((img.shape[0]-c)/(gradient)),img.shape[0]),255,2)
+                #lines = cv2.line(lines,(int(-points[0][1]*(gradient*points[0][0])),0),(int((img.shape[0]-c)/(gradient)),img.shape[0]),255,2)
 
                 compare =  np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
                 compare = cv2.bitwise_and(canny,lines)
@@ -128,6 +113,7 @@ for filename in os.listdir(directory_to_cycle):
                     lineArray.append([(points[0][0],points[0][1]),(points[1][0],points[1][1]),gradient])
                     draw = True
                     for i in range (0,len(lineArray)-1):
+                        #reject if gradient is similar, the lines cross over or the points are too close together
                         if  (lineArray[i][2] - gradientBound <= gradient <= lineArray[i][2] + gradientBound) or \
                             (lineArray[i][0][0] < points[0][0] and lineArray[i][1][0] > points[1][0]) or \
                             (lineArray[i][0][0] > points[0][0] and lineArray[i][1][0] < points[1][0]) or \
