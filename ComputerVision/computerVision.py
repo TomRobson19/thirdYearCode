@@ -96,7 +96,7 @@ for filename in os.listdir(directory_to_cycle):
 
             if (abs(gradient) < 0.5):
                 counter -= 1
-            elif (length < 10):
+            elif (length < 50):
                 counter -= 1
             else:
                 lines = np.zeros((canny.shape[0],canny.shape[1]), np.uint8)

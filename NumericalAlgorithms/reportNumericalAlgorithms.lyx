@@ -96,6 +96,19 @@ It computes the right forces, it is efficient (no unnecessary calculations),
  conditions as described (5 marks each)
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+IMPLEMENT VARIABLE TIME STEPS - distance related to time step^2
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section*
 Part 2
 \end_layout
