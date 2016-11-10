@@ -65,8 +65,6 @@ for filename in os.listdir(directory_to_cycle):
 
         #contours = cv2.findContours(canny,cv2.RETR_CCOMP,cv2.CHAIN_APPROX_NONE)
 
-        #Find connected components within the canny results
-
         canny = cv2.morphologyEx(canny, cv2.MORPH_OPEN, (5,5))
 
         canny = cv2.morphologyEx(canny, cv2.MORPH_CLOSE, (5,5))
@@ -94,7 +92,7 @@ for filename in os.listdir(directory_to_cycle):
 
             length = math.sqrt(abs(points[0][0]-points[1][0])**2 + abs(points[0][1]-points[1][1])**2)
 
-            if (abs(gradient) < 0.5):
+            if (abs(gradient) < 0.5): #remove horizontal lines
                 counter -= 1
             elif (length < 50):
                 counter -= 1
@@ -113,13 +111,13 @@ for filename in os.listdir(directory_to_cycle):
                     lineArray.append([(points[0][0],points[0][1]),(points[1][0],points[1][1]),gradient])
                     draw = True
                     for i in range (0,len(lineArray)-1):
-                        #reject if gradient is similar, the lines cross over or the points are too close together
+                        #reject if gradient is too similar, the lines cross over or the points are too close together
                         if  (lineArray[i][2] - gradientBound <= gradient <= lineArray[i][2] + gradientBound) or \
                             (lineArray[i][0][0] < points[0][0] and lineArray[i][1][0] > points[1][0]) or \
                             (lineArray[i][0][0] > points[0][0] and lineArray[i][1][0] < points[1][0]) or \
-                            (lineArray[i][0][0] - similarityBound <= points[0][0] <= lineArray[i][0][0] + similarityBound) or\
-                            (lineArray[i][1][0] - similarityBound <= points[0][0] <= lineArray[i][1][0] + similarityBound) or\
-                            (lineArray[i][0][0] - similarityBound <= points[1][0] <= lineArray[i][0][0] + similarityBound) or\
+                            (lineArray[i][0][0] - similarityBound <= points[0][0] <= lineArray[i][0][0] + similarityBound) or \
+                            (lineArray[i][1][0] - similarityBound <= points[0][0] <= lineArray[i][1][0] + similarityBound) or \
+                            (lineArray[i][0][0] - similarityBound <= points[1][0] <= lineArray[i][0][0] + similarityBound) or \
                             (lineArray[i][1][0] - similarityBound <= points[1][0] <= lineArray[i][1][0] + similarityBound):
                                 draw = False
                                 break

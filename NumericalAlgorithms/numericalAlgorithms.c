@@ -69,7 +69,8 @@ void printCSVFile(int counter)
 }
 
 void updateBody(int N) 
-{  
+{ 
+  double shortestDistance = 1.0; 
   for (int i=0; i<N; i++) //chooses particle we are examining
   {
     double force[3];
@@ -86,6 +87,11 @@ void updateBody(int N)
         double zDist = x[i][2]-x[j][2];
 
         double distance = sqrt((xDist*xDist) + (yDist*yDist) + (zDist*zDist));
+
+        if (distance < shortestDistance)
+        {
+          shortestDistance = distance;
+        }
 
         double f = (4*a*(((12*pow(s,12))/pow(distance, 13)) - ((6*pow(s,6))/pow(distance, 7))));
        
@@ -138,6 +144,12 @@ void updateBody(int N)
         
         double newF = (4*a*(((12*pow(s,12))/pow(newDistance, 13)) - ((6*pow(s,6))/pow(newDistance, 7))));
 
+        if (newDistance < shortestDistance)
+        {
+          shortestDistance = newDistance;
+        }
+
+
         force[0] += newX/newDistance * newF;
         force[1] += newY/newDistance * newF;
         force[2] += newZ/newDistance * newF;
@@ -166,6 +178,9 @@ void updateBody(int N)
       x[i][2] -= floor(x[i][2]);
     }
   }
+
+  //update time step size here 
+
 }
 
 int main() 
