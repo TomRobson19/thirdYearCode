@@ -1,0 +1,282 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Thomas Robson - Curriculum Vitae
+\end_layout
+
+\begin_layout Author
+E-mail: tomrobson19@gmail.com 
+\end_layout
+
+\begin_layout Author
+Phone: 07521 705080 
+\end_layout
+
+\begin_layout Author
+Address: Woodpeckers, Lower Wokingham Road, RG45 6BX
+\end_layout
+
+\begin_layout Section*
+Profile 
+\end_layout
+
+\begin_layout Standard
+I am a third year Computer Scientist seeking an Internship for the summer
+ of 2017 in a prestigious and innovative company where I can continue to
+ enhance my skills.
+ I believe that I can offer strong technical and organisational skills,
+ along with a professional attitude and good communication skills.
+\end_layout
+
+\begin_layout Section*
+Degree
+\end_layout
+
+\begin_layout Standard
+Currently studying towards MEng in Computer Science at Durham University.
+ Achieved a 1st in the first and second years of study.
+\end_layout
+
+\begin_layout Itemize
+Programming Languages: Java, C/C++, Python, HTML, CSS, PHP, JavaScript,
+ NodeJS, SQL
+\end_layout
+
+\begin_layout Itemize
+Notable Topics Studied: Computer Vision, Machine Learning, Computer Security
+\end_layout
+
+\begin_layout Itemize
+Individual Project: Camera-to-Camera Tracking for Person Re-identification
+ within Thermal Imagery
+\end_layout
+
+\begin_layout Itemize
+Group Projects: Web-Based Volunteer Management System for the Wear Rivers
+ Trust Charity, Administrator and User Dashboard to Support the Citizen
+ Science Approach of the MammalWeb Project.
+ 
+\end_layout
+
+\begin_layout Section*
+Qualifications 
+\end_layout
+
+\begin_layout Standard
+Educated at Wellington College September 2009 - June 2014, achieved the
+ following results: 
+\end_layout
+
+\begin_layout Subsubsection*
+International Baccalaureate Diploma - June 2014: 
+\end_layout
+
+\begin_layout Standard
+Total of 41 points :
+\end_layout
+
+\begin_layout Itemize
+Higher Level Topics: Maths - 6, Physics - 6, Economics - 7 
+\end_layout
+
+\begin_layout Itemize
+Standard Level Topics: English - 6, Spanish - 7, Politics - 7 
+\end_layout
+
+\begin_layout Itemize
+Extended Essay on the theoretical grounding of Computer Science, exploring
+ the proofs of Russell's Paradox, Gödel’s Incompleteness Theorem and Turing's
+ Halting Problem.
+\end_layout
+
+\begin_layout Subsubsection*
+GCSE: 
+\end_layout
+
+\begin_layout Itemize
+Maths - A*, English – A, Greek - A* - June 2012
+\end_layout
+
+\begin_layout Itemize
+Latin - A - June 2011
+\end_layout
+
+\begin_layout Subsubsection*
+International Baccalaureate Middle Years Program - June 2012: 
+\end_layout
+
+\begin_layout Standard
+Full range of subjects studied, achieved six 7s and three 6s.
+ 
+\end_layout
+
+\begin_layout Section*
+Work experience 
+\end_layout
+
+\begin_layout Subsection*
+Cyber Security Summer School July 2016 – September 2016 
+\end_layout
+
+\begin_layout Standard
+I took part in a 10-week summer school over the summer of 2016 to enhance
+ my technical skills.
+ Among the topics covered were networking, secure coding in C/C++ and python,
+ low level operating systems and many aspects of computer security.
+ This school consisted of a combination of learning about cyber security
+ issues and trying both offence and defence using some of these techniques
+ in a controlled laboratory environment using the tools supplied within
+ the Kali Linux distribution by Offensive Security.
+\end_layout
+
+\begin_layout Subsection*
+Microtek Laboratories June 2014 — October 2014 Assistant to MD 
+\end_layout
+
+\begin_layout Standard
+I was hired in the summer of 2014 by Microtek Laboratories Inc., a US based
+ company specialising in the testing of electronic components, to assist
+ the set-up process of their new UK business, working alongside the Managing
+ Director of Gen3 Systems Ltd (a UK based company with which Microtek has
+ an existing relationship), to handle the customer communication, company
+ set-up and testing services that occurred over this period.
+ I served as the main point of contact between the US head office and the
+ new european customers, and ensured that all required test work was carried
+ out to the highest standard whilst keeping the customer fully informed
+ of our process.
+\end_layout
+
+\begin_layout Subsection*
+UK-Japan Cambridge University Young Scientist Workshop July 2012 
+\end_layout
+
+\begin_layout Standard
+In the summer of 2012, I had the opportunity to take part in the UK Japan
+ Young Scientist Workshop at Cambridge University.
+ This was a week long collaboration between schools in the UK and Japan
+ to take part in research projects with academics.
+ My group examined ‘Nuclear Energy and the public perception of radiation’
+ with Professor Wade Allison, a world-leading researcher on the subject.
+ I gave a presentation at the end of the week on our project to the events
+ sponsors and special guests, which was an invaluable opportunity to develop
+ my public speaking and presentation skills.
+\end_layout
+
+\begin_layout Subsection*
+Young Rewired State August 2012 and August 2013 
+\end_layout
+
+\begin_layout Standard
+I participated in two Young Rewired State events in the summers of 2012
+ and 2013, working in the Reading centre in the offices of Microsoft.
+ These events are designed to introduce young people to the process of software
+ development and after a week of development the event ended with a contest
+ in Birmingham where all the centres came together.
+ This was my first experience of programming and the software development
+ process, and I greatly enjoyed the two projects that saw us create web
+ applications based on open source data.
+ 
+\end_layout
+
+\begin_layout Section*
+Interests 
+\end_layout
+
+\begin_layout Standard
+I have a strong interest in all forms of technology, and enjoy investigating
+ new developments in both hardware and software in the consumer and professional
+ markets.
+ This interest heavily influenced my decision to take a Computer Science
+ degree, and it is a decision I’m glad I made.
+\end_layout
+
+\begin_layout Standard
+My main hobby is Golf, which I play off a handicap of 13.
+ I enjoy a casual game with friends and family, have played some match golf
+ for Wellington College and Bearwood Lakes Golf Club, and spent 2015-2016
+ as Captain of University College Golf Club at Durham University.
+\end_layout
+
+\begin_layout Section*
+References 
+\end_layout
+
+\begin_layout Standard
+References available upon request.
+\end_layout
+
+\end_body
+\end_document
