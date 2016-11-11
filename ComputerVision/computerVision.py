@@ -122,7 +122,7 @@ for filename in os.listdir(directory_to_cycle):
                                 draw = False
                                 break
                     if draw == True:
-                        img = cv2.line(img,(points[0][0],points[0][1]),(points[1][0],points[1][1]),(0,0,255))
+                        img = cv2.line(img,(points[0][0],points[0][1]),(points[1][0],points[1][1]),(0,0,255),3)
 
 
         canny = cv2.cvtColor(canny,cv2.COLOR_GRAY2BGR)

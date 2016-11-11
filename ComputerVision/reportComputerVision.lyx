@@ -149,5 +149,9 @@ removed horizontal lines (-0.5<grad<0.5)
 only count line if above certain length (yet to be decided)
 \end_layout
 
+\begin_layout Itemize
+Extend line through image, then when i do logical and, find the extremities.
+\end_layout
+
 \end_body
 \end_document
