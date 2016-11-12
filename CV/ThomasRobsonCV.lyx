@@ -58,8 +58,8 @@
 \bottommargin 2cm
 \secnumdepth 3
 \tocdepth 3
-\paragraph_separation indent
-\paragraph_indentation default
+\paragraph_separation skip
+\defskip bigskip
 \quotes_language english
 \papercolumns 1
 \papersides 1
@@ -166,12 +166,8 @@ Extended Essay on the theoretical grounding of Computer Science, exploring
 GCSE: 
 \end_layout
 
-\begin_layout Itemize
-Maths - A*, English – A, Greek - A* - June 2012
-\end_layout
-
-\begin_layout Itemize
-Latin - A - June 2011
+\begin_layout Standard
+Maths - A*, English – A, Greek - A*, Latin - A
 \end_layout
 
 \begin_layout Subsubsection*
@@ -207,15 +203,16 @@ Microtek Laboratories June 2014 — October 2014 Assistant to MD
 \end_layout
 
 \begin_layout Standard
-I was hired in the summer of 2014 by Microtek Laboratories Inc., a US based
- company specialising in the testing of electronic components, to assist
- the set-up process of their new UK business, working alongside the Managing
- Director of Gen3 Systems Ltd (a UK based company with which Microtek has
- an existing relationship), to handle the customer communication, company
- set-up and testing services that occurred over this period.
+During the summer of 2014 I worked for Microtek Laboratories Inc.
+ This is a US based company specialising in the testing of electronic components.
+ My job was to assist the set-up process of their new UK business, working
+ alongside the Managing Director of Gen3 Systems Ltd (a UK based company
+ with which Microtek has an existing relationship), to handle the customer
+ communication, company set-up and testing services that occurred over this
+ period.
  I served as the main point of contact between the US head office and the
- new european customers, and ensured that all required test work was carried
- out to the highest standard whilst keeping the customer fully informed
+ new European customers, and ensured that all required test work was carried
+ out to the highest standard whilst keeping the customers fully informed
  of our process.
 \end_layout
 
