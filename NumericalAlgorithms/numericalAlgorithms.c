@@ -23,6 +23,10 @@ const double a = pow(10,-5); //constant value of a and s - in assignment pow(10,
 const double s = pow(10,-5); 
 const double R = 2.5*s;
 
+const double boxes[27][3] = {{0,0,0},{0,0,1},{0,0,-1},{0,1,0},{0,1,1},{0,1,-1},{0,-1,0},{0,-1,1},{0,-1,-1},{1,0,0},{1,0,1},{1,0,-1},{1,1,0},{1,1,1},{1,1,-1},{1,-1,0},{1,-1,1},{1,-1,-1},{-1,0,0},{-1,0,1},{-1,0,-1},{-1,1,0},{-1,1,1},{-1,1,-1},{-1,-1,0},{-1,-1,1},{-1,-1,-1}};
+
+
+
 double x[N][3];
 double v[N][3];
 
@@ -82,23 +86,27 @@ void updateBody(int N)
     {
       if (i != j)
       {
-        double xDist = x[i][0]-x[j][0];
-        double yDist = x[i][1]-x[j][1];
-        double zDist = x[i][2]-x[j][2];
-
-        double distance = sqrt((xDist*xDist) + (yDist*yDist) + (zDist*zDist));
-
-        if (distance < shortestDistance)
+        for (int k=0; k<27; k++)
         {
-          shortestDistance = distance;
-        }
+          double xDist = x[i][0]-(x[j][0] + boxes[k][0]);
+          double yDist = x[i][1]-(x[j][1] + boxes[k][1]);
+          double zDist = x[i][2]-(x[j][2] + boxes[k][2]);
 
-        double f = (4*a*(((12*pow(s,12))/pow(distance, 13)) - ((6*pow(s,6))/pow(distance, 7))));
-       
-        force[0] += xDist/distance * f;
-        force[1] += yDist/distance * f;
-        force[2] += zDist/distance * f;
+          double distance = sqrt((xDist*xDist) + (yDist*yDist) + (zDist*zDist));
+
+          if (distance < shortestDistance)
+          {
+            shortestDistance = distance;
+          }
+
+          double f = (4*a*(((12*pow(s,12))/pow(distance, 13)) - ((6*pow(s,6))/pow(distance, 7))));
+         
+          force[0] += xDist/distance * f;
+          force[1] += yDist/distance * f;
+          force[2] += zDist/distance * f;
+        }
         
+        /*
         double newX;
         double newY;
         double newZ;
@@ -153,6 +161,7 @@ void updateBody(int N)
         force[0] += newX/newDistance * newF;
         force[1] += newY/newDistance * newF;
         force[2] += newZ/newDistance * newF;
+        */
       } 
     }
     v[i][0] += timeStepSize * force[0];
