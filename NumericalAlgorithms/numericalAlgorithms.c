@@ -146,6 +146,7 @@ int main()
   printCSVFile(0);
   for (int i=0; i<timeSteps; i++) 
   {
+    //printf("%d%\r",i*100/timeSteps);
     updateBody(N);
     if (i%plotEveryKthStep==0) 
     {

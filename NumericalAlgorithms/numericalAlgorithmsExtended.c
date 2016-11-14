@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-const int N = 100; //number of particles
+const int N = 10; //number of particles
 double timeStepSize = pow(10,-4); //start small, then change during runtime
 const int timeSteps = 2000000;
 const int plotEveryKthStep = 100;
@@ -184,6 +184,7 @@ int main()
   printCSVFile(0);
   for (int i=0; i<timeSteps; i++) 
   {
+    //printf("%d%\r",i*100/timeSteps);
     updateBody(N,i);
     if (i%plotEveryKthStep==0) 
     {
