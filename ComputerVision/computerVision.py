@@ -77,52 +77,59 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
         gradientBound = 0.1
         similarityBound = 2
         linesDetected = 0
+        keepChecking = True
 
-        for counter in range(trials):
-            r1 = random.randint(0,len(data)-1)
-            r2 = random.randint(0,len(data)-1)
+        while keepChecking:
+            for counter in range(trials):
+                r1 = random.randint(0,len(data)-1)
+                r2 = random.randint(0,len(data)-1)
 
-            points = [data[r1][0],data[r2][0]] #select points from non zeros
-            
-            if (points[0][0]-points[1][0] != 0):
-                gradient = (points[0][1]-points[1][1])/float(points[0][0]-points[1][0])
+                points = [data[r1][0],data[r2][0]] #select points from non zeros
+                
+                if (points[0][0]-points[1][0] != 0):
+                    gradient = (points[0][1]-points[1][1])/float(points[0][0]-points[1][0])
+                else:
+                    gradient = (points[0][1]-points[1][1])/float((points[0][0]-points[1][0])+1)
+
+                c = points[0][1] - (gradient*points[0][0]) #calculate y-intercept
+
+                if (abs(gradient) < 0.5): #remove horizontal lines
+                    counter -= 1
+                else:
+                    lines = np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
+                    #lines = cv2.line(lines,(points[0][0],points[0][1]),(points[1][0],points[1][1]),255,2)
+
+                    #draw lines for the whole cut off image
+                    lines = cv2.line(lines,(int((0-c)/gradient),0),(int((canny.shape[0]-c)/gradient),canny.shape[0]),255,2)
+
+                    compare =  np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
+                    compare = cv2.bitwise_and(canny,lines)
+
+                    pixels = cv2.findNonZero(compare)
+
+                    if (len(pixels) > v):
+                        lineArray.append([(int((0-c)/gradient),0),(int((canny.shape[0]-c)/gradient),canny.shape[0]),gradient])
+                        draw = True
+                        for i in range (0,len(lineArray)-1):
+                            #reject if gradient is too similar, the lines cross over or the points are too close together
+                            if  (lineArray[i][2] - gradientBound <= gradient <= lineArray[i][2] + gradientBound) or \
+                                (lineArray[i][0][0] < points[0][0] and lineArray[i][1][0] > points[1][0]) or \
+                                (lineArray[i][0][0] > points[0][0] and lineArray[i][1][0] < points[1][0]) or \
+                                (lineArray[i][0][0] - similarityBound <= points[0][0] <= lineArray[i][0][0] + similarityBound) or \
+                                (lineArray[i][1][0] - similarityBound <= points[0][0] <= lineArray[i][1][0] + similarityBound) or \
+                                (lineArray[i][0][0] - similarityBound <= points[1][0] <= lineArray[i][0][0] + similarityBound) or \
+                                (lineArray[i][1][0] - similarityBound <= points[1][0] <= lineArray[i][1][0] + similarityBound):
+                                    draw = False
+                                    break
+                        if draw == True:
+                            #img = cv2.line(img,(points[0][0],points[0][1]),(points[1][0],points[1][1]),(0,0,255),3)
+                            img = cv2.line(img,(int((0-c)/gradient),0),(int((canny.shape[0]-c)/gradient),canny.shape[0]),(0,0,255),3)
+                            linesDetected += 1
+            if linesDetected == 0 and v > 20:
+                v = int(v/2)
             else:
-                gradient = (points[0][1]-points[1][1])/float((points[0][0]-points[1][0])+1)
+                keepChecking = False
 
-            c = points[0][1] - (gradient*points[0][0]) #calculate y-intercept
-
-            if (abs(gradient) < 0.5): #remove horizontal lines
-                counter -= 1
-            else:
-                lines = np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
-                #lines = cv2.line(lines,(points[0][0],points[0][1]),(points[1][0],points[1][1]),255,2)
-
-                #draw lines for the whole cut off image
-                lines = cv2.line(lines,(int((0-c)/gradient),0),(int((canny.shape[0]-c)/gradient),canny.shape[0]),255,2)
-
-                compare =  np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
-                compare = cv2.bitwise_and(canny,lines)
-
-                pixels = cv2.findNonZero(compare)
-
-                if (len(pixels) > v):
-                    lineArray.append([(int((0-c)/gradient),0),(int((canny.shape[0]-c)/gradient),canny.shape[0]),gradient])
-                    draw = True
-                    for i in range (0,len(lineArray)-1):
-                        #reject if gradient is too similar, the lines cross over or the points are too close together
-                        if  (lineArray[i][2] - gradientBound <= gradient <= lineArray[i][2] + gradientBound) or \
-                            (lineArray[i][0][0] < points[0][0] and lineArray[i][1][0] > points[1][0]) or \
-                            (lineArray[i][0][0] > points[0][0] and lineArray[i][1][0] < points[1][0]) or \
-                            (lineArray[i][0][0] - similarityBound <= points[0][0] <= lineArray[i][0][0] + similarityBound) or \
-                            (lineArray[i][1][0] - similarityBound <= points[0][0] <= lineArray[i][1][0] + similarityBound) or \
-                            (lineArray[i][0][0] - similarityBound <= points[1][0] <= lineArray[i][0][0] + similarityBound) or \
-                            (lineArray[i][1][0] - similarityBound <= points[1][0] <= lineArray[i][1][0] + similarityBound):
-                                draw = False
-                                break
-                    if draw == True:
-                        #img = cv2.line(img,(points[0][0],points[0][1]),(points[1][0],points[1][1]),(0,0,255),3)
-                        img = cv2.line(img,(int((0-c)/gradient),0),(int((canny.shape[0]-c)/gradient),canny.shape[0]),(0,0,255),3)
-                        linesDetected += 1
 
         canny = cv2.cvtColor(canny,cv2.COLOR_GRAY2BGR)
         out = np.concatenate((img,canny),axis=0)
@@ -132,7 +139,7 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
 
         #cv2.imshow('image',out)
         cv2.imshow('original',original)
-        key = cv2.waitKey(1) # wait for this long or until any key press
+        key = cv2.waitKey(1000) # wait for this long or until any key press
         if (key == ord('x')):
             break
 
