@@ -142,7 +142,7 @@ e_lines.py
 \end_layout
 
 \begin_layout Itemize
-removed horizontal lines (-0.5<grad<0.5)
+removed horizontal lines (-0.5<grad<0.5), this may be too aggressive
 \end_layout
 
 \begin_layout Itemize
@@ -151,6 +151,37 @@ only count line if above certain length (yet to be decided)
 
 \begin_layout Itemize
 Extend line through image, then when i do logical and, find the extremities.
+\end_layout
+
+\begin_layout Itemize
+Auto Canny covers 
+\begin_inset Quotes eld
+\end_inset
+
+automatically adjusting the parameters feature extraction based on some
+ form of preliminary analysis image
+\begin_inset Quotes erd
+\end_inset
+
+ from mark scheme
+\end_layout
+
+\begin_layout Itemize
+Also done 
+\begin_inset Quotes eld
+\end_inset
+
+the successful use of any heuristics to speed up processing times or reduce
+ false detections (including at the stage of colour pre-filtering)
+\begin_inset Quotes erd
+\end_inset
+
+ e.g.
+ cutting off top of image, gradient comparisons
+\end_layout
+
+\begin_layout Itemize
+NEED TO DO HOUGH LINES
 \end_layout
 
 \end_body

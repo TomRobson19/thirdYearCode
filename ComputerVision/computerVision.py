@@ -12,7 +12,7 @@ directory_to_cycle = "road-images2016-DURHAM"
 
 # display all images in directory
 
-for filename in os.listdir(directory_to_cycle):
+for filename in list(sorted(os.listdir(directory_to_cycle))):
 
     # if it is a PNG file
 
@@ -90,6 +90,8 @@ for filename in os.listdir(directory_to_cycle):
             else:
                 gradient = (points[0][1]-points[1][1])/float((points[0][0]-points[1][0])+1)
 
+            c = points[0][1] - (gradient*points[0][0])
+
             length = math.sqrt(abs(points[0][0]-points[1][0])**2 + abs(points[0][1]-points[1][1])**2)
 
             if (abs(gradient) < 0.5): #remove horizontal lines
@@ -98,9 +100,9 @@ for filename in os.listdir(directory_to_cycle):
                 counter -= 1
             else:
                 lines = np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
-                lines = cv2.line(lines,(points[0][0],points[0][1]),(points[1][0],points[1][1]),255,2)
+                #lines = cv2.line(lines,(points[0][0],points[0][1]),(points[1][0],points[1][1]),255,2)
 
-                #lines = cv2.line(lines,(int(-points[0][1]*(gradient*points[0][0])),0),(int((img.shape[0]-c)/(gradient)),img.shape[0]),255,2)
+                lines = cv2.line(lines,(int((0-c)/gradient),0),(int((canny.shape[0]-c)/gradient),canny.shape[0]),255,2)
 
                 compare =  np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
                 compare = cv2.bitwise_and(canny,lines)
@@ -122,7 +124,8 @@ for filename in os.listdir(directory_to_cycle):
                                 draw = False
                                 break
                     if draw == True:
-                        img = cv2.line(img,(points[0][0],points[0][1]),(points[1][0],points[1][1]),(0,0,255),3)
+                        #img = cv2.line(img,(points[0][0],points[0][1]),(points[1][0],points[1][1]),(0,0,255),3)
+                        img = cv2.line(img,(int((0-c)/gradient),0),(int((canny.shape[0]-c)/gradient),canny.shape[0]),(0,0,255),3)
 
 
         canny = cv2.cvtColor(canny,cv2.COLOR_GRAY2BGR)
