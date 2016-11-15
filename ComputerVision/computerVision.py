@@ -17,15 +17,13 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
     # if it is a PNG file
 
     if '.png' in filename:
-        print(os.path.join(directory_to_cycle, filename));
-
         # read it and display in a window
 
-        img = cv2.imread(os.path.join(directory_to_cycle, filename), cv2.IMREAD_COLOR)
+        original= cv2.imread(os.path.join(directory_to_cycle, filename), cv2.IMREAD_COLOR)
 
         #remove the top 60% of the image to focus on the roads
-        height = img.shape[0]
-        img = img[(int)(7*height/10):height,0:img.shape[1]]
+        height = original.shape[0]
+        img = original[(int)(7*height/10):height,0:original.shape[1]]
 
 
         # remove all non-blue dominant pixels
@@ -73,11 +71,12 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
 
         t = 2
         v = 100 
-        trials = 10000
+        trials = 1000
         points = []
         lineArray = []
         gradientBound = 0.1
         similarityBound = 2
+        linesDetected = 0
 
         for counter in range(trials):
             r1 = random.randint(0,len(data)-1)
@@ -90,18 +89,15 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
             else:
                 gradient = (points[0][1]-points[1][1])/float((points[0][0]-points[1][0])+1)
 
-            c = points[0][1] - (gradient*points[0][0])
-
-            length = math.sqrt(abs(points[0][0]-points[1][0])**2 + abs(points[0][1]-points[1][1])**2)
+            c = points[0][1] - (gradient*points[0][0]) #calculate y-intercept
 
             if (abs(gradient) < 0.5): #remove horizontal lines
-                counter -= 1
-            elif (length < 50):
                 counter -= 1
             else:
                 lines = np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
                 #lines = cv2.line(lines,(points[0][0],points[0][1]),(points[1][0],points[1][1]),255,2)
 
+                #draw lines for the whole cut off image
                 lines = cv2.line(lines,(int((0-c)/gradient),0),(int((canny.shape[0]-c)/gradient),canny.shape[0]),255,2)
 
                 compare =  np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
@@ -110,7 +106,7 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
                 pixels = cv2.findNonZero(compare)
 
                 if (len(pixels) > v):
-                    lineArray.append([(points[0][0],points[0][1]),(points[1][0],points[1][1]),gradient])
+                    lineArray.append([(int((0-c)/gradient),0),(int((canny.shape[0]-c)/gradient),canny.shape[0]),gradient])
                     draw = True
                     for i in range (0,len(lineArray)-1):
                         #reject if gradient is too similar, the lines cross over or the points are too close together
@@ -126,12 +122,16 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
                     if draw == True:
                         #img = cv2.line(img,(points[0][0],points[0][1]),(points[1][0],points[1][1]),(0,0,255),3)
                         img = cv2.line(img,(int((0-c)/gradient),0),(int((canny.shape[0]-c)/gradient),canny.shape[0]),(0,0,255),3)
-
+                        linesDetected += 1
 
         canny = cv2.cvtColor(canny,cv2.COLOR_GRAY2BGR)
         out = np.concatenate((img,canny),axis=0)
 
+        print(filename,': detected '+str(linesDetected)+' edges/lines');
+
+
         cv2.imshow('image',out)
+        cv2.imshow('original',original)
         key = cv2.waitKey(1000000000) # wait for this long or until any key press
         if (key == ord('x')):
             break

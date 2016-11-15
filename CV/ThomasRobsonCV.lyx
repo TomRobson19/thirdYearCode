@@ -56,6 +56,9 @@
 \topmargin 2cm
 \rightmargin 2cm
 \bottommargin 2cm
+\headheight 2cm
+\headsep 2cm
+\footskip 1cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation skip
