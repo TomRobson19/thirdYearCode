@@ -25,7 +25,7 @@ inv_classes = {v: k for k, v in classes.items()}
 
 ########### Load Data Set
 
-path_to_data = "/HAPT-data-set-DU" # edit this
+path_to_data = "HAPT-data-set-DU" # edit this
 
 # Training data - as currenrtly split
 
