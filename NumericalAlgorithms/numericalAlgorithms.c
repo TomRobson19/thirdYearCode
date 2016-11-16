@@ -7,15 +7,13 @@
 // ./argon
 //
 // Based on spaceboddies.c, (C) 2015 Tobias Weinzierl
-//
-// TRY ADDING PRAGMAS
 
 #include <fstream>
 #include <sstream>
 #include <stdlib.h>
 #include <math.h>
 
-const int N = 10; //number of particles
+const int N = 2; //number of particles
 double timeStepSize = pow(10,-4); //start small, then change during runtime
 const int timeSteps = 2000000;
 const int plotEveryKthStep = 100;
@@ -32,19 +30,19 @@ double v[N][3];
 
 void setUp(int N) //support arbitrary number of particles
 { 
-  // x[0][0] = 0.4;
-  // x[0][1] = 0.5;
-  // x[0][2] = 0.5;
+  x[0][0] = 0.4;
+  x[0][1] = 0.5;
+  x[0][2] = 0.5;
 
-  // x[1][0] = 0.6;
-  // x[1][1] = 0.5;
-  // x[1][2] = 0.5;
+  x[1][0] = 0.6;
+  x[1][1] = 0.5;
+  x[1][2] = 0.5;
 
   for (int i=0; i<N; i++)
   {
-    x[i][0] = (long double)rand()/(long double)RAND_MAX;
-    x[i][1] = (long double)rand()/(long double)RAND_MAX;
-    x[i][2] = (long double)rand()/(long double)RAND_MAX;
+    // x[i][0] = (long double)rand()/(long double)RAND_MAX;
+    // x[i][1] = (long double)rand()/(long double)RAND_MAX;
+    // x[i][2] = (long double)rand()/(long double)RAND_MAX;
 
     v[i][0] = 0.0;
     v[i][1] = 0.0;
@@ -55,7 +53,7 @@ void setUp(int N) //support arbitrary number of particles
 void printCSVFile(int counter) 
 {
   std::stringstream filename;
-  filename << "results/result-" << counter <<  ".csv";
+  filename << "results" << N << "/result-" << counter <<  ".csv";
   std::ofstream out( filename.str().c_str() );
 
   out << "x, y, z" << std::endl;
@@ -142,6 +140,8 @@ void updateBody(int N)
 
 int main() 
 {
+  clock_t start = clock();
+
   setUp(N);
   printCSVFile(0);
   for (int i=0; i<timeSteps; i++) 
@@ -153,5 +153,16 @@ int main()
       printCSVFile(i/plotEveryKthStep+1); // Please switch off all IO for performance tests.
     }
   }
+
+  clock_t end = clock();
+
+  double timeTaken = double(end-start)/CLOCKS_PER_SEC;
+
+  std::stringstream filename;
+  filename << "time" << N; 
+  std::ofstream out( filename.str().c_str() );
+
+  out << timeTaken << std::endl;
+
   return 0;
 }

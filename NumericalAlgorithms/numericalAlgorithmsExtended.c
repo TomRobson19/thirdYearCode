@@ -60,7 +60,7 @@ void setUp(int N) //support arbitrary number of particles
 void printCSVFile(int counter) 
 {
   std::stringstream filename;
-  filename << "results/result-" << counter <<  ".csv";
+  filename << "results" << N << "/result-" << counter <<  ".csv";
   std::ofstream out( filename.str().c_str() );
 
   out << "x, y, z" << std::endl;
@@ -180,6 +180,8 @@ void updateBody(int N, int currentStep)
 
 int main() 
 {
+  clock_t start = clock();
+
   setUp(N);
   printCSVFile(0);
   for (int i=0; i<timeSteps; i++) 
@@ -191,5 +193,16 @@ int main()
       printCSVFile(i/plotEveryKthStep+1); // Please switch off all IO for performance tests.
     }
   }
+
+  clock_t end = clock();
+
+  double timeTaken = double(end-start)/CLOCKS_PER_SEC;
+
+  std::stringstream filename;
+  filename << "time" << N; 
+  std::ofstream out( filename.str().c_str() );
+
+  out << timeTaken << std::endl;
+
   return 0;
 }
