@@ -126,7 +126,7 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
                             img = cv2.line(img,(int((0-c)/gradient),0),(int((canny.shape[0]-c)/gradient),canny.shape[0]),(0,0,255),3)
                             linesDetected += 1
             if linesDetected == 0 and v > 20:
-                v = int(v/2)
+                v = v-10
             else:
                 keepChecking = False
 
