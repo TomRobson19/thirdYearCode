@@ -92,6 +92,10 @@ Part 1
 \end_layout
 
 \begin_layout Standard
+The implementation of step 1 
+\end_layout
+
+\begin_layout Standard
 Brief description of step 1 is precise (2 marks), clear (2 marks) and addresses
  the three remarks given (3x2 marks).
  Use sketches and/or screenshots to make your report easy to follow
@@ -109,6 +113,10 @@ status open
 
 \begin_layout Plain Layout
 IMPLEMENT VARIABLE TIME STEPS - distance related to time step^2
+\end_layout
+
+\begin_layout Plain Layout
+Also done initial velocity as per FAQ
 \end_layout
 
 \end_inset

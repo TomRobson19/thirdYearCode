@@ -14,7 +14,7 @@
 #include <math.h>
 
 const int N = 10; //number of particles
-double timeStepSize = pow(10,-4); //start small, then change during runtime
+double timeStepSize = pow(10,-6); //start small, then change during runtime
 const int timeSteps = 200000;
 const int plotEveryKthStep = 100;
 const double a = pow(10,-5); //constant value of a and s - in assignment pow(10,-5)
