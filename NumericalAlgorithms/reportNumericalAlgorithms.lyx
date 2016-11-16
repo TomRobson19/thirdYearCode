@@ -64,8 +64,8 @@
 \footskip 1cm
 \secnumdepth 3
 \tocdepth 3
-\paragraph_separation indent
-\paragraph_indentation default
+\paragraph_separation skip
+\defskip bigskip
 \quotes_language english
 \papercolumns 1
 \papersides 1
@@ -92,7 +92,81 @@ Part 1
 \end_layout
 
 \begin_layout Standard
-The implementation of step 1 
+The implementation of step 1 begins by initialising the positions and velocities
+ of the particles.
+ Both of these can be done in two different ways.
+ The position is normally allocated randomly, by calculating a random number
+ between 0 and 1 in each dimension, but the option is present in the implementat
+ion to specify the position of 2 particles (or moreas required) to facilitate
+ the experiments in step 2.
+ The initial velocity can either be set to zero, or a random value between
+ 
+\begin_inset Formula $-10^{-5}$
+\end_inset
+
+ and 
+\begin_inset Formula $10^{-5}$
+\end_inset
+
+ depending on the timestep approach used, which will be discussed later.
+\end_layout
+
+\begin_layout Standard
+From this point, we then move onto the force calculations.
+ We first select the particle we will be examining, and set its forces in
+ each dimension to 0.
+ We then loop through each of the rest of the particles and calculate the
+ force that each is applying to our selected particle.
+ Due to the wrap around forces, this must be done 27 times per particle
+ to ensure the force that each image of each particle applies in the Lennard
+ Jones model is applied in our simulation.
+\end_layout
+
+\begin_layout Standard
+For each image of the particle, we first calculate the distances in each
+ dimension using the array of unit cubes, named 'boxes' in the code.
+ From these distances, we compute the euclidean distance between the particle
+ and each of these images.
+ From here, we employ the Lennard Jones potential equation, and muliply
+ this by the quotient of the distance in each dimension and the euclidean
+ distance.
+ The sum of these forces accross all images of all other particles give
+ us our force being applied to our original particle.
+\end_layout
+
+\begin_layout Standard
+We then use the product of this total force and the timestep size to calculate
+ the new velocity, adding this on to the existing velocity in each dimension.
+ After all the updated velocities have been calculated for all particles,
+ we then do a new loop through all of the particles to update the position
+ in each dimension by adding on the product of the timestep size and the
+ velocity in each dimension.
+ We then use floor division on these new positions to ensure the particles
+ stay within the unit cube.
+ 
+\end_layout
+
+\begin_layout Standard
+Like the calculations of the velocities, the timestep has been implemented
+ two different ways.
+ If the particles are given a starting velocity, the timestep is fixed at
+ 
+\begin_inset Formula $10^{-6}$
+\end_inset
+
+.
+ However, if the starting velocity is zero, then a varible time step has
+ been implemented based on the euclidean distance between the closest two
+ paticles.
+ We use a threshold foor this smallest distance, if it is under 0.0002, the
+ timestep is equal to the shortest distance, if it is over 0.0002, then the
+ timestep is equal to 
+\begin_inset Formula $r^{3}\times10^{12}$
+\end_inset
+
+, where r is the shortest distance.
+ Both the equation and the threshold was determined by experimentation.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -135,11 +209,6 @@ status open
 \begin_layout Plain Layout
 WE ARE ALLOWED TO CHANGE A AND S FOR THE EXPERIMENTS WITH 2 PARTICLES IF
  I EXPLAIN IT
-\end_layout
-
-\begin_layout Plain Layout
-MENTION ABOUT EDGE CASE E.G.
- IF Y IS 0.500001 AND 0.5
 \end_layout
 
 \end_inset

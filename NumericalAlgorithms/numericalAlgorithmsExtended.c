@@ -54,6 +54,10 @@ void setUp(int N) //support arbitrary number of particles
     v[i][0] = 0.0;
     v[i][1] = 0.0;
     v[i][2] = 0.0;
+
+    // v[i][0] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
+    // v[i][1] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
+    // v[i][2] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
   }
 }
 
