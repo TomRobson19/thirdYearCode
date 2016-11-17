@@ -14,7 +14,7 @@
 #include <math.h>
 
 const int N = 10; //number of particles
-double timeStepSize = pow(10,-6); //start small, then change during runtime
+double timeStepSize = pow(10,-4); //start small, then change during runtime
 const int timeSteps = 200000;
 const int plotEveryKthStep = 100;
 const double a = pow(10,-5); //constant value of a and s - in assignment pow(10,-5)
@@ -44,17 +44,15 @@ void setUp(int N) //support arbitrary number of particles
     x[i][1] = (long double)rand()/(long double)RAND_MAX;
     x[i][2] = (long double)rand()/(long double)RAND_MAX;
 
-    //maybe random initial velocity between -10^-5 and 10^5?????
-
-    // v[i][0] = 0.0;
-    // v[i][1] = 0.0;
-    // v[i][2] = 0.0;
+    v[i][0] = 0.0;
+    v[i][1] = 0.0;
+    v[i][2] = 0.0;
 
     //when using this, check FAQ for timestep and turn variable off
 
-    v[i][0] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
-    v[i][1] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
-    v[i][2] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
+    // v[i][0] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
+    // v[i][1] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
+    // v[i][2] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
   }
 }
 
@@ -136,14 +134,14 @@ void updateBody(int N)
     }
   }
 
-  // if (shortestDistance > 0.0002) //inaccurate below a certain distance
-  // {
-  //   timeStepSize = pow(shortestDistance,3)*pow(10,12);
-  // }
-  // else
-  // {
-  //   timeStepSize = shortestDistance;
-  // }
+  if (shortestDistance > 0.0002) //inaccurate below a certain distance
+  {
+    timeStepSize = pow(shortestDistance,3)*pow(10,12);
+  }
+  else
+  {
+    timeStepSize = shortestDistance;
+  }
 }
 
 int main() 

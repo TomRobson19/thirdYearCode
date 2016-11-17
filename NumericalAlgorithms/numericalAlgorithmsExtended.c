@@ -7,8 +7,6 @@
 // ./argon
 //
 // Based on spaceboddies.c, (C) 2015 Tobias Weinzierl
-//
-// TRY ADDING PRAGMAS
 
 #include <fstream>
 #include <sstream>
