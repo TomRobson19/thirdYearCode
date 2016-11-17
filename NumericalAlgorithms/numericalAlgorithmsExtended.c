@@ -90,65 +90,64 @@ void updateBody(int N, int currentStep)
 
     if (currentStep % frequencyUpdated == 0)
     {
-      for (int j=0; j<N; j++) //looks through all other particles
+      for (int j=i+1; j<N; j++) //looks through all other particles
       {
-        if (i != j)
+        for (int k=0; k<27; k++)
         {
-          for (int k=0; k<27; k++)
+          double xDist = x[i][0]-(x[j][0] + boxes[k][0]);
+          double yDist = x[i][1]-(x[j][1] + boxes[k][1]);
+          double zDist = x[i][2]-(x[j][2] + boxes[k][2]);
+
+          double distance = sqrt((xDist*xDist) + (yDist*yDist) + (zDist*zDist));
+
+          if (distance < R)
           {
-            double xDist = x[i][0]-(x[j][0] + boxes[k][0]);
-            double yDist = x[i][1]-(x[j][1] + boxes[k][1]);
-            double zDist = x[i][2]-(x[j][2] + boxes[k][2]);
-
-            double distance = sqrt((xDist*xDist) + (yDist*yDist) + (zDist*zDist));
-
-            if (distance < R)
-            {
-              //if we are going to consider this particle, set it to one (true)
-              verletList[i][j][k] = 1;
-            }
-            else
-            {
-              //else, set it to zero (false)
-              verletList[i][j][k] = 0;
-            }
+            //if we are going to consider this particle, set it to one (true)
+            verletList[i][j][k] = 1;
+          }
+          else
+          {
+            //else, set it to zero (false)
+            verletList[i][j][k] = 0;
           }
         }
       }
     }
 
-    for (int j=0; j<N; j++) //looks through all other particles
+    for (int j=i+1; j<N; j++) //looks through all other particles
     {
-      if (i != j)
+      for (int k=0; k<27; k++)
       {
-        for (int k=0; k<27; k++)
+
+        if (verletList[i][j][k] == 1)
         {
+          double xDist = x[i][0]-(x[j][0] + boxes[k][0]);
+          double yDist = x[i][1]-(x[j][1] + boxes[k][1]);
+          double zDist = x[i][2]-(x[j][2] + boxes[k][2]);
 
-          if (verletList[i][j][k])
+          double distance = sqrt((xDist*xDist) + (yDist*yDist) + (zDist*zDist));
+
+          if (distance < shortestDistance)
           {
-            double xDist = x[i][0]-(x[j][0] + boxes[k][0]);
-            double yDist = x[i][1]-(x[j][1] + boxes[k][1]);
-            double zDist = x[i][2]-(x[j][2] + boxes[k][2]);
-
-            double distance = sqrt((xDist*xDist) + (yDist*yDist) + (zDist*zDist));
-
-            if (distance < shortestDistance)
-            {
-              shortestDistance = distance;
-            }
-
-            double f = (4*a*(((12*pow(s,12))/pow(distance, 13)) - ((6*pow(s,6))/pow(distance, 7))));
-           
-            force[0] += xDist/distance * f;
-            force[1] += yDist/distance * f;
-            force[2] += zDist/distance * f;
+            shortestDistance = distance;
           }
+
+          double f = (4*a*(((12*pow(s,12))/pow(distance, 13)) - ((6*pow(s,6))/pow(distance, 7))));
+         
+          force[0] += xDist/distance * f;
+          force[1] += yDist/distance * f;
+          force[2] += zDist/distance * f;
         }
-      } 
+      }
+      v[i][0] += timeStepSize * force[0];
+      v[i][1] += timeStepSize * force[1];
+      v[i][2] += timeStepSize * force[2]; 
+
+      v[i][0] -= timeStepSize * force[0];
+      v[j][1] -= timeStepSize * force[1];
+      v[j][2] -= timeStepSize * force[2];
     }
-    v[i][0] += timeStepSize * force[0];
-    v[i][1] += timeStepSize * force[1];
-    v[i][2] += timeStepSize * force[2];
+
   }
   for(int i = 0; i<N; i++)
   {

@@ -203,6 +203,26 @@ Part 2
 \end_layout
 
 \begin_layout Standard
+For the experiments with only two particles, the values of the constants
+ a and s have been changed from 
+\begin_inset Formula $10^{-5}$
+\end_inset
+
+ to 
+\begin_inset Formula $0.1$
+\end_inset
+
+.
+ Whilst the interaction does still occur with a and s being 
+\begin_inset Formula $10^{-5}$
+\end_inset
+
+, it is difficult to show the behaviour of the particles clearlywith a fixed
+ time step size.
+ Therefore 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -254,19 +274,7 @@ Part 3
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Idea - struct contaning the coordinates of each particle and an array of
- all others within radius by calculating how far away the box would go in
- every direction and looping through the particles and adding if they meet
- the constraints (be careful of wraparound)
-\end_layout
-
-\end_inset
-
-
+The data structure chosen to implement step 3 is a Verlet Lists
 \end_layout
 
 \begin_layout Standard
