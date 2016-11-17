@@ -87,28 +87,26 @@ void updateBody(int N)
       force[1] = 0.0;
       force[2] = 0.0;
 
-      if (i != j)
+      for (int k=0; k<27; k++)
       {
-        for (int k=0; k<27; k++)
+        double xDist = x[i][0]-(x[j][0] + boxes[k][0]);
+        double yDist = x[i][1]-(x[j][1] + boxes[k][1]);
+        double zDist = x[i][2]-(x[j][2] + boxes[k][2]);
+
+        double distance = sqrt((xDist*xDist) + (yDist*yDist) + (zDist*zDist));
+
+        if (distance < shortestDistance)
         {
-          double xDist = x[i][0]-(x[j][0] + boxes[k][0]);
-          double yDist = x[i][1]-(x[j][1] + boxes[k][1]);
-          double zDist = x[i][2]-(x[j][2] + boxes[k][2]);
-
-          double distance = sqrt((xDist*xDist) + (yDist*yDist) + (zDist*zDist));
-
-          if (distance < shortestDistance)
-          {
-            shortestDistance = distance;
-          }
-
-          double f = (4*a*(((12*pow(s,12))/pow(distance, 13)) - ((6*pow(s,6))/pow(distance, 7))));
-         
-          force[0] += xDist/distance * f;
-          force[1] += yDist/distance * f;
-          force[2] += zDist/distance * f;
+          shortestDistance = distance;
         }
+
+        double f = (4*a*(((12*pow(s,12))/pow(distance, 13)) - ((6*pow(s,6))/pow(distance, 7))));
+       
+        force[0] += xDist/distance * f;
+        force[1] += yDist/distance * f;
+        force[2] += zDist/distance * f;
       }
+      
       v[i][0] += timeStepSize * force[0];
       v[i][1] += timeStepSize * force[1];
       v[i][2] += timeStepSize * force[2];
