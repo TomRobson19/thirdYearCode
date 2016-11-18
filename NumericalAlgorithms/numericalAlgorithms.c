@@ -14,18 +14,18 @@
 #include <math.h>
 
 const int N = 10; //number of particles
-double timeStepSize = pow(10,-1); //start small, then change during runtime
+double timeStepSize = pow(10,-4); //start small, then change during runtime
 const int timeSteps = 200000;
 const int plotEveryKthStep = 100;
 const double a = pow(10,-5); //constant value of a and s - in assignment pow(10,-5)
 const double s = pow(10,-5); 
 const double R = 2.5*s;
 
-// const int boxes[27][3] = {{0,0,0},{0,0,1},{0,0,-1},{0,1,0},{0,1,1},{0,1,-1},{0,-1,0},{0,-1,1},{0,-1,-1},
-//                             {1,0,0},{1,0,1},{1,0,-1},{1,1,0},{1,1,1},{1,1,-1},{1,-1,0},{1,-1,1},{1,-1,-1},
-//                             {-1,0,0},{-1,0,1},{-1,0,-1},{-1,1,0},{-1,1,1},{-1,1,-1},{-1,-1,0},{-1,-1,1},{-1,-1,-1}};
+const int boxes[27][3] = {{0,0,0},{0,0,1},{0,0,-1},{0,1,0},{0,1,1},{0,1,-1},{0,-1,0},{0,-1,1},{0,-1,-1},
+                            {1,0,0},{1,0,1},{1,0,-1},{1,1,0},{1,1,1},{1,1,-1},{1,-1,0},{1,-1,1},{1,-1,-1},
+                            {-1,0,0},{-1,0,1},{-1,0,-1},{-1,1,0},{-1,1,1},{-1,1,-1},{-1,-1,0},{-1,-1,1},{-1,-1,-1}};
 
-const int boxes[7][3] = {{0,0,0},{0,0,1},{0,0,-1},{0,1,0},{0,-1,0},{1,0,0},{-1,0,0}};                            
+//const int boxes[7][3] = {{0,0,0},{0,0,1},{0,0,-1},{0,1,0},{0,-1,0},{1,0,0},{-1,0,0}};                            
 
 double x[N][3];
 double v[N][3];
@@ -46,15 +46,15 @@ void setUp(int N) //support arbitrary number of particles
     x[i][1] = (long double)rand()/(long double)RAND_MAX;
     x[i][2] = (long double)rand()/(long double)RAND_MAX;
 
-    // v[i][0] = 0.0;
-    // v[i][1] = 0.0;
-    // v[i][2] = 0.0;
+    v[i][0] = 0.0;
+    v[i][1] = 0.0;
+    v[i][2] = 0.0;
 
     //when using this, check FAQ for timestep and turn variable off
 
-    v[i][0] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
-    v[i][1] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
-    v[i][2] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
+    // v[i][0] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
+    // v[i][1] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
+    // v[i][2] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
   }
 }
 
@@ -79,7 +79,7 @@ void printCSVFile(int counter)
 
 void updateBody(int N) 
 { 
-  double shortestDistance = 1.0; 
+  double shortestDistanceForTimestep = 1.0; 
   for (int i=0; i<N; i++) //chooses particle we are examining
   {
     for (int j=i+1; j<N; j++) //looks through all other particles
@@ -89,7 +89,7 @@ void updateBody(int N)
       force[1] = 0.0;
       force[2] = 0.0;
 
-      for (int k=0; k<7; k++)
+      for (int k=0; k<27; k++)
       {
         double xDist = x[i][0]-(x[j][0] + boxes[k][0]);
         double yDist = x[i][1]-(x[j][1] + boxes[k][1]);
@@ -97,9 +97,9 @@ void updateBody(int N)
 
         double distance = sqrt((xDist*xDist) + (yDist*yDist) + (zDist*zDist));
 
-        if (distance < shortestDistance)
+        if (distance < shortestDistanceForTimestep)
         {
-          shortestDistance = distance;
+          shortestDistanceForTimestep = distance;
         }
 
         double f = (4*a*(((12*pow(s,12))/pow(distance, 13)) - ((6*pow(s,6))/pow(distance, 7))));
@@ -138,14 +138,14 @@ void updateBody(int N)
     }
   }
 
-  // if (shortestDistance > 0.0002) //inaccurate below a certain distance
-  // {
-  //   timeStepSize = pow(shortestDistance,3)*pow(10,12);
-  // }
-  // else
-  // {
-  //   timeStepSize = shortestDistance;
-  // }
+  if (shortestDistanceForTimestep > 0.0002) //inaccurate below a certain distance
+  {
+    timeStepSize = pow(shortestDistanceForTimestep,3)*pow(10,12);
+  }
+  else
+  {
+    timeStepSize = shortestDistanceForTimestep;
+  }
 }
 
 int main() 
