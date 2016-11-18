@@ -120,6 +120,16 @@ From this point, we then move onto the force calculations.
  Due to the wrap around forces, this must be done 27 times per particle
  to ensure the force that each image of each particle applies in the Lennard
  Jones model is applied in our simulation.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+CHANGE THIS PARAGRAPH TO EXPLAIN NEW LOOP
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -137,6 +147,10 @@ For each image of the particle, we first calculate the distances in each
 \begin_layout Standard
 We then use the product of this total force and the timestep size to calculate
  the new velocity, adding this on to the existing velocity in each dimension.
+ This new velocity is also calculated for the other particle by subracting
+ the product of timestep and force rather than adding.
+ This means that each particle only needs to loop through those numbered
+ higher than this, reducing the computation time of the simulation.
  After all the updated velocities have been calculated for all particles,
  we then do a new loop through all of the particles to update the position
  in each dimension by adding on the product of the timestep size and the
@@ -217,9 +231,27 @@ For the experiments with only two particles, the values of the constants
 \begin_inset Formula $10^{-5}$
 \end_inset
 
-, it is difficult to show the behaviour of the particles clearlywith a fixed
- time step size.
- Therefore 
+, it is difficult to show the behaviour of the particles clearly with a
+ fixed time step size.
+ Therefore this change of values has been made, in order to show how the
+ particles interact more clearly.
+ 
+\end_layout
+
+\begin_layout Standard
+The interaction of the particles when they are placed at (0.4,0.5,0.5) and
+ (0.6,0.5,0.5) is an attraction until the distance gets close enough for the
+ sign of the force to change, and they then start to oscillate, with the
+ force changing between attraction and repulsion, as show in this video:
+ 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://www.youtube.com/watch?v=6nED3uGmCQw"
+
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -274,7 +306,7 @@ Part 3
 \end_layout
 
 \begin_layout Standard
-The data structure chosen to implement step 3 is a Verlet Lists
+The data structure chosen to implement step 3 is a Verlet List.
 \end_layout
 
 \begin_layout Standard
