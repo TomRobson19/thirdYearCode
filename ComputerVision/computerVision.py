@@ -21,7 +21,7 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
 
         original= cv2.imread(os.path.join(directory_to_cycle, filename), cv2.IMREAD_COLOR)
 
-        #remove the top 60% of the image to focus on the roads
+        #remove the top 70% of the image to focus on the roads
         height = original.shape[0]
         img = original[(int)(7*height/10):height,0:original.shape[1]]
 
@@ -139,7 +139,7 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
 
         #cv2.imshow('image',out)
         cv2.imshow('original',original)
-        key = cv2.waitKey(1000) # wait for this long or until any key press
+        key = cv2.waitKey(1) # wait for this long or until any key press
         if (key == ord('x')):
             break
 

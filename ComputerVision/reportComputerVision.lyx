@@ -61,8 +61,8 @@
 \footskip 1cm
 \secnumdepth 3
 \tocdepth 3
-\paragraph_separation indent
-\paragraph_indentation default
+\paragraph_separation skip
+\defskip bigskip
 \quotes_language english
 \papercolumns 1
 \papersides 1
@@ -76,29 +76,109 @@
 
 \begin_body
 
-\begin_layout Standard
-Report (max.
- 750 words!, remember - it can always be shorter than this) detailing your
+\begin_layout Title
+Sofware, Systems and Applications III – Computer Vision
+\end_layout
+
+\begin_layout Author
+Tom Robson - hzwr87
+\end_layout
+
+\begin_layout Section*
+Preprocessing
 \end_layout
 
 \begin_layout Standard
-approach to the problem and the success of your solution in the task specified.
- Provide any
+Following a close examination of the dataset, it was determined that all
+ of the foreground edges required could be found in the lower 30% of the
+ image.
+ Therefore, the first step in preprocessing was to crop out the top 70%
+ of the image, as this removes a substantial proportion of the noise, and
+ therefore a subsantial proportion of the potential false positives.
+ Next was the conversion to the grayscale colour space.
+ Conversion to the HSV colour space was attempted, including converting
+ to grayscale using a weighted sum of the H and S colour channels, but these
+ gave an inferior output to the standard grayscale conversion when used
+ for edge detection.
+ Another attempt attempted for this was to identify the dominant colour
+ in the road lines, and filter out all pixels that did not have this dominant
+ colour.
+ However, this did not prove to be very effective.
+ The next step was to apply blurring to the image.
+ A Gaussian filter was initially considered, but it was decided that a Bilateral
+ filter gave superior results, so this was implemented.
+ The combination of these preprocessing techniques gave the best results
+ to the edge detector of all the techniques attempted.
+ 
 \end_layout
 
 \begin_layout Standard
-illustrative images (as many as you feel necessary) of the intermediate
- results of the system
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Figures: Grayscale, HSV, Bilateral filter output.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Edge detection
 \end_layout
 
 \begin_layout Standard
-you produce (overlays, results of processing stages etc.) Remember that any
- titles, captions,
+Following the preprocessing of the images, the next step was to pass them
+ to an edge detector.
+ In this case, the OpenCV Canny edge detection function was used.
+ In order to optimise this, the thresholds were adapted to suit each image
+ by finding the median of the grayscale pixel values of the filtered image,
+ and multiplying this by 0.67 for the lower threshold or 1.33 for the higher
+ threshold.
+ On examination of the output of this Canny function, it was clear that
+ further processing was necessary.
+ To try and remove noise from the image, morphological opening was implemented.
+ However, as a result of this, some of the intended edges became broken
+ up, so morphological closing was implemented to try and strengthen these
+ lines.
+ 
 \end_layout
 
 \begin_layout Standard
-tables, references, and graphs do not count towards the total word count
- of the report.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Figures: Canny (no morphology), just opening, opening and closing 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+RANSAC
+\end_layout
+
+\begin_layout Standard
+Having detected these edges, the next task was to implement the RANSAC algorithm
+ to try and detect which of these edges were true roadlines.
+ This was done by randomly selecting two of the non-zero pixels in the canny
+ image and drawing a line between them.
+ The gradient of this line was then calculated, and used to extend the line
+ over the whole of the bottom 30% of the image.
+ Due to the fact that the vast majority of the foreground lines that are
+ of interest to us are close to vertical, any line with a gradient close
+ to horizontal was eliminated.
+ This greatly reduced the number of false positives returned by the algorithm.
+ 
+\end_layout
+
+\begin_layout Section*
+Evaluation
 \end_layout
 
 \begin_layout Section*
@@ -106,51 +186,8 @@ Things tried
 \end_layout
 
 \begin_layout Itemize
-cut top 70% off 
-\end_layout
-
-\begin_layout Itemize
-converting to hsv and removing v colour channel (setting to one value)
-\end_layout
-
-\begin_layout Itemize
-converting to grayscale
-\end_layout
-
-\begin_layout Itemize
-using opening and closing (erosion and dilation, morphology)
-\end_layout
-
-\begin_layout Itemize
-Both gaussian and bilateral filtering
-\end_layout
-
-\begin_layout Itemize
-Set pixels dominated by red and green to zero as blue seems to be the dominant
- colour
-\end_layout
-
-\begin_layout Itemize
-Could try using a mask in the bottom middle of the image to determine road,
- then look into flood fill
-\end_layout
-
-\begin_layout Itemize
 RANSAC - try not allowing points to be too close, both when making lines
  and comparing to existing lines
-\end_layout
-
-\begin_layout Itemize
-picking only white and yellow - didn't work
-\end_layout
-
-\begin_layout Itemize
-using mask https://github.com/georgesung/road_lane_line_detection/blob/master/lan
-e_lines.py
-\end_layout
-
-\begin_layout Itemize
-removed horizontal lines (-0.5<grad<0.5), this may be too aggressive
 \end_layout
 
 \begin_layout Itemize
@@ -190,6 +227,16 @@ the successful use of any heuristics to speed up processing times or reduce
 
 \begin_layout Itemize
 NEED TO DO HOUGH LINES
+\end_layout
+
+\begin_layout Standard
+Report (max.
+ 750 words!, remember - it can always be shorter than this) detailing your
+ approach to the problem and the success of your solution in the task specified.
+ Provide any illustrative images (as many as you feel necessary) of the
+ intermediate results of the system you produce (overlays, results of processing
+ stages etc.) Remember that any titles, captions, tables, references, and
+ graphs do not count towards the total word count of the report
 \end_layout
 
 \end_body
