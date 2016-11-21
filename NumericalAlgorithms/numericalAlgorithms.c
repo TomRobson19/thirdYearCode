@@ -168,7 +168,7 @@ int main()
   double timeTaken = double(end)-double(start);
 
   std::stringstream filename;
-  filename << "time" << N; 
+  filename << "Part2/time" << N; 
   std::ofstream out( filename.str().c_str() );
 
   out << timeTaken << std::endl;
