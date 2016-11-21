@@ -202,7 +202,7 @@ int main()
 
   clock_t end = clock();
 
-  double timeTaken = double(end-start)/CLOCKS_PER_SEC;
+  double timeTaken = double(start)-double(end);
 
   std::stringstream filename;
   filename << "time" << N; 

@@ -115,21 +115,12 @@ ion to specify the position of 2 particles (or moreas required) to facilitate
 From this point, we then move onto the force calculations.
  We first select the particle we will be examining, and set its forces in
  each dimension to 0.
- We then loop through each of the rest of the particles and calculate the
- force that each is applying to our selected particle.
+ We then loop through each of the remaining particles with higher indexes
+ that the current particle and calculate the force that each is applying
+ to our selected particle.
  Due to the wrap around forces, this must be done 27 times per particle
  to ensure the force that each image of each particle applies in the Lennard
  Jones model is applied in our simulation.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-CHANGE THIS PARAGRAPH TO EXPLAIN NEW LOOP
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -146,7 +137,8 @@ For each image of the particle, we first calculate the distances in each
 
 \begin_layout Standard
 We then use the product of this total force and the timestep size to calculate
- the new velocity, adding this on to the existing velocity in each dimension.
+ the new velocity, adding this on to the existing velocity in each dimension
+ for the current particle, and subtracting this .
  This new velocity is also calculated for the other particle by subracting
  the product of timestep and force rather than adding.
  This means that each particle only needs to loop through those numbered
@@ -184,18 +176,6 @@ Like the calculations of the velocities, the timestep has been implemented
 \end_layout
 
 \begin_layout Standard
-Brief description of step 1 is precise (2 marks), clear (2 marks) and addresses
- the three remarks given (3x2 marks).
- Use sketches and/or screenshots to make your report easy to follow
-\end_layout
-
-\begin_layout Standard
-It computes the right forces, it is efficient (no unnecessary calculations),
- it updates the particle positions correctly, and it realises the boundary
- conditions as described (5 marks each)
-\end_layout
-
-\begin_layout Standard
 \begin_inset Note Note
 status open
 
@@ -205,6 +185,18 @@ IMPLEMENT VARIABLE TIME STEPS - distance related to time step^2
 
 \begin_layout Plain Layout
 Also done initial velocity as per FAQ
+\end_layout
+
+\begin_layout Plain Layout
+Brief description of step 1 is precise (2 marks), clear (2 marks) and addresses
+ the three remarks given (3x2 marks).
+ Use sketches and/or screenshots to make your report easy to follow
+\end_layout
+
+\begin_layout Plain Layout
+It computes the right forces, it is efficient (no unnecessary calculations),
+ it updates the particle positions correctly, and it realises the boundary
+ conditions as described (5 marks each)
 \end_layout
 
 \end_inset
@@ -251,6 +243,99 @@ target "https://www.youtube.com/watch?v=6nED3uGmCQw"
 \end_inset
 
 .
+ This behaviour also occurs with a and s equal to 
+\begin_inset Formula $10^{-5}$
+\end_inset
+
+, but the distance between the particles when the sign flips is very small,
+ so it is more difficult to visualise.
+ As the particles oscillate, the distance that they are apart in each oscilation
+ decreases.
+ Eventually, given enough time steps, the theory suggests that they should
+ get to a stage where the force becomes zero, and they stop oscillating
+ as they are in equilibrium.
+ The distance 
+\begin_inset Formula $r$
+\end_inset
+
+ between the particles where this occurs can be calculated using the equation.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $4a(\nicefrac{12s^{12}}{r^{13}}-\nicefrac{6s^{6}}{r^{7}})=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\nicefrac{12s^{12}}{r^{13}}=\nicefrac{6s^{6}}{r^{7}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\nicefrac{12s^{12}}{6s^{6}}=\nicefrac{r^{13}}{r^{7}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $2s^{6}=r^{6}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $r=\sqrt[6]{2s^{6}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When s has a value of 
+\begin_inset Formula $0.1$
+\end_inset
+
+, this distance is approximately 
+\begin_inset Formula $0.11225$
+\end_inset
+
+, whereas when s has a value of 
+\begin_inset Formula $10^{-5}$
+\end_inset
+
+, this distance is approximately 
+\begin_inset Formula $1.1225\times10^{-5}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The relationship is similar when the particles are positioned at (0.1,0.5,0.5)
+ and (0.9,0.5,0.5), but due to the wrap-around forces from the images of the
+ particles as described in part 1, the attractive forces are towards the
+ edge of the box.
+ The particles then oscillate at the egdes of the box.
+ Again, this is easier to observe with a and s equal to 
+\begin_inset Formula $0.1$
+\end_inset
+
+, and this is clearly shown in this video: 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://www.youtube.com/watch?v=4qtaPcyRIRc"
+
+\end_inset
+
+.
  
 \end_layout
 
@@ -259,23 +344,13 @@ target "https://www.youtube.com/watch?v=6nED3uGmCQw"
 status open
 
 \begin_layout Plain Layout
-WE ARE ALLOWED TO CHANGE A AND S FOR THE EXPERIMENTS WITH 2 PARTICLES IF
- I EXPLAIN IT
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 Per setup: Result is correct qualitatively (2 marks), convergence rate is
  reasonable w.r.t.
  time step size (4 marks), description is accurate and precise (2 marks),
  results are interpreted correctly (2 marks).
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Use N=2 and place the particles without any velocity at x=(0.4,0.5,0.5) and
  x=(0.6,0.5,0.5).
  What happens qualitatively? Run your experiments with different time steps
@@ -286,12 +361,12 @@ Use N=2 and place the particles without any velocity at x=(0.4,0.5,0.5) and
  accuracy and the ODE characteristics? 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Rerun the same experiment with x=(0.1,0.5,0.5) and x=(0.9,0.5,0.5).
  What happens?
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Rerun the experiment with N=100, N=1,000, N=10,000, N=100,000, and so forth
  where all particles are placed randomly within the cube.
  As the cube is fixed, adding more particles increases the gas density,
@@ -301,20 +376,52 @@ Rerun the experiment with N=100, N=1,000, N=10,000, N=100,000, and so forth
  cost (time to solution)?
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section*
 Part 3
 \end_layout
 
 \begin_layout Standard
 The data structure chosen to implement step 3 is a Verlet List.
+ This was implemented as an array of C++ vectors, updated every 100 timesteps.
+ The idea of this is to loop through each particle in the simualtion, and
+ calculate the euclidean distance between this particle and all others.
+ If this is less than the threshold specified in the assignment brief, 2.5s,
+ then this particle is added to the list of neighbours.
+ Due to how little movement occurs per timestep, this is only updated every
+ 100 timesteps.
+ 
 \end_layout
 
 \begin_layout Standard
+The euclidean distance calculations are the most computationally expensive
+ part of this simulation, and this approach vastly minimises the number
+ of these required, as very few particles will ever be in the threshold
+ neighbourhood due to its small size.
+ This means that for 99 out of every 100 timesteps, this method is far more
+ efficient than step 1, meaning that it runs far quicker on both small and
+ large numbers of particles, as has been shown experimentally.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
 Brief description of step 3 is precise and clear (5 marks).
  Runtime impact is experimentally determined and explanation for runtime
  behaviour is given (5 marks).
  Error is determined through Taylor expansion (5 marks).
  All experiments are rerun and results are discussed (5 marks).
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

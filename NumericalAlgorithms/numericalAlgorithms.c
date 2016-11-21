@@ -13,13 +13,12 @@
 #include <stdlib.h>
 #include <math.h>
 
-const int N = 10; //number of particles
+const int N = 2; //number of particles
 double timeStepSize = pow(10,-4); //start small, then change during runtime
 const int timeSteps = 200000;
 const int plotEveryKthStep = 100;
 const double a = pow(10,-5); //constant value of a and s - in assignment pow(10,-5)
 const double s = pow(10,-5); 
-const double R = 2.5*s;
 
 const int boxes[27][3] = {{0,0,0},{0,0,1},{0,0,-1},{0,1,0},{0,1,1},{0,1,-1},{0,-1,0},{0,-1,1},{0,-1,-1},
                             {1,0,0},{1,0,1},{1,0,-1},{1,1,0},{1,1,1},{1,1,-1},{1,-1,0},{1,-1,1},{1,-1,-1},
@@ -32,19 +31,19 @@ double v[N][3];
 
 void setUp(int N) //support arbitrary number of particles
 { 
-  // x[0][0] = 0.4;
-  // x[0][1] = 0.5;
-  // x[0][2] = 0.5;
+  x[0][0] = 0.4;
+  x[0][1] = 0.5;
+  x[0][2] = 0.5;
 
-  // x[1][0] = 0.6;
-  // x[1][1] = 0.5;
-  // x[1][2] = 0.5;
+  x[1][0] = 0.6;
+  x[1][1] = 0.5;
+  x[1][2] = 0.5;
 
   for (int i=0; i<N; i++)
   {
-    x[i][0] = (long double)rand()/(long double)RAND_MAX;
-    x[i][1] = (long double)rand()/(long double)RAND_MAX;
-    x[i][2] = (long double)rand()/(long double)RAND_MAX;
+    // x[i][0] = (long double)rand()/(long double)RAND_MAX;
+    // x[i][1] = (long double)rand()/(long double)RAND_MAX;
+    // x[i][2] = (long double)rand()/(long double)RAND_MAX;
 
     v[i][0] = 0.0;
     v[i][1] = 0.0;
@@ -166,7 +165,7 @@ int main()
 
   clock_t end = clock();
 
-  double timeTaken = double(end-start)/CLOCKS_PER_SEC;
+  double timeTaken = double(end)-double(start);
 
   std::stringstream filename;
   filename << "time" << N; 
