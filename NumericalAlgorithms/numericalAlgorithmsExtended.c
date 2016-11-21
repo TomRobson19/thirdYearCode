@@ -208,8 +208,7 @@ int main()
   filename << "Part3/time" << N; 
   std::ofstream out( filename.str().c_str() );
 
-  out << timeTaken << std::endl;
-  out << timeSteps << std::endl;
+  out << timeTaken/timeSteps << std::endl;
 
   return 0;
 }
