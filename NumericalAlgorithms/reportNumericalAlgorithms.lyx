@@ -97,7 +97,7 @@ The implementation of step 1 begins by initialising the positions and velocities
  Both of these can be done in two different ways.
  The position is normally allocated randomly, by calculating a random number
  between 0 and 1 in each dimension, but the option is present in the implementat
-ion to specify the position of 2 particles (or moreas required) to facilitate
+ion to specify the position of 2 particles (or more as required) to facilitate
  the experiments in step 2.
  The initial velocity can either be set to zero, or a random value between
  
@@ -128,18 +128,18 @@ For each image of the particle, we first calculate the distances in each
  dimension using the array of unit cubes, named 'boxes' in the code.
  From these distances, we compute the euclidean distance between the particle
  and each of these images.
- From here, we employ the Lennard Jones potential equation, and muliply
+ From here, we employ the Lennard Jones potential equation, and multiply
  this by the quotient of the distance in each dimension and the euclidean
  distance.
- The sum of these forces accross all images of all other particles give
- us our force being applied to our original particle.
+ The sum of these forces across all images of all other particles give us
+ our force being applied to our original particle.
 \end_layout
 
 \begin_layout Standard
 We then use the product of this total force and the timestep size to calculate
  the new velocity, adding this on to the existing velocity in each dimension
  for the current particle, and subtracting this .
- This new velocity is also calculated for the other particle by subracting
+ This new velocity is also calculated for the other particle by subtracting
  the product of timestep and force rather than adding.
  This means that each particle only needs to loop through those numbered
  higher than this, reducing the computation time of the simulation.
@@ -161,10 +161,10 @@ Like the calculations of the velocities, the timestep has been implemented
 \end_inset
 
 .
- However, if the starting velocity is zero, then a varible time step has
+ However, if the starting velocity is zero, then a variable time step has
  been implemented based on the euclidean distance between the closest two
- paticles.
- We use a threshold foor this smallest distance, if it is under 0.0002, the
+ particles.
+ We use a threshold for this smallest distance, if it is under 0.0002, the
  timestep is equal to the shortest distance, if it is over 0.0002, then the
  timestep is equal to 
 \begin_inset Formula $r^{3}\times10^{12}$
@@ -249,8 +249,8 @@ target "https://www.youtube.com/watch?v=6nED3uGmCQw"
 
 , but the distance between the particles when the sign flips is very small,
  so it is more difficult to visualise.
- As the particles oscillate, the distance that they are apart in each oscilation
- decreases.
+ As the particles oscillate, the distance that they are apart in each oscillatio
+n decreases.
  Eventually, given enough time steps, the theory suggests that they should
  get to a stage where the force becomes zero, and they stop oscillating
  as they are in equilibrium.
@@ -323,7 +323,7 @@ The relationship is similar when the particles are positioned at (0.1,0.5,0.5)
  and (0.9,0.5,0.5), but due to the wrap-around forces from the images of the
  particles as described in part 1, the attractive forces are towards the
  edge of the box.
- The particles then oscillate at the egdes of the box.
+ The particles then oscillate at the edges of the box.
  Again, this is easier to observe with a and s equal to 
 \begin_inset Formula $0.1$
 \end_inset
@@ -388,7 +388,7 @@ Part 3
 \begin_layout Standard
 The data structure chosen to implement step 3 is a Verlet List.
  This was implemented as an array of C++ vectors, updated every 100 timesteps.
- The idea of this is to loop through each particle in the simualtion, and
+ The idea of this is to loop through each particle in the simulation, and
  calculate the euclidean distance between this particle and all others.
  If this is less than the threshold specified in the assignment brief, 2.5s,
  then this particle is added to the list of neighbours.

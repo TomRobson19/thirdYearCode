@@ -172,6 +172,7 @@ int main()
   std::ofstream out( filename.str().c_str() );
 
   out << timeTaken << std::endl;
+  out << timeSteps << std::endl;
 
   return 0;
 }
