@@ -415,7 +415,7 @@ and
 , giving a clear indication that they are tending towards the calculated
  value, but it is not expected that they will ever stop in this simulation,
  as they should in theory, because there will always be a very small force
- due to slight computational inaccuracies 
+ due to slight computational inaccuracies.
 \end_layout
 
 \begin_layout Standard
@@ -449,7 +449,27 @@ target "https://www.youtube.com/watch?v=4qtaPcyRIRc"
 \end_inset
 
 , but this is even more difficult to visualise, so will not be shown.
- In terms of final position, 
+ In terms of final position, after 200 million timesteps, there is a very
+ small oscillation remaining similar to the other experiment.
+ The particles are between 
+\begin_inset Formula $0.000005$
+\end_inset
+
+ and 
+\begin_inset Formula $0.000007$
+\end_inset
+
+ for the first particle and between 
+\begin_inset Formula $0.999995$
+\end_inset
+
+ and 
+\begin_inset Formula $0.999993$
+\end_inset
+
+ for the second particle, which is close to the theoretical zero-force value
+ again.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -632,7 +652,10 @@ These results show that the increase in Time Taken per timestep as the particle
 \end_inset
 
 , with y being the time taken per timestep and x being the number of particles.
- 
+ Due to the way the timesteps are calculated, the two closest particles
+ to each other do the majority of the oscillating in the simulations for
+ 10 particles or even 100 particles in some situations, but for the larger
+ simulations there are lots of oscillations
 \end_layout
 
 \begin_layout Standard
