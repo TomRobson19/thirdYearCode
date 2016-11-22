@@ -20,37 +20,38 @@ const int plotEveryKthStep = 100;
 const double a = pow(10,-5); //constant value of a and s - in assignment pow(10,-5)
 const double s = pow(10,-5); 
 
+//representation of the 27 dimensions
 const int boxes[27][3] = {{0,0,0},{0,0,1},{0,0,-1},{0,1,0},{0,1,1},{0,1,-1},{0,-1,0},{0,-1,1},{0,-1,-1},
                             {1,0,0},{1,0,1},{1,0,-1},{1,1,0},{1,1,1},{1,1,-1},{1,-1,0},{1,-1,1},{1,-1,-1},
                             {-1,0,0},{-1,0,1},{-1,0,-1},{-1,1,0},{-1,1,1},{-1,1,-1},{-1,-1,0},{-1,-1,1},{-1,-1,-1}};
-
-//const int boxes[7][3] = {{0,0,0},{0,0,1},{0,0,-1},{0,1,0},{0,-1,0},{1,0,0},{-1,0,0}};                            
 
 double x[N][3];
 double v[N][3];
 
 void setUp(int N) //support arbitrary number of particles
 { 
-  x[0][0] = 0.4;
+  //positions for the two particle experiments
+  x[0][0] = 0.1;
   x[0][1] = 0.5;
   x[0][2] = 0.5;
 
-  x[1][0] = 0.6;
+  x[1][0] = 0.9;
   x[1][1] = 0.5;
   x[1][2] = 0.5;
 
   for (int i=0; i<N; i++)
   {
+    //initial random positions
     // x[i][0] = (long double)rand()/(long double)RAND_MAX;
     // x[i][1] = (long double)rand()/(long double)RAND_MAX;
     // x[i][2] = (long double)rand()/(long double)RAND_MAX;
 
+    //initial velocities as zero
     v[i][0] = 0.0;
     v[i][1] = 0.0;
     v[i][2] = 0.0;
 
-    //when using this, check FAQ for timestep and turn variable off
-
+    //initial velocities with random values
     // v[i][0] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
     // v[i][1] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
     // v[i][2] = (((long double)rand()/(long double)RAND_MAX)*2 - 1)*pow(10,-5);
@@ -83,31 +84,36 @@ void updateBody(int N)
   {
     for (int j=i+1; j<N; j++) //looks through all other particles
     {
+      //initialises force array
       double force[3];
       force[0] = 0.0;
       force[1] = 0.0;
       force[2] = 0.0;
 
+      //loop through all 27 images of the particles
       for (int k=0; k<27; k++)
       {
+        //calculate distances in 3 dimensions
         double xDist = x[i][0]-(x[j][0] + boxes[k][0]);
         double yDist = x[i][1]-(x[j][1] + boxes[k][1]);
         double zDist = x[i][2]-(x[j][2] + boxes[k][2]);
 
+        //calculate euclidean distance
         double distance = sqrt((xDist*xDist) + (yDist*yDist) + (zDist*zDist));
-
+        //check if shortest distance for timestep
         if (distance < shortestDistanceForTimestep)
         {
           shortestDistanceForTimestep = distance;
         }
-
+        //calculate force
         double f = (4*a*(((12*pow(s,12))/pow(distance, 13)) - ((6*pow(s,6))/pow(distance, 7))));
-       
+        //update force
         force[0] += xDist/distance * f;
         force[1] += yDist/distance * f;
         force[2] += zDist/distance * f;
       }
-      
+
+      //updates velocities of both particles      
       v[i][0] += timeStepSize * force[0];
       v[i][1] += timeStepSize * force[1];
       v[i][2] += timeStepSize * force[2];
@@ -119,10 +125,12 @@ void updateBody(int N)
   }
   for(int i = 0; i<N; i++)
   {
+    //update positions
     x[i][0] += timeStepSize * v[i][0];
     x[i][1] += timeStepSize * v[i][1];
     x[i][2] += timeStepSize * v[i][2];
     
+    //keep particles inside the box
     if(x[i][0]<=0 || x[i][0]>1)
     {
       x[i][0] -= floor(x[i][0]);
@@ -137,6 +145,7 @@ void updateBody(int N)
     }
   }
 
+  //calculate new timestep size
   if (shortestDistanceForTimestep > 0.00015) //inaccurate below a certain distance
   {
     timeStepSize = pow(shortestDistanceForTimestep,3)*pow(10,12);
@@ -167,6 +176,7 @@ int main()
 
   double timeTaken = double(end)-double(start);
 
+  //timing measurements
   std::stringstream filename;
   filename << "Part2/time" << N; 
   std::ofstream out( filename.str().c_str() );

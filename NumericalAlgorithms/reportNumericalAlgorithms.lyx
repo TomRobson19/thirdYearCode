@@ -215,7 +215,8 @@ Like the calculations of the velocities, the timestep has been implemented
 
 , where r is the shortest distance.
  These values were determined by experimentation.
- 
+ For the following experiments, the particles will be given no velocity,
+ and the timestep size will be variable unless stated.
 \end_layout
 
 \begin_layout Standard
@@ -447,7 +448,8 @@ target "https://www.youtube.com/watch?v=4qtaPcyRIRc"
 \begin_inset Formula $10^{-5}$
 \end_inset
 
-.
+, but this is even more difficult to visualise, so will not be shown.
+ In terms of final position, 
 \end_layout
 
 \begin_layout Standard
