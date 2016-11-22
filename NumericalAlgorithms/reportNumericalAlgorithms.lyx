@@ -92,9 +92,8 @@ Step 1
 \end_layout
 
 \begin_layout Standard
-The implementation of step 1 begins by initialising the positions and velocities
- of the particles.
- Both of these can be done in two different ways.
+The simulation begins by initialising the positions and velocities of the
+ particles.
  The position is normally allocated randomly, by calculating a random number
  between 0 and 1 in each dimension, but the option is present in the implementat
 ion to specify the position of 2 particles (or more as required) to facilitate
@@ -179,18 +178,18 @@ For each image of the particle, we first calculate the distances in each
 \begin_layout Standard
 We then use the product of this total force and the timestep size to calculate
  the new velocity, adding this on to the existing velocity in each dimension
- for the current particle, and subtracting this .
- This new velocity is also calculated for the other particle by subtracting
- the product of timestep and force rather than adding.
+ for the current particle.
+ This velocity is also updated for the other particle by subtracting the
+ product of timestep and force rather than adding.
  This means that each particle only needs to loop through those numbered
- higher than this, reducing the computation time of the simulation.
+ higher than itself, reducing the computation time.
  After all the updated velocities have been calculated for all particles,
  we then do a new loop through every particles to update the position in
  each dimension by adding on the product of the timestep size and the velocity
  in each dimension.
- This ensures that the particles aren't moved before all the velocities
- have been calculated, which would lead to unrealistic results.
- We then use floor division on these new positions to ensure the particles
+ This prevents unrealistic results by ensuring that the particles aren't
+ moved before all the velocities have been calculated.
+ Floor division is used on the updated positions to ensure the particles
  stay within the unit cube.
  
 \end_layout
@@ -221,7 +220,7 @@ Like the calculations of the velocities, the timestep has been implemented
 
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Brief description of step 1 is precise (2 marks), clear (2 marks) and addresses
@@ -241,9 +240,6 @@ It computes the right forces, it is efficient (no unnecessary calculations),
 \end_layout
 
 \begin_layout Section*
-\begin_inset Newpage newpage
-\end_inset
-
 Step 2
 \end_layout
 
@@ -642,20 +638,17 @@ Runtime Analysis
 
 \begin_layout Standard
 These results show that the increase in Time Taken per timestep as the particle
- density increases is 
+ density increases is close to
 \begin_inset Formula $O(N^{2})$
 \end_inset
 
 , where N is the number of particles in the simulation.
  When graphing these results, the equation of the trend-line was 
-\begin_inset Formula $y=0.188x^{2}-7.776x+2373.842$
+\begin_inset Formula $y=0.1556x^{2.0201}$
 \end_inset
 
 , with y being the time taken per timestep and x being the number of particles.
- Due to the way the timesteps are calculated, the two closest particles
- to each other do the majority of the oscillating in the simulations for
- 10 particles or even 100 particles in some situations, but for the larger
- simulations there are lots of oscillations
+ 
 \end_layout
 
 \begin_layout Standard
@@ -960,21 +953,22 @@ Runtime Analysis
 
 \begin_layout Standard
 Although the increase in Time Taken per timestep as the particle density
- increases is 
+ increases is again close to 
 \begin_inset Formula $O(N^{2})$
 \end_inset
 
  as in step 2, it is three orders of magnitude faster, making it a far superior
  approach for running simulations with very large number of particles.
  The equation for the runtime is 
-\begin_inset Formula $y=(6.78\times10^{-4})x^{2}+0.059x-44.382$
+\begin_inset Formula $y=0.0009x^{1.9638}$
 \end_inset
 
-, which is vastly superior to 
-\begin_inset Formula $y=0.188x^{2}-7.776x+2373.842$
+, which is superior to 
+\begin_inset Formula $y=0.1556x^{2.0201}$
 \end_inset
 
  for step 2, making this a far more efficient solution for larger simulations.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -990,7 +984,22 @@ However, due to the fact that the cut off distance, is so small (
  they go past the threshold, at which point they are removed from the verlet
  list and no more forces are calculated, but they keep moving apart at a
  considerable rate due to the velocity they gained from the repulsion.
- This introduces some error into the simulation.
+ This introduces some error into the simulation, as the force that would
+ have existed between particles outside the radius is completely ignored.
+ From the force equation 
+\begin_inset Formula $F(r)=4a(\nicefrac{12s^{12}}{r^{13}}-\nicefrac{6s^{6}}{r^{7}})$
+\end_inset
+
+, the amount of force when 
+\begin_inset Formula $r=2.5s$
+\end_inset
+
+, as specified in the brief, is 
+\begin_inset Formula $-0.0390$
+\end_inset
+
+.
+ When considering the scale of this simulation, this is a significant error.
  
 \end_layout
 
