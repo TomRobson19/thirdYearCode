@@ -32,8 +32,10 @@ const int boxes[27][3] = {{0,0,0},{0,0,1},{0,0,-1},{0,1,0},{0,1,1},{0,1,-1},{0,-
 //const int boxes[7][3] = {{0,0,0},{0,0,1},{0,0,-1},{0,1,0},{0,-1,0},{1,0,0},{-1,0,0}};
 
 std::vector<int> verletList[N];
+
 //how often we update the verlet lists
 const int frequencyUpdated = 100;
+int reset = 0;
 
 
 double x[N][3];
@@ -84,36 +86,11 @@ void printCSVFile(int counter)
   }
 }
 
-double calculateDistance(double distance)
+void updateVerlet()
 {
-  if (distance < -0.5)
-  {
-    distance += 1;
-  }
-  else if (distance > 0.5)
-  {
-    distance -= 1;
-  }
-  return distance;
-}
-
-void updateBody(int N, int currentStep) 
-{ 
-  int reset = 0;
-  double shortestDistanceForTimestep = 1.0; //used for timestep
-  for (int i=0; i<N; i++) //chooses particle we are examining
-  {
-    double force[3];
-    force[0] = 0.0;
-    force[1] = 0.0;
-    force[2] = 0.0;
-
-    if (currentStep % frequencyUpdated == 0)
+  for (int i=0; i<N; i++) 
     {
-      reset = 1;
-    }
-    if (reset == 1)
-    {
+      verletList[i].clear();
       for (int j=0; j<N; j++) //looks through all other particles
       {
         if (i!=j)
@@ -136,10 +113,44 @@ void updateBody(int N, int currentStep)
           }
         }       
       }
-      reset = 0;
     }
+    reset = 0;
+}
+
+double calculateDistance(double distance)
+{
+  if (distance < -0.5)
+  {
+    distance += 1;
+  }
+  else if (distance > 0.5)
+  {
+    distance -= 1;
+  }
+  return distance;
+}
+
+void updateBody(int N, int currentStep) 
+{ 
+  
+  double shortestDistanceForTimestep = 1.0; //used for timestep
+
+  if (currentStep % frequencyUpdated == 0 || reset == 1)
+  {
+    updateVerlet();
+  }
+  for (int i=0; i<N; i++) //chooses particle we are examining
+  {
+    double force[3];
+    force[0] = 0.0;
+    force[1] = 0.0;
+    force[2] = 0.0;
+
     for (int j=0; j<verletList[i].size(); j++) //looks through all other particles
     {
+      printf("%d,%d\n", i,verletList[i][j]);
+
+
       double xDist = calculateDistance(x[i][0]-x[verletList[i][j]][0]);
       double yDist = calculateDistance(x[i][1]-x[verletList[i][j]][1]);
       double zDist = calculateDistance(x[i][2]-x[verletList[i][j]][2]);
