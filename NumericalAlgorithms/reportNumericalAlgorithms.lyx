@@ -671,7 +671,7 @@ Rerun the experiment with N=100, N=1,000, N=10,000, N=100,000, and so forth
 \end_layout
 
 \begin_layout Plain Layout
-Average velocity?????
+Average velocity????? (euclidean velocity)
 \end_layout
 
 \begin_layout Plain Layout
@@ -698,7 +698,9 @@ The data structure chosen to implement step 3 is a Verlet List [1].
  If this is less than the threshold specified in the assignment brief, 2.5s,
  then this particle is added to the list of neighbours.
  Due to how little movement occurs per timestep, this is only updated every
- 100 timesteps.
+ 100 timesteps, or if a particle included in the verlet list has now gone
+ out of the radius, in which case this triggers a rest of the verlet list.
+ When the list is updated, it is completely cleared and the re-populated.
  Logically, only one image of a particle can be within the cut off radius
  of another particle, but it is not necessarily the original particle in
  the centre unit cube from Figure 1 above, so the program loops through
@@ -713,8 +715,8 @@ The euclidean distance calculations are the most computationally expensive
  of these required, as very few particles will ever be in the threshold
  neighbourhood due to its small size, even in the very large simulations.
  This means that for 99 out of every 100 timesteps, this method is far more
- efficient than step 1, meaning that it runs far quicker on both small and
- large numbers of particles, as shown in the table below.
+ efficient than step 1 as it runs far quicker on both small and large numbers
+ of particles, as shown in Table 2 below.
 \end_layout
 
 \begin_layout Standard
@@ -958,7 +960,12 @@ However, due to the fact that the cut off distance, is so small (
 ), these large simulations are the only ones where this approach is useful.
  When the experiments for n=2 from step 2 were rerun, the particles do not
  move as they are positioned outside the cut off radius.
- Even for 10 and 100 particles, there are very few interactions.
+ However, when the starting positions were changed to 0.499995 and 0.500005,
+ putting them inside the threshold with a repulsive force, they repel until
+ they go past the threshold, at which point they are removed from the verlet
+ list and no more forces are calculated, but they keep moving apart at a
+ considerable rate due to the velocity they gained from the repulsion.
+ This introduces some error into the simulation.
  
 \end_layout
 
