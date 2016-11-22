@@ -16,7 +16,7 @@
 
 using namespace std;
 
-const int N = 10; //number of particles
+const int N = 2; //number of particles
 double timeStepSize = pow(10,-4); //start small, then change during runtime
 const int timeSteps = 200000;
 const int plotEveryKthStep = 100;
@@ -41,19 +41,19 @@ double v[N][3];
 
 void setUp(int N) //support arbitrary number of particles
 { 
-  // x[0][0] = 0.4;
-  // x[0][1] = 0.5;
-  // x[0][2] = 0.5;
+  x[0][0] = 0.499996;
+  x[0][1] = 0.5;
+  x[0][2] = 0.5;
 
-  // x[1][0] = 0.6;
-  // x[1][1] = 0.5;
-  // x[1][2] = 0.5;
+  x[1][0] = 0.500004;
+  x[1][1] = 0.5;
+  x[1][2] = 0.5;
 
   for (int i=0; i<N; i++)
   {
-    x[i][0] = (long double)rand()/(long double)RAND_MAX;
-    x[i][1] = (long double)rand()/(long double)RAND_MAX;
-    x[i][2] = (long double)rand()/(long double)RAND_MAX;
+    // x[i][0] = (long double)rand()/(long double)RAND_MAX;
+    // x[i][1] = (long double)rand()/(long double)RAND_MAX;
+    // x[i][2] = (long double)rand()/(long double)RAND_MAX;
 
     v[i][0] = 0.0;
     v[i][1] = 0.0;
@@ -99,6 +99,7 @@ double calculateDistance(double distance)
 
 void updateBody(int N, int currentStep) 
 { 
+  int reset = 0;
   double shortestDistanceForTimestep = 1.0; //used for timestep
   for (int i=0; i<N; i++) //chooses particle we are examining
   {
@@ -109,48 +110,63 @@ void updateBody(int N, int currentStep)
 
     if (currentStep % frequencyUpdated == 0)
     {
-      for (int j=i+1; j<N; j++) //looks through all other particles
+      reset = 1;
+    }
+    if (reset == 1)
+    {
+      for (int j=0; j<N; j++) //looks through all other particles
       {
-        for (int k=0; k<27; k++)
+        if (i!=j)
         {
-          double xDist = x[i][0]-(x[j][0] + boxes[k][0]);
-          double yDist = x[i][1]-(x[j][1] + boxes[k][1]);
-          double zDist = x[i][2]-(x[j][2] + boxes[k][2]);
-
-          //don't square root to save computation time
-          double distance = (xDist*xDist) + (yDist*yDist) + (zDist*zDist);
-          
-          if (distance < Rsquared) 
+          for (int k=0; k<27; k++)
           {
-            //this can only happen once due
-            verletList[i].push_back(j);
+            double xDist = x[i][0]-(x[j][0] + boxes[k][0]);
+            double yDist = x[i][1]-(x[j][1] + boxes[k][1]);
+            double zDist = x[i][2]-(x[j][2] + boxes[k][2]);
+
+            //don't square root to save computation time
+
+            double distance = (xDist*xDist) + (yDist*yDist) + (zDist*zDist);
+
+            if (distance < Rsquared) 
+            {
+              //this can only happen once 
+              verletList[i].push_back(j);
+            }
           }
         }       
       }
+      reset = 0;
     }
-
     for (int j=0; j<verletList[i].size(); j++) //looks through all other particles
     {
       double xDist = calculateDistance(x[i][0]-x[verletList[i][j]][0]);
       double yDist = calculateDistance(x[i][1]-x[verletList[i][j]][1]);
       double zDist = calculateDistance(x[i][2]-x[verletList[i][j]][2]);
 
-      double distance = sqrt((xDist*xDist) + (yDist*yDist) + (zDist*zDist));      
+      double distance = sqrt((xDist*xDist) + (yDist*yDist) + (zDist*zDist));
 
-      double f = (4*a*(((12*pow(s,12))/pow(distance, 13)) - ((6*pow(s,6))/pow(distance, 7))));
-     
-      force[0] += xDist/distance * f;
-      force[1] += yDist/distance * f;
-      force[2] += zDist/distance * f;
-
-      v[i][0] += timeStepSize * force[0];
-      v[i][1] += timeStepSize * force[1];
-      v[i][2] += timeStepSize * force[2]; 
-
-      if (distance < shortestDistanceForTimestep) //for adjusting timestep
+      if (distance < R)
       {
-        shortestDistanceForTimestep = distance;
+        double f = (4*a*(((12*pow(s,12))/pow(distance, 13)) - ((6*pow(s,6))/pow(distance, 7))));
+     
+        force[0] += xDist/distance * f;
+        force[1] += yDist/distance * f;
+        force[2] += zDist/distance * f;
+
+        v[i][0] += timeStepSize * force[0];
+        v[i][1] += timeStepSize * force[1];
+        v[i][2] += timeStepSize * force[2]; 
+
+        if (distance < shortestDistanceForTimestep) //for adjusting timestep
+        {
+          shortestDistanceForTimestep = distance;
+        }
       }
+      else
+      {
+        reset = 1;
+      }      
     }
 
   }

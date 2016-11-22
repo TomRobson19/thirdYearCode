@@ -15,7 +15,7 @@
 
 const int N = 2; //number of particles
 double timeStepSize = pow(10,-4); //start small, then change during runtime
-const int timeSteps = 200000;
+const int timeSteps = 20000000;
 const int plotEveryKthStep = 100;
 const double a = pow(10,-5); //constant value of a and s - in assignment pow(10,-5)
 const double s = pow(10,-5); 
@@ -137,7 +137,7 @@ void updateBody(int N)
     }
   }
 
-  if (shortestDistanceForTimestep > 0.0002) //inaccurate below a certain distance
+  if (shortestDistanceForTimestep > 0.00015) //inaccurate below a certain distance
   {
     timeStepSize = pow(shortestDistanceForTimestep,3)*pow(10,12);
   }

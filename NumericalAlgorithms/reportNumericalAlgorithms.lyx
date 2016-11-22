@@ -88,7 +88,7 @@ Tom Robson - hzwr87
 \end_layout
 
 \begin_layout Section*
-Part 1
+Step 1
 \end_layout
 
 \begin_layout Standard
@@ -121,11 +121,52 @@ From this point, we then move onto the force calculations.
  Due to the wrap around forces, this must be done 27 times per particle
  to ensure the force that each image of each particle applies in the Lennard
  Jones model is applied in our simulation.
+ Figure 1 shows an illustration of a particle in the centre box and its
+ images in 2 dimensions.
+ This is extended to 3 dimensions in the simulation.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Wrap figure
+lines 0
+placement o
+overhang 0col%
+width "50col%"
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename dimensions.eps
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Images of a particle in 2D
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 For each image of the particle, we first calculate the distances in each
- dimension using the array of unit cubes, named 'boxes' in the code.
+ dimension using the array of unit cubes, named 'boxes' in the code, with
+ an entry for each of the boxes in Figure 1.
  From these distances, we compute the euclidean distance between the particle
  and each of these images.
  From here, we employ the Lennard Jones potential equation, and multiply
@@ -144,9 +185,11 @@ We then use the product of this total force and the timestep size to calculate
  This means that each particle only needs to loop through those numbered
  higher than this, reducing the computation time of the simulation.
  After all the updated velocities have been calculated for all particles,
- we then do a new loop through all of the particles to update the position
- in each dimension by adding on the product of the timestep size and the
- velocity in each dimension.
+ we then do a new loop through every particles to update the position in
+ each dimension by adding on the product of the timestep size and the velocity
+ in each dimension.
+ This ensures that the particles aren't moved before all the velocities
+ have been calculated, which would lead to unrealistic results.
  We then use floor division on these new positions to ensure the particles
  stay within the unit cube.
  
@@ -171,21 +214,13 @@ Like the calculations of the velocities, the timestep has been implemented
 \end_inset
 
 , where r is the shortest distance.
- Both the equation and the threshold was determined by experimentation.
+ These values were determined by experimentation.
  
 \end_layout
 
 \begin_layout Standard
 \begin_inset Note Note
 status open
-
-\begin_layout Plain Layout
-IMPLEMENT VARIABLE TIME STEPS - distance related to time step^2
-\end_layout
-
-\begin_layout Plain Layout
-Also done initial velocity as per FAQ
-\end_layout
 
 \begin_layout Plain Layout
 Brief description of step 1 is precise (2 marks), clear (2 marks) and addresses
@@ -205,12 +240,15 @@ It computes the right forces, it is efficient (no unnecessary calculations),
 \end_layout
 
 \begin_layout Section*
-Part 2
+\begin_inset Newpage newpage
+\end_inset
+
+Step 2
 \end_layout
 
 \begin_layout Standard
 For the experiments with only two particles, the values of the constants
- a and s have been changed from 
+ a and s have been temporarily changed from 
 \begin_inset Formula $10^{-5}$
 \end_inset
 
@@ -223,19 +261,28 @@ For the experiments with only two particles, the values of the constants
 \begin_inset Formula $10^{-5}$
 \end_inset
 
-, it is difficult to show the behaviour of the particles clearly with a
- fixed time step size.
- Therefore this change of values has been made, in order to show how the
- particles interact more clearly.
+, it is difficult to show the behaviour of the particles clearly.
+ Therefore this change of values has been made, as well as fixing the timestep
+ size as 
+\begin_inset Formula $10^{-4}$
+\end_inset
+
+, in order to show how the particles interact more clearly.
  
 \end_layout
 
 \begin_layout Standard
-The interaction of the particles when they are placed at (0.4,0.5,0.5) and
- (0.6,0.5,0.5) is an attraction until the distance gets close enough for the
- sign of the force to change, and they then start to oscillate, with the
- force changing between attraction and repulsion, as show in this video:
- 
+The interaction of the particles when they are placed at 
+\begin_inset Formula $(0.4,0.5,0.5)$
+\end_inset
+
+ and 
+\begin_inset Formula $(0.6,0.5,0.5)$
+\end_inset
+
+ is an attraction until the distance gets close enough for the sign of the
+ force to change, and they then start to oscillate, with the force changing
+ between attraction and repulsion, as clearly shown in this video: 
 \begin_inset CommandInset href
 LatexCommand href
 target "https://www.youtube.com/watch?v=6nED3uGmCQw"
@@ -249,8 +296,29 @@ target "https://www.youtube.com/watch?v=6nED3uGmCQw"
 
 , but the distance between the particles when the sign flips is very small,
  so it is more difficult to visualise.
- As the particles oscillate, the distance that they are apart in each oscillatio
-n decreases.
+ The video: 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://www.youtube.com/watch?v=miGfZNgyk54"
+
+\end_inset
+
+ shows this interaction.
+ The small forces mean that a variable timestep is necessary to observe
+ any movement when they are far apart, but to preserve the oscillation when
+ they become close together.
+ Therefore, the video has been zoomed in when the particles get very close
+ together in order to show the interactions more clearly.
+ If the variable time steps were not implemented, and a large timestep was
+ used, then the forces may be large enough that the particles jump over
+ each other, and don't experience the repulsive forces, leading to an inaccurate
+ simulation.
+ 
+\end_layout
+
+\begin_layout Standard
+As the particles oscillate over a large number of timesteps, the distance
+ that they are apart in each oscillation decreases.
  Eventually, given enough time steps, the theory suggests that they should
  get to a stage where the force becomes zero, and they stop oscillating
  as they are in equilibrium.
@@ -258,18 +326,22 @@ n decreases.
 \begin_inset Formula $r$
 \end_inset
 
- between the particles where this occurs can be calculated using the equation.
+ between the particles where this occurs can be calculated using the Lennard-Jon
+es equation: 
+\end_layout
+
+\begin_layout Standard
+\paragraph_spacing single
+\noindent
+\begin_inset Formula $F(r)=4a(\nicefrac{12s^{12}}{r^{13}}-\nicefrac{6s^{6}}{r^{7}})=0$
+\end_inset
+
  
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $4a(\nicefrac{12s^{12}}{r^{13}}-\nicefrac{6s^{6}}{r^{7}})=0$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
+\paragraph_spacing single
+\noindent
 \begin_inset Formula $\nicefrac{12s^{12}}{r^{13}}=\nicefrac{6s^{6}}{r^{7}}$
 \end_inset
 
@@ -277,6 +349,8 @@ n decreases.
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing single
+\noindent
 \begin_inset Formula $\nicefrac{12s^{12}}{6s^{6}}=\nicefrac{r^{13}}{r^{7}}$
 \end_inset
 
@@ -284,6 +358,8 @@ n decreases.
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing single
+\noindent
 \begin_inset Formula $2s^{6}=r^{6}$
 \end_inset
 
@@ -291,6 +367,8 @@ n decreases.
 \end_layout
 
 \begin_layout Standard
+\paragraph_spacing single
+\noindent
 \begin_inset Formula $r=\sqrt[6]{2s^{6}}$
 \end_inset
 
@@ -298,15 +376,7 @@ n decreases.
 \end_layout
 
 \begin_layout Standard
-When s has a value of 
-\begin_inset Formula $0.1$
-\end_inset
-
-, this distance is approximately 
-\begin_inset Formula $0.11225$
-\end_inset
-
-, whereas when s has a value of 
+When s has a value of s has a value of 
 \begin_inset Formula $10^{-5}$
 \end_inset
 
@@ -315,14 +385,50 @@ When s has a value of
 \end_inset
 
 .
- 
+ When this was run experimentally using 200 million time steps, the particles
+ never came to a rest, but they were oscillating between 
+\begin_inset Formula $0.499993$
+\end_inset
+
+ and 
+\begin_inset Formula $0.499995$
+\end_inset
+
+ for the first particle and between 
+\begin_inset Formula $0.500007$
+\end_inset
+
+ and
+\begin_inset Formula $0.500005$
+\end_inset
+
+ for the second particle.
+ They are between 
+\begin_inset Formula $1\times10^{-5}$
+\end_inset
+
+and 
+\begin_inset Formula $1.4\times10^{-5}$
+\end_inset
+
+, giving a clear indication that they are tending towards the calculated
+ value, but it is not expected that they will ever stop in this simulation,
+ as they should in theory, because there will always be a very small force
+ due to slight computational inaccuracies 
 \end_layout
 
 \begin_layout Standard
-The relationship is similar when the particles are positioned at (0.1,0.5,0.5)
- and (0.9,0.5,0.5), but due to the wrap-around forces from the images of the
- particles as described in part 1, the attractive forces are towards the
- edge of the box.
+The relationship is similar when the particles are positioned at 
+\begin_inset Formula $(0.1,0.5,0.5$
+\end_inset
+
+) and 
+\begin_inset Formula $(0.9,0.5,0.5)$
+\end_inset
+
+, but due to the wrap-around forces from the images of the particles as
+ described in part 1, the attractive forces are towards the edge of the
+ box.
  The particles then oscillate at the edges of the box.
  Again, this is easier to observe with a and s equal to 
 \begin_inset Formula $0.1$
@@ -336,6 +442,194 @@ target "https://www.youtube.com/watch?v=4qtaPcyRIRc"
 \end_inset
 
 .
+ As before, the interaction follows a similar pattern with a and s equal
+ to 
+\begin_inset Formula $10^{-5}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The next experiments with larger numbers of particles were conducted with
+ a variable timestep as described in step 1 over 2000 timesteps.
+ The runtime for each of these when run on Hamilton with the output of CSV
+ files disabled is displayed in Table 1 below, expressed in milliseconds
+ per timestep, timed using clock_t in C++.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="2">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Number of Particles
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Time Taken per Timestep (ms)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1850
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1,000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+187040
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10,000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18730000
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100,000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1879810000
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Runtime Analysis
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+These results show that the increase in Time Taken per timestep as the particle
+ density increases is 
+\begin_inset Formula $O(N^{2})$
+\end_inset
+
+, where N is the number of particles in the simulation.
+ When graphing these results, the equation of the trend-line was 
+\begin_inset Formula $y=0.188x^{2}-7.776x+2373.842$
+\end_inset
+
+, with y being the time taken per timestep and x being the number of particles.
  
 \end_layout
 
@@ -376,17 +670,28 @@ Rerun the experiment with N=100, N=1,000, N=10,000, N=100,000, and so forth
  cost (time to solution)?
 \end_layout
 
+\begin_layout Plain Layout
+Average velocity?????
+\end_layout
+
+\begin_layout Plain Layout
+Number of Collisions with walls?????(pressure)
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Section*
-Part 3
+\begin_inset Newpage newpage
+\end_inset
+
+Step 3
 \end_layout
 
 \begin_layout Standard
-The data structure chosen to implement step 3 is a Verlet List.
+The data structure chosen to implement step 3 is a Verlet List [1].
  This was implemented as an array of C++ vectors, updated every 100 timesteps.
  The idea of this is to loop through each particle in the simulation, and
  calculate the euclidean distance between this particle and all others.
@@ -394,6 +699,11 @@ The data structure chosen to implement step 3 is a Verlet List.
  then this particle is added to the list of neighbours.
  Due to how little movement occurs per timestep, this is only updated every
  100 timesteps.
+ Logically, only one image of a particle can be within the cut off radius
+ of another particle, but it is not necessarily the original particle in
+ the centre unit cube from Figure 1 above, so the program loops through
+ all dimensions to find if any of them are sufficiently close, but it is
+ not possible that it will be appended to the Verlet list multiple times.
  
 \end_layout
 
@@ -401,10 +711,255 @@ The data structure chosen to implement step 3 is a Verlet List.
 The euclidean distance calculations are the most computationally expensive
  part of this simulation, and this approach vastly minimises the number
  of these required, as very few particles will ever be in the threshold
- neighbourhood due to its small size.
+ neighbourhood due to its small size, even in the very large simulations.
  This means that for 99 out of every 100 timesteps, this method is far more
  efficient than step 1, meaning that it runs far quicker on both small and
- large numbers of particles, as has been shown experimentally.
+ large numbers of particles, as shown in the table below.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="3">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Number of particles
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Time Taken per Timestep (ms) - Step 2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Time Taken per Timestep (ms) - Step 3
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1850
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.25
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1,000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+187040
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+600
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10,000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18730000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+68350
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100,000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1879810000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6785500
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Runtime Analysis
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Although the increase in Time Taken per timestep as the particle density
+ increases is 
+\begin_inset Formula $O(N^{2})$
+\end_inset
+
+ as in step 2, it is three orders of magnitude faster, making it a far superior
+ approach for running simulations with very large number of particles.
+ The equation for the runtime is 
+\begin_inset Formula $y=(6.78\times10^{-4})x^{2}+0.059x-44.382$
+\end_inset
+
+, which is vastly superior to 
+\begin_inset Formula $y=0.188x^{2}-7.776x+2373.842$
+\end_inset
+
+ for step 2, making this a far more efficient solution for larger simulations.
+\end_layout
+
+\begin_layout Standard
+However, due to the fact that the cut off distance, is so small (
+\begin_inset Formula $2.5\times10^{-5}$
+\end_inset
+
+), these large simulations are the only ones where this approach is useful.
+ When the experiments for n=2 from step 2 were rerun, the particles do not
+ move as they are positioned outside the cut off radius.
+ Even for 10 and 100 particles, there are very few interactions.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -422,6 +977,24 @@ Brief description of step 3 is precise and clear (5 marks).
 \end_inset
 
 
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+Verlet, L.
+ (1967).
+ "Computer 'experiments' on classical fluids.
+ I.
+ Thermodynamical properties of Lennard-Jones molecules".
+ Phys.
+ Rev.
+ 159: 98–103.
+ 
 \end_layout
 
 \end_body
