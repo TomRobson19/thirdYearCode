@@ -92,8 +92,8 @@ Step 1
 \end_layout
 
 \begin_layout Standard
-The simulation begins by initialising the positions and velocities of the
- particles.
+The simulation (implemented in numericalAlgorithms.c) begins by initialising
+ the positions and velocities of the particles.
  The position is normally allocated randomly, by calculating a random number
  between 0 and 1 in each dimension, but the option is present in the implementat
 ion to specify the position of 2 particles (or more as required) to facilitate
@@ -617,12 +617,13 @@ Runtime Analysis
 
 \begin_layout Standard
 These results show that the increase in Time Taken per timestep as the particle
- density increases is close to 
+ density increases is very close to 
 \begin_inset Formula $O(N^{2})$
 \end_inset
 
 , where N is the number of particles in the simulation.
- When graphing these results, the equation of the trend-line was 
+ When graphing these results in figure 2 below, the equation of the trend-line
+ was 
 \begin_inset Formula $y=0.1556x^{2.0201}$
 \end_inset
 
@@ -673,7 +674,8 @@ Plot of Time Taken against Number of Particles
 Due to the variable timesteps being based on distance, in the smaller simulation
 s with N = 10 or 100, many of the particles do not appear to move in the
  simulation as there are one or more pairs of particles oscillating close
- together, making the timestep size very small.
+ together, meaning that the timestep size has to be very small for these
+ interactions to be calculated accurately.
  In the larger simulations, there are more interactions between particles
  due to more of them being sufficiently close together, but there does not
  appear to be much qualitative activity, again due to the timestep size.
@@ -683,6 +685,10 @@ s with N = 10 or 100, many of the particles do not appear to move in the
  leading to inaccuracies in the simulation.
  It was decided that preventing these inaccuracies was more important to
  the final outcome.
+ In these large simulations, the forces on each particle are far greater
+ than in the smaller simulations, as the gas density is increased and they
+ have many more particles to interact with, making this variable time step
+ even more important in calculating a correct simulation.
  
 \end_layout
 
@@ -695,7 +701,8 @@ Step 3
 
 \begin_layout Standard
 The data structure chosen to implement step 3 is a Verlet List [1].
- This was implemented as an array of C++ vectors, updated every 100 timesteps.
+ This was implemented (in the file numericalAlgorithmsExtended.c) as an array
+ of C++ vectors, updated every 100 timesteps.
  The idea of this is to loop through each particle in the simulation, and
  calculate the euclidean distance between this particle and all others.
  If this is less than the threshold specified in the assignment brief, 2.5s,
@@ -984,12 +991,18 @@ However, due to the fact that the cut off distance, is so small (
 \end_inset
 
 .
- When considering the scale of this simulation, this is a significant error.
- When looking at Taylor expansion based on distance, this equation is the
- 2nd derivative, or acceleration, as force = acceleration when there is
- no mass.
- Therefore, the distance between the particles after the first timestep,
- where the velocity began at 0, 
+ When considering the scale of this simulation, this is a significant error,
+ as this amount of force has been ignored in the simulation of step 3.
+ Using Taylor expansion, the error per timestep h compared to step 2 is
+ 
+\begin_inset Formula $h(\frac{4as^{6}}{r^{6}}-\frac{4as^{12}}{r^{12}})+\frac{h^{2}}{2}(\frac{48as^{12}}{r^{13}}-\frac{24as^{6}}{r^{7}})$
+\end_inset
+
+, which evaluates to 
+\begin_inset Formula $-0.0195$
+\end_inset
+
+ with r as 2.5s.
 \end_layout
 
 \begin_layout Standard
