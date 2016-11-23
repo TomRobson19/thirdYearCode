@@ -218,27 +218,6 @@ Like the calculations of the velocities, the timestep has been implemented
  and the timestep size will be variable unless stated.
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-Brief description of step 1 is precise (2 marks), clear (2 marks) and addresses
- the three remarks given (3x2 marks).
- Use sketches and/or screenshots to make your report easy to follow
-\end_layout
-
-\begin_layout Plain Layout
-It computes the right forces, it is efficient (no unnecessary calculations),
- it updates the particle positions correctly, and it realises the boundary
- conditions as described (5 marks each)
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section*
 Step 2
 \end_layout
@@ -546,7 +525,7 @@ Time Taken per Timestep (ms)
 \begin_inset Text
 
 \begin_layout Plain Layout
-1850
+1,850
 \end_layout
 
 \end_inset
@@ -566,7 +545,7 @@ Time Taken per Timestep (ms)
 \begin_inset Text
 
 \begin_layout Plain Layout
-187040
+187,040
 \end_layout
 
 \end_inset
@@ -586,7 +565,7 @@ Time Taken per Timestep (ms)
 \begin_inset Text
 
 \begin_layout Plain Layout
-18730000
+18,730,000
 \end_layout
 
 \end_inset
@@ -606,7 +585,7 @@ Time Taken per Timestep (ms)
 \begin_inset Text
 
 \begin_layout Plain Layout
-1879810000
+1,879,810,000
 \end_layout
 
 \end_inset
@@ -638,7 +617,7 @@ Runtime Analysis
 
 \begin_layout Standard
 These results show that the increase in Time Taken per timestep as the particle
- density increases is close to
+ density increases is close to 
 \begin_inset Formula $O(N^{2})$
 \end_inset
 
@@ -648,57 +627,63 @@ These results show that the increase in Time Taken per timestep as the particle
 \end_inset
 
 , with y being the time taken per timestep and x being the number of particles.
- 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
 
 \begin_layout Plain Layout
-Per setup: Result is correct qualitatively (2 marks), convergence rate is
- reasonable w.r.t.
- time step size (4 marks), description is accurate and precise (2 marks),
- results are interpreted correctly (2 marks).
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/tom/Downloads/Numerical2.png
+	scale 50
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Plain Layout
-Use N=2 and place the particles without any velocity at x=(0.4,0.5,0.5) and
- x=(0.6,0.5,0.5).
- What happens qualitatively? Run your experiments with different time steps
- over a fixed time interval T.
- Ensure that T is chosen such that the sign of F at least flips twice.
- Track the final position.
- What can you observe w.r.t.
- accuracy and the ODE characteristics? 
-\end_layout
+\begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Rerun the same experiment with x=(0.1,0.5,0.5) and x=(0.9,0.5,0.5).
- What happens?
-\end_layout
-
-\begin_layout Plain Layout
-Rerun the experiment with N=100, N=1,000, N=10,000, N=100,000, and so forth
- where all particles are placed randomly within the cube.
- As the cube is fixed, adding more particles increases the gas density,
- i.e.
- we start to study condensation/saturation processes.
- What can you observe quantitatively and what can you observe in terms of
- cost (time to solution)?
-\end_layout
-
-\begin_layout Plain Layout
-Average velocity????? (euclidean velocity)
-\end_layout
-
-\begin_layout Plain Layout
-Number of Collisions with walls?????(pressure)
+Plot of Time Taken against Number of Particles
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Due to the variable timesteps being based on distance, in the smaller simulation
+s with N = 10 or 100, many of the particles do not appear to move in the
+ simulation as there are one or more pairs of particles oscillating close
+ together, making the timestep size very small.
+ In the larger simulations, there are more interactions between particles
+ due to more of them being sufficiently close together, but there does not
+ appear to be much qualitative activity, again due to the timestep size.
+ This is a necessary sacrifice however, because if the timesteps were larger
+ then some of the particles would jump over each other rather than repelling
+ as the force would have too much of an effect when calculated infrequently,
+ leading to inaccuracies in the simulation.
+ It was decided that preventing these inaccuracies was more important to
+ the final outcome.
+ 
 \end_layout
 
 \begin_layout Section*
@@ -825,7 +810,7 @@ Time Taken per Timestep (ms) - Step 3
 \begin_inset Text
 
 \begin_layout Plain Layout
-1850
+1,850
 \end_layout
 
 \end_inset
@@ -854,7 +839,7 @@ Time Taken per Timestep (ms) - Step 3
 \begin_inset Text
 
 \begin_layout Plain Layout
-187040
+187,040
 \end_layout
 
 \end_inset
@@ -883,7 +868,7 @@ Time Taken per Timestep (ms) - Step 3
 \begin_inset Text
 
 \begin_layout Plain Layout
-18730000
+18,730,000
 \end_layout
 
 \end_inset
@@ -892,7 +877,7 @@ Time Taken per Timestep (ms) - Step 3
 \begin_inset Text
 
 \begin_layout Plain Layout
-68350
+68,350
 \end_layout
 
 \end_inset
@@ -912,7 +897,7 @@ Time Taken per Timestep (ms) - Step 3
 \begin_inset Text
 
 \begin_layout Plain Layout
-1879810000
+1,879,810,000
 \end_layout
 
 \end_inset
@@ -921,7 +906,7 @@ Time Taken per Timestep (ms) - Step 3
 \begin_inset Text
 
 \begin_layout Plain Layout
-6785500
+6,785,500
 \end_layout
 
 \end_inset
@@ -994,25 +979,63 @@ However, due to the fact that the cut off distance, is so small (
 \begin_inset Formula $r=2.5s$
 \end_inset
 
-, as specified in the brief, is 
+, as specified in the brief, is
 \begin_inset Formula $-0.0390$
 \end_inset
 
 .
  When considering the scale of this simulation, this is a significant error.
- 
+ When looking at Taylor expansion based on distance, this equation is the
+ 2nd derivative, or acceleration, as force = acceleration when there is
+ no mass.
+ Therefore, the distance between the particles after the first timestep,
+ where the velocity began at 0, 
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Appendix 1 - Comparative Plot
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
 
 \begin_layout Plain Layout
-Brief description of step 3 is precise and clear (5 marks).
- Runtime impact is experimentally determined and explanation for runtime
- behaviour is given (5 marks).
- Error is determined through Taylor expansion (5 marks).
- All experiments are rerun and results are discussed (5 marks).
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/tom/Downloads/Numerical.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison of Step 2 and Step 3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
