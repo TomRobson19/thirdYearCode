@@ -184,6 +184,20 @@ Having detected these edges, the next task was to implement the RANSAC algorithm
  This gives a more accurate count of the lines found per image, rather than
  having RANSAC find many lines associated with the same road line in the
  actual image.
+ This gives the results shown in the output files.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Figures: Some output examples, 1 without if statement
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*

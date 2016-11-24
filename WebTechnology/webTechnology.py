@@ -37,52 +37,50 @@ titles = [
 ]
 
 
-stopwords = ['and','edition','for','in','little','of','the','to']
-# stopwordsFile = open("stopwords.txt", "r")
-# stopwords = stopwordsFile.read().split(' ')
-# stopwordsFile.close()
-
-
 class LSA(object):
 	def __init__(self, stopwords):
 		self.stopwords = stopwords 
-		self.wdict = {} 
-		self.dcount = 0
+		self.wordDictionary = {} 
+		self.documentCount = 0
 		self.translator = str.maketrans({key: None for key in string.punctuation})
 
-	def parse(self, doc):
+	def parseDocument(self, doc):
 		words = doc.split(); 
 		for w in words:
 			w = w.lower().translate(self.translator) 
-			if w in stopwords:
+			if w in self.stopwords:
 				continue
-			elif w in self.wdict:
-				self.wdict[w].append(self.dcount)
+			elif w in self.wordDictionary:
+				self.wordDictionary[w].append(self.documentCount)
 			else:
-				self.wdict[w] = [self.dcount]
-		self.dcount += 1
+				self.wordDictionary[w] = [self.documentCount]
+		self.documentCount += 1
 
-	def build(self):
-		self.keys = [k for k in self.wdict.keys() if len(self.wdict[k]) > 1] 
+	def buildCountMatrix(self):
+		self.keys = []
+		for k in self.wordDictionary.keys():
+			if len(self.wordDictionary[k]) > 1:
+				self.keys.append(k)
+
 		self.keys.sort() 
-		self.A = np.zeros([len(self.keys), self.dcount]) 
+		self.countMatrix = np.zeros([len(self.keys), self.documentCount]) 
 		for i, k in enumerate(self.keys):
-			for d in self.wdict[k]:
-				self.A[i,d] += 1
+			for d in self.wordDictionary[k]:
+				self.countMatrix[i,d] += 1
 
 	def TFIDF(self):
-		WordsPerDoc = np.sum(self.A, axis=0)
-		DocsPerWord = np.sum(np.asarray(self.A > 0), axis=1) 
-		rows, cols = self.A.shape
+		WordsPerDoc = np.sum(self.countMatrix, axis=0)
+		DocsPerWord = np.sum(np.asarray(self.countMatrix > 0), axis=1) 
+		rows, cols = self.countMatrix.shape
 		for i in range(rows):
 			for j in range(cols):
-				self.A[i,j] = (self.A[i,j] / WordsPerDoc[j]) * log(float(cols) / DocsPerWord[i])
+				self.countMatrix[i,j] = (self.countMatrix[i,j] / WordsPerDoc[j]) * log(float(cols) / DocsPerWord[i])
 
-	def calc(self):
-		self.U, self.S, self.Vt = svd(self.A)
+	def calculateSVD(self):
+		self.U, self.S, self.Vt = svd(self.countMatrix)
 
-	def printA(self):
-		print (self.A)
+	def printCountMatrix(self):
+		print (self.countMatrix)
 
 	def printSVD(self):
 		print ('Here are the singular values')
@@ -113,7 +111,7 @@ class LSA(object):
 			coordinates[i][1] = vy[i]
 
 		#determine number of clusters
-		numberOfClusters = round((self.A.shape[0] * self.A.shape[1]) / (np.count_nonzero(self.A)))  
+		numberOfClusters = round((self.countMatrix.shape[0] * self.countMatrix.shape[1]) / (np.count_nonzero(self.countMatrix)))  
 
 		attempts = 100
 		bestCentres = []
@@ -154,22 +152,40 @@ class LSA(object):
 		for i in range(0,numberOfClusters):
 			plt.gca().add_patch(plt.Circle((x[i],y[i]),bestRadii[i],fc='y'))
 
-
-		#need heuristic to determine quality of cluster
-		#radius giving wierd results, optimise kmeans with heuristic and then experiment again
-
-
 		plt.show()
 
 def main():
+	# read in documents from file
+	# stopwordsFile = open("stopwords.txt", "r")
+	# stopwords = stopwordsFile.read().split(' ')
+	# stopwordsFile.close()
+
+
+
+	#read in stopwords from file
+	stopwordsFile = open("stopwords.txt", "r")
+	stopwords = stopwordsFile.read().split(' ')
+	stopwordsFile.close()
+
+	#create instance of class
 	mylsa = LSA(stopwords)
+	
 	for t in titles:
-		mylsa.parse(t)
-	mylsa.build()
-	#mylsa.printA()
-	#mylsa.TFIDF()
-	mylsa.calc()
-	#mylsa.printSVD()
+		#parse each document
+		mylsa.parseDocument(t)
+
+	#create and print count matrix
+	mylsa.buildCountMatrix()
+	mylsa.printCountMatrix()
+
+	#weight results using Term Frequency – Inverse Document Frequency
+	mylsa.TFIDF()
+
+	#Uses Singular Value decomposition
+	mylsa.calculateSVD()
+	mylsa.printSVD()
+
+	#cluster results and plot them	
 	mylsa.plot()
 
 
