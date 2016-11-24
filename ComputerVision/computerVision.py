@@ -25,7 +25,6 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
         height = original.shape[0]
         img = original[(int)(7*height/10):height,0:original.shape[1]]
 
-
         # remove all non-blue dominant pixels
         # for i in range(img.shape[0]):
         #     for j in range(img.shape[1]):
