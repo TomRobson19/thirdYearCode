@@ -5,12 +5,18 @@ import os
 import math
 import random
 
+
+path_to_data = "HAPT-data-set-DU" 
+
 classes = {} # define mapping of classes
+with open(os.path.join(path_to_data, "activity_labels.txt")) as f:
+    for line in f:
+       (key, val) = line.split()
+       classes[int(key)] = val
+
 inv_classes = {v: k for k, v in classes.items()}
 
 ########### Load Data Set
-
-path_to_data = "HAPT-data-set-DU" 
 
 # Training data - as currenrtly split
 
@@ -30,24 +36,19 @@ for row in reader:
 attributes=np.array(attribute_list).astype(np.float32)
 labels=np.array(label_list).astype(np.float32)
 
-print(attributes)
-print(len(attributes))
-print(labels)
-print(len(labels))
-
 random.seed(1)
 random.shuffle(attributes)
 random.seed(1)
 random.shuffle(labels)
 
 
-# write first N% of the entries to first file
+# select first N% of the entries
+N = 30.0
 
-# N = 30.0
+train_x = attributes[0:int(math.floor(len(attributes)* (N/100.0)))]
+train_y = labels[0:int(math.floor(len(labels)* (N/100.0)))]
 
-# writerA = csv.writer(open("outputA.data", "wt", encoding='ascii'), delimiter=',')
-# writerA.writerows(entry_list[0:int(math.floor(len(entry_list)* (N/100.0)))])
+test_x = attributes[int(math.floor(len(attributes)* (N/100.0))):len(attributes)]
+test_y = labels[int(math.floor(len(labels)* (N/100.0))):len(labels)]
 
-# write the remaining (100-N)% of the entries of the second file
-# writerB = csv.writer(open("outputB.data", "wt", encoding='ascii'), delimiter=',')
-# writerB.writerows(entry_list[int(math.floor(len(entry_list)* (N/100.0))):len(entry_list)])
+
