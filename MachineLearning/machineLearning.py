@@ -5,7 +5,6 @@ import os
 import math
 import random
 
-
 path_to_data = "HAPT-data-set-DU" 
 
 classes = {} # define mapping of classes
@@ -41,7 +40,6 @@ random.shuffle(attributes)
 random.seed(1)
 random.shuffle(labels)
 
-
 # select first N% of the entries
 N = 30.0
 
@@ -50,5 +48,3 @@ train_y = labels[0:int(math.floor(len(labels)* (N/100.0)))]
 
 test_x = attributes[int(math.floor(len(attributes)* (N/100.0))):len(attributes)]
 test_y = labels[int(math.floor(len(labels)* (N/100.0))):len(labels)]
-
-

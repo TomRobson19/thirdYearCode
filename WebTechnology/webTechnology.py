@@ -1,3 +1,13 @@
+#####################################################################
+
+#Code based on link provided in lecture slides
+
+#https://technowiki.wordpress.com/2011/08/27/latent-semantic-analysis-lsa-tutorial/
+
+#NEED TO ADD HELPER FUNCTION
+
+#####################################################################
+
 from scipy.linalg import svd
 from scipy.cluster import vq
 from scipy.spatial import distance

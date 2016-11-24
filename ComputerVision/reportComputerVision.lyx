@@ -94,7 +94,7 @@ Following a close examination of the dataset, it was determined that all
  image.
  Therefore, the first step in preprocessing was to crop out the top 70%
  of the image, as this removes a substantial proportion of the noise, and
- therefore a subsantial proportion of the potential false positives.
+ therefore a substantial proportion of the potential false positives.
  Next was the conversion to the grayscale colour space.
  Conversion to the HSV colour space was attempted, including converting
  to grayscale using a weighted sum of the H and S colour channels, but these
@@ -174,7 +174,16 @@ Having detected these edges, the next task was to implement the RANSAC algorithm
  of interest to us are close to vertical, any line with a gradient close
  to horizontal was eliminated.
  This greatly reduced the number of false positives returned by the algorithm.
- 
+ From here, this line is drawn onto a blank image, and compared to the canny
+ image using a bitwise AND operation.
+ If the number of common pixels is above the threshold, then the line is
+ accepted.
+ Then, for each of the accepted lines, we compare them to existing lines
+ drawn on the image and check if their gradient is too similar, if the lines
+ cross over each other or if their x and y coordinates are too close together.
+ This gives a more accurate count of the lines found per image, rather than
+ having RANSAC find many lines associated with the same road line in the
+ actual image.
 \end_layout
 
 \begin_layout Section*
@@ -183,19 +192,6 @@ Evaluation
 
 \begin_layout Section*
 Things tried
-\end_layout
-
-\begin_layout Itemize
-RANSAC - try not allowing points to be too close, both when making lines
- and comparing to existing lines
-\end_layout
-
-\begin_layout Itemize
-only count line if above certain length (yet to be decided)
-\end_layout
-
-\begin_layout Itemize
-Extend line through image, then when i do logical and, find the extremities.
 \end_layout
 
 \begin_layout Itemize
