@@ -102,7 +102,7 @@ def svm(train_x, train_y, test_x, test_y):
 
 	## use SVM auto-training (grid search)
 	# if available in python bindings see open issue: https://github.com/opencv/opencv/issues/7224
-	use_svm_autotrain = False
+	#use_svm_autotrain = False
 
 	############ Perform Training -- SVM
 
@@ -120,18 +120,18 @@ def svm(train_x, train_y, test_x, test_y):
 	svm.setDegree(3)  # used for SVM_POLY kernel only, otherwise has no effect
 
 	# set the relative weights importance of each class for use with penalty term
-	svm.setClassWeights(np.ones(26))
+	svm.setClassWeights(np.ones(12))
 
-	# define and train svm object
-	if (use_svm_autotrain) :
-	    # use automatic grid search across the parameter space of kernel specified above
-	    # (ignoring kernel parameters set previously)
+	# # define and train svm object
+	# if (use_svm_autotrain) :
+	#     # use automatic grid search across the parameter space of kernel specified above
+	#     # (ignoring kernel parameters set previously)
 
-	    # if available in python bindings see open issue: https://github.com/opencv/opencv/issues/7224
-	    svm.trainAuto(cv2.ml.TrainData_create(train_x, cv2.ml.ROW_SAMPLE, train_y), kFold=10)
-	else :
-	    # use kernel specified above with kernel parameters set previously
-	    svm.train(train_x, cv2.ml.ROW_SAMPLE, train_y)
+	#     # if available in python bindings see open issue: https://github.com/opencv/opencv/issues/7224
+	#     svm.trainAuto(cv2.ml.TrainData_create(train_x, cv2.ml.ROW_SAMPLE, train_y), kFold=10)
+	# else :
+	# use kernel specified above with kernel parameters set previously
+	svm.train(train_x, cv2.ml.ROW_SAMPLE, train_y.astype(int))
 
 	############ Perform Testing -- SVM
 
@@ -139,12 +139,12 @@ def svm(train_x, train_y, test_x, test_y):
 	wrong = 0   # handwritten digit wrongly identified
 
 	# for each testing example
-	for i in range(0, len(test_y[:,0])) :
+	for i in range(0, len(test_x[:,0])) :
 
 	    # (to get around some kind of OpenCV python interface bug, vertically stack the
 	    #  example with a second row of zeros of the same size and type which is ignored).
-	    sample = np.vstack((test_y[i,:],
-	                        np.zeros(len(test_y[i,:])).astype(np.float32)))
+	    sample = np.vstack((test_x[i,:],
+	                        np.zeros(len(test_x[i,:])).astype(np.float32)))
 
 	    # perform SVM prediction (i.e. classification)
 	    _, result = svm.predict(sample, cv2.ml.ROW_SAMPLE)
@@ -165,3 +165,5 @@ def svm(train_x, train_y, test_x, test_y):
 	print("Total Correct : {}%".format(round((correct / float(total)) * 100, 2)))
 	print("Total Wrong : {}%".format(round((wrong / float(total)) * 100, 2)))
 
+knn(train_x, train_y, test_x, test_y)
+svm(train_x, train_y, test_x, test_y)

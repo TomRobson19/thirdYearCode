@@ -185,6 +185,14 @@ Having detected these edges, the next task was to implement the RANSAC algorithm
  having RANSAC find many lines associated with the same road line in the
  actual image.
  This gives the results shown in the output files.
+ After all of the trials have been done, if no acceptable line has been
+ found the algorithm is run again with a lower threshold to try and find
+ a line.
+ This is run until a line is found, or until the threshold gets too low,
+ in which case it is accepted that no line is found.
+ This approach slows down runtime and generates some false positives, but
+ also finds more valid lines so it has been decided that it is worth it.
+ 
 \end_layout
 
 \begin_layout Standard
