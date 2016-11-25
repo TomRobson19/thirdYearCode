@@ -134,7 +134,7 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
 
         #cv2.imshow('image',out)
         cv2.imshow('original',original)
-        key = cv2.waitKey(1) # wait for this long or until any key press
+        key = cv2.waitKey(10000) # wait for this long or until any key press
         if (key == ord('x')):
             break
 

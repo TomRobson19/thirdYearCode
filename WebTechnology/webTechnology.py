@@ -99,11 +99,11 @@ class LSA(object):
 
 		plt.plot(ux,uy,'r.')
 		for i in range (0,len(ux)):
-			plt.annotate(self.keys[i],xy=(ux[i],uy[i]),xytext=(ux[i]+0.01,uy[i]))
+			plt.annotate(self.keys[i],xy=(ux[i],uy[i]),xytext=(ux[i]+0.01,uy[i]),fontsize=10)
 
 		plt.plot(vx,vy,'b.')
 		for i in range (0,len(vx)):
-		 	plt.annotate(str(i+1),xy=(vx[i],vy[i]),xytext=(vx[i]+0.01,vy[i]))
+		 	plt.annotate(str(i+1),xy=(vx[i],vy[i]),xytext=(vx[i]+0.01,vy[i]),fontsize=10)
 
 		coordinates = np.zeros([len(vx),3])
 		for i in range(0,len(vx)):
@@ -150,12 +150,15 @@ class LSA(object):
 		x = bestCentres[:, 0:1]
 		y = bestCentres[:, 1:2]
 		for i in range(0,numberOfClusters):
+			if(bestRadii[i] == 0):
+				bestRadii = 0.1
 			plt.gca().add_patch(plt.Circle((x[i],y[i]),bestRadii[i],fc='y'))
 
 		plt.show()
 
 def main():
 	# read in documents from file
+	# HAVE PARAGRAPHS SEPARATED BY NEWLINES
 	# stopwordsFile = open("stopwords.txt", "r")
 	# stopwords = stopwordsFile.read().split(' ')
 	# stopwordsFile.close()
