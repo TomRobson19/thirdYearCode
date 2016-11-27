@@ -1,50 +1,41 @@
-#####################################################################
+'''
+Code to summarise a text document
 
-#Code based on link provided in lecture slides
+Code based on link provided in lecture slides
 
-#https://technowiki.wordpress.com/2011/08/27/latent-semantic-analysis-lsa-tutorial/
+https://technowiki.wordpress.com/2011/08/27/latent-semantic-analysis-lsa-tutorial/
 
-#NEED TO ADD HELPER FUNCTION
+text files supplied on the command line
+
+run with python -W ignore webTechnology.py filename.txt
+'''
 
 #####################################################################
 
 from scipy.linalg import svd
 from scipy.cluster import vq
 from scipy.spatial import distance
-
 from math import log
-
 import string
 import numpy as np
-
 import matplotlib.pyplot as plt
+import sys
 
 np.set_printoptions(formatter={'float': '{: 0.3f}'.format})
 
 #replace these with parsing full text files and full stopword list
 #read document in as a text file and split on full stops
 
-titles = [ 
-"The Neatest Little Guide to Stock Market Investing", 
-"Investing For Dummies, 4th Edition", 
-"The Little Book of Common Sense Investing: The Only Way to Guarantee Your Fair Share of Stock Market Returns", 
-"The Little Book of Value Investing", 
-"Value Investing: From Graham to Buffett and Beyond", 
-"Rich Dad's Guide to Investing: What the Rich Invest in, That the Poor and the Middle Class Do Not!", 
-"Investing in Real Estate, 5th Edition", 
-"Stock Investing For Dummies", 
-"Rich Dad's Advisors: The ABC's of Real Estate Investing: The Secrets of Finding Hidden Profits Most Investors Miss" 
-]
-
-
 class LSA(object):
 	def __init__(self, stopwords):
+		'''Initialises variables for class'''
 		self.stopwords = stopwords 
 		self.wordDictionary = {} 
 		self.documentCount = 0
 		self.translator = str.maketrans({key: None for key in string.punctuation})
 
 	def parseDocument(self, doc):
+		'''Reads in the document and populates the word Dictionary after removing punctuation and stopwords'''
 		words = doc.split(); 
 		for w in words:
 			w = w.lower().translate(self.translator) 
@@ -57,18 +48,23 @@ class LSA(object):
 		self.documentCount += 1
 
 	def buildCountMatrix(self):
+		'''creates a matrix for all words that appear more than once'''
 		self.keys = []
 		for k in self.wordDictionary.keys():
 			if len(self.wordDictionary[k]) > 1:
 				self.keys.append(k)
-
 		self.keys.sort() 
 		self.countMatrix = np.zeros([len(self.keys), self.documentCount]) 
 		for i, k in enumerate(self.keys):
 			for d in self.wordDictionary[k]:
 				self.countMatrix[i,d] += 1
 
+	def printCountMatrix(self):
+		'''Prints out the count matrix'''
+		print (self.countMatrix)
+
 	def TFIDF(self):
+		'''Weight words using the Term Frequency – Inverse Document Frequency method'''
 		WordsPerDoc = np.sum(self.countMatrix, axis=0)
 		DocsPerWord = np.sum(np.asarray(self.countMatrix > 0), axis=1) 
 		rows, cols = self.countMatrix.shape
@@ -77,12 +73,11 @@ class LSA(object):
 				self.countMatrix[i,j] = (self.countMatrix[i,j] / WordsPerDoc[j]) * log(float(cols) / DocsPerWord[i])
 
 	def calculateSVD(self):
+		'''Employs singluar value decomposition to create U, S, and Vt'''
 		self.U, self.S, self.Vt = svd(self.countMatrix)
 
-	def printCountMatrix(self):
-		print (self.countMatrix)
-
 	def printSVD(self):
+		'''Prints U,S and Vt to show resuults of singular value decomposition'''
 		print ('Here are the singular values')
 		print (self.S)
 		print ('Here are the first 3 columns of the U matrix')
@@ -91,6 +86,7 @@ class LSA(object):
 		print (-1*self.Vt[0:3, :])
 
 	def plot(self):
+		'''Clusters the documents and plots them using MatPlotLib'''
 		self.V = np.transpose(self.Vt)
 		ux = -1*self.U[:, 1:2]
 		uy = -1*self.U[:, 2:3]
@@ -151,19 +147,16 @@ class LSA(object):
 		y = bestCentres[:, 1:2]
 		for i in range(0,numberOfClusters):
 			if(bestRadii[i] == 0):
-				bestRadii = 0.1
+				bestRadii[i] = 0.1
 			plt.gca().add_patch(plt.Circle((x[i],y[i]),bestRadii[i],fc='y'))
 
 		plt.show()
 
 def main():
-	# read in documents from file
-	# HAVE PARAGRAPHS SEPARATED BY NEWLINES
-	# stopwordsFile = open("stopwords.txt", "r")
-	# stopwords = stopwordsFile.read().split(' ')
-	# stopwordsFile.close()
-
-
+	'''Reads in files and calls function for summarisation'''
+	file = open(sys.argv[1], "r")
+	document = file.read().split('\n')
+	file.close()
 
 	#read in stopwords from file
 	stopwordsFile = open("stopwords.txt", "r")
@@ -173,10 +166,10 @@ def main():
 	#create instance of class
 	mylsa = LSA(stopwords)
 	
-	for t in titles:
+	for t in document:
 		#parse each document
 		mylsa.parseDocument(t)
-
+	
 	#create and print count matrix
 	mylsa.buildCountMatrix()
 	#mylsa.printCountMatrix()
@@ -191,5 +184,5 @@ def main():
 	#cluster results and plot them	
 	mylsa.plot()
 
-
-main()
+if __name__ == "__main__":
+	main()

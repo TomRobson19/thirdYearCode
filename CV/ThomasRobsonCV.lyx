@@ -45,17 +45,17 @@
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
-\suppress_date false
+\suppress_date true
 \justification true
 \use_refstyle 1
 \index Index
 \shortcut idx
 \color #008000
 \end_index
-\leftmargin 2cm
-\topmargin 2cm
-\rightmargin 2cm
-\bottommargin 2cm
+\leftmargin 1cm
+\topmargin 1cm
+\rightmargin 1cm
+\bottommargin 1cm
 \headheight 2cm
 \headsep 2cm
 \footskip 1cm
@@ -81,14 +81,10 @@ Thomas Robson - Curriculum Vitae
 \end_layout
 
 \begin_layout Author
-E-mail: tomrobson19@gmail.com 
+E-mail: tomrobson19@gmail.com, Phone: 07521 705080 
 \end_layout
 
-\begin_layout Author
-Phone: 07521 705080 
-\end_layout
-
-\begin_layout Author
+\begin_layout Date
 Address: Woodpeckers, Lower Wokingham Road, RG45 6BX
 \end_layout
 
