@@ -175,7 +175,7 @@ def main():
 	#mylsa.printCountMatrix()
 
 	#weight results using Term Frequency – Inverse Document Frequency
-	#mylsa.TFIDF()
+	mylsa.TFIDF()
 
 	#Uses Singular Value decomposition
 	mylsa.calculateSVD()
