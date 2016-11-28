@@ -78,11 +78,11 @@ class LSA(object):
 
 	def printSVD(self):
 		'''Prints U,S and Vt to show resuults of singular value decomposition'''
-		print ('Here are the singular values')
+		print ('The singular values')
 		print (self.S)
-		print ('Here are the first 3 columns of the U matrix')
+		print ('The first 3 columns of the U matrix')
 		print (-1*self.U[:, 0:3])
-		print ('Here are the first 3 rows of the Vt matrix')
+		print ('The first 3 rows of the Vt matrix')
 		print (-1*self.Vt[0:3, :])
 
 	def plot(self):
@@ -107,8 +107,7 @@ class LSA(object):
 			coordinates[i][1] = vy[i]
 
 		#determine number of clusters
-		numberOfClusters = round((self.countMatrix.shape[0] * self.countMatrix.shape[1]) / (np.count_nonzero(self.countMatrix)))  
-		print(numberOfClusters)
+		numberOfClusters = round((self.countMatrix.shape[0] * self.countMatrix.shape[1]) / (np.count_nonzero(self.countMatrix)))
 
 		#initialise variables for comparison
 		attempts = 100

@@ -2,4 +2,4 @@ Code for document summarisation, based on https://technowiki.wordpress.com/2011/
 
 run with - python webTechnology.py filename.txt
 
-Several text files are provided containing book titles in a specified area
+Several text files are provided containing book titles related to a specified area, taken from amazon searches

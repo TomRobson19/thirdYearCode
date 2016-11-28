@@ -8,6 +8,8 @@ import math
 
 directory_to_cycle = "road-images2016-DURHAM"
 
+f = open('data.txt', 'w')
+printCounter = 0
 #####################################################################
 
 # display all images in directory
@@ -60,9 +62,7 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
 
         canny = cv2.Canny(filtered, lower, upper)
 
-        canny = cv2.morphologyEx(canny, cv2.MORPH_OPEN, (5,5))
-
-        canny = cv2.morphologyEx(canny, cv2.MORPH_CLOSE, (5,5))
+        opening = cv2.morphologyEx(canny, cv2.MORPH_OPEN, (5,5))
 
         data = cv2.findNonZero(canny)
 
@@ -125,22 +125,23 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
             else:
                 keepChecking = False
 
+        if(printCounter == 0):
+            #cv2.imwrite('img'+str(printCounter)+'.png',original)
+            cv2.imshow('opening',opening)
+            cv2.imshow('gradient',gradientMorph)
 
-        canny = cv2.cvtColor(canny,cv2.COLOR_GRAY2BGR)
-        out = np.concatenate((img,canny),axis=0)
-
-        print(filename,': detected '+str(linesDetected)+' edges/lines');
-
+        print(filename,': detected '+str(linesDetected)+' edges/lines')
+        printCounter += 1
 
         #cv2.imshow('image',out)
         cv2.imshow('original',original)
-        key = cv2.waitKey(10000) # wait for this long or until any key press
+        key = cv2.waitKey(1000000) # wait for this long or until any key press
         if (key == ord('x')):
             break
 
 
 # close all windows
-
+f.close()
 cv2.destroyAllWindows()
 
 #####################################################################

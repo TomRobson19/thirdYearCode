@@ -96,11 +96,11 @@ Following a close examination of the dataset, it was determined that all
  of the image, as this removes a substantial proportion of the noise, and
  therefore a substantial proportion of the potential false positives.
  Next was the conversion to the grayscale colour space.
- Conversion to the HSV colour space was attempted, including converting
+ Conversion to the HSV colour space was attempted, as well as converting
  to grayscale using a weighted sum of the H and S colour channels, but these
  gave an inferior output to the standard grayscale conversion when used
  for edge detection.
- Another attempt attempted for this was to identify the dominant colour
+ Another approach attempted for this was to identify the dominant colour
  in the road lines, and filter out all pixels that did not have this dominant
  colour.
  However, this did not prove to be very effective.
@@ -113,11 +113,126 @@ Following a close examination of the dataset, it was determined that all
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figuresForReport/gray.png
+	scale 20
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Grayscale
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figuresForReport/hsv.png
+	scale 20
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+HSV
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
 status open
 
 \begin_layout Plain Layout
-Figures: Grayscale, HSV, Bilateral filter output.
+\begin_inset Graphics
+	filename figuresForReport/Bilateral.png
+	scale 20
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Bilateral Filter on Grayscale
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Preprocessing
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -132,26 +247,96 @@ Edge detection
 \begin_layout Standard
 Following the preprocessing of the images, the next step was to pass them
  to an edge detector.
- In this case, the OpenCV Canny edge detection function was used.
- In order to optimise this, the thresholds were adapted to suit each image
- by finding the median of the grayscale pixel values of the filtered image,
- and multiplying this by 0.67 for the lower threshold or 1.33 for the higher
- threshold.
+ In this case, the OpenCV Canny function was used.
+ In order to optimise this, an auto-canny method was implemented to adapt
+ the thresholds to suit each image by finding the median of the grayscale
+ pixel values of the filtered image, and multiplying this by 0.67 for the
+ lower threshold or 1.33 for the higher threshold.
  On examination of the output of this Canny function, it was clear that
  further processing was necessary.
  To try and remove noise from the image, morphological opening was implemented.
- However, as a result of this, some of the intended edges became broken
- up, so morphological closing was implemented to try and strengthen these
- lines.
- 
+ This effectively removed much of the noise while leaving the road lines
+ relatively unharmed.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
 
 \begin_layout Plain Layout
-Figures: Canny (no morphology), just opening, opening and closing 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figuresForReport/canny.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Simple Canny
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figuresForReport/opening.png
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+After morphological opening
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Edge Detection
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -196,11 +381,94 @@ Having detected these edges, the next task was to implement the RANSAC algorithm
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
 
 \begin_layout Plain Layout
-Figures: Some output examples, 1 without if statement
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figuresForReport/noIfStatement.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+All lines found
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename figuresForReport/img0.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Lines filtered down
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Comparison of RANSAC outputs
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -212,49 +480,13 @@ Figures: Some output examples, 1 without if statement
 Evaluation
 \end_layout
 
-\begin_layout Section*
-Things tried
-\end_layout
-
-\begin_layout Itemize
-Auto Canny covers 
-\begin_inset Quotes eld
-\end_inset
-
-automatically adjusting the parameters feature extraction based on some
- form of preliminary analysis image
-\begin_inset Quotes erd
-\end_inset
-
- from mark scheme
-\end_layout
-
-\begin_layout Itemize
-Also done 
-\begin_inset Quotes eld
-\end_inset
-
-the successful use of any heuristics to speed up processing times or reduce
- false detections (including at the stage of colour pre-filtering)
-\begin_inset Quotes erd
-\end_inset
-
- e.g.
- cutting off top of image, gradient comparisons
-\end_layout
-
-\begin_layout Itemize
-NEED TO DO HOUGH LINES
+\begin_layout Standard
+Across the majority of the data set, this implementation performed well.
+ 
 \end_layout
 
 \begin_layout Standard
-Report (max.
- 750 words!, remember - it can always be shorter than this) detailing your
- approach to the problem and the success of your solution in the task specified.
- Provide any illustrative images (as many as you feel necessary) of the
- intermediate results of the system you produce (overlays, results of processing
- stages etc.) Remember that any titles, captions, tables, references, and
- graphs do not count towards the total word count of the report
+
 \end_layout
 
 \end_body
