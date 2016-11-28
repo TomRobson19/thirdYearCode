@@ -125,17 +125,14 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
             else:
                 keepChecking = False
 
-        if(printCounter == 0):
-            #cv2.imwrite('img'+str(printCounter)+'.png',original)
-            cv2.imshow('opening',opening)
-            cv2.imshow('gradient',gradientMorph)
+        cv2.imwrite('img'+str(printCounter)+'.png',original)
 
         print(filename,': detected '+str(linesDetected)+' edges/lines')
         printCounter += 1
 
         #cv2.imshow('image',out)
         cv2.imshow('original',original)
-        key = cv2.waitKey(1000000) # wait for this long or until any key press
+        key = cv2.waitKey(1) # wait for this long or until any key press
         if (key == ord('x')):
             break
 
