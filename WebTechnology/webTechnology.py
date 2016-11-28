@@ -108,7 +108,9 @@ class LSA(object):
 
 		#determine number of clusters
 		numberOfClusters = round((self.countMatrix.shape[0] * self.countMatrix.shape[1]) / (np.count_nonzero(self.countMatrix)))  
+		print(numberOfClusters)
 
+		#initialise variables for comparison
 		attempts = 100
 		bestCentres = []
 		bestLabels = []
@@ -116,7 +118,7 @@ class LSA(object):
 		minimumSSE = 0
 
 		for a in range (0, attempts):
-
+			#run kmeans 
 			centres,labels = vq.kmeans2(coordinates[: , 0:2],numberOfClusters)
 			radii = []
 			sse = 0
@@ -126,7 +128,7 @@ class LSA(object):
 
 			x = centres[:, 0:1]
 			y = centres[:, 1:2]
-
+			#calculate radii as clusters
 			for i in range(0,numberOfClusters):
 				radii.append(0)
 				for j in range(0,len(labels)):
@@ -135,14 +137,13 @@ class LSA(object):
 						sse += possibleRadius**2
 						if (possibleRadius > radii[i]):
 							radii[i] = possibleRadius
-
+			#update based on minimum sse
 			if minimumSSE == 0 or sse < minimumSSE:
 				minimumSSE = sse
 				bestCentres = centres
 				bestLabels = labels
 				bestRadii = radii
-
-
+		#plot the best ones
 		x = bestCentres[:, 0:1]
 		y = bestCentres[:, 1:2]
 		for i in range(0,numberOfClusters):
@@ -166,16 +167,16 @@ def main():
 	#create instance of class
 	mylsa = LSA(stopwords)
 	
-	for t in document:
+	for x in document:
 		#parse each document
-		mylsa.parseDocument(t)
+		mylsa.parseDocument(x)
 	
 	#create and print count matrix
 	mylsa.buildCountMatrix()
 	#mylsa.printCountMatrix()
 
 	#weight results using Term Frequency – Inverse Document Frequency
-	mylsa.TFIDF()
+	#mylsa.TFIDF()
 
 	#Uses Singular Value decomposition
 	mylsa.calculateSVD()
