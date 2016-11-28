@@ -1,6 +1,8 @@
 *.csv
 *.png
 /ComputerVision/road-images2016-DURHAM
+/ComputerVision/images
+/ComputerVision/figuresForReport
 /NumericalAlgorithms/results
 /NumericalAlgorithms/argon
 /Assignments
