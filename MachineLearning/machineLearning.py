@@ -40,7 +40,7 @@ attributes=np.array(attribute_list).astype(np.float32)
 labels=np.array(label_list).astype(np.float32)
 
 # select first N% of the entries
-N = 30.0
+N = 70.0
 
 train_x = attributes[0:int(math.floor(len(attributes)* (N/100.0)))]
 train_y = labels[0:int(math.floor(len(labels)* (N/100.0)))]
@@ -48,10 +48,23 @@ train_y = labels[0:int(math.floor(len(labels)* (N/100.0)))]
 test_x = attributes[int(math.floor(len(attributes)* (N/100.0))):len(attributes)]
 test_y = labels[int(math.floor(len(labels)* (N/100.0))):len(labels)]
 
+def kFold():
+	'''
+	Randomly split (all) the data into k­subsets
+	for 1 to k
+		train using all the data not in kth subset
+		test resulting learned [classifier|function …] using kth subset
+	report mean error over all k tests
+	'''
+
+def confusionMatrix():
+	'''
+	make confusion matrix
+	'''
+#need to do accuracy, precision and recall
+
 ############ Perform Training -- k-NN
-
 def knn(train_x, train_y, test_x, test_y):
-
 	# define kNN object
 	knn = cv2.ml.KNearest_create()
 
@@ -60,7 +73,8 @@ def knn(train_x, train_y, test_x, test_y):
 	knn.setAlgorithmType(cv2.ml.KNEAREST_BRUTE_FORCE)
 
 	# set default 3, can be changed at query time in predict() call
-	knn.setDefaultK(3)
+	knn.setDefaultK(3) #EXPERIMENT WITH THIS
+
 
 	# set up classification, turning off regression
 	knn.setIsClassifier(True)
@@ -97,14 +111,12 @@ def knn(train_x, train_y, test_x, test_y):
 	print("Total Correct : {}%".format(round((correct / float(total)) * 100, 2)))
 	print("Total Wrong : {}%".format(round((wrong / float(total)) * 100, 2)))
 
-
+############ Perform Training -- SVM
 def svm(train_x, train_y, test_x, test_y):
 
 	## use SVM auto-training (grid search)
 	# if available in python bindings see open issue: https://github.com/opencv/opencv/issues/7224
 	#use_svm_autotrain = False
-
-	############ Perform Training -- SVM
 
 	# define SVM object
 	svm = cv2.ml.SVM_create()

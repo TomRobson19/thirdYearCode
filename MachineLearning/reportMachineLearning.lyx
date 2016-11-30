@@ -88,7 +88,25 @@ Tom Robson - hzwr87
 \end_layout
 
 \begin_layout Standard
+(Short) Report (L3: max.
+ 750 words / L4: max.
+ 1000 words) briefly detailing your chosen machine learning approaches and
+ the results/conclusions of your experimentation on the provided data set.
+ 
+\end_layout
 
+\begin_layout Standard
+Provide any tables, graphs and charts (as many as you feel necessary – as
+ they do not count towards the work count) to summarise and support the
+ performance of your chosen approaches on this data.
+ 
+\end_layout
+
+\begin_layout Standard
+Draw conclusions from your experimentation and comment on any potential
+ ethical issues of using such a software solution for the this task (in
+ scenarios as outlined) where performance can only be statistically guaranteed
+ and false positive / false negative classifications will occur in use.
 \end_layout
 
 \end_body
