@@ -1,16 +1,12 @@
 '''
-Code to summarise a text document
-
-Code based on link provided in lecture slides
+Code to summarise a text document, based on link provided in lecture slides
 
 https://technowiki.wordpress.com/2011/08/27/latent-semantic-analysis-lsa-tutorial/
 
-text files supplied on the command line
+text files supplied on the command line, run with python webTechnology.py filename.txt
 
-run with python -W ignore webTechnology.py filename.txt
+Several text files are provided containing book titles related to a specified area, taken from amazon searches
 '''
-
-#####################################################################
 
 from scipy.linalg import svd
 from scipy.cluster import vq
@@ -21,10 +17,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 
-np.set_printoptions(formatter={'float': '{: 0.3f}'.format})
 
-#replace these with parsing full text files and full stopword list
-#read document in as a text file and split on full stops
+np.set_printoptions(formatter={'float': '{: 0.3f}'.format})
 
 class LSA(object):
 	def __init__(self, stopwords):
@@ -47,7 +41,7 @@ class LSA(object):
 				self.wordDictionary[w] = [self.documentCount]
 		self.documentCount += 1
 
-	def buildCountMatrix(self):
+	def constructCountMatrix(self):
 		'''creates a matrix for all words that appear more than once'''
 		self.keys = []
 		for k in self.wordDictionary.keys():
@@ -60,11 +54,11 @@ class LSA(object):
 				self.countMatrix[i,d] += 1
 
 	def printCountMatrix(self):
-		'''Prints out the count matrix'''
+		'''Prints out the count matrix, invoke in main if desired'''
 		print (self.countMatrix)
 
 	def TFIDF(self):
-		'''Weight words using the Term Frequency – Inverse Document Frequency method'''
+		'''Weight words using the Term Frequency – Inverse Document Frequency method, invoke in main if desired'''
 		WordsPerDoc = np.sum(self.countMatrix, axis=0)
 		DocsPerWord = np.sum(np.asarray(self.countMatrix > 0), axis=1) 
 		rows, cols = self.countMatrix.shape
@@ -77,7 +71,7 @@ class LSA(object):
 		self.U, self.S, self.Vt = svd(self.countMatrix)
 
 	def printSVD(self):
-		'''Prints U,S and Vt to show resuults of singular value decomposition'''
+		'''Prints U,S and Vt to show resuults of singular value decomposition, invoke in main if desired'''
 		print ('The singular values')
 		print (self.S)
 		print ('The first 3 columns of the U matrix')
@@ -153,7 +147,7 @@ class LSA(object):
 		plt.show()
 
 def main():
-	'''Reads in files and calls function for summarisation'''
+	'''Reads in files and calls functions for summarisation'''
 	file = open(sys.argv[1], "r")
 	document = file.read().split('\n')
 	file.close()
@@ -171,10 +165,11 @@ def main():
 		mylsa.parseDocument(x)
 	
 	#create and print count matrix
-	mylsa.buildCountMatrix()
+	mylsa.constructCountMatrix()
 	#mylsa.printCountMatrix()
 
 	#weight results using Term Frequency – Inverse Document Frequency
+	#this gave inferior results, so was not used
 	#mylsa.TFIDF()
 
 	#Uses Singular Value decomposition

@@ -607,6 +607,8 @@ However, some problems were encountered, and some of these are shown in
  a drawback of drawing the lines across the whole bottom 30% of the image,
  as it extends further than it should, whereas (d) has two correct lines
  and one incorrect line caused by noise.
+ .
+ 
 \end_layout
 
 \begin_layout Standard

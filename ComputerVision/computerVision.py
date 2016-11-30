@@ -27,30 +27,6 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
         height = original.shape[0]
         img = original[(int)(7*height/10):height,0:original.shape[1]]
 
-        # remove all non-blue dominant pixels
-        # for i in range(img.shape[0]):
-        #     for j in range(img.shape[1]):
-        #         if (img[i][j][1]>=img[i][j][0]) and (img[i][j][1]>=img[i][j][2]):
-        #             img[i][j][0] = 0
-        #             img[i][j][1] = 0
-        #             img[i][j][2] = 0
-        #         if (img[i][j][2]>img[i][j][0]):
-        #             img[i][j][0] = 0
-        #             img[i][j][1] = 0
-        #             img[i][j][2] = 0
-
-        #hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-
-        #gray = np.zeros((hsv.shape[0],hsv.shape[1]), np.uint8)
-
-        
-        #for i in range(hsv.shape[0]):
-         #   for j in range(hsv.shape[1]):
-          #      hsv[i][j][2] = 255
-                #gray[i][j] = (0.5*(hsv[i][j][0]))+(0.5*(hsv[i][j][1]))
-                #gray[i][j] = ((hsv[i][j][2]))
-
-        #bgr = cv2.cvtColor(hsv,cv2.COLOR_HSV2BGR)
         gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
         filtered = cv2.bilateralFilter(gray,9,75,75)
@@ -125,7 +101,7 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
             else:
                 keepChecking = False
 
-        cv2.imwrite('img'+str(printCounter)+'.png',original)
+        #cv2.imwrite('img'+str(printCounter)+'.png',original)
 
         print(filename,': detected '+str(linesDetected)+' edges/lines')
         printCounter += 1
