@@ -757,11 +757,27 @@ Problems
 \end_layout
 
 \begin_layout Standard
+Here is a video 
+\begin_inset CommandInset href
+LatexCommand href
+target "https://www.youtube.com/watch?v=n_9_PGpW0rI"
+
+\end_inset
+
+ showing the algorithm running quickly through the rest of the dataset,
+ supplied for interest.
+ As stated above, on most of the images it performs well, but there are
+ occasional false positives, mostly due to the lowering of the threshold
+ if no lines are found.
+ These are mainly found in the more challenging images.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float table
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent

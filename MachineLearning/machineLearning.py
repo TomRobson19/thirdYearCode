@@ -93,7 +93,7 @@ def knn(train_x, train_y, test_x, test_y):
 	# output summmary statistics
 	total = correct + wrong
 	print("KNN")
-	print("Testing Data Set Performance Summary")
+	print("Performance Summary")
 	print("Total Correct : {}%".format(round((correct / float(total)) * 100, 2)))
 	print("Total Wrong : {}%".format(round((wrong / float(total)) * 100, 2)))
 
@@ -161,7 +161,7 @@ def svm(train_x, train_y, test_x, test_y):
 
 	print()
 	print("SVM")
-	print("Testing Data Set Performance Summary")
+	print("Performance Summary")
 	print("Total Correct : {}%".format(round((correct / float(total)) * 100, 2)))
 	print("Total Wrong : {}%".format(round((wrong / float(total)) * 100, 2)))
 
