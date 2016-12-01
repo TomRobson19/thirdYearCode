@@ -56,6 +56,7 @@ def kFold():
 		test resulting learned [classifier|function …] using kth subset
 	report mean error over all k tests
 	'''
+	#do this in scikit learn
 
 def confusionMatrix():
 	'''
@@ -114,9 +115,7 @@ def knn(train_x, train_y, test_x, test_y):
 ############ Perform Training -- SVM
 def svm(train_x, train_y, test_x, test_y):
 
-	## use SVM auto-training (grid search)
-	# if available in python bindings see open issue: https://github.com/opencv/opencv/issues/7224
-	#use_svm_autotrain = False
+	#implement own grid search 
 
 	# define SVM object
 	svm = cv2.ml.SVM_create()
@@ -126,7 +125,7 @@ def svm(train_x, train_y, test_x, test_y):
 	svm.setKernel(cv2.ml.SVM_LINEAR)
 
 	# set parameters (some specific to certain kernels)
-	svm.setC(10) # penalty constant on margin optimization
+	svm.setC(10) # penalty constant on margin optimization - doesn't seem to do much
 	svm.setType(cv2.ml.SVM_C_SVC) # multiple class (2 or more) classification
 	svm.setGamma(0.5) # used for SVM_RBF kernel only, otherwise has no effect
 	svm.setDegree(3)  # used for SVM_POLY kernel only, otherwise has no effect
@@ -135,13 +134,6 @@ def svm(train_x, train_y, test_x, test_y):
 	svm.setClassWeights(np.ones(12))
 
 	# # define and train svm object
-	# if (use_svm_autotrain) :
-	#     # use automatic grid search across the parameter space of kernel specified above
-	#     # (ignoring kernel parameters set previously)
-
-	#     # if available in python bindings see open issue: https://github.com/opencv/opencv/issues/7224
-	#     svm.trainAuto(cv2.ml.TrainData_create(train_x, cv2.ml.ROW_SAMPLE, train_y), kFold=10)
-	# else :
 	# use kernel specified above with kernel parameters set previously
 	svm.train(train_x, cv2.ml.ROW_SAMPLE, train_y.astype(int))
 
