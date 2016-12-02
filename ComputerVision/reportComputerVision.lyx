@@ -3,6 +3,9 @@
 \begin_document
 \begin_header
 \textclass article
+\begin_preamble
+\date{}
+\end_preamble
 \use_default_options true
 \maintain_unincluded_children false
 \language english
@@ -89,13 +92,11 @@ Preprocessing
 \end_layout
 
 \begin_layout Standard
-Following a close examination of the dataset, it was determined that all
- of the foreground edges required could be found in the lower 30% of the
- image.
- Therefore, the first step in preprocessing was to crop out the top 70%
- of the image, as this removes a substantial proportion of the noise, and
- therefore a substantial proportion of the potential false positives.
- Next was the conversion to the grayscale colour space.
+Following an examination of the dataset, it was determined that most of
+ the foreground edges required could be found in the lower 30% of the image.
+ Therefore, the top 70% of the image was cropped out, as this removed much
+ of the noise, and therefore many of the potential false positives.
+ Next was the conversion to grayscale.
  Conversion to other colour spaces were attempted but these gave an inferior
  output when used for edge detection.
  Another approach attempted for this was to identify the dominant colour
@@ -319,8 +320,8 @@ First, two of the non-zero pixels in the canny image are randomly selected,
  of interest to us are close to vertical, any line with a gradient close
  to horizontal was eliminated.
  This greatly reduced the number of false positives returned by the algorithm.
- From here, this line is drawn onto a blank image, and compared to the canny
- image using a bitwise AND operation.
+ This line is then drawn onto a blank image, and compared to the canny image
+ using a bitwise AND operation.
  If the number of common pixels is above the threshold, then the line is
  accepted.
  Then, for each of the accepted lines, we compare them to existing lines
@@ -336,8 +337,7 @@ First, two of the non-zero pixels in the canny image are randomly selected,
  This is run until a line is found, or until the threshold gets too low,
  in which case it is accepted that no line is found.
  This approach slows down runtime and generates some false positives, but
- also finds more valid lines so it has been decided that it is worth it.
- 
+ also finds more valid lines.
 \end_layout
 
 \begin_layout Standard
@@ -757,19 +757,17 @@ Problems
 \end_layout
 
 \begin_layout Standard
-Here is a video 
+This video 
 \begin_inset CommandInset href
 LatexCommand href
 target "https://www.youtube.com/watch?v=n_9_PGpW0rI"
 
 \end_inset
 
- showing the algorithm running quickly through the rest of the dataset,
- supplied for interest.
- As stated above, on most of the images it performs well, but there are
- occasional false positives, mostly due to the lowering of the threshold
- if no lines are found.
- These are mainly found in the more challenging images.
+ shows the algorithm running through the entire dataset.On most of the images
+ it performs well, but there are occasional false positives, mostly due
+ to the lowering of the threshold if no lines are found.
+ These are found in the more challenging images.
 \end_layout
 
 \begin_layout Standard
@@ -777,7 +775,7 @@ target "https://www.youtube.com/watch?v=n_9_PGpW0rI"
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent

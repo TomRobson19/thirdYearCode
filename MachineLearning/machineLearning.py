@@ -4,6 +4,10 @@ import numpy as np
 import os
 import math
 import random
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import KFold
+from sklearn import datasets
+from sklearn import svm
 
 path_to_data = "HAPT-data-set-DU" 
 
@@ -40,13 +44,18 @@ attributes=np.array(attribute_list).astype(np.float32)
 labels=np.array(label_list).astype(np.float32)
 
 # select first N% of the entries
-N = 70.0
+# N = 70.0
 
-train_x = attributes[0:int(math.floor(len(attributes)* (N/100.0)))]
-train_y = labels[0:int(math.floor(len(labels)* (N/100.0)))]
+# train_x = attributes[0:int(math.floor(len(attributes)* (N/100.0)))]
+# train_y = labels[0:int(math.floor(len(labels)* (N/100.0)))]
 
-test_x = attributes[int(math.floor(len(attributes)* (N/100.0))):len(attributes)]
-test_y = labels[int(math.floor(len(labels)* (N/100.0))):len(labels)]
+# test_x = attributes[int(math.floor(len(attributes)* (N/100.0))):len(attributes)]
+# test_y = labels[int(math.floor(len(labels)* (N/100.0))):len(labels)]
+
+kf = KFold(n_splits=10)
+for train, test in kf.split(attributes):
+    train_x, test_x, train_y, test_y = attributes[train], attributes[test], labels[train], labels[test]
+
 
 def kFold():
 	'''

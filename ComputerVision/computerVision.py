@@ -27,8 +27,10 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
         height = original.shape[0]
         img = original[(int)(7*height/10):height,0:original.shape[1]]
 
+        #convert to grayscale
         gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
+        #apply Bilateral filter to blur image
         filtered = cv2.bilateralFilter(gray,9,75,75)
 
         median = np.median(filtered)
@@ -42,6 +44,7 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
 
         data = cv2.findNonZero(canny)
 
+
         t = 2
         v = 100 
         trials = 1000
@@ -53,6 +56,7 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
         keepChecking = True
 
         while keepChecking:
+            #run through full number of trials
             for counter in range(trials):
                 r1 = random.randint(0,len(data)-1)
                 r2 = random.randint(0,len(data)-1)
@@ -74,6 +78,7 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
                     #draw lines for the whole cut off image
                     lines = cv2.line(lines,(int((0-c)/gradient),0),(int((canny.shape[0]-c)/gradient),canny.shape[0]),255,2)
 
+                    #compare lines to canny
                     compare =  np.zeros((canny.shape[0],canny.shape[1]), np.uint8)
                     compare = cv2.bitwise_and(canny,lines)
 
@@ -94,9 +99,11 @@ for filename in list(sorted(os.listdir(directory_to_cycle))):
                                     draw = False
                                     break
                         if draw == True:
+                            #draw line on image
                             img = cv2.line(img,(int((0-c)/gradient),0),(int((canny.shape[0]-c)/gradient),canny.shape[0]),(0,0,255),3)
                             linesDetected += 1
             if linesDetected == 0 and v > 20:
+                #decrement threshold
                 v = v-10
             else:
                 keepChecking = False
