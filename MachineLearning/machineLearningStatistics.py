@@ -4,6 +4,10 @@ import numpy as np
 import os
 import math
 import random
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import KFold
+from sklearn import datasets
+from sklearn import svm
 
 path_to_data = "HAPT-data-set-DU" 
 
@@ -37,24 +41,43 @@ random.shuffle(temp)
 attribute_list, label_list = zip(*temp)
 
 attributes=np.array(attribute_list).astype(np.float32)
-labels=np.array(label_list).astype(np.uint8)
+labels=np.array(label_list).astype(np.float32)
 
-#select first N% of the entries
-N = 70.0
+print('Files read')
 
-train_x = attributes[0:int(math.floor(len(attributes)* (N/100.0)))]
-train_y = labels[0:int(math.floor(len(labels)* (N/100.0)))]
+def kFoldKNN(attributes,labels):
+	success = 0
+	failure = 0
+	counter = 0
+	kf = KFold(n_splits=10,shuffle=True)
+	for train,test in kf.split(attributes):
+	    train_x, test_x, train_y, test_y = np.array(attributes[train]), np.array(attributes[test]), np.array(labels[train]).astype(np.uint8), np.array(labels[test]).astype(np.uint8)
+	    right,wrong = KNN(train_x,train_y,test_x,test_y)
+	    success += right
+	    failure += wrong
+	    counter += 1
+	    print('Round '+str(counter)+' complete')
+	    
+	print('Overall performance summary')
+	print('Average success is '+str(round((success)/10, 2))+'%')
+	print('Average failure is '+str(round((failure)/10, 2))+'%')
+	'''
+	Randomly split (all) the data into k­subsets
+	for 1 to k
+		train using all the data not in kth subset
+		test resulting learned [classifier|function …] using kth subset
+	report mean error over all k tests
+	'''
+	#do this in scikit learn
 
-test_x = attributes[int(math.floor(len(attributes)* (N/100.0))):len(attributes)]
-test_y = labels[int(math.floor(len(labels)* (N/100.0))):len(labels)]
-
-print ('Files read')
+def confusionMatrix():
+	'''
+	make confusion matrix
+	'''
+#need to do accuracy, precision and recall
 
 ############ Perform Training -- k-NN
 def KNN(train_x, train_y, test_x, test_y):
-
-	print(train_x, train_y, test_x, test_y)
-
 	'''
 	Experiments: Kfold, value of K, confusion matrix, weighted knn
 
@@ -100,10 +123,12 @@ def KNN(train_x, train_y, test_x, test_y):
 
 	# output summmary statistics
 	total = correct + wrong
-	print("KNN")
-	print("Performance Summary")
-	print("Total Correct : {}%".format(round((correct / float(total)) * 100, 2)))
-	print("Total Wrong : {}%".format(round((wrong / float(total)) * 100, 2)))
+	# print("KNN")
+	# print("Performance Summary")
+	# print("Total Correct : {}%".format(round((correct / float(total)) * 100, 2)))
+	# print("Total Wrong : {}%".format(round((wrong / float(total)) * 100, 2)))
+
+	return round((correct / float(total)) * 100,2),round((wrong / float(total)) * 100,2)
 
 ############ Perform Training -- SVM
 def SVM(train_x, train_y, test_x, test_y):
@@ -162,5 +187,4 @@ def SVM(train_x, train_y, test_x, test_y):
 	print("Total Correct : {}%".format(round((correct / float(total)) * 100, 2)))
 	print("Total Wrong : {}%".format(round((wrong / float(total)) * 100, 2)))
 
-KNN(train_x, train_y, test_x, test_y)
-SVM(train_x, train_y, test_x, test_y)
+kFoldKNN(attributes,labels)
