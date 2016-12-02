@@ -49,7 +49,8 @@ def kFoldKNN(attributes,labels):
 	success = 0
 	failure = 0
 	counter = 0
-	kf = KFold(n_splits=10,shuffle=True)
+
+	kf = KFold(n_splits=10)
 	for train,test in kf.split(attributes):
 	    train_x, test_x, train_y, test_y = np.array(attributes[train]), np.array(attributes[test]), np.array(labels[train]).astype(np.uint8), np.array(labels[test]).astype(np.uint8)
 	    right,wrong = KNN(train_x,train_y,test_x,test_y)
@@ -61,14 +62,6 @@ def kFoldKNN(attributes,labels):
 	print('Overall performance summary')
 	print('Average success is '+str(round((success)/10, 2))+'%')
 	print('Average failure is '+str(round((failure)/10, 2))+'%')
-	'''
-	Randomly split (all) the data into k­subsets
-	for 1 to k
-		train using all the data not in kth subset
-		test resulting learned [classifier|function …] using kth subset
-	report mean error over all k tests
-	'''
-	#do this in scikit learn
 
 def confusionMatrix():
 	'''
@@ -80,7 +73,6 @@ def confusionMatrix():
 def KNN(train_x, train_y, test_x, test_y):
 	'''
 	Experiments: Kfold, value of K, confusion matrix, weighted knn
-
 	'''
 	# define kNN object
 	knn = cv2.ml.KNearest_create()
