@@ -75,6 +75,11 @@ def confusionMatrix():
 
 ############ Perform Training -- k-NN
 def knn(train_x, train_y, test_x, test_y):
+
+	'''
+	Experiments: Kfold, value of K, confusion matrix, weighted knn
+
+	'''
 	# define kNN object
 	knn = cv2.ml.KNearest_create()
 
