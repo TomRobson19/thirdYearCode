@@ -100,8 +100,8 @@ k = 10 for all algorithms, commonly used value, enables effective comparison
 
 \end_layout
 
-\begin_layout Standard
-In this coursework
+\begin_layout Section*
+Experimental Approach
 \end_layout
 
 \begin_layout Section*
@@ -109,7 +109,7 @@ K-Nearest Neighbour
 \end_layout
 
 \begin_layout Section*
-Support Vector Machine
+Support Vector Machines
 \end_layout
 
 \begin_layout Section*
@@ -140,6 +140,36 @@ Draw conclusions from your experimentation and comment on any potential
  ethical issues of using such a software solution for the this task (in
  scenarios as outlined) where performance can only be statistically guaranteed
  and false positive / false negative classifications will occur in use.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+@article{scikit-learn, title={Scikit-learn: Machine Learning in {P}ython},
+ author={Pedregosa, F.
+ and Varoquaux, G.
+ and Gramfort, A.
+ and Michel, V.
+ and Thirion, B.
+ and Grisel, O.
+ and Blondel, M.
+ and Prettenhofer, P.
+ and Weiss, R.
+ and Dubourg, V.
+ and Vanderplas, J.
+ and Passos, A.
+ and Cournapeau, D.
+ and Brucher, M.
+ and Perrot, M.
+ and Duchesnay, E.}, journal={Journal of Machine Learning Research}, volume={12},
+ pages={2825--2830}, year={2011} }
 \end_layout
 
 \end_inset
