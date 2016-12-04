@@ -108,8 +108,34 @@ Experimental Approach
 K-Nearest Neighbour
 \end_layout
 
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Still need to do weighting, results for default in KNN.txt
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section*
 Support Vector Machines
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Still unsure of what parameters I actually need to change for each kernel
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
