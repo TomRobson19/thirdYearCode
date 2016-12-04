@@ -51,17 +51,17 @@ labels=np.array(label_list).astype(np.float32)
 
 print('Files read')
 
-def KNNStatistics(attributes,labels):
+def KNNStatistics(K,attributes,labels):
 	success = 0
 	failure = 0
 	counter = 0
 	allSolutions = [] 
 	allLabels = [] 
-	print('KNN')
+	print('KNN with K as '+str(K))
 	kf = KFold(n_splits=10)
 	for train,test in kf.split(attributes):
 	    train_x, test_x, train_y, test_y = np.array(attributes[train]), np.array(attributes[test]), np.array(labels[train]).astype(np.uint8), np.array(labels[test]).astype(np.uint8)
-	    solutions,right,wrong = KNN(train_x,train_y,test_x,test_y)
+	    solutions,right,wrong = KNN(K,train_x,train_y,test_x,test_y)
 	    allSolutions = np.concatenate((allSolutions,solutions))
 	    allLabels = np.concatenate((allLabels,test_y))
 	    success += right
@@ -74,9 +74,9 @@ def KNNStatistics(attributes,labels):
 
 	confusionMatrix = confusion_matrix(allLabels, allSolutions)
 
-	plt.figure()
-	plot_confusion_matrix(confusionMatrix, classes=classes.values(),title='Normalized confusion matrix')
-	plt.show()
+	# plt.figure()
+	# plot_confusion_matrix(confusionMatrix, classes=classes.values(),title='Normalized confusion matrix')
+	# plt.show()
 
 def SVMStatistics(attributes,labels):
 	success = 0
@@ -84,7 +84,7 @@ def SVMStatistics(attributes,labels):
 	counter = 0
 	allSolutions = [] 
 	allLabels = [] 
-	print('KNN')
+	print('SVM')
 	kf = KFold(n_splits=10)
 	for train,test in kf.split(attributes):
 	    train_x, test_x, train_y, test_y = np.array(attributes[train]), np.array(attributes[test]), np.array(labels[train]).astype(np.uint8), np.array(labels[test]).astype(np.uint8)
@@ -138,7 +138,7 @@ def plot_confusion_matrix(cm,classes,title='Confusion matrix',cmap=plt.cm.Blues)
 
 
 ############ Perform Training -- k-NN
-def KNN(train_x, train_y, test_x, test_y):
+def KNN(K,train_x, train_y, test_x, test_y):
 	'''
 	Experiments: Kfold, value of K, confusion matrix, weighted knn
 	'''
@@ -177,7 +177,7 @@ def KNN(train_x, train_y, test_x, test_y):
 	    # now do the prediction returning the result, results (ignored) and also the responses
 	    # + distances of each of the k nearest neighbours
 	    # N.B. k at classification time must be < maxK from earlier training
-	    ret, results, neigh_respones, distances = knn.findNearest(sample, k = 3)#EXPERIMENT WITH THIS
+	    ret, results, neigh_respones, distances = knn.findNearest(sample, k = K)#EXPERIMENT WITH THIS
 
 	    if (results[0] == test_y[i]) : correct+=1
 	    elif (results[0] != test_y[i]) : wrong+=1
@@ -248,7 +248,7 @@ def SVM(train_x, train_y, test_x, test_y):
 	    if (result[0] == test_y[i]) : correct+=1
 	    elif (result[0] != test_y[i]) : wrong+=1
 
-	    solutions.append(result[0])
+	    solutions.append(float(result[0]))
 
 	# output summmary statistics
 	total = wrong + correct
@@ -263,4 +263,5 @@ def SVM(train_x, train_y, test_x, test_y):
 
 	return solutions,round((correct / float(total)) * 100,2),round((wrong / float(total)) * 100,2)
 
-SVMStatistics(attributes,labels)
+#for K in range(1,31):
+#	KNNStatistics(K,attributes,labels)
