@@ -53,8 +53,6 @@ print ('Files read')
 ############ Perform Training -- k-NN
 def KNN(train_x, train_y, test_x, test_y):
 
-	print(train_x, train_y, test_x, test_y)
-
 	'''
 	Experiments: Kfold, value of K, confusion matrix, weighted knn
 

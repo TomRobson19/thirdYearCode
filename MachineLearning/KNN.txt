@@ -1,15 +1,4 @@
-Files read
 KNN with K as 1
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.99      1.00      1.00      1722
@@ -28,17 +17,8 @@ Round 10 complete
 avg / total       0.96      0.96      0.96     10929
 
 Accuracy: 0.956171653399
+
 KNN with K as 2
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -57,17 +37,8 @@ Round 10 complete
 avg / total       0.95      0.94      0.94     10929
 
 Accuracy: 0.94116570592
+
 KNN with K as 3
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.99      1.00      0.99      1722
@@ -86,17 +57,8 @@ Round 10 complete
 avg / total       0.96      0.96      0.96     10929
 
 Accuracy: 0.95589715436
+
 KNN with K as 4
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -115,17 +77,8 @@ Round 10 complete
 avg / total       0.95      0.95      0.95     10929
 
 Accuracy: 0.950590172934
+
 KNN with K as 5
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.99      1.00      0.99      1722
@@ -144,17 +97,8 @@ Round 10 complete
 avg / total       0.95      0.95      0.95     10929
 
 Accuracy: 0.954890657883
+
 KNN with K as 6
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -173,17 +117,8 @@ Round 10 complete
 avg / total       0.95      0.95      0.95     10929
 
 Accuracy: 0.950315673895
+
 KNN with K as 7
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.99      1.00      0.99      1722
@@ -202,17 +137,8 @@ Round 10 complete
 avg / total       0.95      0.95      0.95     10929
 
 Accuracy: 0.952511666209
+
 KNN with K as 8
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -231,17 +157,8 @@ Round 10 complete
 avg / total       0.95      0.95      0.95     10929
 
 Accuracy: 0.948760179339
+
 KNN with K as 9
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -260,17 +177,8 @@ Round 10 complete
 avg / total       0.95      0.95      0.95     10929
 
 Accuracy: 0.949766675817
+
 KNN with K as 10
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -289,17 +197,8 @@ Round 10 complete
 avg / total       0.95      0.95      0.95     10929
 
 Accuracy: 0.94839418062
+
 KNN with K as 11
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -318,17 +217,8 @@ Round 10 complete
 avg / total       0.95      0.95      0.95     10929
 
 Accuracy: 0.94866867966
+
 KNN with K as 12
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -347,17 +237,8 @@ Round 10 complete
 avg / total       0.95      0.95      0.94     10929
 
 Accuracy: 0.945649190228
+
 KNN with K as 13
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -376,17 +257,8 @@ Round 10 complete
 avg / total       0.95      0.95      0.95     10929
 
 Accuracy: 0.945832189587
+
 KNN with K as 14
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -405,17 +277,8 @@ Round 10 complete
 avg / total       0.94      0.94      0.94     10929
 
 Accuracy: 0.942812700156
+
 KNN with K as 15
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -434,17 +297,8 @@ Round 10 complete
 avg / total       0.94      0.94      0.94     10929
 
 Accuracy: 0.942446701437
+
 KNN with K as 16
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -463,17 +317,8 @@ Round 10 complete
 avg / total       0.94      0.94      0.94     10929
 
 Accuracy: 0.94116570592
+
 KNN with K as 17
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -492,17 +337,8 @@ Round 10 complete
 avg / total       0.94      0.94      0.94     10929
 
 Accuracy: 0.942355201757
+
 KNN with K as 18
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -521,17 +357,8 @@ Round 10 complete
 avg / total       0.94      0.94      0.94     10929
 
 Accuracy: 0.939793210724
+
 KNN with K as 19
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -550,17 +377,8 @@ Round 10 complete
 avg / total       0.94      0.94      0.94     10929
 
 Accuracy: 0.94116570592
+
 KNN with K as 20
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -579,17 +397,8 @@ Round 10 complete
 avg / total       0.94      0.94      0.94     10929
 
 Accuracy: 0.938878213926
+
 KNN with K as 21
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.98      1.00      0.99      1722
@@ -608,17 +417,8 @@ Round 10 complete
 avg / total       0.94      0.94      0.94     10929
 
 Accuracy: 0.939793210724
+
 KNN with K as 22
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.97      1.00      0.99      1722
@@ -637,17 +437,8 @@ Round 10 complete
 avg / total       0.94      0.94      0.94     10929
 
 Accuracy: 0.937139720011
+
 KNN with K as 23
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.97      1.00      0.99      1722
@@ -666,17 +457,8 @@ Round 10 complete
 avg / total       0.94      0.94      0.94     10929
 
 Accuracy: 0.938146216488
+
 KNN with K as 24
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.97      1.00      0.98      1722
@@ -695,17 +477,8 @@ Round 10 complete
 avg / total       0.94      0.94      0.94     10929
 
 Accuracy: 0.936590721932
+
 KNN with K as 25
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.97      1.00      0.99      1722
@@ -724,17 +497,8 @@ Round 10 complete
 avg / total       0.94      0.94      0.94     10929
 
 Accuracy: 0.937871717449
+
 KNN with K as 26
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.97      1.00      0.98      1722
@@ -753,17 +517,8 @@ Round 10 complete
 avg / total       0.94      0.94      0.94     10929
 
 Accuracy: 0.936407722573
+
 KNN with K as 27
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.97      1.00      0.98      1722
@@ -782,17 +537,8 @@ Round 10 complete
 avg / total       0.94      0.94      0.94     10929
 
 Accuracy: 0.936224723213
+
 KNN with K as 28
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.97      1.00      0.98      1722
@@ -811,17 +557,8 @@ Round 10 complete
 avg / total       0.93      0.93      0.93     10929
 
 Accuracy: 0.934211730259
+
 KNN with K as 29
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.97      1.00      0.98      1722
@@ -840,17 +577,8 @@ Round 10 complete
 avg / total       0.93      0.93      0.93     10929
 
 Accuracy: 0.93393723122
+
 KNN with K as 30
-Round 1 complete
-Round 2 complete
-Round 3 complete
-Round 4 complete
-Round 5 complete
-Round 6 complete
-Round 7 complete
-Round 8 complete
-Round 9 complete
-Round 10 complete
              precision    recall  f1-score   support
 
         1.0       0.97      1.00      0.98      1722

@@ -72,23 +72,23 @@ def KNNStatistics(K,attributes,labels):
 	print(classification_report(allLabels, allSolutions))
 	print('Accuracy: '+str(accuracy_score(allLabels, allSolutions)))
 
-	confusionMatrix = confusion_matrix(allLabels, allSolutions)
+	# confusionMatrix = confusion_matrix(allLabels, allSolutions)
 
 	# plt.figure()
 	# plot_confusion_matrix(confusionMatrix, classes=classes.values(),title='Normalized confusion matrix')
 	# plt.show()
 
-def SVMStatistics(attributes,labels):
+def SVMStatistics(v,attributes,labels):
 	success = 0
 	failure = 0
 	counter = 0
 	allSolutions = [] 
 	allLabels = [] 
-	print('SVM')
+	print('SVM with C as '+str(v))
 	kf = KFold(n_splits=10)
 	for train,test in kf.split(attributes):
 	    train_x, test_x, train_y, test_y = np.array(attributes[train]), np.array(attributes[test]), np.array(labels[train]).astype(np.uint8), np.array(labels[test]).astype(np.uint8)
-	    solutions,right,wrong = SVM(train_x,train_y,test_x,test_y)
+	    solutions,right,wrong = SVM(v,train_x,train_y,test_x,test_y)
 	    allSolutions = np.concatenate((allSolutions,solutions))
 	    allLabels = np.concatenate((allLabels,test_y))
 	    success += right
@@ -99,11 +99,11 @@ def SVMStatistics(attributes,labels):
 	print(classification_report(allLabels, allSolutions))
 	print('Accuracy: '+str(accuracy_score(allLabels, allSolutions)))
 
-	confusionMatrix = confusion_matrix(allLabels, allSolutions)
+	# confusionMatrix = confusion_matrix(allLabels, allSolutions)
 
-	plt.figure()
-	plot_confusion_matrix(confusionMatrix, classes=classes.values(),title='Normalized confusion matrix')
-	plt.show()
+	# plt.figure()
+	# plot_confusion_matrix(confusionMatrix, classes=classes.values(),title='Normalized confusion matrix')
+	# plt.show()
 
 def plot_confusion_matrix(cm,classes,title='Confusion matrix',cmap=plt.cm.Blues):
     """
@@ -135,7 +135,6 @@ def plot_confusion_matrix(cm,classes,title='Confusion matrix',cmap=plt.cm.Blues)
     plt.tight_layout()
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
-
 
 ############ Perform Training -- k-NN
 def KNN(K,train_x, train_y, test_x, test_y):
@@ -177,7 +176,7 @@ def KNN(K,train_x, train_y, test_x, test_y):
 	    # now do the prediction returning the result, results (ignored) and also the responses
 	    # + distances of each of the k nearest neighbours
 	    # N.B. k at classification time must be < maxK from earlier training
-	    ret, results, neigh_respones, distances = knn.findNearest(sample, k = K)#EXPERIMENT WITH THIS
+	    ret, results, neigh_respones, distances = knn.findNearest(sample, k = K) #EXPERIMENT WITH THIS
 
 	    if (results[0] == test_y[i]) : correct+=1
 	    elif (results[0] != test_y[i]) : wrong+=1
@@ -198,19 +197,17 @@ def KNN(K,train_x, train_y, test_x, test_y):
 	return solutions, round((correct / float(total)) * 100,2),round((wrong / float(total)) * 100,2)
 
 ############ Perform Training -- SVM
-def SVM(train_x, train_y, test_x, test_y):
-
-	#implement own grid search 
+def SVM(v,train_x, train_y, test_x, test_y):
 
 	# define SVM object
 	svm = cv2.ml.SVM_create()
 
 	# set kernel
 	# choices : # SVM_LINEAR / SVM_RBF / SVM_POLY / SVM_SIGMOID / SVM_CHI2 / SVM_INTER
-	svm.setKernel(cv2.ml.SVM_LINEAR)
+	svm.setKernel(cv2.ml.SVM_CHI2)
 
 	# set parameters (some specific to certain kernels)
-	svm.setC(10) # penalty constant on margin optimization - doesn't seem to do much - only Linear kernel
+	svm.setC(v) # penalty constant on margin optimization - doesn't seem to do much - only Linear kernel - EXPONENTIAL (default is 10)
 	
 	svm.setType(cv2.ml.SVM_C_SVC) # multiple class (2 or more) classification
 	
@@ -263,5 +260,8 @@ def SVM(train_x, train_y, test_x, test_y):
 
 	return solutions,round((correct / float(total)) * 100,2),round((wrong / float(total)) * 100,2)
 
-#for K in range(1,31):
-#	KNNStatistics(K,attributes,labels)
+# for k in range(1,31):
+# 	KNNStatistics(k,attributes,labels)
+
+#KNNStatistics(10,attributes,labels)
+SVMStatistics(10,attributes,labels)

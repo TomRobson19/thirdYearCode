@@ -100,6 +100,11 @@ k = 10 for all algorithms, commonly used value, enables effective comparison
 
 \end_layout
 
+\begin_layout Standard
+When normalised, need to take into account that errors did occur in datasets
+ with larger number of samples, just appear less important.
+\end_layout
+
 \begin_layout Section*
 Experimental Approach
 \end_layout
@@ -136,6 +141,18 @@ Still unsure of what parameters I actually need to change for each kernel
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Linear kernel is decent
+\end_layout
+
+\begin_layout Standard
+RBF Kernel is slow and shit
+\end_layout
+
+\begin_layout Standard
+Poly Kernel is better than linear
 \end_layout
 
 \begin_layout Section*
