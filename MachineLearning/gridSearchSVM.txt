@@ -1,0 +1,369 @@
+0.965 (+/-0.001) for {'gamma': 0.1, 'C': 1, 'kernel': 'rbf'}
+0.965 (+/-0.002) for {'gamma': 0.01, 'C': 1, 'kernel': 'rbf'}
+0.910 (+/-0.002) for {'gamma': 0.001, 'C': 1, 'kernel': 'rbf'}
+0.790 (+/-0.006) for {'gamma': 0.0001, 'C': 1, 'kernel': 'rbf'}
+0.341 (+/-0.000) for {'gamma': 1e-05, 'C': 1, 'kernel': 'rbf'}
+
+0.968 (+/-0.002) for {'gamma': 0.1, 'C': 10, 'kernel': 'rbf'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 10, 'kernel': 'rbf'}
+0.964 (+/-0.002) for {'gamma': 0.001, 'C': 10, 'kernel': 'rbf'}
+0.910 (+/-0.002) for {'gamma': 0.0001, 'C': 10, 'kernel': 'rbf'}
+0.791 (+/-0.006) for {'gamma': 1e-05, 'C': 10, 'kernel': 'rbf'}
+
+0.968 (+/-0.002) for {'gamma': 0.1, 'C': 100, 'kernel': 'rbf'}
+0.982 (+/-0.002) for {'gamma': 0.01, 'C': 100, 'kernel': 'rbf'} ###########
+0.975 (+/-0.002) for {'gamma': 0.001, 'C': 100, 'kernel': 'rbf'}
+0.964 (+/-0.002) for {'gamma': 0.0001, 'C': 100, 'kernel': 'rbf'}
+0.910 (+/-0.002) for {'gamma': 1e-05, 'C': 100, 'kernel': 'rbf'}
+
+0.968 (+/-0.002) for {'gamma': 0.1, 'C': 1000, 'kernel': 'rbf'}
+0.982 (+/-0.002) for {'gamma': 0.01, 'C': 1000, 'kernel': 'rbf'} ##########
+0.977 (+/-0.002) for {'gamma': 0.001, 'C': 1000, 'kernel': 'rbf'}
+0.974 (+/-0.002) for {'gamma': 0.0001, 'C': 1000, 'kernel': 'rbf'}
+0.964 (+/-0.002) for {'gamma': 1e-05, 'C': 1000, 'kernel': 'rbf'}
+
+0.968 (+/-0.002) for {'gamma': 0.1, 'C': 10000, 'kernel': 'rbf'}
+0.982 (+/-0.002) for {'gamma': 0.01, 'C': 10000, 'kernel': 'rbf'} #########
+0.978 (+/-0.001) for {'gamma': 0.001, 'C': 10000, 'kernel': 'rbf'}
+0.974 (+/-0.002) for {'gamma': 0.0001, 'C': 10000, 'kernel': 'rbf'}
+0.974 (+/-0.002) for {'gamma': 1e-05, 'C': 10000, 'kernel': 'rbf'}
+
+
+0.974 (+/-0.002) for {'C': 1, 'kernel': 'linear'}
+0.974 (+/-0.002) for {'C': 10, 'kernel': 'linear'}
+0.972 (+/-0.002) for {'C': 100, 'kernel': 'linear'}
+0.972 (+/-0.002) for {'C': 1000, 'kernel': 'linear'}
+0.972 (+/-0.002) for {'C': 10000, 'kernel': 'linear'}
+
+
+0.974 (+/-0.002) for {'gamma': 0.1, 'C': 1, 'degree': 1, 'kernel': 'poly'}
+0.956 (+/-0.003) for {'gamma': 0.01, 'C': 1, 'degree': 1, 'kernel': 'poly'}
+0.887 (+/-0.003) for {'gamma': 0.001, 'C': 1, 'degree': 1, 'kernel': 'poly'}
+0.681 (+/-0.004) for {'gamma': 0.0001, 'C': 1, 'degree': 1, 'kernel': 'poly'}
+0.339 (+/-0.001) for {'gamma': 1e-05, 'C': 1, 'degree': 1, 'kernel': 'poly'}
+
+
+0.979 (+/-0.001) for {'gamma': 0.1, 'C': 1, 'degree': 2, 'kernel': 'poly'}
+0.974 (+/-0.002) for {'gamma': 0.01, 'C': 1, 'degree': 2, 'kernel': 'poly'}
+0.853 (+/-0.003) for {'gamma': 0.001, 'C': 1, 'degree': 2, 'kernel': 'poly'}
+0.243 (+/-0.001) for {'gamma': 0.0001, 'C': 1, 'degree': 2, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1, 'degree': 2, 'kernel': 'poly'}
+
+
+0.980 (+/-0.001) for {'gamma': 0.1, 'C': 1, 'degree': 3, 'kernel': 'poly'}
+0.977 (+/-0.001) for {'gamma': 0.01, 'C': 1, 'degree': 3, 'kernel': 'poly'}
+0.786 (+/-0.003) for {'gamma': 0.001, 'C': 1, 'degree': 3, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 1, 'degree': 3, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1, 'degree': 3, 'kernel': 'poly'}
+
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 1, 'degree': 4, 'kernel': 'poly'} 
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 1, 'degree': 4, 'kernel': 'poly'}
+0.578 (+/-0.004) for {'gamma': 0.001, 'C': 1, 'degree': 4, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 1, 'degree': 4, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1, 'degree': 4, 'kernel': 'poly'}
+
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 1, 'degree': 5, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 1, 'degree': 5, 'kernel': 'poly'}
+0.515 (+/-0.001) for {'gamma': 0.001, 'C': 1, 'degree': 5, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 1, 'degree': 5, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1, 'degree': 5, 'kernel': 'poly'}
+
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 1, 'degree': 6, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 1, 'degree': 6, 'kernel': 'poly'}
+0.506 (+/-0.001) for {'gamma': 0.001, 'C': 1, 'degree': 6, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 1, 'degree': 6, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1, 'degree': 6, 'kernel': 'poly'}
+
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 1, 'degree': 7, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 1, 'degree': 7, 'kernel': 'poly'}
+0.337 (+/-0.001) for {'gamma': 0.001, 'C': 1, 'degree': 7, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 1, 'degree': 7, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1, 'degree': 7, 'kernel': 'poly'}
+
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 1, 'degree': 8, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 1, 'degree': 8, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.001, 'C': 1, 'degree': 8, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 1, 'degree': 8, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1, 'degree': 8, 'kernel': 'poly'}
+
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 1, 'degree': 9, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 1, 'degree': 9, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.001, 'C': 1, 'degree': 9, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 1, 'degree': 9, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1, 'degree': 9, 'kernel': 'poly'}
+
+
+0.980 (+/-0.001) for {'gamma': 0.1, 'C': 1, 'degree': 10, 'kernel': 'poly'}
+0.980 (+/-0.001) for {'gamma': 0.01, 'C': 1, 'degree': 10, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.001, 'C': 1, 'degree': 10, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 1, 'degree': 10, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1, 'degree': 10, 'kernel': 'poly'}
+
+
+0.974 (+/-0.002) for {'gamma': 0.1, 'C': 10, 'degree': 1, 'kernel': 'poly'}
+0.974 (+/-0.002) for {'gamma': 0.01, 'C': 10, 'degree': 1, 'kernel': 'poly'}
+0.956 (+/-0.003) for {'gamma': 0.001, 'C': 10, 'degree': 1, 'kernel': 'poly'}
+0.887 (+/-0.003) for {'gamma': 0.0001, 'C': 10, 'degree': 1, 'kernel': 'poly'}
+0.681 (+/-0.004) for {'gamma': 1e-05, 'C': 10, 'degree': 1, 'kernel': 'poly'}
+
+0.979 (+/-0.001) for {'gamma': 0.1, 'C': 10, 'degree': 2, 'kernel': 'poly'}
+0.978 (+/-0.002) for {'gamma': 0.01, 'C': 10, 'degree': 2, 'kernel': 'poly'}
+0.947 (+/-0.002) for {'gamma': 0.001, 'C': 10, 'degree': 2, 'kernel': 'poly'}
+0.520 (+/-0.001) for {'gamma': 0.0001, 'C': 10, 'degree': 2, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10, 'degree': 2, 'kernel': 'poly'}
+
+0.980 (+/-0.001) for {'gamma': 0.1, 'C': 10, 'degree': 3, 'kernel': 'poly'}
+0.980 (+/-0.001) for {'gamma': 0.01, 'C': 10, 'degree': 3, 'kernel': 'poly'}
+0.913 (+/-0.002) for {'gamma': 0.001, 'C': 10, 'degree': 3, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10, 'degree': 3, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10, 'degree': 3, 'kernel': 'poly'}
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 10, 'degree': 4, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 10, 'degree': 4, 'kernel': 'poly'}
+0.846 (+/-0.003) for {'gamma': 0.001, 'C': 10, 'degree': 4, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10, 'degree': 4, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10, 'degree': 4, 'kernel': 'poly'}
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 10, 'degree': 5, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 10, 'degree': 5, 'kernel': 'poly'}
+0.684 (+/-0.002) for {'gamma': 0.001, 'C': 10, 'degree': 5, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10, 'degree': 5, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10, 'degree': 5, 'kernel': 'poly'}
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 10, 'degree': 6, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 10, 'degree': 6, 'kernel': 'poly'}
+0.608 (+/-0.003) for {'gamma': 0.001, 'C': 10, 'degree': 6, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10, 'degree': 6, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10, 'degree': 6, 'kernel': 'poly'}
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 10, 'degree': 7, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 10, 'degree': 7, 'kernel': 'poly'}
+0.556 (+/-0.003) for {'gamma': 0.001, 'C': 10, 'degree': 7, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10, 'degree': 7, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10, 'degree': 7, 'kernel': 'poly'}
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 10, 'degree': 8, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 10, 'degree': 8, 'kernel': 'poly'}
+0.504 (+/-0.001) for {'gamma': 0.001, 'C': 10, 'degree': 8, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10, 'degree': 8, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10, 'degree': 8, 'kernel': 'poly'}
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 10, 'degree': 9, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 10, 'degree': 9, 'kernel': 'poly'}
+0.473 (+/-0.002) for {'gamma': 0.001, 'C': 10, 'degree': 9, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10, 'degree': 9, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10, 'degree': 9, 'kernel': 'poly'}
+
+0.980 (+/-0.001) for {'gamma': 0.1, 'C': 10, 'degree': 10, 'kernel': 'poly'}
+0.980 (+/-0.001) for {'gamma': 0.01, 'C': 10, 'degree': 10, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.001, 'C': 10, 'degree': 10, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10, 'degree': 10, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10, 'degree': 10, 'kernel': 'poly'}
+
+0.974 (+/-0.002) for {'gamma': 0.1, 'C': 100, 'degree': 1, 'kernel': 'poly'}
+0.974 (+/-0.002) for {'gamma': 0.01, 'C': 100, 'degree': 1, 'kernel': 'poly'}
+0.974 (+/-0.002) for {'gamma': 0.001, 'C': 100, 'degree': 1, 'kernel': 'poly'}
+0.956 (+/-0.003) for {'gamma': 0.0001, 'C': 100, 'degree': 1, 'kernel': 'poly'}
+0.887 (+/-0.003) for {'gamma': 1e-05, 'C': 100, 'degree': 1, 'kernel': 'poly}
+
+0.979 (+/-0.001) for {'gamma': 0.1, 'C': 100, 'degree': 2, 'kernel': 'poly'}
+0.979 (+/-0.001) for {'gamma': 0.01, 'C': 100, 'degree': 2, 'kernel': 'poly'}
+0.974 (+/-0.002) for {'gamma': 0.001, 'C': 100, 'degree': 2, 'kernel': 'poly'}
+0.853 (+/-0.003) for {'gamma': 0.0001, 'C': 100, 'degree': 2, 'kernel': 'poly'}
+0.243 (+/-0.001) for {'gamma': 1e-05, 'C': 100, 'degree': 2, 'kernel': 'poly'}
+
+0.980 (+/-0.001) for {'gamma': 0.1, 'C': 100, 'degree': 3, 'kernel': 'poly'}
+0.980 (+/-0.001) for {'gamma': 0.01, 'C': 100, 'degree': 3, 'kernel': 'poly'}
+0.967 (+/-0.002) for {'gamma': 0.001, 'C': 100, 'degree': 3, 'kernel': 'poly'}
+0.515 (+/-0.001) for {'gamma': 0.0001, 'C': 100, 'degree': 3, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 100, 'degree': 3, 'kernel': 'poly'}
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 100, 'degree': 4, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 100, 'degree': 4, 'kernel': 'poly'}
+0.950 (+/-0.002) for {'gamma': 0.001, 'C': 100, 'degree': 4, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 100, 'degree': 4, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 100, 'degree': 4, 'kernel': 'poly'}
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 100, 'degree': 5, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 100, 'degree': 5, 'kernel': 'poly'}
+0.906 (+/-0.003) for {'gamma': 0.001, 'C': 100, 'degree': 5, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 100, 'degree': 5, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 100, 'degree': 5, 'kernel': 'poly'}
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 100, 'degree': 6, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 100, 'degree': 6, 'kernel': 'poly'}
+0.815 (+/-0.006) for {'gamma': 0.001, 'C': 100, 'degree': 6, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 100, 'degree': 6, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 100, 'degree': 6, 'kernel': 'poly'}
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 100, 'degree': 7, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 100, 'degree': 7, 'kernel': 'poly'}
+0.659 (+/-0.002) for {'gamma': 0.001, 'C': 100, 'degree': 7, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 100, 'degree': 7, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 100, 'degree': 7, 'kernel': 'poly'}
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 100, 'degree': 8, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 100, 'degree': 8, 'kernel': 'poly'}
+0.614 (+/-0.002) for {'gamma': 0.001, 'C': 100, 'degree': 8, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 100, 'degree': 8, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 100, 'degree': 8, 'kernel': 'poly'}
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 100, 'degree': 9, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 100, 'degree': 9, 'kernel': 'poly'}
+0.590 (+/-0.003) for {'gamma': 0.001, 'C': 100, 'degree': 9, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 100, 'degree': 9, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 100, 'degree': 9, 'kernel': 'poly'}
+
+0.980 (+/-0.001) for {'gamma': 0.1, 'C': 100, 'degree': 10, 'kernel': 'poly'}
+0.980 (+/-0.001) for {'gamma': 0.01, 'C': 100, 'degree': 10, 'kernel': 'poly'}
+0.513 (+/-0.002) for {'gamma': 0.001, 'C': 100, 'degree': 10, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 100, 'degree': 10, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 100, 'degree': 10, 'kernel': 'poly'}
+
+0.973 (+/-0.002) for {'gamma': 0.1, 'C': 1000, 'degree': 1, 'kernel': 'poly'}
+0.974 (+/-0.002) for {'gamma': 0.01, 'C': 1000, 'degree': 1, 'kernel': 'poly'}
+0.974 (+/-0.002) for {'gamma': 0.001, 'C': 1000, 'degree': 1, 'kernel': 'poly'}
+0.974 (+/-0.002) for {'gamma': 0.0001, 'C': 1000, 'degree': 1, 'kernel': 'poly'}
+0.956 (+/-0.003) for {'gamma': 1e-05, 'C': 1000, 'degree': 1, 'kernel': 'poly'}
+
+0.979 (+/-0.001) for {'gamma': 0.1, 'C': 1000, 'degree': 2, 'kernel': 'poly'}
+0.979 (+/-0.001) for {'gamma': 0.01, 'C': 1000, 'degree': 2, 'kernel': 'poly'}
+0.978 (+/-0.002) for {'gamma': 0.001, 'C': 1000, 'degree': 2, 'kernel': 'poly'}
+0.947 (+/-0.002) for {'gamma': 0.0001, 'C': 1000, 'degree': 2, 'kernel': 'poly'}
+0.520 (+/-0.001) for {'gamma': 1e-05, 'C': 1000, 'degree': 2, 'kernel': 'poly'}
+
+0.980 (+/-0.001) for {'gamma': 0.1, 'C': 1000, 'degree': 3, 'kernel': 'poly'}
+0.980 (+/-0.001) for {'gamma': 0.01, 'C': 1000, 'degree': 3, 'kernel': 'poly'}
+0.977 (+/-0.001) for {'gamma': 0.001, 'C': 1000, 'degree': 3, 'kernel': 'poly'}
+0.786 (+/-0.003) for {'gamma': 0.0001, 'C': 1000, 'degree': 3, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1000, 'degree': 3, 'kernel': 'poly'}
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 1000, 'degree': 4, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 1000, 'degree': 4, 'kernel': 'poly'}
+0.977 (+/-0.001) for {'gamma': 0.001, 'C': 1000, 'degree': 4, 'kernel': 'poly'}
+0.336 (+/-0.001) for {'gamma': 0.0001, 'C': 1000, 'degree': 4, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1000, 'degree': 4, 'kernel': 'poly'}
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 1000, 'degree': 5, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 1000, 'degree': 5, 'kernel': 'poly'}
+0.965 (+/-0.002) for {'gamma': 0.001, 'C': 1000, 'degree': 5, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 1000, 'degree': 5, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1000, 'degree': 5, 'kernel': 'poly'}
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 1000, 'degree': 6, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 1000, 'degree': 6, 'kernel': 'poly'}
+0.940 (+/-0.002) for {'gamma': 0.001, 'C': 1000, 'degree': 6, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 1000, 'degree': 6, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1000, 'degree': 6, 'kernel': 'poly'}
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 1000, 'degree': 7, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 1000, 'degree': 7, 'kernel': 'poly'}
+0.856 (+/-0.005) for {'gamma': 0.001, 'C': 1000, 'degree': 7, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 1000, 'degree': 7, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1000, 'degree': 7, 'kernel': 'poly'}
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 1000, 'degree': 8, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 1000, 'degree': 8, 'kernel': 'poly'}
+0.722 (+/-0.003) for {'gamma': 0.001, 'C': 1000, 'degree': 8, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 1000, 'degree': 8, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1000, 'degree': 8, 'kernel': 'poly'}
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 1000, 'degree': 9, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 1000, 'degree': 9, 'kernel': 'poly'}
+0.650 (+/-0.002) for {'gamma': 0.001, 'C': 1000, 'degree': 9, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 1000, 'degree': 9, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1000, 'degree': 9, 'kernel': 'poly'}
+
+0.980 (+/-0.001) for {'gamma': 0.1, 'C': 1000, 'degree': 10, 'kernel': 'poly'}
+0.980 (+/-0.001) for {'gamma': 0.01, 'C': 1000, 'degree': 10, 'kernel': 'poly'}
+0.623 (+/-0.003) for {'gamma': 0.001, 'C': 1000, 'degree': 10, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 1000, 'degree': 10, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 1000, 'degree': 10, 'kernel': 'poly'}
+
+0.972 (+/-0.002) for {'gamma': 0.1, 'C': 10000, 'degree': 1, 'kernel': 'poly'}
+0.972 (+/-0.002) for {'gamma': 0.01, 'C': 10000, 'degree': 1, 'kernel': 'poly'}
+0.974 (+/-0.002) for {'gamma': 0.001, 'C': 10000, 'degree': 1, 'kernel': 'poly'}
+0.974 (+/-0.002) for {'gamma': 0.0001, 'C': 10000, 'degree': 1, 'kernel': 'poly'}
+0.974 (+/-0.002) for {'gamma': 1e-05, 'C': 10000, 'degree': 1, 'kernel': 'poly'}
+
+0.979 (+/-0.001) for {'gamma': 0.1, 'C': 10000, 'degree': 2, 'kernel': 'poly'}
+0.979 (+/-0.001) for {'gamma': 0.01, 'C': 10000, 'degree': 2, 'kernel': 'poly'}
+0.979 (+/-0.001) for {'gamma': 0.001, 'C': 10000, 'degree': 2, 'kernel': 'poly'}
+0.974 (+/-0.002) for {'gamma': 0.0001, 'C': 10000, 'degree': 2, 'kernel': 'poly'}
+0.853 (+/-0.003) for {'gamma': 1e-05, 'C': 10000, 'degree': 2, 'kernel': 'poly'}
+
+0.980 (+/-0.001) for {'gamma': 0.1, 'C': 10000, 'degree': 3, 'kernel': 'poly'}
+0.980 (+/-0.001) for {'gamma': 0.01, 'C': 10000, 'degree': 3, 'kernel': 'poly'}
+0.980 (+/-0.001) for {'gamma': 0.001, 'C': 10000, 'degree': 3, 'kernel': 'poly'}
+0.913 (+/-0.002) for {'gamma': 0.0001, 'C': 10000, 'degree': 3, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10000, 'degree': 3, 'kernel': 'poly'}
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 10000, 'degree': 4, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 10000, 'degree': 4, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.001, 'C': 10000, 'degree': 4, 'kernel': 'poly'}
+0.578 (+/-0.004) for {'gamma': 0.0001, 'C': 10000, 'degree': 4, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10000, 'degree': 4, 'kernel': 'poly'}
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 10000, 'degree': 5, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 10000, 'degree': 5, 'kernel': 'poly'}
+0.980 (+/-0.001) for {'gamma': 0.001, 'C': 10000, 'degree': 5, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10000, 'degree': 5, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10000, 'degree': 5, 'kernel': 'poly'}
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 10000, 'degree': 6, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 10000, 'degree': 6, 'kernel': 'poly'}
+0.972 (+/-0.002) for {'gamma': 0.001, 'C': 10000, 'degree': 6, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10000, 'degree': 6, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10000, 'degree': 6, 'kernel': 'poly'}
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 10000, 'degree': 7, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 10000, 'degree': 7, 'kernel': 'poly'}
+0.956 (+/-0.001) for {'gamma': 0.001, 'C': 10000, 'degree': 7, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10000, 'degree': 7, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10000, 'degree': 7, 'kernel': 'poly'}
+
+0.981 (+/-0.002) for {'gamma': 0.1, 'C': 10000, 'degree': 8, 'kernel': 'poly'}
+0.981 (+/-0.002) for {'gamma': 0.01, 'C': 10000, 'degree': 8, 'kernel': 'poly'}
+0.908 (+/-0.002) for {'gamma': 0.001, 'C': 10000, 'degree': 8, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10000, 'degree': 8, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10000, 'degree': 8, 'kernel': 'poly'}
+
+0.980 (+/-0.002) for {'gamma': 0.1, 'C': 10000, 'degree': 9, 'kernel': 'poly'}
+0.980 (+/-0.002) for {'gamma': 0.01, 'C': 10000, 'degree': 9, 'kernel': 'poly'}
+0.816 (+/-0.006) for {'gamma': 0.001, 'C': 10000, 'degree': 9, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10000, 'degree': 9, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10000, 'degree': 9, 'kernel': 'poly'}
+
+0.980 (+/-0.001) for {'gamma': 0.1, 'C': 10000, 'degree': 10, 'kernel': 'poly'}
+0.980 (+/-0.001) for {'gamma': 0.01, 'C': 10000, 'degree': 10, 'kernel': 'poly'}
+0.697 (+/-0.003) for {'gamma': 0.001, 'C': 10000, 'degree': 10, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10000, 'degree': 10, 'kernel': 'poly'}
+0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10000, 'degree': 10, 'kernel': 'poly'}
+
+Detailed classification report:
+
+The model is trained on the full development set.
+The scores are computed on the full evaluation set.
+
+             precision    recall  f1-score   support
+
+        1.0       0.99      1.00      1.00       178
+        2.0       1.00      1.00      1.00       153
+        3.0       1.00      0.99      1.00       153
+        4.0       0.98      0.96      0.97       192
+        5.0       0.96      0.98      0.97       199
+        6.0       0.99      1.00      1.00       158
+        7.0       0.75      0.86      0.80         7
+        8.0       1.00      0.75      0.86         4
+        9.0       0.64      0.78      0.70         9
+       10.0       0.73      0.92      0.81        12
+       11.0       0.82      0.78      0.80        18
+       12.0       1.00      0.50      0.67        10
+
+avg / total       0.98      0.98      0.98      1093

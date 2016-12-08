@@ -41,7 +41,6 @@ for row in reader:
         # attributes in column 1
         label_list.append(row[0])
 
-
 temp = list(zip(attribute_list, label_list))
 random.shuffle(temp)
 attribute_list, label_list = zip(*temp)
@@ -72,11 +71,11 @@ def KNNStatistics(K,attributes,labels):
 	print(classification_report(allLabels, allSolutions))
 	print('Accuracy: '+str(accuracy_score(allLabels, allSolutions)))
 
-	# confusionMatrix = confusion_matrix(allLabels, allSolutions)
+	confusionMatrix = confusion_matrix(allLabels, allSolutions)
 
-	# plt.figure()
-	# plot_confusion_matrix(confusionMatrix, classes=classes.values(),title='Normalized confusion matrix')
-	# plt.show()
+	plt.figure()
+	plot_confusion_matrix(confusionMatrix, classes=classes.values(),title='Normalized confusion matrix')
+	plt.show()
 
 def SVMStatistics(v,attributes,labels):
 	success = 0
@@ -117,7 +116,7 @@ def plot_confusion_matrix(cm,classes,title='Confusion matrix',cmap=plt.cm.Blues)
     plt.title(title)
     
     tick_marks = np.arange(len(classes))
-    plt.xticks(tick_marks, classes, rotation=45)
+    plt.xticks(tick_marks, classes, rotation=90)
     plt.yticks(tick_marks, classes)
 
     
@@ -125,7 +124,6 @@ def plot_confusion_matrix(cm,classes,title='Confusion matrix',cmap=plt.cm.Blues)
 
     #print(cm)
 
-    thresh = cm.max() / 10.
     plt.colorbar()
     for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
         plt.text(j, i, cm[i, j],
@@ -204,7 +202,7 @@ def SVM(v,train_x, train_y, test_x, test_y):
 
 	# set kernel
 	# choices : # SVM_LINEAR / SVM_RBF / SVM_POLY / SVM_SIGMOID / SVM_CHI2 / SVM_INTER
-	svm.setKernel(cv2.ml.SVM_CHI2)
+	svm.setKernel(cv2.ml.SVM_POLY)
 
 	# set parameters (some specific to certain kernels)
 	svm.setC(v) # penalty constant on margin optimization - doesn't seem to do much - only Linear kernel - EXPONENTIAL (default is 10)
@@ -263,5 +261,5 @@ def SVM(v,train_x, train_y, test_x, test_y):
 # for k in range(1,31):
 # 	KNNStatistics(k,attributes,labels)
 
-#KNNStatistics(10,attributes,labels)
+#KNNStatistics(3,attributes,labels)
 SVMStatistics(10,attributes,labels)
