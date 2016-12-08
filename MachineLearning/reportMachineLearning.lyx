@@ -4,7 +4,8 @@
 \begin_header
 \textclass article
 \begin_preamble
-\date{}
+\usepackage {url}
+\usepackage [numbers]{natbib}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -119,10 +120,24 @@ Experimental Approach
 \end_layout
 
 \begin_layout Standard
-The algorithms are implemented in OpenCV, and can be run in machineLearning.py
- on a randomised 70:30 split of the data set.
- The statistics were calculated using the Scikit Learn library [ref] in
- separate files, also supplied.
+The algorithms are implemented in OpenCV, using code from the Github Repository
+ provided 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "breckonRepo"
+
+\end_inset
+
+, and can be run in machineLearning.py on a randomised 70:30 split of the
+ data set.
+ The statistics were calculated using the Scikit Learn library 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "scikit-learn"
+
+\end_inset
+
+ in separate files, also supplied.
  The algorithms selected for implementation are K-Nearest Neighbour and
  Support Vector Machines.
  K-fold cross validation was used for both algorithms to ensure that the
@@ -132,8 +147,15 @@ The algorithms are implemented in OpenCV, and can be run in machineLearning.py
 \end_inset
 
  was the value chosen to ensure uniform testing across all parameters for
- both algorithms.
- [JUSTIFY THIS VALUE]
+ both algorithms, as this has previously been shown to be a good value.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "kohavi1995study"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -141,7 +163,9 @@ The decimal precision provided in the tests carried out for this report
  are constrained by the values that some of the Scikit Learn functions,
  such as classification_report(), which was used to generate the precision,
  recall and F1 values given below.
- 
+ It is also important to note that in the confusion matrices, some false
+ classifications did occur for classes with a large number of occurances,
+ but due to normalisation, it appears as if they did not occur.
 \end_layout
 
 \begin_layout Section*
@@ -2805,24 +2829,6 @@ Confusion Matrices
 
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Still need to do weighting, results for default in KNN.txt
-\end_layout
-
-\begin_layout Plain Layout
-Have full table, need table for all classes on best K, graph of K vs accuracy,
- confusion Matrix of best K.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section*
 Support Vector Machines (SVM)
 \end_layout
@@ -2855,27 +2861,22 @@ and
  Degree behaved differently for the Polynomial Kernel, and this was varied
  between 1 and 10.
  Many of the tests yielded the same accuracy value, but only 1 set of parameters
- that generated the highest accurayc value to 3 decimal places is provided
+ that generated the highest accuracy value to 3 decimal places is provided
  here.
  THE FULL GRID SEARCH IS PROVIDED IN AN EXTERNAL FILE
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float table
+placement H
 wide false
 sideways false
 status open
 
 \begin_layout Plain Layout
 \begin_inset Tabular
-<lyxtabular version="3" rows="3" columns="18">
+<lyxtabular version="3" rows="3" columns="12">
 <features rotate="0" tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -2970,7 +2971,7 @@ Poly Kernel
 
 \end_inset
 </cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2989,60 +2990,6 @@ Sigmoid Kernel
 \end_inset
 </cell>
 <cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Chi2 Kernel
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Inter Kernel
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -3157,63 +3104,6 @@ C
 \end_inset
 
 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Accuracy
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-C
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\gamma$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Degree
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Accuracy
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-C
 \end_layout
 
 \end_inset
@@ -3314,7 +3204,7 @@ Accuracy
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+10000
 \end_layout
 
 \end_inset
@@ -3323,61 +3213,7 @@ Accuracy
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+0.0001
 \end_layout
 
 \end_inset
@@ -3386,7 +3222,7 @@ Accuracy
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.975
 \end_layout
 
 \end_inset
@@ -3397,10 +3233,6 @@ Accuracy
 \end_inset
 
 
-\end_layout
-
-\begin_layout Plain Layout
-CHI2 AND INTER SEEM NOT TO BE IN SKLEARN, CHECK THIS WHEN I GET INTERNET
 \end_layout
 
 \begin_layout Plain Layout
@@ -3425,16 +3257,17 @@ Optimal Parameters and Accuracy values for each Kernel
 \end_layout
 
 \begin_layout Standard
-The best kernel was [INSERT KERNEL HERE].
+The best kernel was the RBF kernel.
  The results per class with these settings are included in Table 4.
  
 \end_layout
 
 \begin_layout Standard
 \begin_inset Float table
+placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -4450,15 +4283,17 @@ Tables of Class Specific Results
 
 \begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
 \end_layout
 
 \begin_layout Plain Layout
+\noindent
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -4483,16 +4318,22 @@ status collapsed
 Conclusions
 \end_layout
 
+\begin_layout Standard
+We can see from these tests that the best method to use for this dataset
+ would be SVM with the RBF kernel, with an accuracy rate of 98.2%.
+ 
+\end_layout
+
 \begin_layout Section*
 Ethical Issues
 \end_layout
 
 \begin_layout Standard
-As these results are accurate, [VALUES HERE], these algorithms can reasonably
- be used to monitor behaviour, but not in critical situations.
- An accuracy value of [VALUES HERE] is acceptable for this dataset and would
- be useful and practical for an application like an exercise monitoring
- system.
+As these results are accurate, with an optimal value of 98.2% for SVM, these
+ algorithms can reasonably be used to monitor behaviour, but not in critical
+ situations.
+ This level of accuracy is acceptable for this dataset and would be useful
+ and practical for an application like an exercise monitoring system.
  In a system like this, the few false positives generated by the algorithm
  will not be particularly important.
  However, if a system like this was used to monitor the health of ill or
@@ -4504,7 +4345,7 @@ s, such as whether a machine should really be responsible to making decisions
  about a person's health, as even if it is correct in the vast majority
  of cases, the unpredictability of the consequences of false classifications
  are a concern for many.
-  
+ 
 \end_layout
 
 \begin_layout Standard
@@ -4539,29 +4380,10 @@ Draw conclusions from your experimentation and comment on any potential
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-@article{scikit-learn, title={Scikit-learn: Machine Learning in Python},
- author={Pedregosa, F.
- and Varoquaux, G.
- and Gramfort, A.
- and Michel, V.
- and Thirion, B.
- and Grisel, O.
- and Blondel, M.
- and Prettenhofer, P.
- and Weiss, R.
- and Dubourg, V.
- and Vanderplas, J.
- and Passos, A.
- and Cournapeau, D.
- and Brucher, M.
- and Perrot, M.
- and Duchesnay, E.}, journal={Journal of Machine Learning Research}, volume={12},
- pages={2825--2830}, year={2011} }
-\end_layout
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "ML"
+options "plain"
 
 \end_inset
 

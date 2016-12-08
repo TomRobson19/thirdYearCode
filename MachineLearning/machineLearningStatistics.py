@@ -202,7 +202,7 @@ def SVM(v,train_x, train_y, test_x, test_y):
 
 	# set kernel
 	# choices : # SVM_LINEAR / SVM_RBF / SVM_POLY / SVM_SIGMOID / SVM_CHI2 / SVM_INTER
-	svm.setKernel(cv2.ml.SVM_POLY)
+	svm.setKernel(cv2.ml.SVM_RBF)
 
 	# set parameters (some specific to certain kernels)
 	svm.setC(v) # penalty constant on margin optimization - doesn't seem to do much - only Linear kernel - EXPONENTIAL (default is 10)

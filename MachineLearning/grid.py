@@ -63,7 +63,7 @@ X_train, X_test, y_train, y_test = train_test_split(attributes, labels, test_siz
 #                     {'kernel': ['inter'], 'C': [1,10,100,1000,10000]}, #####NOT IN SKLEARN
 #                     {'kernel': ['chi2'], 'C': [1,10,100,1000,10000], 'gamma': [1e-1,1e-2,1e-3,1e-4,1e-5]}] #####NOT IN SKLEARN
 
-tuned_parameters = [{'kernel': ['sigmoid'], 'C': [1,10,100,1000,10000], 'gamma': [1e-1,1e-2,1e-3,1e-4,1e-5]}]
+tuned_parameters = [{'kernel': ['linear'], 'C': [1,10,100,1000,10000]}]
 
 scores = ['accuracy']
 

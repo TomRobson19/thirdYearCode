@@ -28,13 +28,47 @@
 0.974 (+/-0.002) for {'gamma': 0.0001, 'C': 10000, 'kernel': 'rbf'}
 0.974 (+/-0.002) for {'gamma': 1e-05, 'C': 10000, 'kernel': 'rbf'}
 
+#################################################################################################################
 
-0.974 (+/-0.002) for {'C': 1, 'kernel': 'linear'}
-0.974 (+/-0.002) for {'C': 10, 'kernel': 'linear'}
-0.972 (+/-0.002) for {'C': 100, 'kernel': 'linear'}
-0.972 (+/-0.002) for {'C': 1000, 'kernel': 'linear'}
-0.972 (+/-0.002) for {'C': 10000, 'kernel': 'linear'}
+Best parameters set found on development set:
 
+SVC(C=1, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape=None, degree=3, gamma='auto', kernel='linear',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+
+Grid scores on development set:
+
+0.973 (+/-0.002) for {'kernel': 'linear', 'C': 1}
+0.972 (+/-0.002) for {'kernel': 'linear', 'C': 10}
+0.971 (+/-0.002) for {'kernel': 'linear', 'C': 100}
+0.970 (+/-0.002) for {'kernel': 'linear', 'C': 1000}
+0.970 (+/-0.002) for {'kernel': 'linear', 'C': 10000}
+
+Detailed classification report:
+
+The model is trained on the full development set.
+The scores are computed on the full evaluation set.
+
+             precision    recall  f1-score   support
+
+        1.0       0.99      1.00      1.00       182
+        2.0       1.00      1.00      1.00       156
+        3.0       1.00      0.99      1.00       137
+        4.0       0.95      0.95      0.95       182
+        5.0       0.95      0.96      0.96       191
+        6.0       1.00      1.00      1.00       200
+        7.0       0.50      0.50      0.50         2
+        8.0       1.00      0.67      0.80         3
+        9.0       0.82      0.60      0.69        15
+       10.0       0.88      0.88      0.88         8
+       11.0       0.75      0.92      0.83        13
+       12.0       0.75      0.75      0.75         4
+
+avg / total       0.97      0.97      0.97      1093
+
+
+#################################################################################################################
 
 0.974 (+/-0.002) for {'gamma': 0.1, 'C': 1, 'degree': 1, 'kernel': 'poly'}
 0.956 (+/-0.003) for {'gamma': 0.01, 'C': 1, 'degree': 1, 'kernel': 'poly'}
@@ -345,25 +379,3 @@
 0.697 (+/-0.003) for {'gamma': 0.001, 'C': 10000, 'degree': 10, 'kernel': 'poly'}
 0.183 (+/-0.000) for {'gamma': 0.0001, 'C': 10000, 'degree': 10, 'kernel': 'poly'}
 0.183 (+/-0.000) for {'gamma': 1e-05, 'C': 10000, 'degree': 10, 'kernel': 'poly'}
-
-Detailed classification report:
-
-The model is trained on the full development set.
-The scores are computed on the full evaluation set.
-
-             precision    recall  f1-score   support
-
-        1.0       0.99      1.00      1.00       178
-        2.0       1.00      1.00      1.00       153
-        3.0       1.00      0.99      1.00       153
-        4.0       0.98      0.96      0.97       192
-        5.0       0.96      0.98      0.97       199
-        6.0       0.99      1.00      1.00       158
-        7.0       0.75      0.86      0.80         7
-        8.0       1.00      0.75      0.86         4
-        9.0       0.64      0.78      0.70         9
-       10.0       0.73      0.92      0.81        12
-       11.0       0.82      0.78      0.80        18
-       12.0       1.00      0.50      0.67        10
-
-avg / total       0.98      0.98      0.98      1093
