@@ -88,33 +88,6 @@ Contemporary Computer Science III – Machine Learning
 Tom Robson - hzwr87
 \end_layout
 
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Many things to do, most in block CAPS
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-When normalised, need to take into account that errors did occur in datasets
- with larger number of samples, just appear less important.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Section*
 Experimental Approach
 \end_layout
@@ -128,8 +101,8 @@ key "breckonRepo"
 
 \end_inset
 
-, and can be run in machineLearning.py on a randomised 70:30 split of the
- data set.
+, and can be run in machineLearning.py on the provided test and training
+ splits of the datasets.
  The statistics were calculated using the Scikit Learn library 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -137,11 +110,15 @@ key "scikit-learn"
 
 \end_inset
 
- in separate files, also supplied.
- The algorithms selected for implementation are K-Nearest Neighbour and
- Support Vector Machines.
- K-fold cross validation was used for both algorithms to ensure that the
- whole dataset is included for both training and testing.
+ in separate files, machineLearningStatistics.py and grid.py, also supplied.
+ 
+\end_layout
+
+\begin_layout Standard
+The algorithms selected for implementation are K-Nearest Neighbour and Support
+ Vector Machines.
+ K-fold cross validation was used for the experiments on both algorithms
+ to ensure that the whole dataset is included for both training and testing.
  
 \begin_inset Formula $K=10$
 \end_inset
@@ -164,7 +141,7 @@ The decimal precision provided in the tests carried out for this report
  such as classification_report(), which was used to generate the precision,
  recall and F1 values given below.
  It is also important to note that in the confusion matrices, some false
- classifications did occur for classes with a large number of occurances,
+ classifications did occur for classes with a large number of occurrences,
  but due to normalisation, it appears as if they did not occur.
 \end_layout
 
@@ -2839,12 +2816,12 @@ In the SVM algorithm, there are many more parameters that can be changed.
  parameters associated with it.
  To evaluate these, a grid searching approach was employed, again using
  methods from Scikit Learn.
- A comparison of the kernels on the optimal parameters found for each is
- included below in Table 3.
+ A comparison of the Linear, Polynomial and RBF kernels on the optimal parameter
+s found for each is included below in Table 3.
  A more thorough grid search was performed, but has been omitted here due
  to the shear volume of data generated.
  For all appropriate kernels, C was tested between 1 and 100000, as it was
- found to only have a great effect when changing on a logarithmic scale.
+ found to only have a great effect when changing on this scale.
  The same was true of 
 \begin_inset Formula $\gamma$
 \end_inset
@@ -2857,13 +2834,13 @@ and
 \begin_inset Formula $10^{-5}$
 \end_inset
 
-.
- Degree behaved differently for the Polynomial Kernel, and this was varied
+ on the RBF and Polynomial kernels.
+ Degree behaves differently for the Polynomial Kernel, and this was varied
  between 1 and 10.
- Many of the tests yielded the same accuracy value, but only 1 set of parameters
- that generated the highest accuracy value to 3 decimal places is provided
- here.
- THE FULL GRID SEARCH IS PROVIDED IN AN EXTERNAL FILE
+ Many of the tests for each kernel yielded the same accuracy value, but
+ only 1 set of parameters that generated the highest accuracy value to 3
+ decimal places is provided here.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2871,15 +2848,14 @@ and
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\noindent
+\align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="3" columns="12">
+<lyxtabular version="3" rows="3" columns="9">
 <features rotate="0" tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -2935,7 +2911,7 @@ RBF Kernel
 
 \end_inset
 </cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2949,33 +2925,6 @@ Poly Kernel
 
 \begin_layout Plain Layout
 
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Sigmoid Kernel
 \end_layout
 
 \end_inset
@@ -3078,36 +3027,6 @@ Degree
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Accuracy
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-C
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $\gamma$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3191,38 +3110,11 @@ Accuracy
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.981
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-10000
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.0001
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.975
+0.981
 \end_layout
 
 \end_inset
@@ -3257,8 +3149,9 @@ Optimal Parameters and Accuracy values for each Kernel
 \end_layout
 
 \begin_layout Standard
-The best kernel was the RBF kernel.
- The results per class with these settings are included in Table 4.
+As seen in Table 3, the best performing kernel was the RBF kernel.
+ The detailed results per class with these settings are included in Table
+ 4, as well as its confusion matrix in Figure 3.
  
 \end_layout
 
@@ -3267,17 +3160,14 @@ The best kernel was the RBF kernel.
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="15" columns="7">
+<lyxtabular version="3" rows="15" columns="4">
 <features rotate="0" tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -3292,38 +3182,11 @@ Class
 
 \end_inset
 </cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-K=1
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
 <cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-K=3
+RBF Kernel
 \end_layout
 
 \end_inset
@@ -3375,33 +3238,6 @@ Recall
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-F1-Score
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Precision
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Recall
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3426,34 +3262,7 @@ Walking
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.99
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 1.00
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.00
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.99
 \end_layout
 
 \end_inset
@@ -3471,7 +3280,7 @@ Walking
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.99
+1.00
 \end_layout
 
 \end_inset
@@ -3491,34 +3300,7 @@ Walking Upstairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.99
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 1.00
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.99
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.98
 \end_layout
 
 \end_inset
@@ -3536,7 +3318,7 @@ Walking Upstairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.99
+1.00
 \end_layout
 
 \end_inset
@@ -3565,34 +3347,7 @@ Walking Downstairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.99
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.99
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.99
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.99
+1.00
 \end_layout
 
 \end_inset
@@ -3601,7 +3356,7 @@ Walking Downstairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.99
+1.00
 \end_layout
 
 \end_inset
@@ -3621,7 +3376,7 @@ Sitting
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.91
+0.98
 \end_layout
 
 \end_inset
@@ -3630,34 +3385,7 @@ Sitting
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.92
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.91
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.93
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.91
+0.98
 \end_layout
 
 \end_inset
@@ -3666,7 +3394,7 @@ Sitting
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.92
+0.98
 \end_layout
 
 \end_inset
@@ -3686,7 +3414,7 @@ Standing
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.93
+0.98
 \end_layout
 
 \end_inset
@@ -3695,34 +3423,7 @@ Standing
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.92
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.92
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.92
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.93
+0.98
 \end_layout
 
 \end_inset
@@ -3731,7 +3432,7 @@ Standing
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.93
+0.98
 \end_layout
 
 \end_inset
@@ -3752,33 +3453,6 @@ Laying
 
 \begin_layout Plain Layout
 1.00
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.00
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.00
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.99
 \end_layout
 
 \end_inset
@@ -3816,7 +3490,7 @@ Stand to Sit
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.86
+0.94
 \end_layout
 
 \end_inset
@@ -3825,34 +3499,7 @@ Stand to Sit
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.84
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.85
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.85
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.74
+0.87
 \end_layout
 
 \end_inset
@@ -3861,7 +3508,7 @@ Stand to Sit
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.79
+0.90
 \end_layout
 
 \end_inset
@@ -3881,7 +3528,7 @@ Sit to Stand
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.86
+0.91
 \end_layout
 
 \end_inset
@@ -3890,34 +3537,7 @@ Sit to Stand
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.94
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.90
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.86
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.94
+0.91
 \end_layout
 
 \end_inset
@@ -3926,7 +3546,7 @@ Sit to Stand
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.90
+0.91
 \end_layout
 
 \end_inset
@@ -3946,16 +3566,7 @@ Sit to Lie
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.74
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.81
+0.78
 \end_layout
 
 \end_inset
@@ -3969,29 +3580,11 @@ Sit to Lie
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.73
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.82
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.77
+0.78
 \end_layout
 
 \end_inset
@@ -4011,7 +3604,7 @@ Lie to Sit
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.61
+0.75
 \end_layout
 
 \end_inset
@@ -4020,34 +3613,7 @@ Lie to Sit
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.69
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.65
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.59
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.72
+0.73
 \end_layout
 
 \end_inset
@@ -4056,7 +3622,7 @@ Lie to Sit
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.65
+0.74
 \end_layout
 
 \end_inset
@@ -4085,34 +3651,7 @@ Stand to Lie
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.73
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.77
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.84
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.71
+0.81
 \end_layout
 
 \end_inset
@@ -4121,7 +3660,7 @@ Stand to Lie
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.77
+0.81
 \end_layout
 
 \end_inset
@@ -4141,7 +3680,7 @@ Lie to Stand
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.60
+0.73
 \end_layout
 
 \end_inset
@@ -4150,34 +3689,7 @@ Lie to Stand
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.48
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.53
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.60
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.39
+0.70
 \end_layout
 
 \end_inset
@@ -4186,7 +3698,7 @@ Lie to Stand
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.47
+0.72
 \end_layout
 
 \end_inset
@@ -4206,7 +3718,7 @@ Average
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.96
+0.98
 \end_layout
 
 \end_inset
@@ -4215,34 +3727,7 @@ Average
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.96
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.96
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.96
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.96
+0.98
 \end_layout
 
 \end_inset
@@ -4251,7 +3736,7 @@ Average
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.96
+0.98
 \end_layout
 
 \end_inset
@@ -4286,9 +3771,17 @@ Tables of Class Specific Results
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/tom/Downloads/SVM.png
+	scale 50
+
+\end_inset
+
 
 \end_layout
 
@@ -4297,7 +3790,7 @@ status open
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
+Confusion Matrix for SVM with RBF Kernel
 \end_layout
 
 \end_inset
@@ -4315,7 +3808,7 @@ status open
 \end_layout
 
 \begin_layout Section*
-Conclusions
+Conclusions from Experimentation
 \end_layout
 
 \begin_layout Standard
@@ -4334,17 +3827,18 @@ As these results are accurate, with an optimal value of 98.2% for SVM, these
  situations.
  This level of accuracy is acceptable for this dataset and would be useful
  and practical for an application like an exercise monitoring system.
- In a system like this, the few false positives generated by the algorithm
+ In a system like this, the few false classifications generated by the algorithm
  will not be particularly important.
- However, if a system like this was used to monitor the health of ill or
- elderly people, for example, an incorrect classification could be the differenc
-e between someone getting the help that they needed or not, and while this
- could increase the coverage that people in this situation need, the fact
- that false classifications can occur introduce interesting ethical complication
-s, such as whether a machine should really be responsible to making decisions
- about a person's health, as even if it is correct in the vast majority
- of cases, the unpredictability of the consequences of false classifications
- are a concern for many.
+ However, if a system like this was used to monitor the health of elderly
+ or infirm people, for example, an incorrect classification could be the
+ difference between someone getting the help that they needed or not.
+ While this could increase the coverage that people in this situation need,
+ the fact that false classifications can occur introduce interesting ethical
+ complications, such as whether a machine should really be responsible to
+ making decisions about a person's health, and who is to blame if a mistake
+ occurs.
+ Even if the system is correct in the vast majority of cases, the unpredictabili
+ty of the consequences of false classifications are a concern for many.
  
 \end_layout
 

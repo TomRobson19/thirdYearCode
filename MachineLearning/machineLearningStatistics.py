@@ -98,11 +98,11 @@ def SVMStatistics(v,attributes,labels):
 	print(classification_report(allLabels, allSolutions))
 	print('Accuracy: '+str(accuracy_score(allLabels, allSolutions)))
 
-	# confusionMatrix = confusion_matrix(allLabels, allSolutions)
+	confusionMatrix = confusion_matrix(allLabels, allSolutions)
 
-	# plt.figure()
-	# plot_confusion_matrix(confusionMatrix, classes=classes.values(),title='Normalized confusion matrix')
-	# plt.show()
+	plt.figure()
+	plot_confusion_matrix(confusionMatrix, classes=classes.values(),title='Normalized confusion matrix')
+	plt.show()
 
 def plot_confusion_matrix(cm,classes,title='Confusion matrix',cmap=plt.cm.Blues):
     """
@@ -205,11 +205,11 @@ def SVM(v,train_x, train_y, test_x, test_y):
 	svm.setKernel(cv2.ml.SVM_RBF)
 
 	# set parameters (some specific to certain kernels)
-	svm.setC(v) # penalty constant on margin optimization - doesn't seem to do much - only Linear kernel - EXPONENTIAL (default is 10)
+	svm.setC(100) # penalty constant on margin optimization - doesn't seem to do much - only Linear kernel - EXPONENTIAL (default is 10)
 	
 	svm.setType(cv2.ml.SVM_C_SVC) # multiple class (2 or more) classification
 	
-	svm.setGamma(0.5) # used for SVM_RBF kernel only, otherwise has no effect
+	svm.setGamma(0.01) # used for SVM_RBF kernel only, otherwise has no effect
 	
 	svm.setDegree(3)  # used for SVM_POLY kernel only, otherwise has no effect
 

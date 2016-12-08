@@ -21,32 +21,36 @@ inv_classes = {v: k for k, v in classes.items()}
 attribute_list = []
 label_list = []
 
-reader=csv.reader(open(os.path.join(path_to_data, "x.txt"),"rt", encoding='ascii'),delimiter=' ')
+reader=csv.reader(open(os.path.join(path_to_data, "Train/x_train.txt"),"rt", encoding='ascii'),delimiter=' ')
 for row in reader:
         # attributes in columns 0-561
         attribute_list.append(list(row[i] for i in (range(0,561))))
 
-reader=csv.reader(open(os.path.join(path_to_data, "y.txt"),"rt", encoding='ascii'),delimiter=' ')
+reader=csv.reader(open(os.path.join(path_to_data, "Train/y_train.txt"),"rt", encoding='ascii'),delimiter=' ')
 for row in reader:
         # attributes in column 1
         label_list.append(row[0])
 
+training_attributes=np.array(attribute_list).astype(np.float32)
+training_labels=np.array(label_list).astype(np.float32)
 
-temp = list(zip(attribute_list, label_list))
-random.shuffle(temp)
-attribute_list, label_list = zip(*temp)
+# Testing data - as currently split
 
-attributes=np.array(attribute_list).astype(np.float32)
-labels=np.array(label_list).astype(np.uint8)
+attribute_list = []
+label_list = []
 
-#select first N% of the entries
-N = 70.0
+reader=csv.reader(open(os.path.join(path_to_data, "Test/x_test.txt"),"rt", encoding='ascii'),delimiter=' ')
+for row in reader:
+        # attributes in columns 0-561
+        attribute_list.append(list(row[i] for i in (range(0,561))))
 
-train_x = attributes[0:int(math.floor(len(attributes)* (N/100.0)))]
-train_y = labels[0:int(math.floor(len(labels)* (N/100.0)))]
+reader=csv.reader(open(os.path.join(path_to_data, "Test/y_test.txt"),"rt", encoding='ascii'),delimiter=' ')
+for row in reader:
+        # attributes in column 1
+        label_list.append(row[0])
 
-test_x = attributes[int(math.floor(len(attributes)* (N/100.0))):len(attributes)]
-test_y = labels[int(math.floor(len(labels)* (N/100.0))):len(labels)]
+testing_attributes=np.array(attribute_list).astype(np.float32)
+testing_labels=np.array(label_list).astype(np.float32)
 
 print ('Files read')
 
@@ -160,5 +164,5 @@ def SVM(train_x, train_y, test_x, test_y):
 	print("Total Correct : {}%".format(round((correct / float(total)) * 100, 2)))
 	print("Total Wrong : {}%".format(round((wrong / float(total)) * 100, 2)))
 
-KNN(train_x, train_y, test_x, test_y)
-SVM(train_x, train_y, test_x, test_y)
+KNN(training_attributes, training_labels, testing_attributes, testing_labels)
+SVM(training_attributes, training_labels, testing_attributes, testing_labels)
