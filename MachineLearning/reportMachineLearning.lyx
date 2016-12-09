@@ -6,6 +6,7 @@
 \begin_preamble
 \usepackage {url}
 \usepackage [numbers]{natbib}
+\date{}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -155,9 +156,9 @@ The main parameter that can be changed in the KNN algorithm is K, or the
  This was varied from 1 to 30 across all 10 folds, and the average precision,
  recall and F1 score across all 12 classes are given in Table 1, as well
  as the accuracy of classification across the entire dataset.
- The accurayc has also been graphed in Figure 1.
- The best values for K from the experiments run are 1 and 3, with an accuracy
- of 95.62% and 95.59% respectively.
+ The accuracy has also been graphed in Figure 1.
+ The best values found for K from the experiments run are 1 and 3, with
+ an accuracy of 95.62% and 95.59% respectively.
  The results of these per class is shown in Table 2, as well as the correspondin
 g confusion matrices in Figure 2.
  
@@ -3150,8 +3151,8 @@ Optimal Parameters and Accuracy values for each Kernel
 
 \begin_layout Standard
 As seen in Table 3, the best performing kernel was the RBF kernel.
- The detailed results per class with these settings are included in Table
- 4, as well as its confusion matrix in Figure 3.
+ The precision, recall and F1 score per class with these settings are included
+ in Table 4, as well as its confusion matrix in Figure 3.
  
 \end_layout
 
@@ -3814,6 +3815,17 @@ Conclusions from Experimentation
 \begin_layout Standard
 We can see from these tests that the best method to use for this dataset
  would be SVM with the RBF kernel, with an accuracy rate of 98.2%.
+ This is one of the slower kernels to run, but the increase in accuracy
+ makes up for this.
+ This is a classic example of the 
+\begin_inset Quotes eld
+\end_inset
+
+No Free Lunch
+\begin_inset Quotes erd
+\end_inset
+
+ theorem.
  
 \end_layout
 
@@ -3840,37 +3852,6 @@ As these results are accurate, with an optimal value of 98.2% for SVM, these
  Even if the system is correct in the vast majority of cases, the unpredictabili
 ty of the consequences of false classifications are a concern for many.
  
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-(Short) Report (L3: max.
- 750 words / L4: max.
- 1000 words) briefly detailing your chosen machine learning approaches and
- the results/conclusions of your experimentation on the provided data set.
- 
-\end_layout
-
-\begin_layout Plain Layout
-Provide any tables, graphs and charts (as many as you feel necessary – as
- they do not count towards the work count) to summarise and support the
- performance of your chosen approaches on this data.
- 
-\end_layout
-
-\begin_layout Plain Layout
-Draw conclusions from your experimentation and comment on any potential
- ethical issues of using such a software solution for the this task (in
- scenarios as outlined) where performance can only be statistically guaranteed
- and false positive / false negative classifications will occur in use.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
