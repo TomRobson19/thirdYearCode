@@ -87,12 +87,15 @@ Computing Methodologies - Distributed Computing
 Tom Robson - hzwr87
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Section
 The Beta Synchroniser
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
+\begin_layout Subsection
+How the Beta Synchroniser works
+\end_layout
+
+\begin_layout Standard
 Synchroniser Beta begins with an initialisation phase, in which a leader
  is chosen in the network and a spanning tree is constructed with this leader
  node as the root.
@@ -108,9 +111,13 @@ Synchroniser Beta begins with an initialisation phase, in which a leader
  
 \end_layout
 
-\begin_layout Enumerate
+\begin_layout Subsection
+Comparison of Alpha and Beta
+\end_layout
+
+\begin_layout Standard
 When performing a comparison on a graph 
-\begin_inset Formula $G=(V,E)$
+\begin_inset Formula $G=(n,m)$
 \end_inset
 
 , with complexities expressed per round, it is clear that Synchroniser Alpha
@@ -119,16 +126,16 @@ When performing a comparison on a graph
 \end_inset
 
  but inferior in terms of message complexity
-\begin_inset Formula $(O(|E|)=O(|V^{2}|))$
+\begin_inset Formula $(O(|m|)=O(|n^{2}|))$
 \end_inset
 
 , while synchroniser Beta is superior to Alpha in terms of message complexity
  
-\begin_inset Formula $(O(|V|))$
+\begin_inset Formula $(O(|n|))$
 \end_inset
 
  but inferior in terms of time complexity 
-\begin_inset Formula $(O(|V|))$
+\begin_inset Formula $(O(|m|))$
 \end_inset
 
 .
@@ -140,8 +147,11 @@ When performing a comparison on a graph
  
 \end_layout
 
-\end_deeper
-\begin_layout Enumerate
+\begin_layout Section
+The Gamma Synchroniser
+\end_layout
+
+\begin_layout Standard
 The Gamma Synchroniser is essentially a combination of the Alpha and Beta
  Synchronisers that is efficient in terms both time and message complexity.
  Like Beta, it has an initialisation phase, in which the network is partitioned
@@ -152,9 +162,9 @@ The Gamma Synchroniser is essentially a combination of the Alpha and Beta
  edge, along which all communication between the clusters will be carried
  out.
  
-\begin_inset Newline newline
-\end_inset
+\end_layout
 
+\begin_layout Standard
 The Gamma Synchroniser then proceeds in two phases.
  In phase one, the Beta Synchroniser is applied to every cluster.
  As soon as each leader knows that its cluster is safe, it reports this
@@ -164,18 +174,10 @@ The Gamma Synchroniser then proceeds in two phases.
  the intercluster edges, as they wait for all neighbouring cluster to confirm
  that they are safe before starting the next round.
  
-\begin_inset Newline newline
-\end_inset
+\end_layout
 
-The message and time complexities of the Gamma Synchroniser are given by
- the sum of the message and time complexities from Alpha and Beta.
- This means that the time complexity of Gamma is 
-\begin_inset Formula $O(1)+O(|V|)=O(|V|+1)=O(|V|)$
-\end_inset
-
-, where V is the maximum depth of the intracluster tree, or the maximum
- distance between a leaf and the root.
- Therefore the message complexity of Gamma is 
+\begin_layout Standard
+When calculating the 
 \family roman
 \series medium
 \shape up
@@ -187,139 +189,226 @@ The message and time complexities of the Gamma Synchroniser are given by
 \uwave off
 \noun off
 \color none
+time complexity of Gamma, we say the depth of each intracluster tree is
+ at most k.
+ In each of these trees, there are two sets of convergecast messages and
+ two sets of broadcast messages.
+ This has a worst-case time complexity of 4k.
+ There is an additional timestep required to send messages over the intercluster
+ edges, so the time complexity of Gamma is 
+\begin_inset Formula $O(4k+1)$
+\end_inset
 
-\begin_inset Formula $O(|V^{2}|)+O(|V|)=O(|V^{2}|+|V|)$
+, which can b simplified to 
+\begin_inset Formula $O(k)$
 \end_inset
 
 .
-\begin_inset Newline newline
-\end_inset
-
-
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-Both Alpha and Beta can be seen as special cases of Gamma, as if the whole
- graph was spanned by one cluster, it would be an instance Beta, and if
- each cluster consisted of only 1 node then it would be an instance of Alpha.
-\end_layout
-
-\begin_layout Enumerate
-Consider Algorithm 3 on page 24 in the textbook (Distributed Computing,
- Attiya and Welch, 2nd edition, ISBN 0471453242).
- This algorithm is called the depth first search spanning tree algorithm
- for a specified root" (DFSr).
- As stated in the textbook, the message complexity of DFSr is O(m) when
- the input is a a network topology graph G on n vertices and m edges.
- 
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-Determine the time complexity of DFSr.
- (15)
-\end_layout
-
-\begin_layout Enumerate
-We apply the synchroniser Alpha on DFSr.
- What are the resulting time and message complexities? (10)
-\end_layout
-
-\begin_layout Enumerate
-We apply the synchroniser Beta on DFSr.
- What are the resulting time and message complexities? (10)
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-Consider the Consensus algorithm discussed in lecture 6.
- Can we apply Alpha on this algorithm to solve the consensus problem in
- an asynchronous system in the presence of crash failures? Answer the same
- question with respect to Beta and also with respect to Gamma .
- Justify your answers.
- (15)
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status open
 
-\begin_layout Enumerate
-Besides the Alpha synchroniser, the Beta synchroniser is another known synchroni
-ser.
- Using the slides of the practical as a starting point, research this synchronis
-er and answer the following questions: 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+When considering message complexity, we note that 4 messages are sent over
+ all intracluster tree edges.
+ The number of intracluster tree edges must be less that n, so the message
+ complexity of this part is
+\begin_inset Formula $O(4n)$
+\end_inset
+
+, or just 
+\begin_inset Formula $O(|n|)$
+\end_inset
+
+.
+ We must then consider the number of messages sent over the intercluster
+ links, denoted here as 
+\begin_inset Formula $m_{c}$
+\end_inset
+
+.
+ Therefore, the overall message complexity of Gamma is 
+\begin_inset Formula $O(|n+m_{c}|)$
+\end_inset
+
+.
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
-Describe how Beta works (it is not necessary to write pseudocode).
- (10)
+\begin_layout Standard
+The time and message complexities of Gamma are dependent on the number of
+ clusters and their size.
+ Therefore, both Alpha and Beta can be seen as special cases of Gamma, as
+ if the whole graph was spanned by one cluster, it would be an instance
+ Beta, and if each cluster consisted of only 1 node then it would be an
+ instance of Alpha.
 \end_layout
 
-\begin_layout Enumerate
-Compare Beta to Alpha .
- What are the advantages and disadvantages of Beta over Alpha ? Refer particular
-ly to their complexities.
- (10)
+\begin_layout Section
+DFSr Algorithm
 \end_layout
 
-\end_deeper
-\begin_layout Enumerate
-Another known synchroniser is the synchroniser Gamma .
- Research this synchroniser and describe how Gamma works (it is not necessary
- to write pseudocode.) Also explain the time and message overheads of Gamma
- and argue that both Alpha and Beta can be seen as special cases of Gamma.
- (30)
+\begin_layout Subsection
+Time Complexity of DFSr
 \end_layout
 
-\begin_layout Enumerate
-Consider Algorithm 3 on page 24 in the textbook (Distributed Computing,
- Attiya and Welch, 2nd edition, ISBN 0471453242).
- This algorithm is called the depth first search spanning tree algorithm
- for a specified root" (DFSr).
- As stated in the textbook, the message complexity of DFSr is O(m) when
- the input is a a network topology graph G on n vertices and m edges.
+\begin_layout Standard
+On a graph with n vertices and m edges, the time complexity of DFSr is O(m).
+ This is informed by the fact that all non-root processors can only send
+ a message when they have received a message, and can only send one message
+ to one neighbour at a time.
+ As at most two messages pass along each edge in an execution of this algorithm,
+ if we assume that the maximum message delay is 1, then the worst case time
+ complexity is 
+\begin_inset Formula $O(2m)$
+\end_inset
+
+, or just 
+\begin_inset Formula $O(m)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Applying Alpha to DFSr
+\end_layout
+
+\begin_layout Standard
+When applying the Alpha Synchroniser, we introduce an message overhead of
+ 
+\begin_inset Formula $O(m$
+\end_inset
+
+) messages per round.
+ The DFSr algorithm has a message complexity of 
+\begin_inset Formula $O(m)$
+\end_inset
+
+, as it sends one message per round and there are 
+\begin_inset Formula $O(m)$
+\end_inset
+
+ rounds in an execution of the algorithm.
+ Therefore the message complexity is 
+\begin_inset Formula $O(m^{2})$
+\end_inset
+
+.
+ The Alpha Synchroniser introduces an time overhead of 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ timesteps per round.
+ Therefore the time complexity of DFSr remains 
+\begin_inset Formula $O(m)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Applying Beta to DFSr
+\end_layout
+
+\begin_layout Standard
+When applying the Beta Synchroniser, we introduce an message overhead of
+ 
+\begin_inset Formula $O(n$
+\end_inset
+
+) messages per round, as in the tree structure the worst case is that there
+ are 
+\begin_inset Formula $n-1$
+\end_inset
+
+ edges, with two messages needing to travel along each.
+ The DFSr algorithm has a message complexity of 
+\begin_inset Formula $O(m)$
+\end_inset
+
+, as it sends one message per round and there are 
+\begin_inset Formula $O(m)$
+\end_inset
+
+ rounds in an execution of the algorithm.
+ Therefore the message complexity when using the Beta synchroniser is 
+\begin_inset Formula $O(mn)$
+\end_inset
+
+.
+ The Beta Synchroniser introduces an time overhead of 
+\begin_inset Formula $O(n)$
+\end_inset
+
+ timesteps per round, as in the worst case the tree is in fact a path and
+ 
+\begin_inset Formula $2(n-1)$
+\end_inset
+
+ timesteps are needed per round to enable Beta to function.
+ Therefore the time complexity of DFSr now becomes 
+\begin_inset Formula $O(mn)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+The Consensus Algorithm
+\end_layout
+
+\begin_layout Standard
+All 3 of the synchronisers fail to solve the consensus problem in an asynchronou
+s system in the presence of crash failures.
+ This is due to the fact that they require all processors to send safe messages
+ before they can begin a new round.
+\end_layout
+
+\begin_layout Standard
+If Alpha is applied to this algorithm, and one of the processors crashes,
+ then it will not have sent safe messages to all of its neighbours.
+ The neighbours require a safe message from this processor to advance to
+ the next round, and if this is never sent, then they will remain stuck
+ in the round that the processor crashed in.
+ The neighbours of these processors will have moved onto the next round
+ and sent out their information, but they will then get stuck as they do
+ not receive a safe message.
+ This will propagate out until the whole algorithm is stuck.
  
 \end_layout
 
-\begin_deeper
-\begin_layout Enumerate
-Determine the time complexity of DFSr.
- (15)
+\begin_layout Standard
+If Beta is used a similar problem will occur, but it will not take time
+ to propagate to the whole algorithm.
+ If a processor fails, then it will not send a safe message, which will
+ not propagate up to the leader, which in turn will then not be able to
+ commence the next round.
+ 
 \end_layout
 
-\begin_layout Enumerate
-We apply the synchroniser Alpha on DFSr.
- What are the resulting time and message complexities? (10)
+\begin_layout Standard
+As Gamma is effectively a combination of Alpha and Beta, and neither of
+ these can withstand crash failures, then it is clear that Gamma will also
+ be unable to solve the consensus problem.
+ 
 \end_layout
 
-\begin_layout Enumerate
-We apply the synchroniser Beta on DFSr.
- What are the resulting time and message complexities? (10)
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-Consider the Consensus algorithm discussed in lecture 6.
- Can we apply Alpha on this algorithm to solve the consensus problem in
- an asynchronous system in the presence of crash failures? Answer the same
- question with respect to Beta and also with respect to Gamma .
- Justify your answers.
- (15)
-\end_layout
-
-\end_inset
-
-
+\begin_layout Standard
+More generally, in an asynchronous system where 1 or more of the processors
+ can crash there is no algorithm that solves the consensus problem, as in
+ an asynchronous system we cannot tell if a processor has crashed or if
+ it is just slow.
+ 
 \end_layout
 
 \begin_layout Standard
