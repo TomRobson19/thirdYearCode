@@ -272,7 +272,7 @@ On a graph with n vertices and m edges, the time complexity of DFSr is O(m).
 \begin_inset Formula $O(2m)$
 \end_inset
 
-, or just 
+, simplified to 
 \begin_inset Formula $O(m)$
 \end_inset
 
