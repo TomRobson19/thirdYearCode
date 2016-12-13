@@ -126,16 +126,16 @@ When performing a comparison on a graph
 \end_inset
 
  but inferior in terms of message complexity
-\begin_inset Formula $(O(|m|)=O(|n^{2}|))$
+\begin_inset Formula $(O(m)=O(n^{2}))$
 \end_inset
 
 , while synchroniser Beta is superior to Alpha in terms of message complexity
  
-\begin_inset Formula $(O(|n|))$
+\begin_inset Formula $(O(n))$
 \end_inset
 
  but inferior in terms of time complexity 
-\begin_inset Formula $(O(|m|))$
+\begin_inset Formula $(O(n))$
 \end_inset
 
 .
@@ -227,7 +227,7 @@ When considering message complexity, we note that 4 messages are sent over
 \end_inset
 
 , or just 
-\begin_inset Formula $O(|n|)$
+\begin_inset Formula $O(n)$
 \end_inset
 
 .
@@ -262,10 +262,16 @@ Time Complexity of DFSr
 \end_layout
 
 \begin_layout Standard
-On a graph with n vertices and m edges, the time complexity of DFSr is O(m).
+On a graph with n vertices and m edges, the time complexity of DFSr is 
+\begin_inset Formula $O(m)$
+\end_inset
+
+.
  This is informed by the fact that all non-root processors can only send
  a message when they have received a message, and can only send one message
  to one neighbour at a time.
+ This means that there can only be one message being sent in the system
+ at any one time.
  As at most two messages pass along each edge in an execution of this algorithm,
  if we assume that the maximum message delay is 1, then the worst case time
  complexity is 

@@ -81,6 +81,14 @@
 
 \begin_body
 
+\begin_layout Title
+Contemporary Computer Science - Security
+\end_layout
+
+\begin_layout Author
+Tom Robson - hzwr87
+\end_layout
+
 \begin_layout Standard
 Database password var/www/html/query.php - credentials in plain text
 \end_layout
@@ -156,7 +164,7 @@ ls -ld $HOME --> returns permissions list --> everyone has read-write-execute
 
 \begin_layout Standard
 other user accounts have weak passwords, or use john, another README in
- toor
+ toor (password, letmein, 1234567)
 \end_layout
 
 \end_body

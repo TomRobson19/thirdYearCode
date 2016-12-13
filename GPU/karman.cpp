@@ -665,7 +665,7 @@ int computeP() {
                 + 6.0 * p[ getCellIndex(ix,iy,iz) ]
               );
             globalResidual              += residual * residual;
-            p[ getCellIndex(ix,iy,iz) ] += -omega * residual / 6.0 * getH() * getH();
+            p[ getCellIndex(ix,iy,iz) ] += -omega * residual / 6.0 * getH() * getH(); //BAD LINE
           }
         }
       }
@@ -1147,7 +1147,9 @@ int main (int argc, char *argv[]) {
   double tOfLastSnapshot                       = 0.0;
   int    timeStepCounter                       = 0;
   int    numberOfTimeStepsWithOnlyOneIteration = 0;
-  while (t<20.0) {
+
+  //change this to make it run in reasonable time - default was 20
+  while (t<0.1) {
     std::cout << "time step " << timeStepCounter << ": t=" << t << "\t dt=" << timeStepSize << "\t";
 
     setVelocityBoundaryConditions(t);
