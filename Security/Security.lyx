@@ -90,6 +90,40 @@ Tom Robson - hzwr87
 \end_layout
 
 \begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Need 8 vulnerabilities, I find more, can include them, ensure I order by
+ severity.
+\end_layout
+
+\begin_layout Plain Layout
+Each vulnerability is worth 10 marks and is marked as follows: 
+\end_layout
+
+\begin_layout Plain Layout
+- Naming the vulnerability or providing a single sentence defining it.
+ 1 mark 
+\end_layout
+
+\begin_layout Plain Layout
+- Providing a step-by-step guide to exploiting the vulnerability.
+ 4 marks 
+\end_layout
+
+\begin_layout Plain Layout
+- Providing a step-by-step guide to mitigating the vulnerability.
+ 5 marks.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Database password var/www/html/query.php - credentials in plain text
 \end_layout
 
@@ -104,6 +138,11 @@ DB password is also root password for system
 \begin_layout Standard
 index.html submits to query.php, which is injectable (' or 1=1--) as username
  and password
+\end_layout
+
+\begin_layout Standard
+As the web server is running as root, can do anything root can do post injection
+, including see the passwd file (Ghomas found this, try it myself)
 \end_layout
 
 \begin_layout Standard
