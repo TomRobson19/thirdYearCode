@@ -89,8 +89,51 @@ Contemporary Computer Science - GPU
 Tom Robson - hzwr87
 \end_layout
 
+\begin_layout Section*
+Step 1
+\end_layout
+
 \begin_layout Standard
-Performance Model - Problem size scales
+Run VTune tests and comment on them.
+ Read back through slides to see what is causing the bottlenecks and choose
+ a performance model.
+ (Should be fine if done with slides, print out when at home)
+\end_layout
+
+\begin_layout Section*
+Step 2
+\end_layout
+
+\begin_layout Standard
+Split code across multiple cores (vectorise)
+\end_layout
+
+\begin_layout Standard
+Split into blocks (maybe 1 for each core?) and determine which code doesn't
+ ever run and store this per block.
+ 
+\end_layout
+
+\begin_layout Standard
+Write special code without these fragments and optimise aggressively.
+ ???????
+\end_layout
+
+\begin_layout Standard
+Use pragmas to speed this up
+\end_layout
+
+\begin_layout Standard
+Validate vectorisation has been successful (VTune)
+\end_layout
+
+\begin_layout Section*
+Step 3
+\end_layout
+
+\begin_layout Standard
+Parrallelise step 2 on multicore node (further instructions on coursework
+ spec)
 \end_layout
 
 \end_body
