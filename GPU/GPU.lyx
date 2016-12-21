@@ -136,5 +136,88 @@ Parrallelise step 2 on multicore node (further instructions on coursework
  spec)
 \end_layout
 
+\begin_layout Section*
+Notes from chat
+\end_layout
+
+\begin_layout Standard
+Have a look at the profiling lecture/practical
+\end_layout
+
+\begin_layout Standard
+He means stuff like hot functions
+\end_layout
+
+\begin_layout Standard
+Step 1 - Profile it before you change anything to make sure it's getting
+ better
+\end_layout
+
+\begin_layout Standard
+Vectorisation is SIMD, parallelization is MIMD
+\end_layout
+
+\begin_layout Standard
+You parallelize outer loops and vectorize inner loops
+\end_layout
+
+\begin_layout Standard
+Don't forget to compile with -g3 --> Keeps source information in the binary,
+ that way you can see line by line the expensive stuff
+\end_layout
+
+\begin_layout Standard
+Can confirm the parameters matter a lot First one: size of the box Or length
+ more accurately I think Second one is when to plot a file (use 0 to disable)
+ Last one is density of fluid: haven't really figured out the effect of
+ this one yet
+\end_layout
+
+\begin_layout Standard
+Need to run for a range of parameters and get an average?
+\end_layout
+
+\begin_layout Standard
+Ben do you think the model we should use should be weak scaling? --> Need
+ to have a look over those lecture notes but theory yes as I can't see it
+ being memory bound but could be wrong
+\end_layout
+
+\begin_layout Standard
+Memory bound --> Doesn't matter if your CPU can do 1 GFLOPS if you can only
+ do 0.5GFLOpS because data can't be accessed fast enough So parallelising
+ the code won't help But vectorising would assuming you haven't saturated
+ the memory link --> the roofline model 
+\end_layout
+
+\begin_layout Standard
+It's all those graphs Tobias drew in the lectures --> The diagonal is the
+ compute (performance) bound right? --> Yep --> And the horizontal is when
+ the memory can't provide data fast enough --> Yep
+\end_layout
+
+\begin_layout Standard
+we need to calculate what the operation:byte ratio is of the expensive code
+\end_layout
+
+\begin_layout Standard
+I'm assuming a high arithmetic intensity implies compute bound --> yes
+\end_layout
+
+\begin_layout Standard
+Basically if a section is slow but it doesn't do many operations per loaded
+ byte It's likely memory bound
+\end_layout
+
+\begin_layout Standard
+PRACTICALS HAVE STUFF ON ARITHMETIC INTENSITY CALCULATIONS
+\end_layout
+
+\begin_layout Standard
+(Gustafson vs Amdahl) No but he does give you the properties of each, To
+ match with the properties of our code, Amdahl's law is probably the one
+ as its pretty popular
+\end_layout
+
 \end_body
 \end_document
