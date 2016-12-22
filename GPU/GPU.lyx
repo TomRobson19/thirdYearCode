@@ -201,6 +201,33 @@ we need to calculate what the operation:byte ratio is of the expensive code
 \end_layout
 
 \begin_layout Standard
+Probably only need hamilton for timing
+\end_layout
+
+\begin_layout Standard
+Ben's Tobias Email:
+\end_layout
+
+\begin_layout Standard
+> The majority of time spent (~85%) is in the computeP() which only has
+ a single if statement and as 98% of the cells are inside the domain I don't
+ see how optimising blocks that are outside of the domain would result in
+ a speed up.
+ 
+\end_layout
+
+\begin_layout Standard
+Why outside of the domain? It might be interesting to see whether a block
+ holds any flagged cells.
+ The ifs are not really an issue in a standard code.
+ But what happens if you wanna vectorise?
+\end_layout
+
+\begin_layout Standard
+Tobias
+\end_layout
+
+\begin_layout Standard
 I'm assuming a high arithmetic intensity implies compute bound --> yes
 \end_layout
 
