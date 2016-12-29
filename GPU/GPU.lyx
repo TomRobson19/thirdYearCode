@@ -135,8 +135,9 @@ p[ getCellIndex(ix,iy,iz) ] += -omega * residual / 6.0 * getH() * getH();
 \begin_layout Standard
 This line is so computationally expensive because it performs complex mathematic
 al functions and has multiple function calls.
- The primary bottleneck in this line comes from the Back-End of the pipeline,
- making this a memory bounded bottleneck.
+ The General Exploration analysis states that the primary bottleneck in
+ this line comes from the Back-End of the pipeline, making this a memory
+ bounded bottleneck.
  CHECK THIS
 \end_layout
 
