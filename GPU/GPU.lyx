@@ -82,7 +82,7 @@
 \begin_body
 
 \begin_layout Title
-Contemporary Computer Science - GPU
+Contemporary Computer Science - GPU, Many-core, and Cluster Computing
 \end_layout
 
 \begin_layout Author
@@ -94,10 +94,50 @@ Step 1
 \end_layout
 
 \begin_layout Standard
-Run VTune tests and comment on them.
- Read back through slides to see what is causing the bottlenecks and choose
- a performance model.
- (Should be fine if done with slides, print out when at home)
+Before attempts are made to improve the performance of the karman code,
+ we must examine its current characteristics.
+ This has been done using intel VTune on this code, with 
+\begin_inset Formula $t=0.1$
+\end_inset
+
+ for reasonable execution time.
+ The types of analysis used for this project were General Exploration, Advanced
+ Hotspots and HPC Performance Characterization.
+ 
+\end_layout
+
+\begin_layout Standard
+From running these analysis methods, it has been determined that the key
+ hotspots are in the functions computeP, setPressureBoundaryConditions and
+ getCellIndex.
+ computeP calls setPressureBoundaryConditions, and both of these call getCellInd
+ex many times, giving us a clear idea that the main issues for this algorithm
+ lie in its implementation of pressure.
+ From a closer examination of the computeP function, we can see that the
+ main bottleneck in this function comes from line 668, given here:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+p[ getCellIndex(ix,iy,iz) ] += -omega * residual / 6.0 * getH() * getH();
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This line is so computationally expensive because it performs complex mathematic
+al functions and has multiple function calls.
+ The primary bottleneck in this line comes from the Back-End of the pipeline,
+ making this a memory bounded bottleneck.
+ CHECK THIS
 \end_layout
 
 \begin_layout Section*
@@ -201,7 +241,7 @@ we need to calculate what the operation:byte ratio is of the expensive code
 \end_layout
 
 \begin_layout Standard
-Probably only need hamilton for timing
+Probably only need hamilton for timing, if at all
 \end_layout
 
 \begin_layout Standard
@@ -244,6 +284,13 @@ PRACTICALS HAVE STUFF ON ARITHMETIC INTENSITY CALCULATIONS
 (Gustafson vs Amdahl) No but he does give you the properties of each, To
  match with the properties of our code, Amdahl's law is probably the one
  as its pretty popular
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+BEN --> Im going with strong scaling/amdahls law because we only know the
+ time for a single processor anyway and its easier to talk about
 \end_layout
 
 \end_body

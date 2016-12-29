@@ -141,8 +141,8 @@ index.html submits to query.php, which is injectable (' or 1=1--) as username
 \end_layout
 
 \begin_layout Standard
-As the web server is running as root, can do anything root can do post injection
-, including see the passwd file (Ghomas found this, try it myself)
+As the web server is running as root, can do anything root can do post injxectio
+n, including see the passwd file (Ghomas found this, try it myself)
 \end_layout
 
 \begin_layout Standard
