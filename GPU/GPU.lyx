@@ -96,7 +96,8 @@ Step 1
 \begin_layout Standard
 Before attempts are made to improve the performance of the karman code,
  we must examine its current characteristics.
- This has been done using intel VTune on this code, with 
+ This has been done using the Intel VTune performance analysis tool on this
+ code, with 
 \begin_inset Formula $t=0.1$
 \end_inset
 
@@ -136,9 +137,21 @@ p[ getCellIndex(ix,iy,iz) ] += -omega * residual / 6.0 * getH() * getH();
 This line is so computationally expensive because it performs complex mathematic
 al functions and has multiple function calls.
  The General Exploration analysis states that the primary bottleneck in
- this line comes from the Back-End of the pipeline, making this a memory
- bounded bottleneck.
- CHECK THIS
+ this line comes from the Back-End of the pipeline, with the majority of
+ this being as a result of a memory bound, where the Back-End cannot accept
+ new operations due to existing operations still running.
+ This function also has a substantial core bound, meaning that some of the
+ execution ports have become saturated.
+ 
+\end_layout
+
+\begin_layout Standard
+When examining setPressureBoundaryConditions more closely, the VTune analysis
+ tells us that this function is limited by the Front-End of the pipeline.
+ The majority of this is caused by Front-End bandwidth, meaning that not
+ all the slots in the pipeline are filled, rather than Front-End latency,
+ where none of the slots are filled.
+ 
 \end_layout
 
 \begin_layout Section*
