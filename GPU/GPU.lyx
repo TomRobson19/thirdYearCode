@@ -10,7 +10,7 @@
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
-\language english
+\language british
 \language_package default
 \inputencoding auto
 \fontencoding global
@@ -103,7 +103,7 @@ Before attempts are made to improve the performance of the karman code,
 
  for reasonable execution time.
  The types of analysis used for this project were General Exploration, Advanced
- Hotspots and HPC Performance Characterization.
+ Hotspots and HPC Performance Characterisation.
  
 \end_layout
 
@@ -142,16 +142,61 @@ al functions and has multiple function calls.
  new operations due to existing operations still running.
  This function also has a substantial core bound, meaning that some of the
  execution ports have become saturated.
+ The results of the Advanced Hotspots analysis reveal that this line also
+ consumes a large proportion of the CPU time.
+ The HPC analysis supports the General Exploration in the fact that there
+ is a substantial memory bound present in the whole computeP function, and
+ this line in particular.
  
 \end_layout
 
 \begin_layout Standard
-When examining setPressureBoundaryConditions more closely, the VTune analysis
- tells us that this function is limited by the Front-End of the pipeline.
+When examining setPressureBoundaryConditions more closely, the General explorati
+on analysis tells us that this function is limited by the Front-End of the
+ pipeline.
  The majority of this is caused by Front-End bandwidth, meaning that not
  all the slots in the pipeline are filled, rather than Front-End latency,
  where none of the slots are filled.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+THE CPI RATE IS ALSO VERY HIGH
+\end_layout
+
+\begin_layout Standard
+To address these issues, the performance model that should be applied is
+ Strong Scaling.
+ We must first take the time for the execution of the algorithm with one
+ processor, t(1).
+ This is given as 60.323 seconds, with command line parameters 10 0 1600,
+ and t as 0.1 in the main while loop.
+ We must then calculate the time taken to run this code on p processors,
+ t(p).
+ We will have p tend to infinity for this calculation, to get the maximum
+ possible improvement in this code due to vectorisation.
+ This is calculated using Amdahl's Law.
  
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Ben - I got max speedup to be around 6.25
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+use Amdahls law to get t(p), then calculate speed-up
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+work this out as if p tend to infinity to get max possible speed-up - will
+ become limited by f 
 \end_layout
 
 \begin_layout Section*
@@ -179,6 +224,13 @@ Use pragmas to speed this up
 
 \begin_layout Standard
 Validate vectorisation has been successful (VTune)
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+maybe calculate speed-up on actual number of processors used.
+ 
 \end_layout
 
 \begin_layout Section*
