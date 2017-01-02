@@ -90,7 +90,7 @@ Tom Robson - hzwr87
 \end_layout
 
 \begin_layout Section*
-Step 1
+Step 1 - will need to rewrite much of this
 \end_layout
 
 \begin_layout Standard
@@ -109,11 +109,10 @@ Before attempts are made to improve the performance of the karman code,
 
 \begin_layout Standard
 From running these analysis methods, it has been determined that the key
- hotspots are in the functions computeP, setPressureBoundaryConditions and
- getCellIndex.
- computeP calls setPressureBoundaryConditions, and both of these call getCellInd
-ex many times, giving us a clear idea that the main issues for this algorithm
- lie in its implementation of pressure.
+ hotspots are in the functions computeP and setPressureBoundaryConditions.
+ These functions are linked, as computeP calls setPressureBoundaryConditions,
+ giving us a clear idea that the main issues for this algorithm lie in its
+ implementation of pressure.
  From a closer examination of the computeP function, we can see that the
  main bottleneck in this function comes from line 668, given here:
 \end_layout
@@ -125,7 +124,7 @@ status open
 
 \begin_layout Plain Layout
 
-p[ getCellIndex(ix,iy,iz) ] += -omega * residual / 6.0 * getH() * getH();
+p[getCellIndex(ix,iy,iz)] += -omega * residual / 6.0 * getH() * getH();
 \end_layout
 
 \end_inset
@@ -135,7 +134,8 @@ p[ getCellIndex(ix,iy,iz) ] += -omega * residual / 6.0 * getH() * getH();
 
 \begin_layout Standard
 This line is so computationally expensive because it performs complex mathematic
-al functions and has multiple function calls.
+al functions and has multiple function calls, meaning tat it has a high
+ CPI rate.
  The General Exploration analysis states that the primary bottleneck in
  this line comes from the Back-End of the pipeline, with the majority of
  this being as a result of a memory bound, where the Back-End cannot accept
@@ -151,39 +151,78 @@ al functions and has multiple function calls.
 \end_layout
 
 \begin_layout Standard
-When examining setPressureBoundaryConditions more closely, the General explorati
+When examining setPressureBoundaryConditions more closely, the General Explorati
 on analysis tells us that this function is limited by the Front-End of the
  pipeline.
  The majority of this is caused by Front-End bandwidth, meaning that not
  all the slots in the pipeline are filled, rather than Front-End latency,
  where none of the slots are filled.
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-THE CPI RATE IS ALSO VERY HIGH
+ 
 \end_layout
 
 \begin_layout Standard
 To address these issues, the performance model that should be applied is
  Strong Scaling.
- We must first take the time for the execution of the algorithm with one
- processor, t(1).
- This is given as 60.323 seconds, with command line parameters 10 0 1600,
- and t as 0.1 in the main while loop.
- We must then calculate the time taken to run this code on p processors,
- t(p).
- We will have p tend to infinity for this calculation, to get the maximum
- possible improvement in this code due to vectorisation.
- This is calculated using Amdahl's Law.
+ To calculate the possible speedup due to parallelisation over 
+\begin_inset Formula $p$
+\end_inset
+
+ processors, was must apply the equation 
+\begin_inset Formula $S(p)=\frac{t(1)}{t(p)}$
+\end_inset
+
+, where 
+\begin_inset Formula $t(1)$
+\end_inset
+
+ is the time taken on one processor, and the 
+\begin_inset Formula $t(p)$
+\end_inset
+
+ is the time taken over p processors.
+\begin_inset Formula $t(p)$
+\end_inset
+
+ can be calculated using Amdahl's law, 
+\begin_inset Formula $t(p)=f.t(1)+\frac{(1-f).t(1)}{p}$
+\end_inset
+
+, where 
+\begin_inset Formula $f$
+\end_inset
+
+ is the fraction of the code that is not parallelisable.
+ As computeP is the main hotspot for this code, this must be the target
+ of the parallelisation.
+ Therefore, the non parallelisable part of the code is everything but computeP.
+ These to formulae can be combined and simplified to give 
+\begin_inset Formula $S(p)=\frac{1}{f+\frac{(1-f)}{p}}$
+\end_inset
+
+.
+ To calculate the maximum possible speedup, we will assume 
+\begin_inset Formula $p$
+\end_inset
+
+ tends to infinity.
+ From the Advanced Hotspot analysis, we can see that 75.9% of the CPU time
+ is consumed by computeP, so the value of f needed for this equation is
+ 0.241.
+ Using this value, with p tending to infinity, gives a maximum speedup value
+ of 4.149.
  
+\end_layout
+
+\begin_layout Standard
+################################################################################
+################################################################################
+#####
 \end_layout
 
 \begin_layout Standard
 
 \series bold
-Ben - I got max speedup to be around 6.25
+Ben got max speedup to be around 6.25
 \end_layout
 
 \begin_layout Standard
@@ -197,6 +236,22 @@ use Amdahls law to get t(p), then calculate speed-up
 \series bold
 work this out as if p tend to infinity to get max possible speed-up - will
  become limited by f 
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+S(p) = 1 /(f + (1 − f )/p) - use this as don't need a t(1) figure
+\end_layout
+
+\begin_layout Standard
+If you're only gonna parallelize computeP then f is everything else, do
+ f as percentage/100
+\end_layout
+
+\begin_layout Standard
+Setpressure is called from computeP and cellindex is basically inlined and
+ contributes very little
 \end_layout
 
 \begin_layout Section*
@@ -240,6 +295,10 @@ Step 3
 \begin_layout Standard
 Parrallelise step 2 on multicore node (further instructions on coursework
  spec)
+\end_layout
+
+\begin_layout Standard
+Setup scenario function will be important here
 \end_layout
 
 \begin_layout Section*
