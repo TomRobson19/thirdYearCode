@@ -1149,7 +1149,7 @@ int main (int argc, char *argv[]) {
   int    numberOfTimeStepsWithOnlyOneIteration = 0;
 
   //change this to make it run in reasonable time - default was 20
-  while (t<0.1) {
+  while (t<20) {
     std::cout << "time step " << timeStepCounter << ": t=" << t << "\t dt=" << timeStepSize << "\t";
 
     setVelocityBoundaryConditions(t);

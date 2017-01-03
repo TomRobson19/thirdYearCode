@@ -96,12 +96,12 @@ Step 1 - will need to rewrite much of this
 \begin_layout Standard
 Before attempts are made to improve the performance of the karman code,
  we must examine its current characteristics.
- This has been done using the Intel VTune performance analysis tool on this
- code, with 
+ This has been done using the Intel VTune performance analysis tool, with
+ 
 \begin_inset Formula $t=0.1$
 \end_inset
 
- for reasonable execution time.
+ in the main while loop for reasonable execution time.
  The types of analysis used for this project were General Exploration, Advanced
  Hotspots and HPC Performance Characterisation.
  
@@ -205,12 +205,17 @@ To address these issues, the performance model that should be applied is
 \end_inset
 
  tends to infinity.
- From the Advanced Hotspot analysis, we can see that 75.9% of the CPU time
- is consumed by computeP, so the value of f needed for this equation is
- 0.241.
- Using this value, with p tending to infinity, gives a maximum speedup value
- of 4.149.
- 
+ USE FIGURES FROM HAMILTON
+\end_layout
+
+\begin_layout Standard
+USE GPROF AS WE DID IN THE PRACTICAL
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Definitely add -xHost if you're gonna vectorize
 \end_layout
 
 \begin_layout Standard
