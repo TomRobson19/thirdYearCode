@@ -134,8 +134,8 @@ p[getCellIndex(ix,iy,iz)] += -omega * residual / 6.0 * getH() * getH();
 
 \begin_layout Standard
 This line is so computationally expensive because it performs complex mathematic
-al functions and has multiple function calls, meaning tat it has a high
- CPI rate.
+al functions at floating point precision, meaning tat it has a high CPI
+ rate.
  The General Exploration analysis states that the primary bottleneck in
  this line comes from the Back-End of the pipeline, with the majority of
  this being as a result of a memory bound, where the Back-End cannot accept
@@ -264,37 +264,44 @@ Step 2
 \end_layout
 
 \begin_layout Standard
-Split code across multiple cores (vectorise)
-\end_layout
-
-\begin_layout Standard
-Split into blocks (maybe 1 for each core?) and determine which code doesn't
- ever run and store this per block.
- 
-\end_layout
-
-\begin_layout Standard
-Write special code without these fragments and optimise aggressively.
- ???????
-\end_layout
-
-\begin_layout Standard
-Use pragmas to speed this up
-\end_layout
-
-\begin_layout Standard
-Validate vectorisation has been successful (VTune)
+Restrict 1st arg to be a multiple of the block size, make sure divisible
+ by 4
 \end_layout
 
 \begin_layout Standard
 
 \series bold
-maybe calculate speed-up on actual number of processors used.
- 
+Array of which cells are in each block, mark which blocks have obstacle
+ in them.
+ (loop in setupScenario?)
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Then in compute P, if unmarked do it normal way, if marked, do it a different
+ way.
+\end_layout
+
+\begin_layout Standard
+Only do computeP, make a point of 'don't vectorise what doesn't need to
+ be'
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Ben - As a guide: I got 2x by using vectorisation
 \end_layout
 
 \begin_layout Section*
 Step 3
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+OPENMP pragmas not intel pragmas
 \end_layout
 
 \begin_layout Standard
