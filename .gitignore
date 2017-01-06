@@ -13,7 +13,6 @@
 /WebTechnology/__pycache__
 /GPU/GPU
 /GPU/karman
+/GPU/karman2
+/GPU/karman3
 /GPU/GPUAnalysis
-*.exe
-*.out
-*.app
