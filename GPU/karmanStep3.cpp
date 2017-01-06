@@ -125,6 +125,11 @@ double* ink;
  */
 bool* cellIsInside;
 
+//block variables
+int numberOfBlocks;
+
+bool* blockIsInside;
+
 double timeStepSize;
 
 double ReynoldsNumber = 0;
@@ -649,24 +654,62 @@ int computeP() {
 
     previousGlobalResidual = globalResidual;
     globalResidual         = 0.0;
-    for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz++) {
-      for (int iy=1; iy<numberOfCellsPerAxisY+1; iy++) {
-        for (int ix=1; ix<numberOfCellsPerAxisX+1; ix++) {
-          if ( cellIsInside[getCellIndex(ix,iy,iz)] ) {
-            double residual = rhs[ getCellIndex(ix,iy,iz) ] +
-              1.0/getH()/getH()*
-              (
-                - 1.0 * p[ getCellIndex(ix-1,iy,iz) ]
-                - 1.0 * p[ getCellIndex(ix+1,iy,iz) ]
-                - 1.0 * p[ getCellIndex(ix,iy-1,iz) ]
-                - 1.0 * p[ getCellIndex(ix,iy+1,iz) ]
-                - 1.0 * p[ getCellIndex(ix,iy,iz-1) ]
-                - 1.0 * p[ getCellIndex(ix,iy,iz+1) ]
-                + 6.0 * p[ getCellIndex(ix,iy,iz) ]
-              );
-            globalResidual              += residual * residual;
-            p[ getCellIndex(ix,iy,iz) ] += -omega * residual / 6.0 * getH() * getH(); //BAD LINE
+    int blockCounter = 0;
+    for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=4) {
+      for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=4) {
+        for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=4) {
+          if (blockIsInside[blockCounter])
+          {
+            for (int jz=0; jz<4; jz+=1) {
+              for (int jy=0; jy<4; jy+=1) {
+                #pragma simd
+                for (int jx=0; jx<4; jx+=1) {
+                  double residual = 0;
+                  #pragma forceinline
+                  residual = rhs[ getCellIndex(ix+jx, iy+jy, iz+jz) ] +
+                    1.0/getH()/getH()*
+                    (
+                      - 1.0 * p[ getCellIndex(ix+jx-1, iy+jy, iz+jz) ]
+                      - 1.0 * p[ getCellIndex(ix+jx+1, iy+jy, iz+jz) ]
+                      - 1.0 * p[ getCellIndex(ix+jx, iy+jy-1, iz+jz) ]
+                      - 1.0 * p[ getCellIndex(ix+jx, iy+jy+1, iz+jz) ]
+                      - 1.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz-1) ]
+                      - 1.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz+1) ]
+                      + 6.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz) ]
+                    );
+                  globalResidual              += residual * residual;
+                  #pragma forceinline
+                  p[ getCellIndex(ix+jx, iy+jy, iz+jz) ] += -omega * residual / 6.0 * getH() * getH();
+                }
+              }
+            }
           }
+          else
+          {
+            for (int jz=0; jz<4; jz+=1) {
+              for (int jy=0; jy<4; jy+=1) {
+                for (int jx=0; jx<4; jx+=1) {
+                  if ( cellIsInside[getCellIndex(ix+jx, iy+jy, iz+jz)] ) 
+                  {
+                    double residual = rhs[ getCellIndex(ix+jx, iy+jy, iz+jz) ] +
+                      1.0/getH()/getH()*
+                      (
+                        - 1.0 * p[ getCellIndex(ix+jx-1, iy+jy, iz+jz) ]
+                        - 1.0 * p[ getCellIndex(ix+jx+1, iy+jy, iz+jz) ]
+                        - 1.0 * p[ getCellIndex(ix+jx, iy+jy-1, iz+jz) ]
+                        - 1.0 * p[ getCellIndex(ix+jx, iy+jy+1, iz+jz) ]
+                        - 1.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz-1) ]
+                        - 1.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz+1) ]
+                        + 6.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz) ]
+                      );
+                    globalResidual              += residual * residual;
+                    p[ getCellIndex(ix+jx,iy+jy,iz+jz) ] += -omega * residual / 6.0 * getH() * getH();
+                  }
+                }
+              }
+            }
+          }
+          blockCounter++;          
         }
       }
     }
@@ -734,6 +777,8 @@ void setupScenario() {
   const int numberOfFacesY = (numberOfCellsPerAxisX+2) * (numberOfCellsPerAxisY+3) * (numberOfCellsPerAxisZ+2);
   const int numberOfFacesZ = (numberOfCellsPerAxisX+2) * (numberOfCellsPerAxisY+2) * (numberOfCellsPerAxisZ+3);
 
+  numberOfBlocks = ((numberOfCellsPerAxisX)*(numberOfCellsPerAxisY)*(numberOfCellsPerAxisZ))/64;
+
   ux  = 0;
   uy  = 0;
   uz  = 0;
@@ -757,6 +802,9 @@ void setupScenario() {
   ink = new (std::nothrow) double[(numberOfCellsPerAxisX+1) * (numberOfCellsPerAxisY+1) * (numberOfCellsPerAxisZ+1)];
 
   cellIsInside = new (std::nothrow) bool[numberOfCells];
+
+  //block stuff
+  blockIsInside = new (std::nothrow) bool[numberOfBlocks];
 
   if (
     ux  == 0 ||
@@ -795,6 +843,11 @@ void setupScenario() {
     Fz[i]=0;
   }
 
+  for (int i=0; i<numberOfBlocks; i++)
+  {
+    blockIsInside[i] = true;
+  }
+
 
   //
   // Insert the obstacle that forces the fluid to do something interesting.
@@ -814,6 +867,35 @@ void setupScenario() {
     cellIsInside[ getCellIndex(xOffsetOfObstacle+sizeOfObstacle+0,  2*sizeOfObstacle+2,iz) ] = false;
     cellIsInside[ getCellIndex(xOffsetOfObstacle+sizeOfObstacle+1,  2*sizeOfObstacle+2,iz) ] = false;
   }
+
+  int blockCounter = 0;
+
+  for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=4) {
+    for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=4) {
+      for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=4) {
+
+        for (int jz=0; jz<4; jz+=1) {
+          for (int jy=0; jy<4; jy+=1) {
+            for (int jx=0; jx<4; jx+=1) {
+              if (cellIsInside[getCellIndex(ix+jx,iy+jy,iz+jz)] == false)
+              {
+                blockIsInside[blockCounter] = false;
+              }
+            }
+          }
+        }
+        blockCounter++;
+      }
+    }
+  }
+
+  //print blocks with obstacle in
+  // for(int i = 0; i < numberOfBlocks; i++)
+  //   {
+  //     if(!blockIsInside[i]){
+  //       std::cout << "blockIsInside[" << i << "] => " << blockIsInside[i] << std::endl;
+  //     }
+  //   }
 
   validateThatEntriesAreBounded("setupScenario()");
 }
@@ -1109,10 +1191,16 @@ void setVelocityBoundaryConditions(double time) {
 int main (int argc, char *argv[]) {
   if (argc!=4) {
       std::cout << "Usage: executable number-of-elements-per-axis time-steps-between-plots reynolds-number" << std::endl;
-      std::cout << "    number-of-elements-per-axis  Resolution. Start with 20, but try to increase as much as possible later." << std::endl;
+      std::cout << "    number-of-elements-per-axis  Resolution. Must be divisible by 4. Try to increase as much as possible later." << std::endl;
       std::cout << "    time-between-plots           Determines how many files are written. Set to 0 to switch off plotting (for performance studies)." << std::endl;
       std::cout << "    reynolds-number              Use something in-between 1 and 1000. Determines viscosity of fluid." << std::endl;
       return 1;
+  }
+
+  if (atoi(argv[1])%4 != 0)
+  {
+    std::cout << "Number of elements per axis must be divisible by 4";
+    return 1;
   }
 
   numberOfCellsPerAxisY    = atoi(argv[1]);
@@ -1149,7 +1237,7 @@ int main (int argc, char *argv[]) {
   int    numberOfTimeStepsWithOnlyOneIteration = 0;
 
   //change this to make it run in reasonable time - default was 20
-  while (t<20) {
+  while (t<0.1) {
     std::cout << "time step " << timeStepCounter << ": t=" << t << "\t dt=" << timeStepSize << "\t";
 
     setVelocityBoundaryConditions(t);

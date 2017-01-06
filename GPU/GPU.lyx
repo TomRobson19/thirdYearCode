@@ -264,6 +264,12 @@ Step 2
 \end_layout
 
 \begin_layout Standard
+
+\series bold
+DONE NOW, WRITE UP
+\end_layout
+
+\begin_layout Standard
 Restrict 1st arg to be a multiple of the block size, make sure divisible
  by 4
 \end_layout
