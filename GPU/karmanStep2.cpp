@@ -685,7 +685,28 @@ int computeP() {
           }
           else
           {
-            std::cout << "test";
+            for (int jz=0; jz<4; jz+=1) {
+              for (int jy=0; jy<4; jy+=1) {
+                for (int jx=0; jx<4; jx+=1) {
+                  if ( cellIsInside[getCellIndex(ix,iy,iz)] ) 
+                  {
+                    residual = rhs[ getCellIndex(ix,iy,iz) ] +
+                      1.0/getH()/getH()*
+                      (
+                        - 1.0 * p[ getCellIndex(ix+jx-1,iy+jy,iz+jz) ]
+                        - 1.0 * p[ getCellIndex(ix+jx+1,iy+jy,iz+jz) ]
+                        - 1.0 * p[ getCellIndex(ix+jx,iy+jy-1,iz+jz) ]
+                        - 1.0 * p[ getCellIndex(ix+jx,iy+jy+1,iz+jz) ]
+                        - 1.0 * p[ getCellIndex(ix+jx,iy+jy,iz+jz-1) ]
+                        - 1.0 * p[ getCellIndex(ix+jx,iy+jy,iz+jz+1) ]
+                        + 6.0 * p[ getCellIndex(ix+jx,iy+jy,iz+jz) ]
+                      );
+                    globalResidual              += residual * residual;
+                    p[ getCellIndex(ix,iy,iz) ] += -omega * residual / 6.0 * getH() * getH();
+                  }
+                }
+              }
+            }
           }          
         }
       }
