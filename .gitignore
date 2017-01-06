@@ -14,3 +14,6 @@
 /GPU/GPU
 /GPU/karman
 /GPU/GPUAnalysis
+*.exe
+*.out
+*.app
