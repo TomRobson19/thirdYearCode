@@ -127,8 +127,8 @@ bool* cellIsInside;
 
 //block variables
 int numberOfBlocks;
-int* cellInBlock;
-bool* obstacleInBlock;
+
+bool* blockIsInside;
 
 double timeStepSize;
 
@@ -654,31 +654,32 @@ int computeP() {
 
     previousGlobalResidual = globalResidual;
     globalResidual         = 0.0;
+    int blockCounter = 0;
     for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=4) {
       for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=4) {
         for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=4) {
-          double residual = 0;
-          if (obstacleInBlock == false)
+          if (blockIsInside[blockCounter])
           {
             for (int jz=0; jz<4; jz+=1) {
               for (int jy=0; jy<4; jy+=1) {
                 #pragma simd
                 for (int jx=0; jx<4; jx+=1) {
+                  double residual = 0;
                   #pragma forceinline
-                  residual = rhs[ getCellIndex(ix,iy,iz) ] +
+                  residual = rhs[ getCellIndex(ix+jx, iy+jy, iz+jz) ] +
                     1.0/getH()/getH()*
                     (
-                      - 1.0 * p[ getCellIndex(ix+jx-1,iy+jy,iz+jz) ]
-                      - 1.0 * p[ getCellIndex(ix+jx+1,iy+jy,iz+jz) ]
-                      - 1.0 * p[ getCellIndex(ix+jx,iy+jy-1,iz+jz) ]
-                      - 1.0 * p[ getCellIndex(ix+jx,iy+jy+1,iz+jz) ]
-                      - 1.0 * p[ getCellIndex(ix+jx,iy+jy,iz+jz-1) ]
-                      - 1.0 * p[ getCellIndex(ix+jx,iy+jy,iz+jz+1) ]
-                      + 6.0 * p[ getCellIndex(ix+jx,iy+jy,iz+jz) ]
+                      - 1.0 * p[ getCellIndex(ix+jx-1, iy+jy, iz+jz) ]
+                      - 1.0 * p[ getCellIndex(ix+jx+1, iy+jy, iz+jz) ]
+                      - 1.0 * p[ getCellIndex(ix+jx, iy+jy-1, iz+jz) ]
+                      - 1.0 * p[ getCellIndex(ix+jx, iy+jy+1, iz+jz) ]
+                      - 1.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz-1) ]
+                      - 1.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz+1) ]
+                      + 6.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz) ]
                     );
                   globalResidual              += residual * residual;
                   #pragma forceinline
-                  p[ getCellIndex(ix,iy,iz) ] += -omega * residual / 6.0 * getH() * getH();
+                  p[ getCellIndex(ix+jx, iy+jy, iz+jz) ] += -omega * residual / 6.0 * getH() * getH();
                 }
               }
             }
@@ -688,26 +689,27 @@ int computeP() {
             for (int jz=0; jz<4; jz+=1) {
               for (int jy=0; jy<4; jy+=1) {
                 for (int jx=0; jx<4; jx+=1) {
-                  if ( cellIsInside[getCellIndex(ix,iy,iz)] ) 
+                  if ( cellIsInside[getCellIndex(ix+jx, iy+jy, iz+jz)] ) 
                   {
-                    residual = rhs[ getCellIndex(ix,iy,iz) ] +
+                    double residual = rhs[ getCellIndex(ix+jx, iy+jy, iz+jz) ] +
                       1.0/getH()/getH()*
                       (
-                        - 1.0 * p[ getCellIndex(ix+jx-1,iy+jy,iz+jz) ]
-                        - 1.0 * p[ getCellIndex(ix+jx+1,iy+jy,iz+jz) ]
-                        - 1.0 * p[ getCellIndex(ix+jx,iy+jy-1,iz+jz) ]
-                        - 1.0 * p[ getCellIndex(ix+jx,iy+jy+1,iz+jz) ]
-                        - 1.0 * p[ getCellIndex(ix+jx,iy+jy,iz+jz-1) ]
-                        - 1.0 * p[ getCellIndex(ix+jx,iy+jy,iz+jz+1) ]
-                        + 6.0 * p[ getCellIndex(ix+jx,iy+jy,iz+jz) ]
+                        - 1.0 * p[ getCellIndex(ix+jx-1, iy+jy, iz+jz) ]
+                        - 1.0 * p[ getCellIndex(ix+jx+1, iy+jy, iz+jz) ]
+                        - 1.0 * p[ getCellIndex(ix+jx, iy+jy-1, iz+jz) ]
+                        - 1.0 * p[ getCellIndex(ix+jx, iy+jy+1, iz+jz) ]
+                        - 1.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz-1) ]
+                        - 1.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz+1) ]
+                        + 6.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz) ]
                       );
                     globalResidual              += residual * residual;
-                    p[ getCellIndex(ix,iy,iz) ] += -omega * residual / 6.0 * getH() * getH();
+                    p[ getCellIndex(ix+jx,iy+jy,iz+jz) ] += -omega * residual / 6.0 * getH() * getH();
                   }
                 }
               }
             }
-          }          
+          }
+          blockCounter++;          
         }
       }
     }
@@ -775,7 +777,7 @@ void setupScenario() {
   const int numberOfFacesY = (numberOfCellsPerAxisX+2) * (numberOfCellsPerAxisY+3) * (numberOfCellsPerAxisZ+2);
   const int numberOfFacesZ = (numberOfCellsPerAxisX+2) * (numberOfCellsPerAxisY+2) * (numberOfCellsPerAxisZ+3);
 
-  numberOfBlocks = numberOfCells/64;
+  numberOfBlocks = ((numberOfCellsPerAxisX)*(numberOfCellsPerAxisY)*(numberOfCellsPerAxisZ))/64;
 
   ux  = 0;
   uy  = 0;
@@ -802,8 +804,7 @@ void setupScenario() {
   cellIsInside = new (std::nothrow) bool[numberOfCells];
 
   //block stuff
-  cellInBlock = new (std::nothrow) int[numberOfCells];
-  obstacleInBlock = new (std::nothrow) bool[numberOfBlocks];
+  blockIsInside = new (std::nothrow) bool[numberOfBlocks];
 
   if (
     ux  == 0 ||
@@ -844,7 +845,7 @@ void setupScenario() {
 
   for (int i=0; i<numberOfBlocks; i++)
   {
-    obstacleInBlock[i] = false;
+    blockIsInside[i] = true;
   }
 
 
@@ -876,10 +877,9 @@ void setupScenario() {
         for (int jz=0; jz<4; jz+=1) {
           for (int jy=0; jy<4; jy+=1) {
             for (int jx=0; jx<4; jx+=1) {
-              cellInBlock[getCellIndex(ix+jx,iy+jy,iz+jz)] = blockCounter;
-              if ((obstacleInBlock[blockCounter] = false) && (cellIsInside[getCellIndex(ix+jx,iy+jy,iz+jz)] == false))
+              if (cellIsInside[getCellIndex(ix+jx,iy+jy,iz+jz)] == false)
               {
-                obstacleInBlock[blockCounter] = true;
+                blockIsInside[blockCounter] = false;
               }
             }
           }
@@ -889,6 +889,13 @@ void setupScenario() {
     }
   }
 
+  //print blocks with obstacle in
+  // for(int i = 0; i < numberOfBlocks; i++)
+  //   {
+  //     if(!blockIsInside[i]){
+  //       std::cout << "blockIsInside[" << i << "] => " << blockIsInside[i] << std::endl;
+  //     }
+  //   }
 
   validateThatEntriesAreBounded("setupScenario()");
 }
