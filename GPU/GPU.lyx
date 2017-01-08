@@ -273,6 +273,11 @@ Step 3
 \end_layout
 
 \begin_layout Standard
+Halos have been implemented, but currently calculating with these values
+ as 0 rather than the neighbour
+\end_layout
+
+\begin_layout Standard
 
 \series bold
 OPENMP pragmas not intel pragmas
