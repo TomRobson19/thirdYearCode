@@ -209,54 +209,10 @@ To address these issues, the performance model that should be applied is
 \end_layout
 
 \begin_layout Standard
-USE GPROF AS WE DID IN THE PRACTICAL
-\end_layout
+\begin_inset Newpage newpage
+\end_inset
 
-\begin_layout Standard
 
-\series bold
-Definitely add -xHost if you're gonna vectorize
-\end_layout
-
-\begin_layout Standard
-################################################################################
-################################################################################
-#####
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Ben got max speedup to be around 6.25
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-use Amdahls law to get t(p), then calculate speed-up
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-work this out as if p tend to infinity to get max possible speed-up - will
- become limited by f 
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-S(p) = 1 /(f + (1 − f )/p) - use this as don't need a t(1) figure
-\end_layout
-
-\begin_layout Standard
-If you're only gonna parallelize computeP then f is everything else, do
- f as percentage/100
-\end_layout
-
-\begin_layout Standard
-Setpressure is called from computeP and cellindex is basically inlined and
- contributes very little
 \end_layout
 
 \begin_layout Section*
@@ -264,40 +220,52 @@ Step 2
 \end_layout
 
 \begin_layout Standard
+To break up the computational domain into blocks, or subproblems, we must
+ first determine a suitable block size.
+ The size chosen for these blocks are 4x4x4.
+ To facilitate the process of computation, it has been decided to restrict
+ the grid dimensions to be multiples of 4, supplied by the first command
+ line argument.
+ To allocate cells to blocks, we loop through the cells that would be in
+ the top left corner of each block, and for all cells in the block, check
+ if the obstacle is present in any of these cells.
+ These blocks are enumerated by a counter, and if a block contains the obstacle,
+ this is stored in a boolean array, with the index in the array indicating
+ which block the boolean refers to.
+ 
+\end_layout
+
+\begin_layout Standard
+The benefits of this process can be realised in computeP, the main hotspot
+ of this code, to improve its run-time.
+ We loop through each block, and if it doesn't contain the obstacle, we
+ can vectorise the loops for the cells in this block using Intel's SIMD
+ pragmas.
+ If it does contain the obstacle, then the computation must be done in the
+ same way as before.
+ Due to the small size of the obstacle, most of the blocks can have SIMD
+ vectorisation applied to them, so this modification results in a substantial
+ increase in the time taken to run the simulation.
+ 
+\end_layout
+
+\begin_layout Standard
 
 \series bold
-DONE NOW, WRITE UP
-\end_layout
-
-\begin_layout Standard
-Restrict 1st arg to be a multiple of the block size, make sure divisible
- by 4
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Array of which cells are in each block, mark which blocks have obstacle
- in them.
- (loop in setupScenario?)
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-Then in compute P, if unmarked do it normal way, if marked, do it a different
- way.
-\end_layout
-
-\begin_layout Standard
-Only do computeP, make a point of 'don't vectorise what doesn't need to
- be'
+Now collect results from Hamilton
 \end_layout
 
 \begin_layout Standard
 
 \series bold
 Ben - As a guide: I got 2x by using vectorisation
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
@@ -311,7 +279,7 @@ OPENMP pragmas not intel pragmas
 \end_layout
 
 \begin_layout Standard
-Parrallelise step 2 on multicore node (further instructions on coursework
+Parallelise step 2 on multicore node (further instructions on coursework
  spec)
 \end_layout
 

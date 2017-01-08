@@ -655,15 +655,15 @@ int computeP() {
     previousGlobalResidual = globalResidual;
     globalResidual         = 0.0;
     int blockCounter = 0;
-    for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=4) {
-      for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=4) {
-        for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=4) {
+    for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=6) {
+      for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=6) {
+        for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=6) {
           if (blockIsInside[blockCounter])
           {
-            for (int jz=0; jz<4; jz+=1) {
-              for (int jy=0; jy<4; jy+=1) {
+            for (int jz=1; jz<5; jz+=1) {
+              for (int jy=1; jy<5; jy+=1) {
                 #pragma simd
-                for (int jx=0; jx<4; jx+=1) {
+                for (int jx=1; jx<5; jx+=1) {
                   double residual = 0;
                   #pragma forceinline
                   residual = rhs[ getCellIndex(ix+jx, iy+jy, iz+jz) ] +
@@ -686,9 +686,9 @@ int computeP() {
           }
           else
           {
-            for (int jz=0; jz<4; jz+=1) {
-              for (int jy=0; jy<4; jy+=1) {
-                for (int jx=0; jx<4; jx+=1) {
+            for (int jz=1; jz<5; jz+=1) {
+              for (int jy=1; jy<5; jy+=1) {
+                for (int jx=1; jx<5; jx+=1) {
                   if ( cellIsInside[getCellIndex(ix+jx, iy+jy, iz+jz)] ) 
                   {
                     double residual = rhs[ getCellIndex(ix+jx, iy+jy, iz+jz) ] +
@@ -709,7 +709,7 @@ int computeP() {
               }
             }
           }
-          blockCounter++;          
+          blockCounter++;
         }
       }
     }
@@ -777,7 +777,9 @@ void setupScenario() {
   const int numberOfFacesY = (numberOfCellsPerAxisX+2) * (numberOfCellsPerAxisY+3) * (numberOfCellsPerAxisZ+2);
   const int numberOfFacesZ = (numberOfCellsPerAxisX+2) * (numberOfCellsPerAxisY+2) * (numberOfCellsPerAxisZ+3);
 
-  numberOfBlocks = ((numberOfCellsPerAxisX)*(numberOfCellsPerAxisY)*(numberOfCellsPerAxisZ))/64;
+  numberOfBlocks = ((numberOfCellsPerAxisX)*(numberOfCellsPerAxisY)*(numberOfCellsPerAxisZ))/216;
+
+  std::cout << numberOfBlocks << '\n';
 
   ux  = 0;
   uy  = 0;
@@ -870,13 +872,13 @@ void setupScenario() {
 
   int blockCounter = 0;
 
-  for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=4) {
-    for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=4) {
-      for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=4) {
+  for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=6) {
+    for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=6) {
+      for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=6) {
 
-        for (int jz=0; jz<4; jz+=1) {
-          for (int jy=0; jy<4; jy+=1) {
-            for (int jx=0; jx<4; jx+=1) {
+        for (int jz=0; jz<6; jz+=1) {
+          for (int jy=0; jy<6; jy+=1) {
+            for (int jx=0; jx<6; jx+=1) {
               if (cellIsInside[getCellIndex(ix+jx,iy+jy,iz+jz)] == false)
               {
                 blockIsInside[blockCounter] = false;
@@ -1203,9 +1205,9 @@ int main (int argc, char *argv[]) {
     return 1;
   }
 
-  numberOfCellsPerAxisY    = atoi(argv[1]);
-  numberOfCellsPerAxisZ    = numberOfCellsPerAxisY / 2;
-  numberOfCellsPerAxisX    = numberOfCellsPerAxisY * 5;
+  numberOfCellsPerAxisY    = atoi(argv[1]) + atoi(argv[1])/2;
+  numberOfCellsPerAxisZ    = (atoi(argv[1]) / 2) + (atoi(argv[1]) / 2)/2;
+  numberOfCellsPerAxisX    = (atoi(argv[1]) * 5) + (atoi(argv[1]) * 5)/2;
   double timeBetweenPlots  = atof(argv[2]);
   ReynoldsNumber           = atof(argv[3]);
 
