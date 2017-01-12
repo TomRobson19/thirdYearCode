@@ -85,6 +85,8 @@ on YouTube, e.g.
 #include <sstream>
 #include <fstream>
 #include <cmath>
+#include <omp.h>
+
 
 
 /**
@@ -660,6 +662,7 @@ int computeP() {
         for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=6) {
           if (blockIsInside[blockCounter])
           {
+
             for (int jz=1; jz<5; jz+=1) {
               for (int jy=1; jy<5; jy+=1) {
                 #pragma simd
