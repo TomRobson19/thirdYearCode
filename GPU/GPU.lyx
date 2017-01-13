@@ -280,6 +280,12 @@ Halos have been implemented, but currently calculating with these values
 \begin_layout Standard
 
 \series bold
+check all other places that the p array is used
+\end_layout
+
+\begin_layout Standard
+
+\series bold
 OPENMP pragmas not intel pragmas
 \end_layout
 
