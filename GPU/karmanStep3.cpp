@@ -726,6 +726,13 @@ int computeP() {
   return iterations;
 }
 
+void populateHalos(int x, int y, int z) {
+  /*
+  Take in top left corner of the block, go through all halo cells in each dimension
+  Need to take into account the halos that are on the edge of the entire domain.
+  */
+}
+
 
 /**
  * @todo Your job if you attend the Scientific Computing submodule. Otherwise empty.
