@@ -658,8 +658,7 @@ int computeP() {
     for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=4) {
       for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=4) {
         for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=4) {
-          if (blockIsInside[blockCounter])
-          {
+          if (blockIsInside[blockCounter]) {
             for (int jz=0; jz<4; jz+=1) {
               for (int jy=0; jy<4; jy+=1) {
                 #pragma simd
@@ -684,13 +683,11 @@ int computeP() {
               }
             }
           }
-          else
-          {
+          else {
             for (int jz=0; jz<4; jz+=1) {
               for (int jy=0; jy<4; jy+=1) {
                 for (int jx=0; jx<4; jx+=1) {
-                  if ( cellIsInside[getCellIndex(ix+jx, iy+jy, iz+jz)] ) 
-                  {
+                  if ( cellIsInside[getCellIndex(ix+jx, iy+jy, iz+jz)] ) {
                     double residual = rhs[ getCellIndex(ix+jx, iy+jy, iz+jz) ] +
                       1.0/getH()/getH()*
                       (

@@ -134,7 +134,7 @@ p[getCellIndex(ix,iy,iz)] += -omega * residual / 6.0 * getH() * getH();
 
 \begin_layout Standard
 This line is so computationally expensive because it performs complex mathematic
-al functions at floating point precision, meaning tat it has a high CPI
+al functions at floating point precision, meaning that it has a high CPI
  rate.
  The General Exploration analysis states that the primary bottleneck in
  this line comes from the Back-End of the pipeline, with the majority of
