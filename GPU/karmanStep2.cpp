@@ -86,6 +86,7 @@ on YouTube, e.g.
 #include <fstream>
 #include <cmath>
 
+#define BLOCK_SIZE 4
 
 /**
  * Number of cell we have per axis
@@ -655,14 +656,14 @@ int computeP() {
     previousGlobalResidual = globalResidual;
     globalResidual         = 0.0;
     int blockCounter = 0;
-    for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=4) {
-      for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=4) {
-        for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=4) {
+    for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=BLOCK_SIZE) {
+      for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=BLOCK_SIZE) {
+        for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=BLOCK_SIZE) {
           if (blockIsInside[blockCounter]) {
-            for (int jz=0; jz<4; jz+=1) {
-              for (int jy=0; jy<4; jy+=1) {
+            for (int jz=0; jz<BLOCK_SIZE; jz+=1) {
+              for (int jy=0; jy<BLOCK_SIZE; jy+=1) {
                 #pragma simd
-                for (int jx=0; jx<4; jx+=1) {
+                for (int jx=0; jx<BLOCK_SIZE; jx+=1) {
                   double residual = 0;
                   #pragma forceinline
                   residual = rhs[ getCellIndex(ix+jx, iy+jy, iz+jz) ] +
@@ -684,9 +685,9 @@ int computeP() {
             }
           }
           else {
-            for (int jz=0; jz<4; jz+=1) {
-              for (int jy=0; jy<4; jy+=1) {
-                for (int jx=0; jx<4; jx+=1) {
+            for (int jz=0; jz<BLOCK_SIZE; jz+=1) {
+              for (int jy=0; jy<BLOCK_SIZE; jy+=1) {
+                for (int jx=0; jx<BLOCK_SIZE; jx+=1) {
                   if ( cellIsInside[getCellIndex(ix+jx, iy+jy, iz+jz)] ) {
                     double residual = rhs[ getCellIndex(ix+jx, iy+jy, iz+jz) ] +
                       1.0/getH()/getH()*
@@ -774,7 +775,7 @@ void setupScenario() {
   const int numberOfFacesY = (numberOfCellsPerAxisX+2) * (numberOfCellsPerAxisY+3) * (numberOfCellsPerAxisZ+2);
   const int numberOfFacesZ = (numberOfCellsPerAxisX+2) * (numberOfCellsPerAxisY+2) * (numberOfCellsPerAxisZ+3);
 
-  numberOfBlocks = ((numberOfCellsPerAxisX)*(numberOfCellsPerAxisY)*(numberOfCellsPerAxisZ))/64;
+  numberOfBlocks = ((numberOfCellsPerAxisX)*(numberOfCellsPerAxisY)*(numberOfCellsPerAxisZ))/(BLOCK_SIZE*BLOCK_SIZE*BLOCK_SIZE);
 
   ux  = 0;
   uy  = 0;
@@ -867,13 +868,13 @@ void setupScenario() {
 
   int blockCounter = 0;
 
-  for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=4) {
-    for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=4) {
-      for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=4) {
+  for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=BLOCK_SIZE) {
+    for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=BLOCK_SIZE) {
+      for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=BLOCK_SIZE) {
 
-        for (int jz=0; jz<4; jz+=1) {
-          for (int jy=0; jy<4; jy+=1) {
-            for (int jx=0; jx<4; jx+=1) {
+        for (int jz=0; jz<BLOCK_SIZE; jz+=1) {
+          for (int jy=0; jy<BLOCK_SIZE; jy+=1) {
+            for (int jx=0; jx<BLOCK_SIZE; jx+=1) {
               if (cellIsInside[getCellIndex(ix+jx,iy+jy,iz+jz)] == false)
               {
                 blockIsInside[blockCounter] = false;

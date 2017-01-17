@@ -85,8 +85,8 @@ on YouTube, e.g.
 #include <sstream>
 #include <fstream>
 #include <cmath>
-#include <omp.h>
 
+#define BLOCK_SIZE 4
 
 
 /**
@@ -95,6 +95,10 @@ on YouTube, e.g.
 int numberOfCellsPerAxisX;
 int numberOfCellsPerAxisY;
 int numberOfCellsPerAxisZ;
+
+int numberOfCellsPerAxisXHalo;
+int numberOfCellsPerAxisYHalo;
+int numberOfCellsPerAxisZHalo;
 
 /**
  * Velocity of fluid along x,y and z direction
@@ -165,6 +169,27 @@ void assertion( bool condition, int line ) {
   #endif
 }
 
+int getBlockIndex(int ix, int iy, int iz) {
+  assertion(ix>=0,__LINE__);
+  assertion(ix<numberOfCellsPerAxisX+2,__LINE__);
+  assertion(iy>=0,__LINE__);
+  assertion(iy<numberOfCellsPerAxisY+2,__LINE__);
+  assertion(iz>=0,__LINE__);
+  assertion(iz<numberOfCellsPerAxisZ+2,__LINE__);
+
+  ix = (ix+1)/(BLOCK_SIZE+2);
+  iy = (iy+1)/(BLOCK_SIZE+2);
+  iz = (iz+1)/(BLOCK_SIZE+2);
+
+  int blocksPerAxisX = numberOfCellsPerAxisX/BLOCK_SIZE;
+  int blocksPerAxisY = numberOfCellsPerAxisY/BLOCK_SIZE;
+  int blocksPerAxisZ = numberOfCellsPerAxisZ/BLOCK_SIZE;
+
+  return ix+iy*(blocksPerAxisX+2)+iz*(blocksPerAxisX+2)*(blocksPerAxisY+2);
+}
+
+
+
 /**
  * Maps the three coordinates onto one cell index.
  */
@@ -177,6 +202,90 @@ int getCellIndex(int ix, int iy, int iz) {
   assertion(iz<numberOfCellsPerAxisZ+2,__LINE__);
   return ix+iy*(numberOfCellsPerAxisX+2)+iz*(numberOfCellsPerAxisX+2)*(numberOfCellsPerAxisY+2);
 }
+
+int getCellIndexHalo(int ix, int iy, int iz) {
+  assertion(ix>=0,__LINE__);
+  assertion(ix<numberOfCellsPerAxisXHalo+2,__LINE__);
+  assertion(iy>=0,__LINE__);
+  assertion(iy<numberOfCellsPerAxisYHalo+2,__LINE__);
+  assertion(iz>=0,__LINE__);
+  assertion(iz<numberOfCellsPerAxisZHalo+2,__LINE__);
+  return ix+iy*(numberOfCellsPerAxisXHalo+2)+iz*(numberOfCellsPerAxisXHalo+2)*(numberOfCellsPerAxisYHalo+2);
+}
+
+//used to access p when I don't want to consider halos (everywhere I access p that isn't in computeP) 
+int getCellIndexFromOriginals(int ix, int iy, int iz) {
+  assertion(ix>=0,__LINE__);
+  assertion(ix<numberOfCellsPerAxisX+2,__LINE__);
+  assertion(iy>=0,__LINE__);
+  assertion(iy<numberOfCellsPerAxisY+2,__LINE__);
+  assertion(iz>=0,__LINE__);
+  assertion(iz<numberOfCellsPerAxisZ+2,__LINE__);
+
+  ix += (ix/(BLOCK_SIZE+1))+1;
+  iy += (iy/(BLOCK_SIZE+1))+1;
+  iz += (iz/(BLOCK_SIZE+1))+1;
+
+  return getCellIndexHalo(ix, iy, iz);
+}
+
+//used when accessing rhs in computeP
+int getCellIndexFromHalos(int ix, int iy, int iz) {
+  assertion(ix>=0,__LINE__);
+  assertion(ix<numberOfCellsPerAxisXHalo+2,__LINE__);
+  assertion(iy>=0,__LINE__);
+  assertion(iy<numberOfCellsPerAxisYHalo+2,__LINE__);
+  assertion(iz>=0,__LINE__);
+  assertion(iz<numberOfCellsPerAxisZHalo+2,__LINE__);
+
+  int numberOfBlocksPassedInX = (ix+1)/(BLOCK_SIZE+2);
+  int numberOfBlocksPassedInY = (iy+1)/(BLOCK_SIZE+2);
+  int numberOfBlocksPassedInZ = (iz+1)/(BLOCK_SIZE+2);
+
+  ix -= (1+numberOfBlocksPassedInX*2);
+  iy -= (1+numberOfBlocksPassedInY*2);
+  iz -= (1+numberOfBlocksPassedInZ*2);
+
+  return getCellIndex(ix,iy,iz);
+}
+
+//insert the correct one of these when needed
+//change loops in computeP
+
+void updateHalos()
+{
+  for (int ix=BLOCK_SIZE+2; ix<numberOfCellsPerAxisZHalo; ix+=BLOCK_SIZE+2) {
+    for (int iy=2; iy<numberOfCellsPerAxisYHalo; iy++) {
+      for (int iz=2; iz<numberOfCellsPerAxisXHalo; iz++) {
+        p[getCellIndexHalo(ix,iy,iz)] = p[getCellIndexHalo(ix+2,iy,iz)];
+        p[getCellIndexHalo(ix+1,iy,iz)] = p[getCellIndexHalo(ix-1,iy,iz)];
+      }
+    }
+  }
+
+  for (int iy=BLOCK_SIZE+2; iy<numberOfCellsPerAxisZHalo; iy+=BLOCK_SIZE+2) {
+    for (int ix=2; ix<numberOfCellsPerAxisYHalo; ix++) {
+      for (int iz=2; iz<numberOfCellsPerAxisXHalo; iz++) {
+        p[getCellIndexHalo(ix,iy,iz)] = p[getCellIndexHalo(ix,iy+2,iz)];
+        p[getCellIndexHalo(ix,iy+1,iz)] = p[getCellIndexHalo(ix,iy-1,iz)];
+      }
+    }
+  }
+
+  for (int iz=BLOCK_SIZE+2; iz<numberOfCellsPerAxisZHalo; iz+=BLOCK_SIZE+2) {
+    for (int iy=2; iy<numberOfCellsPerAxisYHalo; iy++) {
+      for (int ix=2; ix<numberOfCellsPerAxisXHalo; ix++) {
+        p[getCellIndexHalo(ix,iy,iz)] = p[getCellIndexHalo(ix,iy,iz+2)];
+        p[getCellIndexHalo(ix,iy,iz+1)] = p[getCellIndexHalo(ix,iy,iz-1)];
+      }
+    }
+  }
+
+}
+
+
+
+
 
 /**
  * Maps the three coordinates onto one vertex index.
@@ -253,7 +362,7 @@ void validateThatEntriesAreBounded(const std::string&  callingRoutine) {
   for (int ix=0; ix<numberOfCellsPerAxisX+2; ix++)
   for (int iy=0; iy<numberOfCellsPerAxisY+2; iy++)
   for (int iz=0; iz<numberOfCellsPerAxisZ+2; iz++) {
-    if ( std::abs(p[ getCellIndex(ix,iy,iz)])>1e10 ) {
+    if ( std::abs(p[ getCellIndexFromOriginals(ix,iy,iz)])>1e10 ) {
       std::cerr << "error in routine " + callingRoutine + " in p[" << ix << "," << iy << "," << iz << "]" << std::endl;
       exit(-1);
     }
@@ -386,7 +495,7 @@ void plotVTKFile() {
   for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz++) {
     for (int iy=1; iy<numberOfCellsPerAxisY+1; iy++) {
       for (int ix=1; ix<numberOfCellsPerAxisX+1; ix++) {
-        out << p[ getCellIndex(ix,iy,iz) ] << std::endl;
+        out << p[ getCellIndexFromOriginals(ix,iy,iz) ] << std::endl;
       }
     }
   }
@@ -566,32 +675,32 @@ void setPressureBoundaryConditions() {
   for (iy=0; iy<numberOfCellsPerAxisY+2; iy++) {
     for (iz=0; iz<numberOfCellsPerAxisZ+2; iz++) {
       ix=0;
-      p[ getCellIndex(ix,iy,iz) ]   = p[ getCellIndex(ix+1,iy,iz) ];
+      p[ getCellIndexFromOriginals(ix,iy,iz) ]   = p[ getCellIndexFromOriginals(ix+1,iy,iz) ];
       ix=numberOfCellsPerAxisX+1;
-      p[ getCellIndex(ix,iy,iz) ]   = p[ getCellIndex(ix-1,iy,iz) ];
+      p[ getCellIndexFromOriginals(ix,iy,iz) ]   = p[ getCellIndexFromOriginals(ix-1,iy,iz) ];
     }
   }
   for (ix=0; ix<numberOfCellsPerAxisX+2; ix++) {
     for (iz=0; iz<numberOfCellsPerAxisZ+2; iz++) {
       iy=0;
-      p[ getCellIndex(ix,iy,iz) ]   = p[ getCellIndex(ix,iy+1,iz) ];
+      p[ getCellIndexFromOriginals(ix,iy,iz) ]   = p[ getCellIndexFromOriginals(ix,iy+1,iz) ];
       iy=numberOfCellsPerAxisY+1;
-      p[ getCellIndex(ix,iy,iz) ]   = p[ getCellIndex(ix,iy-1,iz) ];
+      p[ getCellIndexFromOriginals(ix,iy,iz) ]   = p[ getCellIndexFromOriginals(ix,iy-1,iz) ];
     }
   }
   for (ix=0; ix<numberOfCellsPerAxisX+2; ix++) {
     for (iy=0; iy<numberOfCellsPerAxisY+2; iy++) {
       iz=0;
-      p[ getCellIndex(ix,iy,iz) ]   = p[ getCellIndex(ix,iy,iz+1) ];
+      p[ getCellIndexFromOriginals(ix,iy,iz) ]   = p[ getCellIndexFromOriginals(ix,iy,iz+1) ];
       iz=numberOfCellsPerAxisZ+1;
-      p[ getCellIndex(ix,iy,iz) ]   = p[ getCellIndex(ix,iy,iz-1) ];
+      p[ getCellIndexFromOriginals(ix,iy,iz) ]   = p[ getCellIndexFromOriginals(ix,iy,iz-1) ];
     }
   }
 
   // Normalise pressure at rhs to zero
   for (iy=1; iy<numberOfCellsPerAxisY+2-1; iy++) {
     for (iz=1; iz<numberOfCellsPerAxisZ+2-1; iz++) {
-      p[ getCellIndex(numberOfCellsPerAxisX+1,iy,iz) ]   = 0.0;
+      p[ getCellIndexFromOriginals(numberOfCellsPerAxisX+1,iy,iz) ]   = 0.0;
     }
   }
 
@@ -601,22 +710,22 @@ void setPressureBoundaryConditions() {
       for (int ix=2; ix<numberOfCellsPerAxisX+1; ix++) {
         if (cellIsInside[getCellIndex(ix,iy,iz)]) {
           if ( !cellIsInside[getCellIndex(ix-1,iy,iz)] ) { // left neighbour
-            p[getCellIndex(ix-1,iy,iz)]     = p[getCellIndex(ix,iy,iz)];
+            p[getCellIndexFromOriginals(ix-1,iy,iz)]     = p[getCellIndexFromOriginals(ix,iy,iz)];
           }
           if ( !cellIsInside[getCellIndex(ix+1,iy,iz)] ) { // right neighbour
-            p[getCellIndex(ix+1,iy,iz)]     = p[getCellIndex(ix,iy,iz)];
+            p[getCellIndexFromOriginals(ix+1,iy,iz)]     = p[getCellIndexFromOriginals(ix,iy,iz)];
           }
           if ( !cellIsInside[getCellIndex(ix,iy-1,iz)] ) { // bottom neighbour
-            p[getCellIndex(ix,iy-1,iz)]     = p[getCellIndex(ix,iy,iz)];
+            p[getCellIndexFromOriginals(ix,iy-1,iz)]     = p[getCellIndexFromOriginals(ix,iy,iz)];
           }
           if ( !cellIsInside[getCellIndex(ix,iy+1,iz)] ) { // right neighbour
-            p[getCellIndex(ix,iy+1,iz)]     = p[getCellIndex(ix,iy,iz)];
+            p[getCellIndexFromOriginals(ix,iy+1,iz)]     = p[getCellIndexFromOriginals(ix,iy,iz)];
           }
           if ( !cellIsInside[getCellIndex(ix,iy,iz-1)] ) { // front neighbour
-            p[getCellIndex(ix,iy,iz-1)]     = p[getCellIndex(ix,iy,iz)];
+            p[getCellIndexFromOriginals(ix,iy,iz-1)]     = p[getCellIndexFromOriginals(ix,iy,iz)];
           }
           if ( !cellIsInside[getCellIndex(ix,iy,iz+1)] ) { // right neighbour
-            p[getCellIndex(ix,iy,iz+1)]     = p[getCellIndex(ix,iy,iz)];
+            p[getCellIndexFromOriginals(ix,iy,iz+1)]     = p[getCellIndexFromOriginals(ix,iy,iz)];
           }
         }
       }
@@ -656,63 +765,61 @@ int computeP() {
 
     previousGlobalResidual = globalResidual;
     globalResidual         = 0.0;
-    int blockCounter = 0;
-    for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=6) {
-      for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=6) {
-        for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=6) {
-          if (blockIsInside[blockCounter]) {
-            for (int jz=1; jz<5; jz+=1) {
-              for (int jy=1; jy<5; jy+=1) {
+    for (int iz=2; iz<numberOfCellsPerAxisZ+1; iz+=BLOCK_SIZE+2) {
+      for (int iy=2; iy<numberOfCellsPerAxisY+1; iy+=BLOCK_SIZE+2) {
+        for (int ix=2; ix<numberOfCellsPerAxisX+1; ix+=BLOCK_SIZE+2) {
+          if (blockIsInside[getBlockIndex(iz,iy,iz)]) {
+            for (int jz=0; jz<BLOCK_SIZE; jz+=1) {
+              for (int jy=0; jy<BLOCK_SIZE; jy+=1) {
                 #pragma simd
-                for (int jx=1; jx<5; jx+=1) {
+                for (int jx=0; jx<BLOCK_SIZE; jx+=1) {
                   double residual = 0;
                   #pragma forceinline
-                  residual = rhs[ getCellIndex(ix+jx, iy+jy, iz+jz) ] +
+                  residual = rhs[ getCellIndexFromHalos(ix+jx, iy+jy, iz+jz) ] +
                     1.0/getH()/getH()*
                     (
-                      - 1.0 * p[ getCellIndex(ix+jx-1, iy+jy, iz+jz) ]
-                      - 1.0 * p[ getCellIndex(ix+jx+1, iy+jy, iz+jz) ]
-                      - 1.0 * p[ getCellIndex(ix+jx, iy+jy-1, iz+jz) ]
-                      - 1.0 * p[ getCellIndex(ix+jx, iy+jy+1, iz+jz) ]
-                      - 1.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz-1) ]
-                      - 1.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz+1) ]
-                      + 6.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz) ]
+                      - 1.0 * p[ getCellIndexHalo(ix+jx-1, iy+jy, iz+jz) ]
+                      - 1.0 * p[ getCellIndexHalo(ix+jx+1, iy+jy, iz+jz) ]
+                      - 1.0 * p[ getCellIndexHalo(ix+jx, iy+jy-1, iz+jz) ]
+                      - 1.0 * p[ getCellIndexHalo(ix+jx, iy+jy+1, iz+jz) ]
+                      - 1.0 * p[ getCellIndexHalo(ix+jx, iy+jy, iz+jz-1) ]
+                      - 1.0 * p[ getCellIndexHalo(ix+jx, iy+jy, iz+jz+1) ]
+                      + 6.0 * p[ getCellIndexHalo(ix+jx, iy+jy, iz+jz) ]
                     );
                   globalResidual              += residual * residual;
                   #pragma forceinline
-                  p[ getCellIndex(ix+jx, iy+jy, iz+jz) ] += -omega * residual / 6.0 * getH() * getH();
+                  p[ getCellIndexHalo(ix+jx, iy+jy, iz+jz) ] += -omega * residual / 6.0 * getH() * getH();
                 }
               }
             }
           }
           else {
-            for (int jz=1; jz<5; jz+=1) {
-              for (int jy=1; jy<5; jy+=1) {
-                for (int jx=1; jx<5; jx+=1) {
-                  if ( cellIsInside[getCellIndex(ix+jx, iy+jy, iz+jz)] ) 
-                  {
-                    double residual = rhs[ getCellIndex(ix+jx, iy+jy, iz+jz) ] +
+            for (int jz=0; jz<BLOCK_SIZE; jz+=1) {
+              for (int jy=0; jy<BLOCK_SIZE; jy+=1) {
+                for (int jx=0; jx<BLOCK_SIZE; jx+=1) {
+                  if ( cellIsInside[getCellIndex(ix+jx, iy+jy, iz+jz)] ) {
+                    double residual = rhs[ getCellIndexFromHalos(ix+jx, iy+jy, iz+jz) ] +
                       1.0/getH()/getH()*
                       (
-                        - 1.0 * p[ getCellIndex(ix+jx-1, iy+jy, iz+jz) ]
-                        - 1.0 * p[ getCellIndex(ix+jx+1, iy+jy, iz+jz) ]
-                        - 1.0 * p[ getCellIndex(ix+jx, iy+jy-1, iz+jz) ]
-                        - 1.0 * p[ getCellIndex(ix+jx, iy+jy+1, iz+jz) ]
-                        - 1.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz-1) ]
-                        - 1.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz+1) ]
-                        + 6.0 * p[ getCellIndex(ix+jx, iy+jy, iz+jz) ]
+                        - 1.0 * p[ getCellIndexHalo(ix+jx-1, iy+jy, iz+jz) ]
+                        - 1.0 * p[ getCellIndexHalo(ix+jx+1, iy+jy, iz+jz) ]
+                        - 1.0 * p[ getCellIndexHalo(ix+jx, iy+jy-1, iz+jz) ]
+                        - 1.0 * p[ getCellIndexHalo(ix+jx, iy+jy+1, iz+jz) ]
+                        - 1.0 * p[ getCellIndexHalo(ix+jx, iy+jy, iz+jz-1) ]
+                        - 1.0 * p[ getCellIndexHalo(ix+jx, iy+jy, iz+jz+1) ]
+                        + 6.0 * p[ getCellIndexHalo(ix+jx, iy+jy, iz+jz) ]
                       );
                     globalResidual              += residual * residual;
-                    p[ getCellIndex(ix+jx,iy+jy,iz+jz) ] += -omega * residual / 6.0 * getH() * getH();
+                    p[ getCellIndexHalo(ix+jx,iy+jy,iz+jz) ] += -omega * residual / 6.0 * getH() * getH();
                   }
                 }
               }
             }
           }
-          blockCounter++;
         }
       }
     }
+    updateHalos();
     globalResidual        = std::sqrt(globalResidual);
     firstResidual         = firstResidual==0 ? globalResidual : firstResidual;
     iterations++;
@@ -724,13 +831,6 @@ int computeP() {
             << ", |res(n-1)|_2-|res(n)|_2=" << (previousGlobalResidual-globalResidual);
 
   return iterations;
-}
-
-void populateHalos(int x, int y, int z) {
-  /*
-  Take in top left corner of the block, go through all halo cells in each dimension
-  Need to take into account the halos that are on the edge of the entire domain.
-  */
 }
 
 
@@ -749,7 +849,7 @@ void setNewVelocities() {
   for (int iz=1; iz<numberOfCellsPerAxisZ+2-1; iz++) {
     for (int iy=1; iy<numberOfCellsPerAxisY+2-1; iy++) {
       for (int ix=2; ix<numberOfCellsPerAxisX+3-2; ix++) {
-        ux[ getFaceIndexX(ix,iy,iz) ] = Fx[ getFaceIndexX(ix,iy,iz) ] - timeStepSize/getH() * ( p[getCellIndex(ix,iy,iz)] - p[getCellIndex(ix-1,iy,iz)]);
+        ux[ getFaceIndexX(ix,iy,iz) ] = Fx[ getFaceIndexX(ix,iy,iz) ] - timeStepSize/getH() * ( p[getCellIndexFromOriginals(ix,iy,iz)] - p[getCellIndexFromOriginals(ix-1,iy,iz)]);
       }
     }
   }
@@ -757,7 +857,7 @@ void setNewVelocities() {
   for (int iz=1; iz<numberOfCellsPerAxisZ+2-1; iz++) {
     for (int iy=2; iy<numberOfCellsPerAxisY+3-2; iy++) {
       for (int ix=1; ix<numberOfCellsPerAxisX+2-1; ix++) {
-        uy[ getFaceIndexY(ix,iy,iz) ] = Fy[ getFaceIndexY(ix,iy,iz) ] - timeStepSize/getH() * ( p[getCellIndex(ix,iy,iz)] - p[getCellIndex(ix,iy-1,iz)]);
+        uy[ getFaceIndexY(ix,iy,iz) ] = Fy[ getFaceIndexY(ix,iy,iz) ] - timeStepSize/getH() * ( p[getCellIndexFromOriginals(ix,iy,iz)] - p[getCellIndexFromOriginals(ix,iy-1,iz)]);
       }
     }
   }
@@ -765,7 +865,7 @@ void setNewVelocities() {
   for (int iz=2; iz<numberOfCellsPerAxisZ+3-2; iz++) {
     for (int iy=1; iy<numberOfCellsPerAxisY+2-1; iy++) {
       for (int ix=1; ix<numberOfCellsPerAxisX+2-1; ix++) {
-        uz[ getFaceIndexZ(ix,iy,iz) ] = Fz[ getFaceIndexZ(ix,iy,iz) ] - timeStepSize/getH() * ( p[getCellIndex(ix,iy,iz)] - p[getCellIndex(ix,iy,iz-1)]);
+        uz[ getFaceIndexZ(ix,iy,iz) ] = Fz[ getFaceIndexZ(ix,iy,iz) ] - timeStepSize/getH() * ( p[getCellIndexFromOriginals(ix,iy,iz)] - p[getCellIndexFromOriginals(ix,iy,iz-1)]);
       }
     }
   }
@@ -784,9 +884,14 @@ void setupScenario() {
   const int numberOfFacesY = (numberOfCellsPerAxisX+2) * (numberOfCellsPerAxisY+3) * (numberOfCellsPerAxisZ+2);
   const int numberOfFacesZ = (numberOfCellsPerAxisX+2) * (numberOfCellsPerAxisY+2) * (numberOfCellsPerAxisZ+3);
 
-  numberOfBlocks = ((numberOfCellsPerAxisX)*(numberOfCellsPerAxisY)*(numberOfCellsPerAxisZ))/216;
+  numberOfBlocks = ((numberOfCellsPerAxisX)*(numberOfCellsPerAxisY)*(numberOfCellsPerAxisZ))/64;
 
-  std::cout << numberOfBlocks << '\n';
+  //number of cells with halos
+  numberOfCellsPerAxisXHalo = (numberOfCellsPerAxisX + (numberOfCellsPerAxisX/2) + 2);
+  numberOfCellsPerAxisYHalo = (numberOfCellsPerAxisY + (numberOfCellsPerAxisY/2) + 2);
+  numberOfCellsPerAxisZHalo = (numberOfCellsPerAxisZ + (numberOfCellsPerAxisZ/2) + 2);
+
+  const int numberOfCellsHalos = (numberOfCellsPerAxisXHalo+2) * (numberOfCellsPerAxisYHalo+2) * (numberOfCellsPerAxisZHalo+2);
 
   ux  = 0;
   uy  = 0;
@@ -805,7 +910,7 @@ void setupScenario() {
   Fy  = new (std::nothrow) double[numberOfFacesY];
   Fz  = new (std::nothrow) double[numberOfFacesZ];
 
-  p   = new (std::nothrow) double[numberOfCells];
+  p   = new (std::nothrow) double[numberOfCellsHalos];
   rhs = new (std::nothrow) double[numberOfCells];
 
   ink = new (std::nothrow) double[(numberOfCellsPerAxisX+1) * (numberOfCellsPerAxisY+1) * (numberOfCellsPerAxisZ+1)];
@@ -879,13 +984,13 @@ void setupScenario() {
 
   int blockCounter = 0;
 
-  for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=6) {
-    for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=6) {
-      for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=6) {
+  for (int iz=1; iz<numberOfCellsPerAxisZ+1; iz+=BLOCK_SIZE) {
+    for (int iy=1; iy<numberOfCellsPerAxisY+1; iy+=BLOCK_SIZE) {
+      for (int ix=1; ix<numberOfCellsPerAxisX+1; ix+=BLOCK_SIZE) {
 
-        for (int jz=0; jz<6; jz+=1) {
-          for (int jy=0; jy<6; jy+=1) {
-            for (int jx=0; jx<6; jx+=1) {
+        for (int jz=0; jz<BLOCK_SIZE; jz+=1) {
+          for (int jy=0; jy<BLOCK_SIZE; jy+=1) {
+            for (int jx=0; jx<BLOCK_SIZE; jx+=1) {
               if (cellIsInside[getCellIndex(ix+jx,iy+jy,iz+jz)] == false)
               {
                 blockIsInside[blockCounter] = false;
@@ -1212,9 +1317,9 @@ int main (int argc, char *argv[]) {
     return 1;
   }
 
-  numberOfCellsPerAxisY    = atoi(argv[1]) + atoi(argv[1])/2;
-  numberOfCellsPerAxisZ    = (atoi(argv[1]) / 2) + (atoi(argv[1]) / 2)/2;
-  numberOfCellsPerAxisX    = (atoi(argv[1]) * 5) + (atoi(argv[1]) * 5)/2;
+  numberOfCellsPerAxisY    = atoi(argv[1]);
+  numberOfCellsPerAxisZ    = numberOfCellsPerAxisY / 2;
+  numberOfCellsPerAxisX    = numberOfCellsPerAxisY * 5;
   double timeBetweenPlots  = atof(argv[2]);
   ReynoldsNumber           = atof(argv[3]);
 
