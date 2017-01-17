@@ -150,7 +150,7 @@ const double PPESolverThreshold                  = 1e-6;
 /**
  * Switch on to have a couple of security checks
  */
-//#define CheckVariableValues
+#define CheckVariableValues
 
 
 /**
@@ -252,20 +252,19 @@ int getCellIndexFromHalos(int ix, int iy, int iz) {
 //insert the correct one of these when needed
 //change loops in computeP
 
-void updateHalos()
-{
-  for (int ix=BLOCK_SIZE+2; ix<numberOfCellsPerAxisZHalo; ix+=BLOCK_SIZE+2) {
-    for (int iy=2; iy<numberOfCellsPerAxisYHalo; iy++) {
-      for (int iz=2; iz<numberOfCellsPerAxisXHalo; iz++) {
+void updateHalos() {
+  for (int ix=BLOCK_SIZE+2; ix<numberOfCellsPerAxisXHalo; ix+=BLOCK_SIZE+2) {
+    for (int iy=2; iy<numberOfCellsPerAxisYHalo-2; iy++) {
+      for (int iz=2; iz<numberOfCellsPerAxisZHalo-2; iz++) {
         p[getCellIndexHalo(ix,iy,iz)] = p[getCellIndexHalo(ix+2,iy,iz)];
         p[getCellIndexHalo(ix+1,iy,iz)] = p[getCellIndexHalo(ix-1,iy,iz)];
       }
     }
   }
 
-  for (int iy=BLOCK_SIZE+2; iy<numberOfCellsPerAxisZHalo; iy+=BLOCK_SIZE+2) {
-    for (int ix=2; ix<numberOfCellsPerAxisYHalo; ix++) {
-      for (int iz=2; iz<numberOfCellsPerAxisXHalo; iz++) {
+  for (int iy=BLOCK_SIZE+2; iy<numberOfCellsPerAxisYHalo; iy+=BLOCK_SIZE+2) {
+    for (int ix=2; ix<numberOfCellsPerAxisXHalo-2; ix++) {
+      for (int iz=2; iz<numberOfCellsPerAxisZHalo-2; iz++) {
         p[getCellIndexHalo(ix,iy,iz)] = p[getCellIndexHalo(ix,iy+2,iz)];
         p[getCellIndexHalo(ix,iy+1,iz)] = p[getCellIndexHalo(ix,iy-1,iz)];
       }
@@ -273,8 +272,8 @@ void updateHalos()
   }
 
   for (int iz=BLOCK_SIZE+2; iz<numberOfCellsPerAxisZHalo; iz+=BLOCK_SIZE+2) {
-    for (int iy=2; iy<numberOfCellsPerAxisYHalo; iy++) {
-      for (int ix=2; ix<numberOfCellsPerAxisXHalo; ix++) {
+    for (int iy=2; iy<numberOfCellsPerAxisYHalo-2; iy++) {
+      for (int ix=2; ix<numberOfCellsPerAxisXHalo-2; ix++) {
         p[getCellIndexHalo(ix,iy,iz)] = p[getCellIndexHalo(ix,iy,iz+2)];
         p[getCellIndexHalo(ix,iy,iz+1)] = p[getCellIndexHalo(ix,iy,iz-1)];
       }
@@ -282,10 +281,6 @@ void updateHalos()
   }
 
 }
-
-
-
-
 
 /**
  * Maps the three coordinates onto one vertex index.
@@ -771,7 +766,7 @@ int computeP() {
           if (blockIsInside[getBlockIndex(iz,iy,iz)]) {
             for (int jz=0; jz<BLOCK_SIZE; jz+=1) {
               for (int jy=0; jy<BLOCK_SIZE; jy+=1) {
-                #pragma simd
+                //#pragma simd
                 for (int jx=0; jx<BLOCK_SIZE; jx+=1) {
                   double residual = 0;
                   #pragma forceinline
