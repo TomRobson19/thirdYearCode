@@ -150,8 +150,7 @@ const double PPESolverThreshold                  = 1e-6;
 /**
  * Switch on to have a couple of security checks
  */
-#define CheckVariableValues
-
+//#define CheckVariableValues
 
 /**
  * This is a small macro that I use to ensure that something is valid. There's
@@ -177,18 +176,16 @@ int getBlockIndex(int ix, int iy, int iz) {
   assertion(iz>=0,__LINE__);
   assertion(iz<numberOfCellsPerAxisZ+2,__LINE__);
 
-  ix = (ix+1)/(BLOCK_SIZE+2);
-  iy = (iy+1)/(BLOCK_SIZE+2);
-  iz = (iz+1)/(BLOCK_SIZE+2);
+  ix = (ix)/(BLOCK_SIZE+2);
+  iy = (iy)/(BLOCK_SIZE+2);
+  iz = (iz)/(BLOCK_SIZE+2);
 
   int blocksPerAxisX = numberOfCellsPerAxisX/BLOCK_SIZE;
   int blocksPerAxisY = numberOfCellsPerAxisY/BLOCK_SIZE;
   int blocksPerAxisZ = numberOfCellsPerAxisZ/BLOCK_SIZE;
 
-  return ix+iy*(blocksPerAxisX+2)+iz*(blocksPerAxisX+2)*(blocksPerAxisY+2);
+  return ix+iy*(blocksPerAxisX)+iz*(blocksPerAxisX)*(blocksPerAxisY);
 }
-
-
 
 /**
  * Maps the three coordinates onto one cell index.
@@ -222,14 +219,14 @@ int getCellIndexFromOriginals(int ix, int iy, int iz) {
   assertion(iz>=0,__LINE__);
   assertion(iz<numberOfCellsPerAxisZ+2,__LINE__);
 
-  ix += (ix/(BLOCK_SIZE+1))+1;
-  iy += (iy/(BLOCK_SIZE+1))+1;
-  iz += (iz/(BLOCK_SIZE+1))+1;
+  ix += ((ix-1)/BLOCK_SIZE)*2+1;
+  iy += ((iy-1)/BLOCK_SIZE)*2+1;
+  iz += ((iz-1)/BLOCK_SIZE)*2+1;
 
   return getCellIndexHalo(ix, iy, iz);
 }
 
-//used when accessing rhs in computeP
+//used when accessing other stuff in computeP
 int getCellIndexFromHalos(int ix, int iy, int iz) {
   assertion(ix>=0,__LINE__);
   assertion(ix<numberOfCellsPerAxisXHalo+2,__LINE__);
@@ -238,9 +235,9 @@ int getCellIndexFromHalos(int ix, int iy, int iz) {
   assertion(iz>=0,__LINE__);
   assertion(iz<numberOfCellsPerAxisZHalo+2,__LINE__);
 
-  int numberOfBlocksPassedInX = (ix+1)/(BLOCK_SIZE+2);
-  int numberOfBlocksPassedInY = (iy+1)/(BLOCK_SIZE+2);
-  int numberOfBlocksPassedInZ = (iz+1)/(BLOCK_SIZE+2);
+  int numberOfBlocksPassedInX = ix/(BLOCK_SIZE+2);
+  int numberOfBlocksPassedInY = iy/(BLOCK_SIZE+2);
+  int numberOfBlocksPassedInZ = iz/(BLOCK_SIZE+2);
 
   ix -= (1+numberOfBlocksPassedInX*2);
   iy -= (1+numberOfBlocksPassedInY*2);
@@ -249,13 +246,20 @@ int getCellIndexFromHalos(int ix, int iy, int iz) {
   return getCellIndex(ix,iy,iz);
 }
 
-//insert the correct one of these when needed
-//change loops in computeP
+void printGrid(){
+    std::cout << std::endl;
+    for (int iy=0; iy<numberOfCellsPerAxisYHalo+2;iy+=1){
+      for (int ix=0; ix<numberOfCellsPerAxisXHalo+2; ix+=1) {
+        std::cout << (int)p[getCellIndexHalo(ix,iy,2)] << ",";
+      }
+      std::cout << std::endl;
+    }
+}
 
 void updateHalos() {
   for (int ix=BLOCK_SIZE+2; ix<numberOfCellsPerAxisXHalo; ix+=BLOCK_SIZE+2) {
-    for (int iy=2; iy<numberOfCellsPerAxisYHalo-2; iy++) {
-      for (int iz=2; iz<numberOfCellsPerAxisZHalo-2; iz++) {
+    for (int iy=2; iy<numberOfCellsPerAxisYHalo; iy++) {
+      for (int iz=2; iz<numberOfCellsPerAxisZHalo; iz++) {
         p[getCellIndexHalo(ix,iy,iz)] = p[getCellIndexHalo(ix+2,iy,iz)];
         p[getCellIndexHalo(ix+1,iy,iz)] = p[getCellIndexHalo(ix-1,iy,iz)];
       }
@@ -263,8 +267,8 @@ void updateHalos() {
   }
 
   for (int iy=BLOCK_SIZE+2; iy<numberOfCellsPerAxisYHalo; iy+=BLOCK_SIZE+2) {
-    for (int ix=2; ix<numberOfCellsPerAxisXHalo-2; ix++) {
-      for (int iz=2; iz<numberOfCellsPerAxisZHalo-2; iz++) {
+    for (int ix=2; ix<numberOfCellsPerAxisXHalo; ix++) {
+      for (int iz=2; iz<numberOfCellsPerAxisZHalo; iz++) {
         p[getCellIndexHalo(ix,iy,iz)] = p[getCellIndexHalo(ix,iy+2,iz)];
         p[getCellIndexHalo(ix,iy+1,iz)] = p[getCellIndexHalo(ix,iy-1,iz)];
       }
@@ -272,14 +276,13 @@ void updateHalos() {
   }
 
   for (int iz=BLOCK_SIZE+2; iz<numberOfCellsPerAxisZHalo; iz+=BLOCK_SIZE+2) {
-    for (int iy=2; iy<numberOfCellsPerAxisYHalo-2; iy++) {
-      for (int ix=2; ix<numberOfCellsPerAxisXHalo-2; ix++) {
+    for (int iy=2; iy<numberOfCellsPerAxisYHalo; iy++) {
+      for (int ix=2; ix<numberOfCellsPerAxisXHalo; ix++) {
         p[getCellIndexHalo(ix,iy,iz)] = p[getCellIndexHalo(ix,iy,iz+2)];
         p[getCellIndexHalo(ix,iy,iz+1)] = p[getCellIndexHalo(ix,iy,iz-1)];
       }
     }
   }
-
 }
 
 /**
@@ -296,7 +299,6 @@ int getVertexIndex(int ix, int iy, int iz) {
   return ix+iy*(numberOfCellsPerAxisX+1)+iz*(numberOfCellsPerAxisX+1)*(numberOfCellsPerAxisY+1);
 }
 
-
 /**
  * Gives you the face with the number ix,iy,iz.
  *
@@ -312,7 +314,6 @@ int getFaceIndexX(int ix, int iy, int iz) {
   return ix+iy*(numberOfCellsPerAxisX+3)+iz*(numberOfCellsPerAxisX+3)*(numberOfCellsPerAxisY+2);
 }
 
-
 int getFaceIndexY(int ix, int iy, int iz) {
   assertion(ix>=0,__LINE__);
   assertion(ix<numberOfCellsPerAxisX+2,__LINE__);
@@ -322,7 +323,6 @@ int getFaceIndexY(int ix, int iy, int iz) {
   assertion(iz<numberOfCellsPerAxisZ+2,__LINE__);
   return ix+iy*(numberOfCellsPerAxisX+2)+iz*(numberOfCellsPerAxisX+2)*(numberOfCellsPerAxisY+2);
 }
-
 
 int getFaceIndexZ(int ix, int iy, int iz) {
   assertion(ix>=0,__LINE__);
@@ -334,7 +334,6 @@ int getFaceIndexZ(int ix, int iy, int iz) {
   return ix+iy*(numberOfCellsPerAxisX+2)+iz*(numberOfCellsPerAxisX+2)*(numberOfCellsPerAxisY+2);
 }
 
-
 /**
  * We use always numberOfCellsPerAxisX=numberOfCellsPerAxisY and we make Z 5
  * times bigger, i.e. we always work with cubes. We also assume that the whole
@@ -343,7 +342,6 @@ int getFaceIndexZ(int ix, int iy, int iz) {
 double getH() {
   return 1.0/static_cast<double>(numberOfCellsPerAxisY);
 }
-
 
 /**
  * There are two types of errors/bugs that really hunt us in these codes: We
@@ -403,7 +401,6 @@ void validateThatEntriesAreBounded(const std::string&  callingRoutine) {
   }
   #endif
 }
-
 
 /**
  * Plot a vtk file. This function probably never has to be changed when you do
@@ -529,7 +526,6 @@ void plotVTKFile() {
   vtkFileCounter++;
 }
 
-
 /**
  * Computes a helper velocity. See book of Griebel for details.
  */
@@ -634,7 +630,6 @@ void computeF() {
   validateThatEntriesAreBounded( "computeF" );
 }
 
-
 /**
  * Compute the right-hand side. This basically means how much a flow would
  * violate the incompressibility if there were no pressure.
@@ -655,7 +650,6 @@ void computeRhs() {
     }
   }
 }
-
 
 /**
  * Set boundary conditions for pressure. The values of the pressure at the
@@ -728,7 +722,6 @@ void setPressureBoundaryConditions() {
   }
 }
 
-
 /**
  * Determine the new pressure. The operation depends on properly set pressure
  * boundary conditions. See setPressureBoundaryConditions().
@@ -760,13 +753,13 @@ int computeP() {
 
     previousGlobalResidual = globalResidual;
     globalResidual         = 0.0;
-    for (int iz=2; iz<numberOfCellsPerAxisZ+1; iz+=BLOCK_SIZE+2) {
-      for (int iy=2; iy<numberOfCellsPerAxisY+1; iy+=BLOCK_SIZE+2) {
-        for (int ix=2; ix<numberOfCellsPerAxisX+1; ix+=BLOCK_SIZE+2) {
-          if (blockIsInside[getBlockIndex(iz,iy,iz)]) {
+    for (int iz=2; iz<numberOfCellsPerAxisZHalo+1; iz+=BLOCK_SIZE+2) {
+      for (int iy=2; iy<numberOfCellsPerAxisYHalo+1; iy+=BLOCK_SIZE+2) {
+        for (int ix=2; ix<numberOfCellsPerAxisXHalo+1; ix+=BLOCK_SIZE+2) {
+          if (blockIsInside[getBlockIndex(ix,iy,iz)]) {
             for (int jz=0; jz<BLOCK_SIZE; jz+=1) {
               for (int jy=0; jy<BLOCK_SIZE; jy+=1) {
-                //#pragma simd
+                #pragma simd
                 for (int jx=0; jx<BLOCK_SIZE; jx+=1) {
                   double residual = 0;
                   #pragma forceinline
@@ -792,7 +785,7 @@ int computeP() {
             for (int jz=0; jz<BLOCK_SIZE; jz+=1) {
               for (int jy=0; jy<BLOCK_SIZE; jy+=1) {
                 for (int jx=0; jx<BLOCK_SIZE; jx+=1) {
-                  if ( cellIsInside[getCellIndex(ix+jx, iy+jy, iz+jz)] ) {
+                  if ( cellIsInside[getCellIndexFromHalos(ix+jx, iy+jy, iz+jz)] ) {
                     double residual = rhs[ getCellIndexFromHalos(ix+jx, iy+jy, iz+jz) ] +
                       1.0/getH()/getH()*
                       (
@@ -828,14 +821,11 @@ int computeP() {
   return iterations;
 }
 
-
 /**
  * @todo Your job if you attend the Scientific Computing submodule. Otherwise empty.
  */
 void updateInk() {
 }
-
-
 
 /**
  * Once we have F and a valid pressure p, we may update the velocities.
@@ -879,12 +869,12 @@ void setupScenario() {
   const int numberOfFacesY = (numberOfCellsPerAxisX+2) * (numberOfCellsPerAxisY+3) * (numberOfCellsPerAxisZ+2);
   const int numberOfFacesZ = (numberOfCellsPerAxisX+2) * (numberOfCellsPerAxisY+2) * (numberOfCellsPerAxisZ+3);
 
-  numberOfBlocks = ((numberOfCellsPerAxisX)*(numberOfCellsPerAxisY)*(numberOfCellsPerAxisZ))/64;
+  numberOfBlocks = ((numberOfCellsPerAxisX)*(numberOfCellsPerAxisY)*(numberOfCellsPerAxisZ))/(BLOCK_SIZE*BLOCK_SIZE*BLOCK_SIZE);
 
   //number of cells with halos
-  numberOfCellsPerAxisXHalo = (numberOfCellsPerAxisX + (numberOfCellsPerAxisX/2) + 2);
-  numberOfCellsPerAxisYHalo = (numberOfCellsPerAxisY + (numberOfCellsPerAxisY/2) + 2);
-  numberOfCellsPerAxisZHalo = (numberOfCellsPerAxisZ + (numberOfCellsPerAxisZ/2) + 2);
+  numberOfCellsPerAxisXHalo = (numberOfCellsPerAxisX + (numberOfCellsPerAxisX/BLOCK_SIZE)*2);
+  numberOfCellsPerAxisYHalo = (numberOfCellsPerAxisY + (numberOfCellsPerAxisY/BLOCK_SIZE)*2);
+  numberOfCellsPerAxisZHalo = (numberOfCellsPerAxisZ + (numberOfCellsPerAxisZ/BLOCK_SIZE)*2);
 
   const int numberOfCellsHalos = (numberOfCellsPerAxisXHalo+2) * (numberOfCellsPerAxisYHalo+2) * (numberOfCellsPerAxisZHalo+2);
 
@@ -1009,7 +999,6 @@ void setupScenario() {
   validateThatEntriesAreBounded("setupScenario()");
 }
 
-
 /**
  * Clean up the system
  */
@@ -1035,7 +1024,6 @@ void freeDataStructures() {
   rhs = 0;
   ink = 0;
 }
-
 
 /**
  * - Handle all the velocities at the domain boundaries. We either
@@ -1294,9 +1282,6 @@ void setVelocityBoundaryConditions(double time) {
   validateThatEntriesAreBounded("setVelocityBoundaryConditions(double)[out]");
 }
 
-
-
-
 int main (int argc, char *argv[]) {
   if (argc!=4) {
       std::cout << "Usage: executable number-of-elements-per-axis time-steps-between-plots reynolds-number" << std::endl;
@@ -1346,7 +1331,7 @@ int main (int argc, char *argv[]) {
   int    numberOfTimeStepsWithOnlyOneIteration = 0;
 
   //change this to make it run in reasonable time - default was 20
-  while (t<0.1) {
+  while (t<20) {
     std::cout << "time step " << timeStepCounter << ": t=" << t << "\t dt=" << timeStepSize << "\t";
 
     setVelocityBoundaryConditions(t);
@@ -1356,6 +1341,8 @@ int main (int argc, char *argv[]) {
     // we use underrelaxation as we are interested in the pressure gradient, i.e.
     // we want to have a smooth solution
     int innerIterationsRequired = computeP();
+    //return 0;
+
     setNewVelocities();
     updateInk();
 
