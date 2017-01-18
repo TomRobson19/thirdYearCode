@@ -222,17 +222,18 @@ Step 2
 \begin_layout Standard
 To break up the computational domain into blocks, or subproblems, we must
  first determine a suitable block size.
- The size chosen for these blocks are 4x4x4.
+ The size chosen for these blocks is 4x4x4.
  To facilitate the process of computation, it has been decided to restrict
  the grid dimensions to be multiples of 4, supplied by the first command
  line argument.
+ If this is not supplied correctly, the system will error.
  To allocate cells to blocks, we loop through the cells that would be in
  the top left corner of each block, and for all cells in the block, check
  if the obstacle is present in any of these cells.
  These blocks are enumerated by a counter, and if a block contains the obstacle,
- this is stored in a boolean array, with the index in the array indicating
+ this is stored in an array of booleans, with the index in the array indicating
  which block the boolean refers to.
- 
+ This process is performed in setupScenario().
 \end_layout
 
 \begin_layout Standard
@@ -243,9 +244,9 @@ The benefits of this process can be realised in computeP, the main hotspot
  pragmas.
  If it does contain the obstacle, then the computation must be done in the
  same way as before.
- Due to the small size of the obstacle, most of the blocks can have SIMD
- vectorisation applied to them, so this modification results in a substantial
- increase in the time taken to run the simulation.
+ Due to the small size of the obstacle, the majority of the blocks can have
+ SIMD vectorisation applied to them, so this modification results in a substanti
+al increase in the time taken to run the simulation.
  
 \end_layout
 
@@ -270,149 +271,6 @@ Ben - As a guide: I got 2x by using vectorisation
 
 \begin_layout Section*
 Step 3
-\end_layout
-
-\begin_layout Standard
-Halos have been implemented, but currently calculating with these values
- as 0 rather than the neighbour
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-check all other places that the p array is used
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-OPENMP pragmas not intel pragmas
-\end_layout
-
-\begin_layout Standard
-Parallelise step 2 on multicore node (further instructions on coursework
- spec)
-\end_layout
-
-\begin_layout Standard
-Setup scenario function will be important here
-\end_layout
-
-\begin_layout Section*
-Notes from chat
-\end_layout
-
-\begin_layout Standard
-Have a look at the profiling lecture/practical
-\end_layout
-
-\begin_layout Standard
-He means stuff like hot functions
-\end_layout
-
-\begin_layout Standard
-Step 1 - Profile it before you change anything to make sure it's getting
- better
-\end_layout
-
-\begin_layout Standard
-Vectorisation is SIMD, parallelization is MIMD
-\end_layout
-
-\begin_layout Standard
-You parallelize outer loops and vectorize inner loops
-\end_layout
-
-\begin_layout Standard
-Don't forget to compile with -g3 --> Keeps source information in the binary,
- that way you can see line by line the expensive stuff
-\end_layout
-
-\begin_layout Standard
-Can confirm the parameters matter a lot First one: size of the box Or length
- more accurately I think Second one is when to plot a file (use 0 to disable)
- Last one is density of fluid: haven't really figured out the effect of
- this one yet
-\end_layout
-
-\begin_layout Standard
-Need to run for a range of parameters and get an average?
-\end_layout
-
-\begin_layout Standard
-Ben do you think the model we should use should be weak scaling? --> Need
- to have a look over those lecture notes but theory yes as I can't see it
- being memory bound but could be wrong
-\end_layout
-
-\begin_layout Standard
-Memory bound --> Doesn't matter if your CPU can do 1 GFLOPS if you can only
- do 0.5GFLOpS because data can't be accessed fast enough So parallelising
- the code won't help But vectorising would assuming you haven't saturated
- the memory link --> the roofline model 
-\end_layout
-
-\begin_layout Standard
-It's all those graphs Tobias drew in the lectures --> The diagonal is the
- compute (performance) bound right? --> Yep --> And the horizontal is when
- the memory can't provide data fast enough --> Yep
-\end_layout
-
-\begin_layout Standard
-we need to calculate what the operation:byte ratio is of the expensive code
-\end_layout
-
-\begin_layout Standard
-Probably only need hamilton for timing, if at all
-\end_layout
-
-\begin_layout Standard
-Ben's Tobias Email:
-\end_layout
-
-\begin_layout Standard
-> The majority of time spent (~85%) is in the computeP() which only has
- a single if statement and as 98% of the cells are inside the domain I don't
- see how optimising blocks that are outside of the domain would result in
- a speed up.
- 
-\end_layout
-
-\begin_layout Standard
-Why outside of the domain? It might be interesting to see whether a block
- holds any flagged cells.
- The ifs are not really an issue in a standard code.
- But what happens if you wanna vectorise?
-\end_layout
-
-\begin_layout Standard
-Tobias
-\end_layout
-
-\begin_layout Standard
-I'm assuming a high arithmetic intensity implies compute bound --> yes
-\end_layout
-
-\begin_layout Standard
-Basically if a section is slow but it doesn't do many operations per loaded
- byte It's likely memory bound
-\end_layout
-
-\begin_layout Standard
-PRACTICALS HAVE STUFF ON ARITHMETIC INTENSITY CALCULATIONS
-\end_layout
-
-\begin_layout Standard
-(Gustafson vs Amdahl) No but he does give you the properties of each, To
- match with the properties of our code, Amdahl's law is probably the one
- as its pretty popular
-\end_layout
-
-\begin_layout Standard
-
-\series bold
-BEN --> Im going with strong scaling/amdahls law because we only know the
- time for a single processor anyway and its easier to talk about
 \end_layout
 
 \end_body
