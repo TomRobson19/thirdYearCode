@@ -761,7 +761,7 @@ int computeP() {
           if (blockIsInside[getBlockIndex(ix,iy,iz)]) {
             for (int jz=0; jz<BLOCK_SIZE; jz+=1) {
               for (int jy=0; jy<BLOCK_SIZE; jy+=1) {
-                #pragma simd
+                #pragma omp simd
                 for (int jx=0; jx<BLOCK_SIZE; jx+=1) {
                   double residual = 0;
                   #pragma forceinline

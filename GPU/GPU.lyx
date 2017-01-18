@@ -205,7 +205,7 @@ To address these issues, the performance model that should be applied is
 \end_inset
 
  tends to infinity.
- USE FIGURES FROM HAMILTON
+ 
 \end_layout
 
 \begin_layout Standard
@@ -221,11 +221,10 @@ Step 2
 
 \begin_layout Standard
 To break up the computational domain into blocks, or subproblems, we must
- first determine a suitable block size.
- The size chosen for these blocks is 4x4x4.
+ first determine a suitable block size, set by a global variable.
  To facilitate the process of computation, it has been decided to restrict
- the grid dimensions to be multiples of 4, supplied by the first command
- line argument.
+ the grid dimensions to be multiples of this block size, supplied by the
+ first command line argument.
  If this is not supplied correctly, the system will error.
  To allocate cells to blocks, we loop through the cells that would be in
  the top left corner of each block, and for all cells in the block, check
