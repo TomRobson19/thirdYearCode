@@ -753,7 +753,6 @@ int computeP() {
 
     previousGlobalResidual = globalResidual;
     globalResidual         = 0.0;
-    
     #pragma omp parallel for reduction (+:globalResidual)
     for (int iz=2; iz<numberOfCellsPerAxisZHalo+1; iz+=BLOCK_SIZE+2) {
       for (int iy=2; iy<numberOfCellsPerAxisYHalo+1; iy+=BLOCK_SIZE+2) {

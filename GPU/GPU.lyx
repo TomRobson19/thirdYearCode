@@ -238,14 +238,16 @@ To break up the computational domain into blocks, or subproblems, we must
 \begin_layout Standard
 The benefits of this process can be realised in computeP, the main hotspot
  of this code, to improve its run-time.
- We loop through each block, and if it doesn't contain the obstacle, we
- can vectorise the loops for the cells in this block using Intel's SIMD
- pragmas.
- If it does contain the obstacle, then the computation must be done in the
- same way as before.
+ We loop through each block, and if the boolean array tells us that this
+ block doesn't contain the obstacle, we can vectorise the loops for the
+ cells in this block using Intel's SIMD pragmas.
+ If one or more of the cells of the block does contain part of the obstacle,
+ then the computation must be done in the same way as before, by looping
+ through all of the cells individually, and checking if they have a part
+ of the obstacle in them, and only performing the update to p if it is not.
  Due to the small size of the obstacle, the majority of the blocks can have
- SIMD vectorisation applied to them, so this modification results in a substanti
-al increase in the time taken to run the simulation.
+ SIMD vectorisation applied to them, so this vectorisation results in a
+ substantial increase in the time taken to run the simulation.
  
 \end_layout
 
