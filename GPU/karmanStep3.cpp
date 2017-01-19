@@ -88,7 +88,6 @@ on YouTube, e.g.
 
 #define BLOCK_SIZE 4
 
-
 /**
  * Number of cell we have per axis
  */
@@ -145,7 +144,6 @@ const int MinAverageComputePIterations           = 200;
 const int IterationsBeforeTimeStepSizeIsAltered  = 64;
 const double ChangeOfTimeStepSize                = 0.1;
 const double PPESolverThreshold                  = 1e-6;
-
 
 /**
  * Switch on to have a couple of security checks
@@ -856,7 +854,6 @@ void setNewVelocities() {
     }
   }
 }
-
 
 /**
  * Setup our scenario, i.e. initialise all the big arrays and set the

@@ -258,12 +258,6 @@ Now collect results from Hamilton
 \end_layout
 
 \begin_layout Standard
-
-\series bold
-Ben - As a guide: I got 2x by using vectorisation
-\end_layout
-
-\begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
 
@@ -272,6 +266,46 @@ Ben - As a guide: I got 2x by using vectorisation
 
 \begin_layout Section*
 Step 3
+\end_layout
+
+\begin_layout Standard
+To eliminate the data races and facilitate parallelisation, we must implement
+ halo layers for the blocks.
+ In order to achieve this, we calculate the increase in number of cells
+ in each dimension, by adding 2 cells per block in each dimension, and increase
+ the size of p to accommodate this.
+ In computeP, we loop through the blocks in a similar fashion to step 2,
+ and loop through the cells containing data, ignoring the halos.
+ The the end of each computeP iteration, the halos are updated using the
+ updateHalo function so that they contain the correct neighbour data to
+ be used for the calculations in the next iteration.
+ 
+\end_layout
+
+\begin_layout Standard
+As halos are not necessary in any of the other arrays, and to facilitate
+ accessing p from any of the functions other than computeP, we must implement
+ some additional getCellIndex functions.
+ When we access p from any other function, the loops have not been expanded
+ to include halos, so we must map the value given by the loops to the newly
+ expanded array.
+ This is done by the function getCellIndexFromOriginals.
+ We also need the inverse of this to access the other arrays from the loops
+ intended for halos, done by the function getCellIndexFromHalos.
+ The final function is for accessing the correct value in p with the halos
+ embedded, used in the computeP loops, done using the getCellIndexHalo function.
+ 
+\end_layout
+
+\begin_layout Standard
+When these functions have been implemented, we can then move on to the paralleli
+sation.
+ The OpenMP pragmas will be used to accomplish this.
+ As the global residual value is appended to in each section, and these
+ sections must be brought together.
+ This is done using the reduction option from OpenMP.
+ The SIMD pragma from step 2 must also be changed to the OpenMP equivalent.
+ 
 \end_layout
 
 \end_body

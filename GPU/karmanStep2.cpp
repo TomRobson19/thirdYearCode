@@ -120,7 +120,6 @@ double* rhs;
  */
 double* ink;
 
-
 /**
  * Is cell inside domain
  */
@@ -141,12 +140,10 @@ const int IterationsBeforeTimeStepSizeIsAltered  = 64;
 const double ChangeOfTimeStepSize                = 0.1;
 const double PPESolverThreshold                  = 1e-6;
 
-
 /**
  * Switch on to have a couple of security checks
  */
 //#define CheckVariableValues
-
 
 /**
  * This is a small macro that I use to ensure that something is valid. There's
@@ -191,7 +188,6 @@ int getVertexIndex(int ix, int iy, int iz) {
   return ix+iy*(numberOfCellsPerAxisX+1)+iz*(numberOfCellsPerAxisX+1)*(numberOfCellsPerAxisY+1);
 }
 
-
 /**
  * Gives you the face with the number ix,iy,iz.
  *
@@ -207,7 +203,6 @@ int getFaceIndexX(int ix, int iy, int iz) {
   return ix+iy*(numberOfCellsPerAxisX+3)+iz*(numberOfCellsPerAxisX+3)*(numberOfCellsPerAxisY+2);
 }
 
-
 int getFaceIndexY(int ix, int iy, int iz) {
   assertion(ix>=0,__LINE__);
   assertion(ix<numberOfCellsPerAxisX+2,__LINE__);
@@ -217,7 +212,6 @@ int getFaceIndexY(int ix, int iy, int iz) {
   assertion(iz<numberOfCellsPerAxisZ+2,__LINE__);
   return ix+iy*(numberOfCellsPerAxisX+2)+iz*(numberOfCellsPerAxisX+2)*(numberOfCellsPerAxisY+2);
 }
-
 
 int getFaceIndexZ(int ix, int iy, int iz) {
   assertion(ix>=0,__LINE__);
@@ -229,7 +223,6 @@ int getFaceIndexZ(int ix, int iy, int iz) {
   return ix+iy*(numberOfCellsPerAxisX+2)+iz*(numberOfCellsPerAxisX+2)*(numberOfCellsPerAxisY+2);
 }
 
-
 /**
  * We use always numberOfCellsPerAxisX=numberOfCellsPerAxisY and we make Z 5
  * times bigger, i.e. we always work with cubes. We also assume that the whole
@@ -238,7 +231,6 @@ int getFaceIndexZ(int ix, int iy, int iz) {
 double getH() {
   return 1.0/static_cast<double>(numberOfCellsPerAxisY);
 }
-
 
 /**
  * There are two types of errors/bugs that really hunt us in these codes: We
@@ -298,7 +290,6 @@ void validateThatEntriesAreBounded(const std::string&  callingRoutine) {
   }
   #endif
 }
-
 
 /**
  * Plot a vtk file. This function probably never has to be changed when you do
@@ -424,7 +415,6 @@ void plotVTKFile() {
   vtkFileCounter++;
 }
 
-
 /**
  * Computes a helper velocity. See book of Griebel for details.
  */
@@ -529,7 +519,6 @@ void computeF() {
   validateThatEntriesAreBounded( "computeF" );
 }
 
-
 /**
  * Compute the right-hand side. This basically means how much a flow would
  * violate the incompressibility if there were no pressure.
@@ -550,7 +539,6 @@ void computeRhs() {
     }
   }
 }
-
 
 /**
  * Set boundary conditions for pressure. The values of the pressure at the
@@ -622,7 +610,6 @@ void setPressureBoundaryConditions() {
     }
   }
 }
-
 
 /**
  * Determine the new pressure. The operation depends on properly set pressure
@@ -724,14 +711,11 @@ int computeP() {
   return iterations;
 }
 
-
 /**
  * @todo Your job if you attend the Scientific Computing submodule. Otherwise empty.
  */
 void updateInk() {
 }
-
-
 
 /**
  * Once we have F and a valid pressure p, we may update the velocities.
@@ -761,7 +745,6 @@ void setNewVelocities() {
     }
   }
 }
-
 
 /**
  * Setup our scenario, i.e. initialise all the big arrays and set the
@@ -898,7 +881,6 @@ void setupScenario() {
   validateThatEntriesAreBounded("setupScenario()");
 }
 
-
 /**
  * Clean up the system
  */
@@ -924,7 +906,6 @@ void freeDataStructures() {
   rhs = 0;
   ink = 0;
 }
-
 
 /**
  * - Handle all the velocities at the domain boundaries. We either
@@ -1182,9 +1163,6 @@ void setVelocityBoundaryConditions(double time) {
 
   validateThatEntriesAreBounded("setVelocityBoundaryConditions(double)[out]");
 }
-
-
-
 
 int main (int argc, char *argv[]) {
   if (argc!=4) {
