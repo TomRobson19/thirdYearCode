@@ -230,9 +230,9 @@ To break up the computational domain into blocks, or subproblems, we must
  the top left corner of each block, and for all cells in the block, check
  if the obstacle is present in any of these cells.
  These blocks are enumerated by a counter, and if a block contains the obstacle,
- this is stored in an array of booleans, with the index in the array indicating
- which block the boolean refers to.
- This process is performed in setupScenario().
+ this is stored in a separate array of booleans, with the index in the array
+ indicating which block the boolean refers to.
+ This initialisation process is performed in setupScenario.
 \end_layout
 
 \begin_layout Standard
@@ -248,7 +248,8 @@ The benefits of this process can be realised in computeP, the main hotspot
  Due to the small size of the obstacle, the majority of the blocks can have
  SIMD vectorisation applied to them, so this vectorisation results in a
  substantial increase in the time taken to run the simulation.
- 
+ This process is necessary as the if statement to determine whether a cell
+ contains the obstacle presents a barrier to vectorisation.
 \end_layout
 
 \begin_layout Standard
@@ -300,7 +301,8 @@ As halos are not necessary in any of the other arrays, and to facilitate
 \begin_layout Standard
 When these functions have been implemented, we can then move on to the paralleli
 sation.
- The OpenMP pragmas will be used to accomplish this.
+ The OpenMP pragmas will be used to accomplish this, #pragma omp parallel
+ for to be specific.
  As the global residual value is appended to in each section, and these
  sections must be brought together.
  This is done using the reduction option from OpenMP.
