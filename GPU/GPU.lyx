@@ -265,6 +265,11 @@ Now collect results from Hamilton
 \end_layout
 
 \begin_layout Standard
+Changing reynolds number only affects number of timesteps, and i have fixed
+ this
+\end_layout
+
+\begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
 
