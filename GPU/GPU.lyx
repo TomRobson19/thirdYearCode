@@ -205,7 +205,9 @@ To address these issues, the performance model that should be applied is
 \end_inset
 
  tends to infinity.
- 
+ The code was run on Hamiton, and computeP consumes 66.6% of the runtime
+ of the code.
+ Elapsed Time: 1588.834s
 \end_layout
 
 \begin_layout Standard
@@ -256,6 +258,10 @@ The benefits of this process can be realised in computeP, the main hotspot
 
 \series bold
 Now collect results from Hamilton
+\end_layout
+
+\begin_layout Standard
+8,16,24,32 - 0 - 800,1600,2400,3200
 \end_layout
 
 \begin_layout Standard

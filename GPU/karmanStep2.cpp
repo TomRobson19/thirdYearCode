@@ -412,7 +412,7 @@ void plotVTKFile() {
 
   out.close();
 
-  vtkFileCounter++;
+  vtkFileCounter++;//
 }
 
 /**
@@ -624,19 +624,8 @@ int computeP() {
   double       previousGlobalResidual = 2.0;
   int          iterations             = 0;
 
-  while(
-   (
-    std::abs(globalResidual-previousGlobalResidual)>PPESolverThreshold
-    &&
-    iterations<MaxComputePIterations
-    &&
-    std::abs(globalResidual)>PPESolverThreshold
-    &&
-    (globalResidual/firstResidual>PPESolverThreshold)
-   )
-   ||
-   (iterations%2==1) // we have alternating omega, so we allow only even iteration counts
-  ) {
+  while((iterations<MaxComputePIterations)||(iterations%2==1)) // we have alternating omega, so we allow only even iteration counts
+  {
     const double omega = iterations%2==0 ? 1.2 : 0.8;
     setPressureBoundaryConditions();
 
@@ -703,12 +692,12 @@ int computeP() {
     iterations++;
   }
 
-  std::cout << "iterations n=" << iterations
-            << ", |res(n)|_2=" << globalResidual
-            << ", |res(n-1)|_2=" << previousGlobalResidual
-            << ", |res(n-1)|_2-|res(n)|_2=" << (previousGlobalResidual-globalResidual);
+  // std::cout << "iterations n=" << iterations
+  //           << ", |res(n)|_2=" << globalResidual
+  //           << ", |res(n-1)|_2=" << previousGlobalResidual
+  //           << ", |res(n-1)|_2-|res(n)|_2=" << (previousGlobalResidual-globalResidual);
 
-  return iterations;
+  return iterations;//
 }
 
 /**
@@ -1166,16 +1155,16 @@ void setVelocityBoundaryConditions(double time) {
 
 int main (int argc, char *argv[]) {
   if (argc!=4) {
-      std::cout << "Usage: executable number-of-elements-per-axis time-steps-between-plots reynolds-number" << std::endl;
-      std::cout << "    number-of-elements-per-axis  Resolution. Must be divisible by 4. Try to increase as much as possible later." << std::endl;
-      std::cout << "    time-between-plots           Determines how many files are written. Set to 0 to switch off plotting (for performance studies)." << std::endl;
-      std::cout << "    reynolds-number              Use something in-between 1 and 1000. Determines viscosity of fluid." << std::endl;
+      //std::cout << "Usage: executable number-of-elements-per-axis time-steps-between-plots reynolds-number" << std::endl;
+      //std::cout << "    number-of-elements-per-axis  Resolution. Must be divisible by 4. Try to increase as much as possible later." << std::endl;
+      //std::cout << "    time-between-plots           Determines how many files are written. Set to 0 to switch off plotting (for performance studies)." << std::endl;
+      //std::cout << "    reynolds-number              Use something in-between 1 and 1000. Determines viscosity of fluid." << std::endl;
       return 1;
   }
 
   if (atoi(argv[1])%4 != 0)
   {
-    std::cout << "Number of elements per axis must be divisible by 4";
+    //std::cout << "Number of elements per axis must be divisible by 4";
     return 1;
   }
 
@@ -1185,9 +1174,9 @@ int main (int argc, char *argv[]) {
   double timeBetweenPlots  = atof(argv[2]);
   ReynoldsNumber           = atof(argv[3]);
 
-  std::cout << "Re=" << ReynoldsNumber << std::endl;
+  //std::cout << "Re=" << ReynoldsNumber << std::endl;
 
-  std::cout << "create " << numberOfCellsPerAxisX << "x" << numberOfCellsPerAxisY << "x" << numberOfCellsPerAxisZ << " grid" << std::endl;
+  //std::cout << "create " << numberOfCellsPerAxisX << "x" << numberOfCellsPerAxisY << "x" << numberOfCellsPerAxisZ << " grid" << std::endl;
   setupScenario();
 
   //   dt <= C Re dx^2
@@ -1198,14 +1187,14 @@ int main (int argc, char *argv[]) {
   const double MinimalTimeStepSize  = MaximumTimeStepSize / 800;
 
   timeStepSize = MaximumTimeStepSize;
-  std::cout << "start with time step size " << timeStepSize << std::endl;
+  //std::cout << "start with time step size " << timeStepSize << std::endl;
 
   setVelocityBoundaryConditions(0.0);
-  std::cout << "velocity start conditions are set";
+  //std::cout << "velocity start conditions are set";
   if (timeBetweenPlots>0.0) {
     plotVTKFile();
   }
-  std::cout << std::endl;
+  //std::cout << std::endl;
 
   double t = 0.0;
   double tOfLastSnapshot                       = 0.0;
@@ -1213,8 +1202,8 @@ int main (int argc, char *argv[]) {
   int    numberOfTimeStepsWithOnlyOneIteration = 0;
 
   //change this to make it run in reasonable time - default was 20
-  while (t<20) {
-    std::cout << "time step " << timeStepCounter << ": t=" << t << "\t dt=" << timeStepSize << "\t";
+  while (timeStepCounter<100) {
+    //std::cout << "time step " << timeStepCounter << ": t=" << t << "\t dt=" << timeStepSize << "\t";
 
     setVelocityBoundaryConditions(t);
     computeF();
@@ -1244,21 +1233,21 @@ int main (int argc, char *argv[]) {
     if (numberOfTimeStepsWithOnlyOneIteration>IterationsBeforeTimeStepSizeIsAltered && timeStepSize < MaximumTimeStepSize) {
       timeStepSize *= (1.0+ChangeOfTimeStepSize);
       numberOfTimeStepsWithOnlyOneIteration = 0;
-      std::cout << "\t time step size seems to be too small. Increased to " << timeStepSize << " to speed up simulation";
+      //std::cout << "\t time step size seems to be too small. Increased to " << timeStepSize << " to speed up simulation";
     }
     else if (numberOfTimeStepsWithOnlyOneIteration<-IterationsBeforeTimeStepSizeIsAltered && timeStepSize>MinimalTimeStepSize) {
       timeStepSize /= 2.0;
       numberOfTimeStepsWithOnlyOneIteration = 0;
-      std::cout << "\t time step size seems to be too big. Reduced to " << timeStepSize << " to keep simulation stable";
+      //std::cout << "\t time step size seems to be too big. Reduced to " << timeStepSize << " to keep simulation stable";
     }
 
     t += timeStepSize;
     timeStepCounter++;
 
-    std::cout << std::endl;
+    //std::cout << std::endl;
   }
 
-  std::cout << "free data structures" << std::endl;
+  //std::cout << "free data structures" << std::endl;
   freeDataStructures();
 
   return 0;

@@ -619,19 +619,8 @@ int computeP() {
   double       previousGlobalResidual = 2.0;
   int          iterations             = 0;
 
-  while(
-   (
-    std::abs(globalResidual-previousGlobalResidual)>PPESolverThreshold
-    &&
-    iterations<MaxComputePIterations
-    &&
-    std::abs(globalResidual)>PPESolverThreshold
-    &&
-    (globalResidual/firstResidual>PPESolverThreshold)
-   )
-   ||
-   (iterations%2==1) // we have alternating omega, so we allow only even iteration counts
-  ) {
+  while((iterations<MaxComputePIterations)||(iterations%2==1)) // we have alternating omega, so we allow only even iteration counts
+  {
     const double omega = iterations%2==0 ? 1.2 : 0.8;
     setPressureBoundaryConditions();
 
@@ -1128,7 +1117,7 @@ int main (int argc, char *argv[]) {
   int    numberOfTimeStepsWithOnlyOneIteration = 0;
 
   //change this to make it run in reasonable time - default was 20
-  while (t<20) {
+  while (timeStepCounter<100) {
     std::cout << "time step " << timeStepCounter << ": t=" << t << "\t dt=" << timeStepSize << "\t";
 
     setVelocityBoundaryConditions(t);
