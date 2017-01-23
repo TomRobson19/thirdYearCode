@@ -1,0 +1,1279 @@
+Intel(R) Advisor can now assist with vectorization and show optimization
+  report messages with your source code.
+See "https://software.intel.com/en-us/intel-advisor-xe" for details.
+
+Intel(R) C++ Intel(R) 64 Compiler for applications running on Intel(R) 64, Version 17.0.1.132 Build 20161005
+
+Compiler options: -O3 -g -qopt-report-phase=vec,loop -qopt-report=5 -o karman2
+
+Begin optimization report for: main(int, char **)
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at karmanStep2.cpp(1205,3)
+   remark #15382: vectorization support: call to function setVelocityBoundaryConditions(double) cannot be vectorized   [ karmanStep2.cpp(1208,5) ]
+   remark #15382: vectorization support: call to function computeF() cannot be vectorized   [ karmanStep2.cpp(1209,5) ]
+   remark #15382: vectorization support: call to function computeP() cannot be vectorized   [ karmanStep2.cpp(1214,35) ]
+   remark #15382: vectorization support: call to function plotVTKFile() cannot be vectorized   [ karmanStep2.cpp(1219,7) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+
+   LOOP BEGIN at karmanStep2.cpp(527,3) inlined into karmanStep2.cpp(1210,5)
+      remark #25101: Loop Interchange not done due to: Original Order seems proper
+      remark #25452: Original Order found to be proper, but by a close margin
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11) and rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11)
+      remark #15346: vector dependence: assumed OUTPUT dependence between rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11) and rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11)
+
+      LOOP BEGIN at karmanStep2.cpp(528,5) inlined into karmanStep2.cpp(1210,5)
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+         remark #15346: vector dependence: assumed FLOW dependence between rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11) and timeStepSize (531:11)
+         remark #15346: vector dependence: assumed ANTI dependence between timeStepSize (531:11) and rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11)
+
+         LOOP BEGIN at karmanStep2.cpp(529,7) inlined into karmanStep2.cpp(1210,5)
+            remark #15344: loop was not vectorized: vector dependence prevents vectorization
+            remark #15346: vector dependence: assumed FLOW dependence between rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11) and timeStepSize (531:11)
+            remark #15346: vector dependence: assumed ANTI dependence between timeStepSize (531:11) and rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11)
+         LOOP END
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at karmanStep2.cpp(713,3) inlined into karmanStep2.cpp(1215,5)
+      remark #25101: Loop Interchange not done due to: Original Order seems proper
+      remark #25452: Original Order found to be proper, but by a close margin
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9) and ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9)
+      remark #15346: vector dependence: assumed OUTPUT dependence between ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9) and ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9)
+
+      LOOP BEGIN at karmanStep2.cpp(714,5) inlined into karmanStep2.cpp(1215,5)
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+         remark #15346: vector dependence: assumed FLOW dependence between ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9) and Fx[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9)
+         remark #15346: vector dependence: assumed ANTI dependence between Fx[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9) and ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9)
+
+         LOOP BEGIN at karmanStep2.cpp(715,7) inlined into karmanStep2.cpp(1215,5)
+            remark #15344: loop was not vectorized: vector dependence prevents vectorization
+            remark #15346: vector dependence: assumed FLOW dependence between ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9) and Fx[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9)
+            remark #15346: vector dependence: assumed ANTI dependence between Fx[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9) and ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9)
+            remark #25439: unrolled with remainder by 4  
+         LOOP END
+
+         LOOP BEGIN at karmanStep2.cpp(715,7) inlined into karmanStep2.cpp(1215,5)
+         <Remainder>
+         LOOP END
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at karmanStep2.cpp(721,3) inlined into karmanStep2.cpp(1215,5)
+      remark #25101: Loop Interchange not done due to: Original Order seems proper
+      remark #25452: Original Order found to be proper, but by a close margin
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9) and uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9)
+      remark #15346: vector dependence: assumed OUTPUT dependence between uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9) and uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9)
+
+      LOOP BEGIN at karmanStep2.cpp(722,5) inlined into karmanStep2.cpp(1215,5)
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+         remark #15346: vector dependence: assumed FLOW dependence between uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9) and Fy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9)
+         remark #15346: vector dependence: assumed ANTI dependence between Fy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9) and uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9)
+
+         LOOP BEGIN at karmanStep2.cpp(723,7) inlined into karmanStep2.cpp(1215,5)
+            remark #15344: loop was not vectorized: vector dependence prevents vectorization
+            remark #15346: vector dependence: assumed FLOW dependence between uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9) and Fy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9)
+            remark #15346: vector dependence: assumed ANTI dependence between Fy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9) and uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9)
+            remark #25439: unrolled with remainder by 4  
+         LOOP END
+
+         LOOP BEGIN at karmanStep2.cpp(723,7) inlined into karmanStep2.cpp(1215,5)
+         <Remainder>
+         LOOP END
+      LOOP END
+   LOOP END
+
+   LOOP BEGIN at karmanStep2.cpp(729,3) inlined into karmanStep2.cpp(1215,5)
+      remark #25101: Loop Interchange not done due to: Original Order seems proper
+      remark #25452: Original Order found to be proper, but by a close margin
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9) and uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9)
+      remark #15346: vector dependence: assumed OUTPUT dependence between uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9) and uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9)
+
+      LOOP BEGIN at karmanStep2.cpp(730,5) inlined into karmanStep2.cpp(1215,5)
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+         remark #15346: vector dependence: assumed FLOW dependence between uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9) and Fz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9)
+         remark #15346: vector dependence: assumed ANTI dependence between Fz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9) and uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9)
+
+         LOOP BEGIN at karmanStep2.cpp(731,7) inlined into karmanStep2.cpp(1215,5)
+            remark #15344: loop was not vectorized: vector dependence prevents vectorization
+            remark #15346: vector dependence: assumed FLOW dependence between uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9) and Fz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9)
+            remark #15346: vector dependence: assumed ANTI dependence between Fz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9) and uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9)
+            remark #25439: unrolled with remainder by 4  
+         LOOP END
+
+         LOOP BEGIN at karmanStep2.cpp(731,7) inlined into karmanStep2.cpp(1215,5)
+         <Remainder>
+         LOOP END
+      LOOP END
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: computeP()
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at karmanStep2.cpp(625,39)
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at karmanStep2.cpp(635,5)
+      remark #15542: loop was not vectorized: inner loop was already vectorized
+
+      LOOP BEGIN at karmanStep2.cpp(636,7)
+         remark #15542: loop was not vectorized: inner loop was already vectorized
+
+         LOOP BEGIN at karmanStep2.cpp(637,9)
+            remark #15542: loop was not vectorized: inner loop was already vectorized
+
+            LOOP BEGIN at karmanStep2.cpp(639,13)
+               remark #25101: Loop Interchange not done due to: Original Order seems proper
+               remark #25452: Original Order found to be proper, but by a close margin
+               remark #15542: loop was not vectorized: inner loop was already vectorized
+
+               LOOP BEGIN at karmanStep2.cpp(640,15)
+                  remark #15542: loop was not vectorized: inner loop was already vectorized
+
+                  LOOP BEGIN at karmanStep2.cpp(642,17)
+                     remark #15389: vectorization support: reference rhs[ix+jx+(iy+jy)*(numberOfCellsPerAxisX+2)+((iz+jz)*(numberOfCellsPerAxisX+2))*(numberOfCellsPerAxisY+2)] has unaligned access   [ karmanStep2.cpp(645,30) ]
+                     remark #15389: vectorization support: reference p[ix+jx-1+(iy+jy)*(numberOfCellsPerAxisX+2)+((iz+jz)*(numberOfCellsPerAxisX+2))*(numberOfCellsPerAxisY+2)] has unaligned access   [ karmanStep2.cpp(648,31) ]
+                     remark #15389: vectorization support: reference p[ix+jx+1+(iy+jy)*(numberOfCellsPerAxisX+2)+((iz+jz)*(numberOfCellsPerAxisX+2))*(numberOfCellsPerAxisY+2)] has unaligned access   [ karmanStep2.cpp(649,31) ]
+                     remark #15389: vectorization support: reference p[ix+jx+(iy+jy-1)*(numberOfCellsPerAxisX+2)+((iz+jz)*(numberOfCellsPerAxisX+2))*(numberOfCellsPerAxisY+2)] has unaligned access   [ karmanStep2.cpp(650,31) ]
+                     remark #15389: vectorization support: reference p[ix+jx+(iy+jy+1)*(numberOfCellsPerAxisX+2)+((iz+jz)*(numberOfCellsPerAxisX+2))*(numberOfCellsPerAxisY+2)] has unaligned access   [ karmanStep2.cpp(651,31) ]
+                     remark #15389: vectorization support: reference p[ix+jx+(iy+jy)*(numberOfCellsPerAxisX+2)+((iz+jz-1)*(numberOfCellsPerAxisX+2))*(numberOfCellsPerAxisY+2)] has unaligned access   [ karmanStep2.cpp(652,31) ]
+                     remark #15389: vectorization support: reference p[ix+jx+(iy+jy)*(numberOfCellsPerAxisX+2)+((iz+jz+1)*(numberOfCellsPerAxisX+2))*(numberOfCellsPerAxisY+2)] has unaligned access   [ karmanStep2.cpp(653,31) ]
+                     remark #15389: vectorization support: reference p[ix+jx+(iy+jy)*(numberOfCellsPerAxisX+2)+((iz+jz)*(numberOfCellsPerAxisX+2))*(numberOfCellsPerAxisY+2)] has unaligned access   [ karmanStep2.cpp(654,31) ]
+                     remark #15389: vectorization support: reference p[:] has unaligned access   [ karmanStep2.cpp(658,19) ]
+                     remark #15389: vectorization support: reference p[:] has unaligned access   [ karmanStep2.cpp(658,19) ]
+                     remark #15381: vectorization support: unaligned access used inside loop body
+                     remark #15305: vectorization support: vector length 2
+                     remark #15309: vectorization support: normalized vectorization overhead 0.359
+                     remark #15301: SIMD LOOP WAS VECTORIZED
+                     remark #15450: unmasked unaligned unit stride loads: 9 
+                     remark #15451: unmasked unaligned unit stride stores: 1 
+                     remark #15475: --- begin vector cost summary ---
+                     remark #15476: scalar cost: 380 
+                     remark #15477: vector cost: 72.500 
+                     remark #15478: estimated potential speedup: 4.440 
+                     remark #15486: divides: 1 
+                     remark #15488: --- end vector cost summary ---
+                     remark #25015: Estimate of max trip count of loop=2
+                  LOOP END
+               LOOP END
+            LOOP END
+
+            LOOP BEGIN at karmanStep2.cpp(664,13)
+               remark #25101: Loop Interchange not done due to: Original Order seems proper
+               remark #25452: Original Order found to be proper, but by a close margin
+               remark #15344: loop was not vectorized: vector dependence prevents vectorization
+               remark #15346: vector dependence: assumed ANTI dependence between rhs[ix+jx+(iy+jy)*(numberOfCellsPerAxisX+2)+((iz+jz)*(numberOfCe (677:33) and p[:] (680:21)
+               remark #15346: vector dependence: assumed FLOW dependence between p[:] (680:21) and rhs[ix+jx+(iy+jy)*(numberOfCellsPerAxisX+2)+((iz+jz)*(numberOfCe (677:33)
+
+               LOOP BEGIN at karmanStep2.cpp(665,15)
+                  remark #15344: loop was not vectorized: vector dependence prevents vectorization
+                  remark #15346: vector dependence: assumed ANTI dependence between rhs[ix+jx+(iy+jy)*(numberOfCellsPerAxisX+2)+((iz+jz)*(numberOfCe (677:33) and p[:] (680:21)
+                  remark #15346: vector dependence: assumed FLOW dependence between p[:] (680:21) and rhs[ix+jx+(iy+jy)*(numberOfCellsPerAxisX+2)+((iz+jz)*(numberOfCe (677:33)
+
+                  LOOP BEGIN at karmanStep2.cpp(666,17)
+                     remark #15344: loop was not vectorized: vector dependence prevents vectorization
+                     remark #15346: vector dependence: assumed ANTI dependence between rhs[ix+jx+(iy+jy)*(numberOfCellsPerAxisX+2)+((iz+jz)*(numberOfCe (677:33) and p[:] (680:21)
+                     remark #15346: vector dependence: assumed FLOW dependence between p[:] (680:21) and rhs[ix+jx+(iy+jy)*(numberOfCellsPerAxisX+2)+((iz+jz)*(numberOfCe (677:33)
+                     remark #25436: completely unrolled by 4  
+                  LOOP END
+               LOOP END
+            LOOP END
+         LOOP END
+      LOOP END
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: setPressureBoundaryConditions()
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at karmanStep2.cpp(553,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between p[iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2))*(n (556:7) and p[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2)) (558:7)
+   remark #15346: vector dependence: assumed OUTPUT dependence between p[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2)) (558:7) and p[iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2))*(n (556:7)
+
+   LOOP BEGIN at karmanStep2.cpp(554,5)
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between p[iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2))*(n (556:7) and p[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2)) (558:7)
+      remark #15346: vector dependence: assumed OUTPUT dependence between p[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2)) (558:7) and p[iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2))*(n (556:7)
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(561,3)
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between p[ix+(iz*(numberOfCellsPerAxisX+2))*(numberOfCellsPerAxisY+2)] (564:7) and p[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2)) (566:7)
+   remark #15346: vector dependence: assumed OUTPUT dependence between p[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2)) (566:7) and p[ix+(iz*(numberOfCellsPerAxisX+2))*(numberOfCellsPerAxisY+2)] (564:7)
+
+   LOOP BEGIN at karmanStep2.cpp(562,5)
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between p[ix+(iz*(numberOfCellsPerAxisX+2))*(numberOfCellsPerAxisY+2)] (564:7) and p[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2)) (566:7)
+      remark #15346: vector dependence: assumed OUTPUT dependence between p[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2)) (566:7) and p[ix+(iz*(numberOfCellsPerAxisX+2))*(numberOfCellsPerAxisY+2)] (564:7)
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(569,3)
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between p[ix+iy*(numberOfCellsPerAxisX+2)] (572:7) and p[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2)) (574:7)
+   remark #15346: vector dependence: assumed OUTPUT dependence between p[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2)) (574:7) and p[ix+iy*(numberOfCellsPerAxisX+2)] (572:7)
+
+   LOOP BEGIN at karmanStep2.cpp(570,5)
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between p[ix+iy*(numberOfCellsPerAxisX+2)] (572:7) and p[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2)) (574:7)
+      remark #15346: vector dependence: assumed OUTPUT dependence between p[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2)) (574:7) and p[ix+iy*(numberOfCellsPerAxisX+2)] (572:7)
+      remark #25439: unrolled with remainder by 2  
+   LOOP END
+
+   LOOP BEGIN at karmanStep2.cpp(570,5)
+   <Remainder>
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(579,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at karmanStep2.cpp(580,5)
+      remark #15329: vectorization support: non-unit strided store was emulated for the variable <p[numberOfCellsPerAxisX+1+iy*(numberOfCellsPerAxisX+2)+(iz*(numb>, stride is unknown to compiler   [ karmanStep2.cpp(581,7) ]
+      remark #15305: vectorization support: vector length 2
+      remark #15399: vectorization support: unroll factor set to 4
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15453: unmasked strided stores: 1 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 4 
+      remark #15477: vector cost: 3.000 
+      remark #15478: estimated potential speedup: 1.320 
+      remark #15488: --- end vector cost summary ---
+   LOOP END
+
+   LOOP BEGIN at karmanStep2.cpp(580,5)
+   <Remainder loop for vectorization>
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(586,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between p[ix-1+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (591:13) and p[ix+iy*(numberOfCellsPerAxisX+2)+((iz+1)*(numberOfCellsPerAxisX (606:13)
+   remark #15346: vector dependence: assumed OUTPUT dependence between p[ix+iy*(numberOfCellsPerAxisX+2)+((iz+1)*(numberOfCellsPerAxisX (606:13) and p[ix-1+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (591:13)
+
+   LOOP BEGIN at karmanStep2.cpp(587,5)
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between p[ix-1+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (591:13) and p[ix+iy*(numberOfCellsPerAxisX+2)+((iz+1)*(numberOfCellsPerAxisX (606:13)
+      remark #15346: vector dependence: assumed OUTPUT dependence between p[ix+iy*(numberOfCellsPerAxisX+2)+((iz+1)*(numberOfCellsPerAxisX (606:13) and p[ix-1+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (591:13)
+
+      LOOP BEGIN at karmanStep2.cpp(588,7)
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+         remark #15346: vector dependence: assumed OUTPUT dependence between p[ix-1+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (591:13) and p[ix+iy*(numberOfCellsPerAxisX+2)+((iz+1)*(numberOfCellsPerAxisX (606:13)
+         remark #15346: vector dependence: assumed OUTPUT dependence between p[ix+iy*(numberOfCellsPerAxisX+2)+((iz+1)*(numberOfCellsPerAxisX (606:13) and p[ix-1+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (591:13)
+      LOOP END
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: computeF()
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at karmanStep2.cpp(424,3)
+   remark #25095: Loop Interchange not done due to: User Function Inside Loop Nest
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
+
+   LOOP BEGIN at karmanStep2.cpp(425,5)
+      remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
+
+      LOOP BEGIN at karmanStep2.cpp(426,7)
+         remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(428,24) ]
+         remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(430,24) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(433,27) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(433,67) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(433,105) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(434,27) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(434,67) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(434,105) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(435,27) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(435,67) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(435,105) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(438,22) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(438,52) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(438,86) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(438,116) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(438,152) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(438,184) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(438,220) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(438,252) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(439,22) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(439,52) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(439,86) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(439,116) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(439,152) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(439,184) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(439,220) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(439,252) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(440,22) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(440,52) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(440,86) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(440,116) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(440,152) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(440,184) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(440,220) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(440,252) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(441,38) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(441,68) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(441,102) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(441,132) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(441,176) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(441,208) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(441,244) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(441,276) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(442,38) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(442,68) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(442,102) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(442,132) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(442,176) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(442,208) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(442,244) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(442,276) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(443,38) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(443,68) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(443,102) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(443,132) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(443,176) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(443,208) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(443,244) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(443,276) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(447,16) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(446,15) ]
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      LOOP END
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(455,3)
+   remark #25095: Loop Interchange not done due to: User Function Inside Loop Nest
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
+
+   LOOP BEGIN at karmanStep2.cpp(456,5)
+      remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
+
+      LOOP BEGIN at karmanStep2.cpp(457,7)
+         remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(459,24) ]
+         remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(461,24) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(464,26) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(464,66) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(464,104) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(465,26) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(465,66) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(465,104) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(466,26) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(466,66) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(466,104) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(470,21) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(470,51) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(470,85) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(470,115) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(470,151) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(470,183) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(470,220) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(470,252) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(471,21) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(471,51) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(471,85) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(471,115) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(471,151) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(471,183) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(471,220) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(471,252) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(472,21) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(472,51) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(472,85) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(472,115) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(472,151) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(472,183) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(472,220) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(472,252) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(473,37) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(473,67) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(473,101) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(473,131) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(473,175) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(473,207) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(473,244) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(473,276) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(474,37) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(474,67) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(474,101) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(474,131) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(474,175) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(474,207) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(474,244) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(474,276) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(475,37) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(475,67) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(475,101) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(475,131) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(475,175) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(475,207) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(475,244) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(475,276) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(479,16) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(478,15) ]
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      LOOP END
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(487,3)
+   remark #25095: Loop Interchange not done due to: User Function Inside Loop Nest
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(491,24) ]
+   remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(493,24) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(496,26) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(496,66) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(496,104) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(497,26) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(497,66) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(497,104) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(498,26) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(498,66) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(498,104) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(502,21) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(502,51) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getCellIndex(int, int, int) (491:24) and call:getFaceIndexX(int, int, int) (502:51)
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexX(int, int, int) (502:51) and call:getCellIndex(int, int, int) (491:24)
+
+   LOOP BEGIN at karmanStep2.cpp(488,5)
+      remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(491,24) ]
+      remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(493,24) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(496,26) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(496,66) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(496,104) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(497,26) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(497,66) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(497,104) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(498,26) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(498,66) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(498,104) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(502,21) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(502,51) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed OUTPUT dependence between call:getCellIndex(int, int, int) (491:24) and call:getFaceIndexX(int, int, int) (502:51)
+      remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexX(int, int, int) (502:51) and call:getCellIndex(int, int, int) (491:24)
+
+      LOOP BEGIN at karmanStep2.cpp(489,7)
+         remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(491,24) ]
+         remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(493,24) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(496,26) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(496,66) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(496,104) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(497,26) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(497,66) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(497,104) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(498,26) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(498,66) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(498,104) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(502,21) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(502,51) ]
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      LOOP END
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: setVelocityBoundaryConditions(double)
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at karmanStep2.cpp(921,3)
+   remark #25095: Loop Interchange not done due to: User Function Inside Loop Nest
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(924,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(926,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(929,70) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(929,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(930,70) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(930,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(933,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(935,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(938,70) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(938,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(939,70) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(939,11) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexX(int, int, int) (924:11) and call:getFaceIndexZ(int, int, int) (939:11)
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexZ(int, int, int) (939:11) and call:getFaceIndexX(int, int, int) (924:11)
+
+   LOOP BEGIN at karmanStep2.cpp(922,5)
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(924,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(926,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(929,70) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(929,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(930,70) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(930,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(933,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(935,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(938,70) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(938,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(939,70) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(939,11) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(943,3)
+   remark #25095: Loop Interchange not done due to: User Function Inside Loop Nest
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(946,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(948,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(951,70) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(951,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(952,70) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(952,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(955,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(957,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(960,70) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(960,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(961,70) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(961,11) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexY(int, int, int) (946:11) and call:getFaceIndexZ(int, int, int) (961:11)
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexZ(int, int, int) (961:11) and call:getFaceIndexY(int, int, int) (946:11)
+
+   LOOP BEGIN at karmanStep2.cpp(944,5)
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(946,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(948,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(951,70) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(951,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(952,70) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(952,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(955,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(957,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(960,70) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(960,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(961,70) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(961,11) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(965,3)
+   remark #25095: Loop Interchange not done due to: User Function Inside Loop Nest
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(968,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(970,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(973,70) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(973,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(974,70) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(974,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(977,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(979,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(982,70) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(982,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(983,70) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(983,11) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexZ(int, int, int) (968:11) and call:getFaceIndexY(int, int, int) (983:11)
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexY(int, int, int) (983:11) and call:getFaceIndexZ(int, int, int) (968:11)
+
+   LOOP BEGIN at karmanStep2.cpp(966,5)
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(968,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(970,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(973,70) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(973,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(974,70) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(974,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(977,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(979,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(982,70) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(982,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(983,70) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(983,11) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(995,3)
+   remark #25096: Loop Interchange not done due to: Imperfect Loop Nest (Either at Source or due to other Compiler Transformations)
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1002,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1003,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1004,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1006,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1007,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1008,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1011,64) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1011,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1012,64) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1012,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1013,64) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1013,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1014,64) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1014,11) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexX(int, int, int) (1002:11) and call:getFaceIndexZ(int, int, int) (1014:11)
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexZ(int, int, int) (1014:11) and call:getFaceIndexX(int, int, int) (1002:11)
+
+   LOOP BEGIN at karmanStep2.cpp(996,5)
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1002,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1003,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1004,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1006,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1007,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1008,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1011,64) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1011,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1012,64) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1012,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1013,64) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1013,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1014,64) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1014,11) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(1023,3)
+   remark #25096: Loop Interchange not done due to: Imperfect Loop Nest (Either at Source or due to other Compiler Transformations)
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1026,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1026,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1028,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1028,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1029,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1029,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1034,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1034,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1037,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1037,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1038,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1038,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1039,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1039,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1044,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1044,11) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexX(int, int, int) (1026:43) and call:getFaceIndexX(int, int, int) (1044:11)
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexX(int, int, int) (1044:11) and call:getFaceIndexX(int, int, int) (1026:43)
+
+   LOOP BEGIN at karmanStep2.cpp(1024,5)
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1026,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1026,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1028,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1028,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1029,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1029,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1034,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1034,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1037,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1037,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1038,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1038,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1039,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1039,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1044,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1044,11) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(1048,3)
+   remark #25096: Loop Interchange not done due to: Imperfect Loop Nest (Either at Source or due to other Compiler Transformations)
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1051,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1051,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1053,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1053,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1054,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1054,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1059,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1059,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1062,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1062,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1063,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1063,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1064,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1064,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1069,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1069,11) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexY(int, int, int) (1051:43) and call:getFaceIndexY(int, int, int) (1069:11)
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexY(int, int, int) (1069:11) and call:getFaceIndexY(int, int, int) (1051:43)
+
+   LOOP BEGIN at karmanStep2.cpp(1049,5)
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1051,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1051,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1053,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1053,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1054,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1054,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1059,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1059,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1062,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1062,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1063,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1063,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1064,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1064,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1069,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1069,11) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(1074,3)
+   remark #25096: Loop Interchange not done due to: Imperfect Loop Nest (Either at Source or due to other Compiler Transformations)
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1077,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1077,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1079,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1079,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1080,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1080,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1085,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1085,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1088,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1088,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1089,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1089,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1090,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1090,11) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1095,43) ]
+   remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1095,11) ]
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexZ(int, int, int) (1077:43) and call:getFaceIndexZ(int, int, int) (1095:11)
+   remark #15346: vector dependence: assumed OUTPUT dependence between call:getFaceIndexZ(int, int, int) (1095:11) and call:getFaceIndexZ(int, int, int) (1077:43)
+
+   LOOP BEGIN at karmanStep2.cpp(1075,5)
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1077,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1077,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1079,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1079,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1080,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1080,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1085,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1085,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1088,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1088,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1089,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1089,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1090,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1090,11) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1095,43) ]
+      remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1095,11) ]
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(1102,3)
+   remark #25095: Loop Interchange not done due to: User Function Inside Loop Nest
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
+
+   LOOP BEGIN at karmanStep2.cpp(1103,5)
+      remark #15541: outer loop was not auto-vectorized: consider using SIMD directive
+
+      LOOP BEGIN at karmanStep2.cpp(1104,7)
+         remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1105,26) ]
+         remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1106,30) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1107,17) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1108,17) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1109,17) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1110,52) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1110,17) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1111,52) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1111,17) ]
+         remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1113,30) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1114,17) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1115,17) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1116,17) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1117,52) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1117,17) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1118,52) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1118,17) ]
+         remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1120,30) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1121,17) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1122,17) ]
+         remark #15382: vectorization support: call to function getFaceIndexY(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1123,17) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1124,52) ]
+         remark #15382: vectorization support: call to function getFaceIndexX(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1124,17) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1125,52) ]
+         remark #15382: vectorization support: call to function getFaceIndexZ(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1125,17) ]
+         remark #15382: vectorization support: call to function getCellIndex(int, int, int) cannot be vectorized   [ karmanStep2.cpp(1127,30) ]
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      LOOP END
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: plotVTKFile()
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at karmanStep2.cpp(332,7)
+   remark #15523: loop was not vectorized: loop control variable ix was found, but loop iteration count cannot be computed before executing the loop
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(363,7)
+   remark #15523: loop was not vectorized: loop control variable ix was found, but loop iteration count cannot be computed before executing the loop
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(378,7)
+   remark #15523: loop was not vectorized: loop control variable ix was found, but loop iteration count cannot be computed before executing the loop
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(389,7)
+   remark #15523: loop was not vectorized: loop control variable ix was found, but loop iteration count cannot be computed before executing the loop
+LOOP END
+
+
+Non-optimizable loops:
+
+
+LOOP BEGIN at karmanStep2.cpp(330,3)
+   remark #15333: loop was not vectorized: exception handling for a call prevents vectorization   [ karmanStep2.cpp(333,13) ]
+
+   LOOP BEGIN at karmanStep2.cpp(331,5)
+      remark #15333: loop was not vectorized: exception handling for a call prevents vectorization   [ karmanStep2.cpp(333,13) ]
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(361,3)
+   remark #15333: loop was not vectorized: exception handling for a call prevents vectorization   [ karmanStep2.cpp(364,13) ]
+
+   LOOP BEGIN at karmanStep2.cpp(362,5)
+      remark #15333: loop was not vectorized: exception handling for a call prevents vectorization   [ karmanStep2.cpp(364,13) ]
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(376,3)
+   remark #15333: loop was not vectorized: exception handling for a call prevents vectorization   [ karmanStep2.cpp(379,13) ]
+
+   LOOP BEGIN at karmanStep2.cpp(377,5)
+      remark #15333: loop was not vectorized: exception handling for a call prevents vectorization   [ karmanStep2.cpp(379,13) ]
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(387,3)
+   remark #15333: loop was not vectorized: exception handling for a call prevents vectorization   [ karmanStep2.cpp(390,13) ]
+
+   LOOP BEGIN at karmanStep2.cpp(388,5)
+      remark #15333: loop was not vectorized: exception handling for a call prevents vectorization   [ karmanStep2.cpp(390,13) ]
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: setupScenario()
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at karmanStep2.cpp(794,3)
+   remark #25408: memset generated
+   remark #15542: loop was not vectorized: inner loop was already vectorized
+
+   LOOP BEGIN at karmanStep2.cpp(794,3)
+      remark #15389: vectorization support: reference ink[i] has unaligned access   [ karmanStep2.cpp(795,5) ]
+      remark #15381: vectorization support: unaligned access used inside loop body
+      remark #15305: vectorization support: vector length 2
+      remark #15399: vectorization support: unroll factor set to 2
+      remark #15309: vectorization support: normalized vectorization overhead 0.300
+      remark #15300: LOOP WAS VECTORIZED
+      remark #15451: unmasked unaligned unit stride stores: 1 
+      remark #15475: --- begin vector cost summary ---
+      remark #15476: scalar cost: 4 
+      remark #15477: vector cost: 2.500 
+      remark #15478: estimated potential speedup: 1.450 
+      remark #15488: --- end vector cost summary ---
+      remark #25015: Estimate of max trip count of loop=3
+   LOOP END
+
+   LOOP BEGIN at karmanStep2.cpp(794,3)
+   <Remainder loop for vectorization>
+      remark #25015: Estimate of max trip count of loop=12
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(798,3)
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed ANTI dependence between p (799:5) and cellIsInside[i] (800:5)
+   remark #15346: vector dependence: assumed FLOW dependence between cellIsInside[i] (800:5) and p (799:5)
+   remark #25439: unrolled with remainder by 2  
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(798,3)
+<Remainder>
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(803,3)
+<Peeled loop for vectorization, Multiversioned v1>
+   remark #25015: Estimate of max trip count of loop=1
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(803,3)
+<Multiversioned v1>
+   remark #25228: Loop multiversioned for Data Dependence
+   remark #15388: vectorization support: reference ux[i] has aligned access   [ karmanStep2.cpp(804,5) ]
+   remark #15388: vectorization support: reference Fx[i] has aligned access   [ karmanStep2.cpp(805,5) ]
+   remark #15305: vectorization support: vector length 2
+   remark #15399: vectorization support: unroll factor set to 4
+   remark #15309: vectorization support: normalized vectorization overhead 0.583
+   remark #15300: LOOP WAS VECTORIZED
+   remark #15442: entire loop may be executed in remainder
+   remark #15449: unmasked aligned unit stride stores: 2 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 8 
+   remark #15477: vector cost: 3.000 
+   remark #15478: estimated potential speedup: 2.560 
+   remark #15488: --- end vector cost summary ---
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(803,3)
+<Alternate Alignment Vectorized Loop, Multiversioned v1>
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(803,3)
+<Remainder loop for vectorization, Multiversioned v1>
+   remark #15389: vectorization support: reference ux[i] has unaligned access   [ karmanStep2.cpp(804,5) ]
+   remark #15388: vectorization support: reference Fx[i] has aligned access   [ karmanStep2.cpp(805,5) ]
+   remark #15381: vectorization support: unaligned access used inside loop body
+   remark #15335: remainder loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+   remark #15305: vectorization support: vector length 2
+   remark #15309: vectorization support: normalized vectorization overhead 1.083
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(803,3)
+<Multiversioned v2>
+   remark #15304: loop was not vectorized: non-vectorizable loop instance from multiversioning
+   remark #25439: unrolled with remainder by 2  
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(803,3)
+<Remainder, Multiversioned v2>
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(807,3)
+<Peeled loop for vectorization, Multiversioned v1>
+   remark #25015: Estimate of max trip count of loop=1
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(807,3)
+<Multiversioned v1>
+   remark #25228: Loop multiversioned for Data Dependence
+   remark #15388: vectorization support: reference uy[i] has aligned access   [ karmanStep2.cpp(808,5) ]
+   remark #15388: vectorization support: reference Fy[i] has aligned access   [ karmanStep2.cpp(809,5) ]
+   remark #15305: vectorization support: vector length 2
+   remark #15399: vectorization support: unroll factor set to 4
+   remark #15309: vectorization support: normalized vectorization overhead 0.583
+   remark #15300: LOOP WAS VECTORIZED
+   remark #15442: entire loop may be executed in remainder
+   remark #15449: unmasked aligned unit stride stores: 2 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 8 
+   remark #15477: vector cost: 3.000 
+   remark #15478: estimated potential speedup: 2.560 
+   remark #15488: --- end vector cost summary ---
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(807,3)
+<Alternate Alignment Vectorized Loop, Multiversioned v1>
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(807,3)
+<Remainder loop for vectorization, Multiversioned v1>
+   remark #15389: vectorization support: reference uy[i] has unaligned access   [ karmanStep2.cpp(808,5) ]
+   remark #15388: vectorization support: reference Fy[i] has aligned access   [ karmanStep2.cpp(809,5) ]
+   remark #15381: vectorization support: unaligned access used inside loop body
+   remark #15335: remainder loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+   remark #15305: vectorization support: vector length 2
+   remark #15309: vectorization support: normalized vectorization overhead 1.083
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(807,3)
+<Multiversioned v2>
+   remark #15304: loop was not vectorized: non-vectorizable loop instance from multiversioning
+   remark #25439: unrolled with remainder by 2  
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(807,3)
+<Remainder, Multiversioned v2>
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(811,3)
+<Peeled loop for vectorization, Multiversioned v1>
+   remark #25015: Estimate of max trip count of loop=1
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(811,3)
+<Multiversioned v1>
+   remark #25228: Loop multiversioned for Data Dependence
+   remark #15388: vectorization support: reference uz[i] has aligned access   [ karmanStep2.cpp(812,5) ]
+   remark #15388: vectorization support: reference Fz[i] has aligned access   [ karmanStep2.cpp(813,5) ]
+   remark #15305: vectorization support: vector length 2
+   remark #15399: vectorization support: unroll factor set to 4
+   remark #15309: vectorization support: normalized vectorization overhead 0.583
+   remark #15300: LOOP WAS VECTORIZED
+   remark #15442: entire loop may be executed in remainder
+   remark #15449: unmasked aligned unit stride stores: 2 
+   remark #15475: --- begin vector cost summary ---
+   remark #15476: scalar cost: 8 
+   remark #15477: vector cost: 3.000 
+   remark #15478: estimated potential speedup: 2.560 
+   remark #15488: --- end vector cost summary ---
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(811,3)
+<Alternate Alignment Vectorized Loop, Multiversioned v1>
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(811,3)
+<Remainder loop for vectorization, Multiversioned v1>
+   remark #15389: vectorization support: reference uz[i] has unaligned access   [ karmanStep2.cpp(812,5) ]
+   remark #15388: vectorization support: reference Fz[i] has aligned access   [ karmanStep2.cpp(813,5) ]
+   remark #15381: vectorization support: unaligned access used inside loop body
+   remark #15335: remainder loop was not vectorized: vectorization possible but seems inefficient. Use vector always directive or -vec-threshold0 to override 
+   remark #15305: vectorization support: vector length 2
+   remark #15309: vectorization support: normalized vectorization overhead 1.083
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(811,3)
+<Multiversioned v2>
+   remark #15304: loop was not vectorized: non-vectorizable loop instance from multiversioning
+   remark #25439: unrolled with remainder by 2  
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(811,3)
+<Remainder, Multiversioned v2>
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(816,3)
+   remark #15523: loop was not vectorized: loop control variable i was found, but loop iteration count cannot be computed before executing the loop
+   remark #25478: While Loop Unrolled by 8  
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(829,3)
+   remark #15523: loop was not vectorized: loop control variable iz was found, but loop iteration count cannot be computed before executing the loop
+
+   LOOP BEGIN at karmanStep2.cpp(832,5)
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed ANTI dependence between numberOfCellsPerAxisX (833:7) and cellIsInside[xOffsetOfObstacle+ii+2+(sizeOfObstacle+ii+2)*(numbe (835:7)
+      remark #15346: vector dependence: assumed FLOW dependence between cellIsInside[xOffsetOfObstacle+ii+2+(sizeOfObstacle+ii+2)*(numbe (835:7) and numberOfCellsPerAxisX (833:7)
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(843,3)
+   remark #15523: loop was not vectorized: loop control variable iz was found, but loop iteration count cannot be computed before executing the loop
+
+   LOOP BEGIN at karmanStep2.cpp(844,5)
+      remark #15523: loop was not vectorized: loop control variable iy was found, but loop iteration count cannot be computed before executing the loop
+
+      LOOP BEGIN at karmanStep2.cpp(845,7)
+         remark #15523: loop was not vectorized: loop control variable ix was found, but loop iteration count cannot be computed before executing the loop
+
+         LOOP BEGIN at karmanStep2.cpp(847,9)
+            remark #25101: Loop Interchange not done due to: Original Order seems proper
+            remark #25452: Original Order found to be proper, but by a close margin
+            remark #15344: loop was not vectorized: vector dependence prevents vectorization
+            remark #15346: vector dependence: assumed FLOW dependence between blockIsInside[blockCounter] (852:17) and numberOfCellsPerAxisY (174:72)
+            remark #15346: vector dependence: assumed ANTI dependence between numberOfCellsPerAxisY (174:72) and blockIsInside[blockCounter] (852:17)
+            remark #25436: completely unrolled by 4  
+
+            LOOP BEGIN at karmanStep2.cpp(848,11)
+               remark #15344: loop was not vectorized: vector dependence prevents vectorization
+               remark #15346: vector dependence: assumed FLOW dependence between blockIsInside[blockCounter] (852:17) and numberOfCellsPerAxisY (174:72)
+               remark #15346: vector dependence: assumed ANTI dependence between numberOfCellsPerAxisY (174:72) and blockIsInside[blockCounter] (852:17)
+               remark #25436: completely unrolled by 4  
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+                  remark #15344: loop was not vectorized: vector dependence prevents vectorization
+                  remark #15346: vector dependence: assumed FLOW dependence between blockIsInside[blockCounter] (852:17) and numberOfCellsPerAxisY (174:72)
+                  remark #15346: vector dependence: assumed ANTI dependence between numberOfCellsPerAxisY (174:72) and blockIsInside[blockCounter] (852:17)
+                  remark #25436: completely unrolled by 4  
+               LOOP END
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+            LOOP END
+
+            LOOP BEGIN at karmanStep2.cpp(848,11)
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+            LOOP END
+
+            LOOP BEGIN at karmanStep2.cpp(848,11)
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+            LOOP END
+
+            LOOP BEGIN at karmanStep2.cpp(848,11)
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+
+               LOOP BEGIN at karmanStep2.cpp(849,13)
+               LOOP END
+            LOOP END
+         LOOP END
+      LOOP END
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: computeRhs()
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at karmanStep2.cpp(527,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11) and rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11)
+   remark #15346: vector dependence: assumed OUTPUT dependence between rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11) and rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11)
+
+   LOOP BEGIN at karmanStep2.cpp(528,5)
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed FLOW dependence between rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11) and timeStepSize (531:11)
+      remark #15346: vector dependence: assumed ANTI dependence between timeStepSize (531:11) and rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11)
+
+      LOOP BEGIN at karmanStep2.cpp(529,7)
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+         remark #15346: vector dependence: assumed FLOW dependence between rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11) and timeStepSize (531:11)
+         remark #15346: vector dependence: assumed ANTI dependence between timeStepSize (531:11) and rhs[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2 (531:11)
+      LOOP END
+   LOOP END
+LOOP END
+===========================================================================
+
+Begin optimization report for: setNewVelocities()
+
+    Report from: Loop nest & Vector optimizations [loop, vec]
+
+
+LOOP BEGIN at karmanStep2.cpp(713,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9) and ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9)
+   remark #15346: vector dependence: assumed OUTPUT dependence between ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9) and ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9)
+
+   LOOP BEGIN at karmanStep2.cpp(714,5)
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed FLOW dependence between ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9) and Fx[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9)
+      remark #15346: vector dependence: assumed ANTI dependence between Fx[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9) and ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9)
+
+      LOOP BEGIN at karmanStep2.cpp(715,7)
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+         remark #15346: vector dependence: assumed FLOW dependence between ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9) and Fx[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9)
+         remark #15346: vector dependence: assumed ANTI dependence between Fx[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9) and ux[ix+iy*(numberOfCellsPerAxisX+3)+(iz*(numberOfCellsPerAxisX+3) (716:9)
+         remark #25439: unrolled with remainder by 4  
+      LOOP END
+
+      LOOP BEGIN at karmanStep2.cpp(715,7)
+      <Remainder>
+      LOOP END
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(721,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9) and uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9)
+   remark #15346: vector dependence: assumed OUTPUT dependence between uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9) and uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9)
+
+   LOOP BEGIN at karmanStep2.cpp(722,5)
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed FLOW dependence between uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9) and Fy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9)
+      remark #15346: vector dependence: assumed ANTI dependence between Fy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9) and uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9)
+
+      LOOP BEGIN at karmanStep2.cpp(723,7)
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+         remark #15346: vector dependence: assumed FLOW dependence between uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9) and Fy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9)
+         remark #15346: vector dependence: assumed ANTI dependence between Fy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9) and uy[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (724:9)
+         remark #25439: unrolled with remainder by 4  
+      LOOP END
+
+      LOOP BEGIN at karmanStep2.cpp(723,7)
+      <Remainder>
+      LOOP END
+   LOOP END
+LOOP END
+
+LOOP BEGIN at karmanStep2.cpp(729,3)
+   remark #25101: Loop Interchange not done due to: Original Order seems proper
+   remark #25452: Original Order found to be proper, but by a close margin
+   remark #15344: loop was not vectorized: vector dependence prevents vectorization
+   remark #15346: vector dependence: assumed OUTPUT dependence between uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9) and uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9)
+   remark #15346: vector dependence: assumed OUTPUT dependence between uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9) and uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9)
+
+   LOOP BEGIN at karmanStep2.cpp(730,5)
+      remark #15344: loop was not vectorized: vector dependence prevents vectorization
+      remark #15346: vector dependence: assumed FLOW dependence between uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9) and Fz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9)
+      remark #15346: vector dependence: assumed ANTI dependence between Fz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9) and uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9)
+
+      LOOP BEGIN at karmanStep2.cpp(731,7)
+         remark #15344: loop was not vectorized: vector dependence prevents vectorization
+         remark #15346: vector dependence: assumed FLOW dependence between uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9) and Fz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9)
+         remark #15346: vector dependence: assumed ANTI dependence between Fz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9) and uz[ix+iy*(numberOfCellsPerAxisX+2)+(iz*(numberOfCellsPerAxisX+2) (732:9)
+         remark #25439: unrolled with remainder by 4  
+      LOOP END
+
+      LOOP BEGIN at karmanStep2.cpp(731,7)
+      <Remainder>
+      LOOP END
+   LOOP END
+LOOP END
+===========================================================================
