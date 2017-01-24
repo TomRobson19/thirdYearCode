@@ -168,19 +168,19 @@ void assertion( bool condition, int line ) {
 
 int getBlockIndex(int ix, int iy, int iz) {
   assertion(ix>=0,__LINE__);
-  assertion(ix<numberOfCellsPerAxisX+2,__LINE__);
+  assertion(ix<numberOfCellsPerAxisXHalo+2,__LINE__);
   assertion(iy>=0,__LINE__);
-  assertion(iy<numberOfCellsPerAxisY+2,__LINE__);
+  assertion(iy<numberOfCellsPerAxisYHalo+2,__LINE__);
   assertion(iz>=0,__LINE__);
-  assertion(iz<numberOfCellsPerAxisZ+2,__LINE__);
+  assertion(iz<numberOfCellsPerAxisZHalo+2,__LINE__);
 
   ix = (ix)/(BLOCK_SIZE+2);
   iy = (iy)/(BLOCK_SIZE+2);
   iz = (iz)/(BLOCK_SIZE+2);
 
-  int blocksPerAxisX = numberOfCellsPerAxisX/BLOCK_SIZE;
-  int blocksPerAxisY = numberOfCellsPerAxisY/BLOCK_SIZE;
-  int blocksPerAxisZ = numberOfCellsPerAxisZ/BLOCK_SIZE;
+  int blocksPerAxisX = numberOfCellsPerAxisXHalo/BLOCK_SIZE+2;
+  int blocksPerAxisY = numberOfCellsPerAxisYHalo/BLOCK_SIZE+2;
+  int blocksPerAxisZ = numberOfCellsPerAxisZHalo/BLOCK_SIZE+2;
 
   return ix+iy*(blocksPerAxisX)+iz*(blocksPerAxisX)*(blocksPerAxisY);
 }
@@ -217,9 +217,28 @@ int getCellIndexFromOriginals(int ix, int iy, int iz) {
   assertion(iz>=0,__LINE__);
   assertion(iz<numberOfCellsPerAxisZ+2,__LINE__);
 
+  int origX = ix;
+  int origY = iy;
+  int origZ = iz;
+
   ix += ((ix-1)/BLOCK_SIZE)*2+1;
   iy += ((iy-1)/BLOCK_SIZE)*2+1;
   iz += ((iz-1)/BLOCK_SIZE)*2+1;
+
+  if(origX > numberOfCellsPerAxisX)
+  {
+    ix -= 1;
+  }
+
+   if(origY > numberOfCellsPerAxisY)
+  {
+    iy -= 1;
+  }
+
+   if(origZ > numberOfCellsPerAxisZ)
+  {
+    iz -= 1;
+  }
 
   return getCellIndexHalo(ix, iy, iz);
 }
@@ -741,13 +760,13 @@ int computeP() {
     previousGlobalResidual = globalResidual;
     globalResidual         = 0.0;
     #pragma omp parallel for reduction (+:globalResidual)
-    for (int ix=2; ix<numberOfCellsPerAxisZHalo+1; ix+=BLOCK_SIZE+2) {
+    for (int iz=2; iz<numberOfCellsPerAxisZHalo+1; iz+=BLOCK_SIZE+2) {
       for (int iy=2; iy<numberOfCellsPerAxisYHalo+1; iy+=BLOCK_SIZE+2) {
-        for (int iz=2; iz<numberOfCellsPerAxisXHalo+1; iz+=BLOCK_SIZE+2) {
+        for (int ix=2; ix<numberOfCellsPerAxisXHalo+1; ix+=BLOCK_SIZE+2) {
           if (blockIsInside[getBlockIndex(ix,iy,iz)]) {
             for (int jz=0; jz<BLOCK_SIZE; jz+=1) {
               for (int jy=0; jy<BLOCK_SIZE; jy+=1) {
-                #pragma omp simd
+                #pragma omp simd reduction (+:globalResidual)
                 for (int jx=0; jx<BLOCK_SIZE; jx+=1) {
                   double residual = 0;
                   #pragma forceinline
