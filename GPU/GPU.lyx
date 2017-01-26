@@ -90,18 +90,13 @@ Tom Robson - hzwr87
 \end_layout
 
 \begin_layout Section*
-Step 1 - will need to rewrite much of this
+Step 1
 \end_layout
 
 \begin_layout Standard
 Before attempts are made to improve the performance of the karman code,
  we must examine its current characteristics.
- This has been done using the Intel VTune performance analysis tool, with
- 
-\begin_inset Formula $t=0.1$
-\end_inset
-
- in the main while loop for reasonable execution time.
+ This has been done using the Intel VTune performance analysis tool.
  The types of analysis used for this project were General Exploration, Advanced
  Hotspots and HPC Performance Characterisation.
  
@@ -151,9 +146,9 @@ al functions at floating point precision, meaning that it has a high CPI
 \end_layout
 
 \begin_layout Standard
-When examining setPressureBoundaryConditions more closely, the General Explorati
-on analysis tells us that this function is limited by the Front-End of the
- pipeline.
+When briefly examining the secondary bottleneck, setPressureBoundaryConditions,
+ more closely, the General Exploration analysis tells us that this function
+ is limited by the Front-End of the pipeline.
  The majority of this is caused by Front-End bandwidth, meaning that not
  all the slots in the pipeline are filled, rather than Front-End latency,
  where none of the slots are filled.
@@ -192,7 +187,7 @@ To address these issues, the performance model that should be applied is
 \end_inset
 
  is the fraction of the code that is not parallelisable.
- As computeP is the main hotspot for this code, this must be the target
+ As computeP is the main hotspot for this code, this will be the target
  of the parallelisation.
  Therefore, the non parallelisable part of the code is everything but computeP.
  These to formulae can be combined and simplified to give 
@@ -206,8 +201,26 @@ To address these issues, the performance model that should be applied is
 
  tends to infinity.
  The code was run on Hamiton with parameters 10 0 1600, and computeP consumes
- 66.6% of the runtime of the code.
- Elapsed Time: 1588.834s
+ 
+\begin_inset Formula $66.6\%$
+\end_inset
+
+ of the runtime of the code, giving us a theoretical value for possible
+ speedup of 
+\begin_inset Formula $2.99$
+\end_inset
+
+.
+ With 
+\begin_inset Formula $t<20$
+\end_inset
+
+ as the while loop condition, the code runs in 
+\begin_inset Formula $1588.834$
+\end_inset
+
+ seconds.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -239,7 +252,7 @@ To break up the computational domain into blocks, or subproblems, we must
 
 \begin_layout Standard
 The benefits of this process can be realised in computeP, the main hotspot
- of this code, to improve its run-time.
+ of this code, to improve its runtime.
  We loop through each block, and if the boolean array tells us that this
  block doesn't contain the obstacle, we can vectorise the loops for the
  cells in this block using Intel's SIMD pragmas.
@@ -370,15 +383,17 @@ When this new implementation is run, it appears to not be as fast as step
  2.
  Tests have been run in the same way as in step 2, by varying the grid size
  over 100 timesteps.
+ This is due to the overhead of parallelisation, leading to a large amount
+ of spin time on the set ove grid sizes that have been experimented with.
  
 \end_layout
 
 \begin_layout Standard
 Experimentation has also been done with the scheduling options for the paralleli
 sation.
- This was done by including the statement schedule(runtime) in the for loop
- pragma, and changing the OMP_SCHEDULE environment variable between static,
- dynamic and guided.
+ This was done by including the statement 'schedule(runtime)' in the for
+ loop pragma, and changing the OMP_SCHEDULE environment variable between
+ static, dynamic and guided.
  The best runtime was achieved using the guided scheduling method.
  
 \end_layout
@@ -390,13 +405,10 @@ Try changing between options for simd pragma - test is running, second one
 
 \begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -407,10 +419,6 @@ Analysis of step 3
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
