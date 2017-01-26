@@ -366,11 +366,57 @@ sation.
 \end_layout
 
 \begin_layout Standard
-Try changing between options for simd pragma
+When this new implementation is run, it appears to not be as fast as step
+ 2.
+ Tests have been run in the same way as in step 2, by varying the grid size
+ over 100 timesteps.
+ 
 \end_layout
 
 \begin_layout Standard
-Try scheduling the omp for loop
+Experimentation has also been done with the scheduling options for the paralleli
+sation.
+ This was done by including the statement schedule(runtime) in the for loop
+ pragma, and changing the OMP_SCHEDULE environment variable between static,
+ dynamic and guided.
+ The best runtime was achieved using the guided scheduling method.
+ 
+\end_layout
+
+\begin_layout Standard
+Try changing between options for simd pragma - test is running, second one
+ is with intel, first is with omp
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Analysis of step 3
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body
