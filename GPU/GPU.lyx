@@ -109,7 +109,7 @@ From running these analysis methods, it has been determined that the key
  giving us a clear idea that the main issues for this algorithm lie in its
  implementation of pressure.
  From a closer examination of the computeP function, we can see that the
- main bottleneck in this function comes from line 668, given here:
+ main bottleneck in this function comes from the line given below:
 \end_layout
 
 \begin_layout Standard
@@ -147,8 +147,8 @@ al functions at floating point precision, meaning that it has a high CPI
 
 \begin_layout Standard
 When briefly examining the secondary bottleneck, setPressureBoundaryConditions,
- more closely, the General Exploration analysis tells us that this function
- is limited by the Front-End of the pipeline.
+ the General Exploration analysis tells us that this function is limited
+ by the Front-End of the pipeline.
  The majority of this is caused by Front-End bandwidth, meaning that not
  all the slots in the pipeline are filled, rather than Front-End latency,
  where none of the slots are filled.
@@ -375,6 +375,8 @@ sation.
  with the command 'reduction (+:globalResidual)'.
  The SIMD pragma from step 2 has also been changed to the OpenMP equivalent,
  and also uses the reduction for the global residuals.
+ When comparing the two pragmas however, we found that the intel pragma
+ with the reduction added produced superior performance.
  
 \end_layout
 
@@ -386,8 +388,9 @@ When this new implementation is run, it appears to not be as fast as step
  This is due to the overhead of parallelisation, leading to a large amount
  of spin time on the set of grid sizes that have been experimented with.
  We predict that this overhead will be reduced on larger grid sizes, but
- this has not been shown experimentally yet, as grid sizes up to 200 have
- been experimented yet.
+ this has not been shown experimentally yet, and grid sizes up to 200 have
+ been experimented with, and step 3 is still substantially slower than step
+ 3.
  
 \end_layout
 
@@ -399,11 +402,6 @@ sation.
  static, dynamic and guided.
  The best runtime was achieved using the guided scheduling method.
  
-\end_layout
-
-\begin_layout Standard
-Try changing between options for simd pragma - test is running, second one
- is with intel, first is with omp
 \end_layout
 
 \begin_layout Standard
