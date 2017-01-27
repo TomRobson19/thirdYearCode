@@ -384,7 +384,10 @@ When this new implementation is run, it appears to not be as fast as step
  Tests have been run in the same way as in step 2, by varying the grid size
  over 100 timesteps.
  This is due to the overhead of parallelisation, leading to a large amount
- of spin time on the set ove grid sizes that have been experimented with.
+ of spin time on the set of grid sizes that have been experimented with.
+ We predict that this overhead will be reduced on larger grid sizes, but
+ this has not been shown experimentally yet, as grid sizes up to 200 have
+ been experimented yet.
  
 \end_layout
 
@@ -408,9 +411,18 @@ Try changing between options for simd pragma - test is running, second one
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Step3.png
+	scale 50
+
+\end_inset
+
+
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
