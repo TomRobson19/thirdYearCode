@@ -1,0 +1,35 @@
+<?XML VERSION = "1.0" STANDALONE = "yes"?>
+<bookstore>
+
+	<book category = "Cooking">
+		<title lang = "italian"> Spaghetti Ricette </title>
+		<author> Giada Laurentis </author>
+		<year> 2005 </year>
+		<price> 50 </price>
+	</book>
+
+	<book category = "Children">
+		<title> Harry Potter </title>
+		<author> J. Rowling </author>
+		<year> 2005 </year>
+		<price> 25 </price>
+	</book>
+
+	<book category = "Web">
+		<title> XQuery Start </title>
+		<author> Per Bothner </author>
+		<author> Kurt Cagle </author>
+		<author> James Linn </author>
+		<author> Vaidy Nagar </author>
+		<year> 2003 </year>
+		<price> 49 </price>
+	</book>
+	
+	<book category="Web">
+		<title> Learning XML </title>
+		<author> Erik Ray </author>
+		<year> 2003 </year>
+		<price> 39 </price>
+	</book>
+
+</bookstore>

@@ -89,6 +89,41 @@ Contemporary Computer Science - Security
 Tom Robson - hzwr87
 \end_layout
 
+\begin_layout Section
+Passwords Stored in Plaintext
+\end_layout
+
+\begin_layout Section
+index.html is SQL Injectable
+\end_layout
+
+\begin_layout Section
+Full Database is available to all users
+\end_layout
+
+\begin_layout Section
+All users have read-write-execute permissions
+\end_layout
+
+\begin_layout Section
+Command Escalation in outputDB
+\end_layout
+
+\begin_layout Section
+Passwords are crackable
+\end_layout
+
+\begin_layout Standard
+This uses John the Ripper on the /etc/passwd file, as it contains the salt.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset Note Note
 status open

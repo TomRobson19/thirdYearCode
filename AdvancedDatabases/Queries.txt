@@ -1,0 +1,15 @@
+XPATH:
+
+/bookstore/book[price>35.00]/title
+
+/bookstore/book[category == "Web"]/author[1]
+
+XQUERY:
+
+for $x in doc("books.xml")/bookstore/book
+where $x/price>40
+return $x/author[2]
+
+for $x in doc(“books.xml”)/bookstore/book
+let $av := avg(doc(“books.xml”)/bookstore/book[year=2005]/price)
+where $x/price>$av return $x/author
