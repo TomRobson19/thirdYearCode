@@ -93,6 +93,30 @@ Tom Robson - hzwr87
 Passwords Stored in Plaintext
 \end_layout
 
+\begin_layout Standard
+In the file var/www/html/query.php, the root username and password are written
+ in plaintext in the line of code below.
+ As the user account given as vulnerability 0 has read access to this file,
+ we can open this in a text editor and access the unencrypted password:
+\end_layout
+
+\begin_layout Standard
+
+\lang british
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+mysql_connect(localhost,root,letmein) or die(mysql_error());
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 index.html is SQL Injectable
 \end_layout
@@ -101,12 +125,19 @@ index.html is SQL Injectable
 Full Database is available to all users
 \end_layout
 
+\begin_layout Standard
+When signed in as user (the account given as vulnerability 0), we can use
+ the mysql command to get access to the full database.
+ Using the combination of the commands 'show databases;', 'use shop;', 'show
+ tables', 'select * from users;' gives us all the information 
+\end_layout
+
 \begin_layout Section
 All users have read-write-execute permissions
 \end_layout
 
 \begin_layout Section
-Command Escalation in outputDB
+Command Injection in outputDB
 \end_layout
 
 \begin_layout Section
@@ -181,13 +212,13 @@ index.html submits to query.php, which is injectable (' or 1=1--) as username
 \end_layout
 
 \begin_layout Standard
-As the web server is running as root, can do anything root can do post injxectio
-n, including see the passwd file (Ghomas found this, try it myself)
+As the web server is running as root, can do anything root can do post injection
+, including see the passwd file (Ghomas found this, try it myself)
 \end_layout
 
 \begin_layout Standard
 Can start mysql, then use show databases;, use shop;, show tables;, from
- customers select *; ,passwords in plaintext, balances etc
+ users select *; ,passwords in plaintext, balances etc
 \end_layout
 
 \begin_layout Standard
@@ -248,6 +279,10 @@ other user accounts have weak passwords, or use john, another README in
 
 \begin_layout Standard
 Try using locate README
+\end_layout
+
+\begin_layout Standard
+TOCTOU Vulnerability
 \end_layout
 
 \end_body
