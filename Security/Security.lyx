@@ -10,7 +10,7 @@
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
-\language english
+\language british
 \language_package default
 \inputencoding auto
 \fontencoding global
@@ -101,8 +101,6 @@ In the file var/www/html/query.php, the root username and password are written
 \end_layout
 
 \begin_layout Standard
-
-\lang british
 \begin_inset listings
 inline false
 status open
@@ -115,6 +113,11 @@ mysql_connect(localhost,root,letmein) or die(mysql_error());
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+In order to remove this vulnerability, these credentials must not be stored
+ in plaintext.
 \end_layout
 
 \begin_layout Section
@@ -151,6 +154,10 @@ This uses John the Ripper on the /etc/passwd file, as it contains the salt.
 \begin_layout Section
 Open Ports e.g.
  Telnet
+\end_layout
+
+\begin_layout Section
+Vul 8
 \end_layout
 
 \begin_layout Standard
@@ -262,6 +269,8 @@ cat .mysql_history
 \begin_layout Standard
 sendfile.java creates a temporary db file while sending, as we have permissions
  could be changed so it stays forever, then have the DB.
+ TOCTOU Vulnerability\SpecialChar \slash{}
+
 \end_layout
 
 \begin_layout Standard
@@ -282,7 +291,7 @@ Try using locate README
 \end_layout
 
 \begin_layout Standard
-TOCTOU Vulnerability
+Stored XXS in DB - credit
 \end_layout
 
 \end_body
