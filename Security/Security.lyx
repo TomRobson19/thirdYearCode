@@ -94,10 +94,14 @@ Passwords Stored in Plaintext
 \end_layout
 
 \begin_layout Standard
-In the file var/www/html/query.php, the root username and password are written
- in plaintext in the line of code below.
+In the diectory /var/www/html/, there is a file called query.php.
+ This file is used to connect to the sql server and enable users to log
+ in to the web store.
+ When the mysql server is set up, the root username and password for the
+ system are written in plaintext in the line of code below.
  As the user account given as vulnerability 0 has read access to this file,
- we can open this in a text editor and access the unencrypted password:
+ we can open this in a text editor such as nano and view the unencrypted
+ root password:
 \end_layout
 
 \begin_layout Standard
@@ -219,8 +223,8 @@ index.html submits to query.php, which is injectable (' or 1=1--) as username
 \end_layout
 
 \begin_layout Standard
-As the web server is running as root, can do anything root can do post injection
-, including see the passwd file (Ghomas found this, try it myself)
+As the web server is running as root, can do anything root can do post SQL
+ injection, including see the passwd file (Ghomas found this, try it myself)
 \end_layout
 
 \begin_layout Standard
