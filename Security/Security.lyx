@@ -135,8 +135,60 @@ Full Database is available to all users
 \begin_layout Standard
 When signed in as user (the account given as vulnerability 0), we can use
  the mysql command to get access to the full database.
- Using the combination of the commands 'show databases;', 'use shop;', 'show
- tables', 'select * from users;' gives us all the information 
+ Using the sequence of commands 'show databases;', 'use shop;', 'show tables',
+ 'select * from users;' shows us all the information sotred about each user
+ with an account for this online shop, including their usernames, passwords
+ and balances.
+ This would enable anyone with access to this machine to access all of the
+ user accounts for the shop and spend their credits.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/tom/Pictures/mysql.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In order to mitigate this vulnerability, these passwords must not be stored
+ in this unencrypted form.
+ Also, it is recommended that access to this database through mysql is restricte
+d to the root user, or administrator by requiring a password to access it.
+ 
 \end_layout
 
 \begin_layout Section
