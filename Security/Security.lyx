@@ -154,7 +154,12 @@ index.html is SQL Injectable
 
 \begin_layout Standard
 The index.html webpage contains a simple username and password form.
- This form is vulnerable to SQL injection
+ This form is vulnerable to SQL injection, as we proved by using ' or 1=1--
+ as both the username and password.
+ This logs us in as the first user in the system.
+ From here, we can experiment with more useful commands, such as changing
+ the balances of users.
+ 
 \end_layout
 
 \begin_layout Section
@@ -242,7 +247,9 @@ Passwords are crackable
 \end_layout
 
 \begin_layout Standard
-Solve ^ by making only root able to read
+We can mitigate this vulnerability by making changing the permissions so
+ that only root is able to read the file.
+ Also, the 
 \end_layout
 
 \begin_layout Section
