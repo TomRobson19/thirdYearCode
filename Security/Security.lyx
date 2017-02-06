@@ -122,6 +122,11 @@ mysql_connect(localhost,root,letmein) or die(mysql_error());
 \begin_layout Standard
 In order to remove this vulnerability, these credentials must not be stored
  in plaintext.
+ 
+\end_layout
+
+\begin_layout Standard
+These 
 \end_layout
 
 \begin_layout Section
@@ -307,7 +312,7 @@ cd / su - python -m SimpleHTTPServer
 \end_layout
 
 \begin_layout Standard
-command escalation for outputDB - ./outputDB 
+command injection for outputDB - ./outputDB 
 \begin_inset Quotes eld
 \end_inset
 
@@ -315,7 +320,7 @@ dump.txt && bash
 \begin_inset Quotes erd
 \end_inset
 
-
+ - this happens because it can run a string as a command
 \end_layout
 
 \begin_layout Standard
@@ -334,7 +339,12 @@ ls -ld $HOME --> returns permissions list --> everyone has read-write-execute
 \end_layout
 
 \begin_layout Standard
-/etc/passwd files have the salt in to break hashes
+/etc/passwd files have the salt in to break hashes, and are readable, and
+ are very weak so quick using john
+\end_layout
+
+\begin_layout Standard
+Solve ^ by making only root able to read
 \end_layout
 
 \begin_layout Standard
