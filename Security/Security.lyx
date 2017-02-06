@@ -94,7 +94,7 @@ Passwords Stored in Plaintext
 \end_layout
 
 \begin_layout Standard
-In the diectory /var/www/html/, there is a file called query.php.
+In the directory /var/www/html/, there is a file called query.php.
  This file is used to connect to the sql server and enable users to log
  in to the web store.
  When the mysql server is set up, the root username and password for the
@@ -120,17 +120,41 @@ mysql_connect(localhost,root,letmein) or die(mysql_error());
 \end_layout
 
 \begin_layout Standard
-In order to remove this vulnerability, these credentials must not be stored
- in plaintext.
- 
+This vulnerability is also present in the outputDB.c file in the user's home
+ directory, with the root password being written in plaintext in the following
+ line:
 \end_layout
 
 \begin_layout Standard
-These 
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+char cmd[4096] = "mysqldump -pletmein --all-databases > ";
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In order to mitigate this vulnerability in both of these files, these credential
+s must not be stored in plaintext.
+ A way of ensuring this would be to store this information in a different
+ file, encrypted and with stricter permissions.
+ 
 \end_layout
 
 \begin_layout Section
 index.html is SQL Injectable
+\end_layout
+
+\begin_layout Standard
+The index.html webpage contains a simple username and password form.
+ This form is vulnerable to SQL injection
 \end_layout
 
 \begin_layout Section
@@ -141,7 +165,7 @@ Full Database is available to all users
 When signed in as user (the account given as vulnerability 0), we can use
  the mysql command to get access to the full database.
  Using the sequence of commands 'show databases;', 'use shop;', 'show tables',
- 'select * from users;' shows us all the information sotred about each user
+ 'select * from users;' shows us all the information stored about each user
  with an account for this online shop, including their usernames, passwords
  and balances.
  This would enable anyone with access to this machine to access all of the
@@ -191,8 +215,12 @@ status collapsed
 \begin_layout Standard
 In order to mitigate this vulnerability, these passwords must not be stored
  in this unencrypted form.
- Also, it is recommended that access to this database through mysql is restricte
-d to the root user, or administrator by requiring a password to access it.
+ 
+\end_layout
+
+\begin_layout Standard
+Also, it is recommended that access to this database through mysql is restricted
+ to the root user, or administrator by requiring a password to access it.
  
 \end_layout
 
@@ -209,7 +237,12 @@ Passwords are crackable
 \end_layout
 
 \begin_layout Standard
-This uses John the Ripper on the /etc/passwd file, as it contains the salt.
+/etc/passwd files have the salt in to break hashes, and are readable, and
+ are very weak so quick using john
+\end_layout
+
+\begin_layout Standard
+Solve ^ by making only root able to read
 \end_layout
 
 \begin_layout Section
