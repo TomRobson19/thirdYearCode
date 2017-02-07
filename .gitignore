@@ -21,3 +21,6 @@
 GPU/hzwr87\.zip
 
 GPU/hzwr87/
+
+*.lyx~
+*.lyx#
