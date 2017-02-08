@@ -171,6 +171,11 @@ The index.html webpage contains a simple username and password form.
 \end_layout
 
 \begin_layout Standard
+This vulnerability permits an attacker to access the file system of the
+ host machine.
+\end_layout
+
+\begin_layout Standard
 Mitigation - sanitise all inputs using a whitelist before passing to SQL.
  Analyse query to see what it will do before it is executed.
  Ensure the queries on the database are performed by a low privileged user
