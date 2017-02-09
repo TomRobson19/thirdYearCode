@@ -452,7 +452,7 @@ Also, it is recommended that access to this database through mysql is restricted
 \end_layout
 
 \begin_layout Section
-Inappropriate permissions
+Inappropriate permissions for .bashrc
 \end_layout
 
 \begin_layout Standard
@@ -519,12 +519,11 @@ status open
 
 \begin_layout Standard
 To mitigate this vulnerability, the execve() command should be used instead
- of system(), as system() is unsafe
-\end_layout
-
-\begin_layout Standard
-execve(cmd,args); Anything the other side of the && will be treated as a
- text argument not run as a command
+ of system(), as the system() command is unsafe.
+ This is called using execve(cmd,args); Anything the other side of the &&
+ will be treated as a text argument not run as a command, which prevents
+ the command injection from occurring.
+ 
 \end_layout
 
 \begin_layout Section
@@ -537,7 +536,8 @@ In the /etc directory, the passwd file contains the hashed passwords for
  They are stored alongside the corresponding salt from their encryption.
  This means that these are vulnerable to dictionary attacks.
  These passwords are very weak, so can be broken very quickly using the
- John the Ripper password cracking tool.
+ John the Ripper password cracking tool, as they are very weak (password,
+ letmein, 1234567), so will be broken very quickly by a dictionary attack.
  
 \end_layout
 
@@ -559,78 +559,99 @@ Also, change permissions on the backup password files (passwd- and passwd.OLD)
 \begin_layout Standard
 These passwords are also encrypted using the MD5 system.
  This is not a good idea, as this system is old and is known to have been
- compromised and exploited a few years ago.
- An alternative hash function should be used for encryption, such as SHA-512.
+ compromised and exploited many times in the past.
+ A superior, alternative hash function should be used for encryption, such
+ as SHA-512.
 \end_layout
 
 \begin_layout Section
-Open Ports e.g.
- Telnet
-\end_layout
-
-\begin_layout Section
-XXS in Database
+Stored XXS in Database
 \end_layout
 
 \begin_layout Standard
-\begin_inset Newpage newpage
+The database is vulnerable to stored Cross Site Scripting, or XSS.
+ By either using SQL injection or through direct access to the mysql shell,
+ we can use the following command to change the type of the credit column
+ to allow commands to be placed there.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+alter table users modify column credit varchar(500);
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
 \begin_layout Standard
-open services (nmap): ftp,telnet,http,rpcbind,unknown,unknown,mysql,http-proxy
- (ftp no authentication)
+From here, we can use the following command to insert a script element in
+ this column.
+ 
 \end_layout
 
 \begin_layout Standard
-sendfile.java creates a temporary db file while sending, as we have permissions
- could be changed so it stays forever, then have the DB.
- (TOCTOU Vulnerability)
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+update users set credit = "<script>alert('Hacked!')</script>";
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-ls -ld $HOME --> returns permissions list --> everyone has read-write-execute
+This is a simple alert command, however our ability to insert such commands
+ makes it clear that we can use this vulnerability for more malicious means
+ as desired.
+ 
 \end_layout
 
 \begin_layout Standard
-other user accounts have weak passwords, or use john, another README in
- toor (password, letmein, 1234567)
+This can be mitigated using a whitelist of commands that are allowed to
+ be run on this database by certain users, so that we do not have the ability
+ to change the type of the column, for example.
+ Also, all commands must be checked and sanitised before they are run so
+ that we can escape from <script> tags and similar.
+\end_layout
+
+\begin_layout Section
+Race Conditions in backupOnHour.bash
 \end_layout
 
 \begin_layout Standard
-Try using locate README
+The file backupOnHour.bash creates a copy of the database and uses java to
+ send this copy of the database to the backup account on this computer.
+ After it has been sent, the file is deleted from the user system.
+ Assuming we do not have write access to this bash file, we need to write
+ another file that constantly checks the system to see if a file called
+ tmp.db exists in this directory, and if it does make a copy of it before
+ and save it or send it to another networked device.
+ From here, the attacker would have access to a full copy of the database,
+ including the user's credentials and information.
+ 
 \end_layout
 
 \begin_layout Standard
-Stored XXS in DB - credit
-\end_layout
-
-\begin_layout Standard
-.bashrc is accessible by all, add malicious command to be executed when root
- logs in (make new root user, delete everything)
-\end_layout
-
-\begin_layout Standard
-(when logged in as backup) recieveFile.java has no data limit, can just DOS
- it
-\end_layout
-
-\begin_layout Standard
-XSS - change field type to be varchar, then put script in
-\end_layout
-
-\begin_layout Standard
-alter table users modify column credit varchar(500);
-\end_layout
-
-\begin_layout Standard
-update users set credit = ''<script>alert('Hacked!')</script>''
-\end_layout
-
-\begin_layout Standard
-Database transferred over network in plaintext
+To mitigate this vulnerability, we could use a less predictable filename,
+ such as a random filename, to thwart our searching file.
+ Also, we could store the temporary file in another directory that will
+ have permissions such that it will not be searchable by our file.
+ This way, we ensure that the attacker is not able to obtain a copy of our
+ database, and ensure the data stored within is not accessible.
+ 
 \end_layout
 
 \end_body
