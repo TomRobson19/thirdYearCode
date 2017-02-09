@@ -141,20 +141,20 @@ char cmd[4096] = "mysqldump -pletmein --all-databases > ";
 \end_layout
 
 \begin_layout Standard
-If we did not have access to the source file for this, we would still be
- able to use the 'strings' command 
+Even if we did not have access to the source file for this, we would still
+ be able to use the 'strings' command in linux to view the strings within
+ the compiled file.
+ 
 \end_layout
 
 \begin_layout Standard
 In order to mitigate this vulnerability in both of these files, these credential
 s must not be stored in plaintext.
+ A way of ensuring this would be to store this information in a different
+ file, such as a config file, which would be located elsewhere in the system
+ and have stricter permissions applied to it.
+ This should be done using a separate account to host and run the web service.
  
-\end_layout
-
-\begin_layout Standard
-A way of ensuring this would be to store this information in a different
- file, such as a config file, which would be encrypted and have stricter
- permissions applied to it.
 \end_layout
 
 \begin_layout Section
@@ -167,19 +167,219 @@ The index.html webpage contains a simple username and password form.
  as both the username and password.
  This logs us in as the first user in the system.
  From here, we can experiment with more useful commands.
- If we know the username of any of the users of the system 
+ If we know the username of any of the users of the system then we can log
+ in as this person without needing their password and spend their credits.
+ We can also use this to inject commands to give a user more balance, for
+ example.
+ 
 \end_layout
 
 \begin_layout Standard
-This vulnerability permits an attacker to access the file system of the
- host machine.
+Another important aspect of this vulnerability is that it permits an attacker
+ to access the file system of the host machine, and as the sql system runs
+ as root, accessing the system through this method gives the attacker root
+ permissions.
+ Once we have found out the number of columns in the database through experiment
+ation, we know where to inject commands to get data out.
+ For example, this command shows us what user we are:
 \end_layout
 
 \begin_layout Standard
-Mitigation - sanitise all inputs using a whitelist before passing to SQL.
- Analyse query to see what it will do before it is executed.
- Ensure the queries on the database are performed by a low privileged user
- so significant changes to the database cannot be made.
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="1">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+user = 1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+password = 'UNION ALL SELECT 1,2,user()#
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+output: user 1 is logged in successfully.
+ Your credit is root@localhost
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This command shows us that we can extract the password file, only one of
+ the passwords is included here:
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="1">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+user = 1
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+password = 'UNION ALL SELECT 1,2,LOAD_FILE('etc/passwd/')#
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+output: user 1 is logged in successfully.
+ Your credit is 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+root:$1$8WSL8Sld$gcAwfXJ7.GzA/K131SGKV.:0:0:root:/root:/bin/bash........
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In order to mitigate this vulnerability, all user inputs must be sanitised
+ using a whitelist before passing to SQL.
+ Each query must be analysed to see what it will do before it is executed.
+ We must also configure the database to ensure the queries are performed
+ by a low privileged user so significant changes to the database cannot
+ be made.
  Do not embed input into queries, use just as values not commands.
 \end_layout
 
@@ -189,7 +389,8 @@ Full Database is available to all users
 
 \begin_layout Standard
 When signed in as user (the account given as vulnerability 0), we can use
- the mysql command to get access to the full database.
+ the mysql command to get access to the mysql shell, and therefore full
+ database.
  Using the sequence of commands 'show databases;', 'use shop;', 'show tables',
  'select * from users;' shows us all the information stored about each user
  with an account for this online shop, including their usernames, passwords
@@ -239,14 +440,14 @@ status collapsed
 \end_layout
 
 \begin_layout Standard
-In order to mitigate this vulnerability, these passwords must not be stored
- in this unencrypted form, but instead be encrypted .
- 
+In order to mitigate this vulnerability, these passwords must be stored
+ in an encrypted form, using a hashing algorithm such as SHA-512.
 \end_layout
 
 \begin_layout Standard
 Also, it is recommended that access to this database through mysql is restricted
- to the root user, or administrator by requiring a password to access it.
+ to the root user, or a different user account by that requires a password
+ to access it.
  
 \end_layout
 
@@ -255,13 +456,26 @@ Inappropriate permissions
 \end_layout
 
 \begin_layout Standard
-Can log in as user, add a malicious command to the .bashrc file, as the user
- has full permissions for this file.
- Command could be something like 'rm -rf *', to delete everything on the
- system.
- The next time the root user logs in, this command will be executed and
- all the data on the system will be deleted.
+When logged in as the user account that is vulnerability 0, we can access
+ the .bashrc file in the /root/ directory.
+ All users have read and write permissions for the files in this directory,
+ so we can exploit this.
+ In the .bashrc file, we can then add a malicious command, such as 'rm -rf
+ *', to delete everything on the system.
+ The next time the root user logs in or opens a shell, this command will
+ be executed and all the data on the system will be deleted.
  
+\end_layout
+
+\begin_layout Standard
+In order to mitigate this vulnerability, the permissions on this file, and
+ the root folder in general, must be changed so it is only accessible by
+ root, using the command chmod 700.
+ This means that only root can read, write and execute it, and other users
+ can not do anything.
+ There are other occurrences of inappropriate permissions present within
+ this system, but this problem with the .bashrc file is the most severe vulnerabi
+lity that has not been addressed elsewhere in this document.
 \end_layout
 
 \begin_layout Section
@@ -304,11 +518,8 @@ status open
 \end_layout
 
 \begin_layout Standard
-To mitigate this vulnerability, 
-\end_layout
-
-\begin_layout Standard
-using execve() instead of system(), as system is unsafe
+To mitigate this vulnerability, the execve() command should be used instead
+ of system(), as system() is unsafe
 \end_layout
 
 \begin_layout Standard
@@ -317,7 +528,7 @@ execve(cmd,args); Anything the other side of the && will be treated as a
 \end_layout
 
 \begin_layout Section
-Passwords are easily crackable
+Passwords are weak and easily crackable
 \end_layout
 
 \begin_layout Standard
@@ -335,7 +546,14 @@ To mitigate this vulnerability, the passwd file should not be readable by
  all users, it should be restricted to root.
  Also, this data should be stored in the shadow file rather than the passwd
  file in the same directory.
+ This can be done using the command pwconv, which uses the passwd file to
+ create a corresponding shadow file.
  
+\end_layout
+
+\begin_layout Standard
+Also, change permissions on the backup password files (passwd- and passwd.OLD)
+ so that they are only readable by root, using the command chmod 700.
 \end_layout
 
 \begin_layout Standard
@@ -351,7 +569,7 @@ Open Ports e.g.
 \end_layout
 
 \begin_layout Section
-XXS in DB
+XXS in Database
 \end_layout
 
 \begin_layout Standard
@@ -359,55 +577,6 @@ XXS in DB
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-Need 8 vulnerabilities, I find more, can include them, ensure I order by
- severity.
-\end_layout
-
-\begin_layout Plain Layout
-Each vulnerability is worth 10 marks and is marked as follows: 
-\end_layout
-
-\begin_layout Plain Layout
-- Naming the vulnerability or providing a single sentence defining it.
- 1 mark 
-\end_layout
-
-\begin_layout Plain Layout
-- Providing a step-by-step guide to exploiting the vulnerability.
- 4 marks 
-\end_layout
-
-\begin_layout Plain Layout
-- Providing a step-by-step guide to mitigating the vulnerability.
- 5 marks.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-index.html submits to query.php, which is injectable (' or 1=1--) as username
- and password
-\end_layout
-
-\begin_layout Standard
-As the web server is running as root, can do anything root can do post SQL
- injection, including see the passwd file (Ghomas found this, try it myself)
-\end_layout
-
-\begin_layout Standard
-Can start mysql, then use show databases;, use shop;, show tables;, from
- users select *; ,passwords in plaintext, balances etc
 \end_layout
 
 \begin_layout Standard
@@ -423,15 +592,6 @@ sendfile.java creates a temporary db file while sending, as we have permissions
 
 \begin_layout Standard
 ls -ld $HOME --> returns permissions list --> everyone has read-write-execute
-\end_layout
-
-\begin_layout Standard
-/etc/passwd files have the salt in to break hashes, and are readable, and
- are very weak so quick using john
-\end_layout
-
-\begin_layout Standard
-Solve ^ by making only root able to read
 \end_layout
 
 \begin_layout Standard
@@ -467,6 +627,10 @@ alter table users modify column credit varchar(500);
 
 \begin_layout Standard
 update users set credit = ''<script>alert('Hacked!')</script>''
+\end_layout
+
+\begin_layout Standard
+Database transferred over network in plaintext
 \end_layout
 
 \end_body
