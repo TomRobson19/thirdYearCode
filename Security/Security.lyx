@@ -690,8 +690,8 @@ To mitigate this vulnerability, we could use a less predictable filename,
  such as a random filename, to thwart our searching file.
  Also, we could store the temporary file in another directory that will
  have permissions such that it will not be searchable by our file.
- This way, we ensure that the attacker is not able to obtain a copy of our
- database, and ensure the data stored within is not accessible.
+ This way, we will ensure that the attacker is not able to obtain a copy
+ of our database, and ensure the data stored within is not accessible.
  
 \end_layout
 
