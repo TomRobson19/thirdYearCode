@@ -143,8 +143,46 @@ char cmd[4096] = "mysqldump -pletmein --all-databases > ";
 \begin_layout Standard
 Even if we did not have access to the source file for this, we would still
  be able to use the 'strings' command in linux to view the strings within
- the compiled file.
- 
+ the compiled file, as shown below.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/tom/Pictures/strings.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Using the strings command
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -391,7 +429,7 @@ Full Database is available to all users
 When signed in as user (the account given as vulnerability 0), we can use
  the mysql command to get access to the mysql shell, and therefore full
  database.
- Using the sequence of commands 'show databases;', 'use shop;', 'show tables',
+ Using the sequence of commands 'show databases;', 'use shop;', 'show tables;',
  'select * from users;' shows us all the information stored about each user
  with an account for this online shop, including their usernames, passwords
  and balances.
@@ -464,6 +502,9 @@ When logged in as the user account that is vulnerability 0, we can access
  *', to delete everything on the system.
  The next time the root user logs in or opens a shell, this command will
  be executed and all the data on the system will be deleted.
+ We could also use this vulnerability to execute other commands that require
+ root permissions, such as creating more users with root permissions, or
+ setting the userid of existing users to 0.
  
 \end_layout
 
@@ -520,9 +561,9 @@ status open
 \begin_layout Standard
 To mitigate this vulnerability, the execve() command should be used instead
  of system(), as the system() command is unsafe.
- This is called using execve(cmd,args); Anything the other side of the &&
- will be treated as a text argument not run as a command, which prevents
- the command injection from occurring.
+ This is called using execve(cmd,args); Anything the right hand side of
+ the &&, or a similar symbol, will be treated as a text argument not run
+ as a command, which prevents the command injection from occurring.
  
 \end_layout
 
