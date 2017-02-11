@@ -26,3 +26,5 @@ GPU/hzwr87/
 *.lyx#
 
 NetworkAnalysis/CCS/
+
+NetworkAnalysis/__pycache__/
