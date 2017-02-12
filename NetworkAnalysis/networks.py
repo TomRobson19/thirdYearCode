@@ -3,9 +3,10 @@ Code for the Networks Assignment
 Tom Robson - hzwr87
 """
 import random
-
-
-#degree distribution and diameter
+import queue
+import numpy as np
+import matplotlib.pyplot as plt
+from collections import Counter
 
 def makeGroupGraph(m,k,p,q):
 	random.seed(m*k)
@@ -27,8 +28,28 @@ def makeGroupGraph(m,k,p,q):
 				graph[node] += [neighbour]
 				graph[neighbour] += [node]
 
-	print(graph)
+	return graph
 
+def max_dist(graph, source):
+	q = queue.Queue()
+	found = {}
+	distance = {}
+	for node in graph:
+		found[node] = 0
+		distance[node] = -1
+	max_distance = 0
+	found[source] = 1
+	distance[source] = 0
+	q.put(source)
+	while q.empty() == False:
+		current = q.get()
+		for neighbour in graph[current]:
+			if found[neighbour] == 0:
+				found[neighbour] = 1
+				distance[neighbour] = distance[current] + 1
+				max_distance = distance[neighbour]
+				q.put(neighbour)
+	return max_distance
 
 def diameter(graph):
 	distances = []
@@ -38,4 +59,27 @@ def diameter(graph):
 	
 	return max(distances)
 
-makeGroupGraph(5,4,0.4,0.1)
+def plotDegreeDistribution(graph):
+	degrees = []
+
+	for node in graph:
+		degrees += [len(graph[node])]
+
+	degreeCount = {x:degrees.count(x) for x in degrees}
+
+	print(degreeCount)
+
+	plt.bar(degreeCount.keys(),degreeCount.values(), 1, color='g')
+	plt.xlabel("Degree", fontsize = 20)
+	plt.ylabel("Occurances", fontsize = 20)
+	plt.title("Degree Distribution", fontsize = 20)
+	plt.show()
+
+print("Graph")
+print(makeGroupGraph(5,4,0.4,0.1))
+
+print("Diameter")
+print(diameter(makeGroupGraph(5,4,0.4,0.1)))
+
+print("Plotting")
+plotDegreeDistribution(makeGroupGraph(5,4,0.4,0.1))
