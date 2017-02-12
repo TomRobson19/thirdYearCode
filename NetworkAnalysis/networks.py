@@ -5,6 +5,8 @@ Tom Robson - hzwr87
 import random
 
 
+#degree distribution and diameter
+
 def makeGroupGraph(m,k,p,q):
 	random.seed(m*k)
 	numberOfNodes = m*k
@@ -15,8 +17,6 @@ def makeGroupGraph(m,k,p,q):
 	for node in range(numberOfNodes):
 		group[node] = node//k
 		graph[node] = []
-
-	print(group)
 
 	for node in range(numberOfNodes):
 		for neighbour in range(node+1, numberOfNodes):
@@ -29,4 +29,13 @@ def makeGroupGraph(m,k,p,q):
 
 	print(graph)
 
-makeGroupGraph(5,4,0.5,0.2)
+
+def diameter(graph):
+	distances = []
+	
+	for node in graph:
+		distances += [max_dist(graph, node)]
+	
+	return max(distances)
+
+makeGroupGraph(5,4,0.4,0.1)
