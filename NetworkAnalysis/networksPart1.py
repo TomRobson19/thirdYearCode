@@ -1,5 +1,5 @@
 """
-Code for the Networks Assignment
+Code for the Part 1 of the Networks Assignment
 Tom Robson - hzwr87
 """
 import random
@@ -67,8 +67,6 @@ def plotDegreeDistribution(graph):
 
 	degreeCount = {x:degrees.count(x) for x in degrees}
 
-	print(degreeCount)
-
 	plt.bar(degreeCount.keys(),degreeCount.values(), 1, color='r')
 	plt.xlabel("Degree", fontsize = 10)
 	plt.ylabel("Occurances", fontsize = 10)
@@ -76,10 +74,9 @@ def plotDegreeDistribution(graph):
 	plt.show()
 
 print("Graph")
-print(makeGroupGraph(10,10,0.4,0.1))
 
 print("Diameter")
-print(diameter(makeGroupGraph(10,10,0.4,0.1)))
+print(diameter(makeGroupGraph(100,10,0.4,0.1)))
 
 print("Plotting")
-plotDegreeDistribution(makeGroupGraph(10,10,0.4,0.1))
+plotDegreeDistribution(makeGroupGraph(100,10,0.4,0.1))
