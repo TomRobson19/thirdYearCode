@@ -339,7 +339,7 @@ subject to:
 \begin_layout Standard
 \noindent
 \align center
-\begin_inset Formula $x_{2}^{+},x_{2}^{-}\leq6$
+\begin_inset Formula $(x_{2}^{+}-x_{2}^{-})+x_{6}=6$
 \end_inset
 
 
@@ -348,7 +348,7 @@ subject to:
 \begin_layout Standard
 \noindent
 \align center
-\begin_inset Formula $x_{1},x_{3},x_{4},x_{5}\geq0$
+\begin_inset Formula $x_{1},x_{2}^{+},x_{2}^{-},x_{3},x_{4},x_{5},x_{6}\geq0$
 \end_inset
 
 
