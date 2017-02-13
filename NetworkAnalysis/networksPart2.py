@@ -2,13 +2,17 @@
 Code for the Part 2 of the Networks Assignment
 Tom Robson - hzwr87
 """
+import random
+import queue
+import numpy as np
+import matplotlib.pyplot as plt
 
-def load_graph(graph_txt):
+def load_graph():
 	"""
 	Loads a graph from a text file.
 	Then returns the graph as a dictionary.
 	"""
-	graph = open(graph_txt)
+	graph = open("coauthorship.txt")
 
 	answerGraph = {}
 
@@ -22,4 +26,12 @@ def load_graph(graph_txt):
 		answerGraph[node] += [int(neighbours[1])]
 	return answerGraph
 
-load_graph("coauthorship.txt")
+def findKCycles(graph,k):
+	cyclesPerNode = {}
+	for node in graph:
+		for neighbour in graph[node]:
+			return 1
+
+
+
+(load_graph()
