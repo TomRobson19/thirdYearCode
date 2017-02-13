@@ -69,17 +69,17 @@ def plotDegreeDistribution(graph):
 
 	print(degreeCount)
 
-	plt.bar(degreeCount.keys(),degreeCount.values(), 1, color='g')
-	plt.xlabel("Degree", fontsize = 20)
-	plt.ylabel("Occurances", fontsize = 20)
+	plt.bar(degreeCount.keys(),degreeCount.values(), 1, color='r')
+	plt.xlabel("Degree", fontsize = 10)
+	plt.ylabel("Occurances", fontsize = 10)
 	plt.title("Degree Distribution", fontsize = 20)
 	plt.show()
 
 print("Graph")
-print(makeGroupGraph(5,4,0.4,0.1))
+print(makeGroupGraph(10,10,0.4,0.1))
 
 print("Diameter")
-print(diameter(makeGroupGraph(5,4,0.4,0.1)))
+print(diameter(makeGroupGraph(10,10,0.4,0.1)))
 
 print("Plotting")
-plotDegreeDistribution(makeGroupGraph(5,4,0.4,0.1))
+plotDegreeDistribution(makeGroupGraph(10,10,0.4,0.1))
