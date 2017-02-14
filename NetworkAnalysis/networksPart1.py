@@ -8,6 +8,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import Counter
 
+#############################################################################################################################
+
 def makeGroupGraph(m,k,p,q):
 	random.seed(m*k)
 	numberOfNodes = m*k
@@ -30,6 +32,8 @@ def makeGroupGraph(m,k,p,q):
 
 	return graph
 
+#############################################################################################################################
+
 def max_dist(graph, source):
 	q = queue.Queue()
 	found = {}
@@ -51,6 +55,8 @@ def max_dist(graph, source):
 				q.put(neighbour)
 	return max_distance
 
+#############################################################################################################################
+
 def diameter(graph):
 	distances = []
 	
@@ -58,6 +64,8 @@ def diameter(graph):
 		distances += [max_dist(graph, node)]
 	
 	return max(distances)
+
+#############################################################################################################################
 
 def plotDegreeDistribution(graph):
 	degrees = []
@@ -73,6 +81,8 @@ def plotDegreeDistribution(graph):
 	plt.title("Degree Distribution", fontsize = 20)
 	plt.show()
 
+#############################################################################################################################
+
 print("Graph")
 
 print("Diameter")
@@ -80,3 +90,5 @@ print(diameter(makeGroupGraph(100,10,0.4,0.1)))
 
 print("Plotting")
 plotDegreeDistribution(makeGroupGraph(100,10,0.4,0.1))
+
+#############################################################################################################################
