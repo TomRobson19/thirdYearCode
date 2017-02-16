@@ -67,41 +67,52 @@ def diameter(graph):
 
 #############################################################################################################################
 
-def plotDegreeDistribution(graph):
-	degrees = []
+def average_degree_distribution_group_graphs(m,k,p,q,trials):
+	distribution = {}
+	
+	for i in range(trials):
+		graph = makeGroupGraph(m,k,p,q)
 
-	for node in graph:
-		degrees += [len(graph[node])]
+		degrees = []
+		for node in graph:
+			degrees += [len(graph[node])]
 
-	degreeCount = {x:degrees.count(x) for x in degrees}
+	degreeCount = {x:degrees.count(x)/trials for x in degrees}
 
-	plt.bar(degreeCount.keys(),degreeCount.values(), 1, color='r')
-	plt.xlabel("Degree", fontsize = 10)
-	plt.ylabel("Occurances", fontsize = 10)
-	plt.title("Degree Distribution", fontsize = 20)
-	plt.show()
+	return degreeCount
+
 
 #############################################################################################################################
 
-def plot_diameter_vs_p(num_groups, nodes_per_group, external_prob, trials=1, title=False):
+def plot_degree_distribution(degreeCount, title, filename):
+	plt.clf()
+	plt.vlines(degreeCount.keys(),degreeCount.values(), 1, color='r')
+	plt.xlabel("Degree", fontsize = 10)
+	plt.ylabel("Occurances", fontsize = 10)
+	plt.title(title)
+	#plt.show()
+	plt.savefig(filename)
+
+#############################################################################################################################
+
+def plot_diameter_vs_p(m, k, q, trials, title):
     """plot diameter of group graph versus internal probability by taking average of k trials for each data point"""
     #create arrays for plotting
     xdata = []
     ydata = []
-    for internal_prob in [0.1*p for p in range(1,11)]:
+    for p in [0.1*p for p in range(1,11)]:
         diameters = []
-        print (internal_prob)
+        print (p)
         for idx in range(trials):
-            graph = make_group_graph(num_groups, nodes_per_group, internal_prob, external_prob)
+            graph = makeGroupGraph(m, k, p, q)
             diam = diameter(graph)
             diameters += [diam]
-        xdata += [internal_prob]
+        xdata += [p]
         ydata += [1.0*sum(diameters)/trials]
     plt.clf() #clears plot
     plt.xlabel('Internal Probability')
     plt.ylabel('Diameter')
-    if title:
-        plt.title(title)
+    plt.title(title)
     plt.plot(xdata, ydata, marker='.', linestyle='-', color='b')
     plt.savefig('Q1_diameters.png')
 
@@ -132,12 +143,16 @@ def question1(part1=True, part2=True):
         print ("from the plot we see the relationship is rather uninteresting with the diameter not depending (much) on p")
         print ()
 
-print("Graph")
+#############################################################################################################################
 
-print("Diameter")
-print(diameter(makeGroupGraph(100,10,0.4,0.1)))
+# print("Graph")
 
-print("Plotting")
-plotDegreeDistribution(makeGroupGraph(100,10,0.4,0.1))
+# print("Diameter")
+# print(diameter(makeGroupGraph(100,10,0.4,0.1)))
+
+# print("Plotting")
+# plotDegreeDistribution(makeGroupGraph(100,10,0.4,0.1))
+
+question1()
 
 #############################################################################################################################
