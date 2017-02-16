@@ -3,6 +3,9 @@
 \begin_document
 \begin_header
 \textclass article
+\begin_preamble
+\usepackage{pdflscape}
+\end_preamble
 \use_default_options false
 \maintain_unincluded_children false
 \language british
@@ -76,6 +79,22 @@
 
 \begin_body
 
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{landscape}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Title
 Software, Systems and Applications - Advanced Databases
 \end_layout
@@ -96,7 +115,7 @@ status collapsed
 \align center
 \begin_inset Graphics
 	filename Tree2.png
-	scale 30
+	scale 45
 
 \end_inset
 
@@ -117,8 +136,20 @@ Directed Tree
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
 \begin_layout Plain Layout
 
+
+\backslash
+end{landscape}
 \end_layout
 
 \end_inset
@@ -126,11 +157,11 @@ Directed Tree
 
 \end_layout
 
-\begin_layout Section*
-Select the title nodes of the books that have a price higher than 35 :
+\begin_layout Subsection*
+Select the title nodes of the books that have a price higher than 35
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Query
 \end_layout
 
@@ -149,7 +180,7 @@ status open
 
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Result
 \end_layout
 
@@ -178,11 +209,11 @@ status open
 
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection*
 Select the first author of each book with category “Web”
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Query
 \end_layout
 
@@ -201,7 +232,7 @@ status open
 
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Result
 \end_layout
 
@@ -225,11 +256,11 @@ status open
 
 \end_layout
 
-\begin_layout Section*
-Find the second author of the books of year 2003 with price more than 40.
+\begin_layout Subsection*
+Find the second author of the books of year 2003 with price more than 40
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Query
 \end_layout
 
@@ -263,7 +294,7 @@ return $x/author[2]
 
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Result
 \end_layout
 
@@ -282,12 +313,12 @@ status open
 
 \end_layout
 
-\begin_layout Section*
+\begin_layout Subsection*
 Find the authors of all books that have price higher than the average price
- of the books of year 2005.
+ of the books of year 2005
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Query
 \end_layout
 
@@ -316,7 +347,7 @@ return $x/author[$x]
 
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Result
 \end_layout
 
@@ -360,11 +391,11 @@ status open
 
 \end_layout
 
-\begin_layout Section*
-Find the book categories that correspond to more than one book.
+\begin_layout Subsection*
+Find the book categories that correspond to more than one book
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Query
 \end_layout
 
@@ -408,7 +439,7 @@ return ($category)
 
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Result
 \end_layout
 
