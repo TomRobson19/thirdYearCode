@@ -33,7 +33,7 @@ def load_coauthorship_graph(graph_txt):
 
 #############################################################################################################################
 
-def makeGroupGraph(m,k,p,q):
+def make_group_graph(m,k,p,q):
 	random.seed(m*k)
 	numberOfNodes = m*k
 	graph = {}
@@ -183,7 +183,7 @@ def five_cycles(graph, vertex):
 
 def q2_plot():
     plt.clf() #clears plot
-    ydata = [1 for i in range(10)] + [2 for i in range(10)] + [3 for i in range(10)]+ [4 for i in range(10)]+ [5 for i in range(10)]
+    ydata = [1 for i in range(10)] + [2 for i in range(10)] + [3 for i in range(10)] + [4 for i in range(10)] + [5 for i in range(10)]
     random = [1, 10, 100, 20000, 10000, 100000, 500000, 700000, 1000000, 5000000]
     pa = [1, 3000, 100, 1000, 2000, 100000, 500000, 700000, 1000000, 5000000]
     group = [10, 10000, 100, 1000, 30000, 100000, 500000, 10000000, 1000000, 5000000]
@@ -197,7 +197,7 @@ def q2_plot():
 
 #############################################################################################################################
 
-graph = load_graph("coauthorship.txt")
+graph = load_coauthorship_graph("coauthorship.txt")
 
 for i in graph:
 	#print(four_cycles(graph,i))

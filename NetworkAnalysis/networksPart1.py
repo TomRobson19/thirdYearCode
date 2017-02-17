@@ -10,7 +10,7 @@ from collections import Counter
 
 #############################################################################################################################
 
-def makeGroupGraph(m,k,p,q):
+def make_group_graph(m,k,p,q):
 	random.seed(m*k)
 	numberOfNodes = m*k
 	graph = {}
@@ -71,7 +71,7 @@ def average_degree_distribution_group_graphs(m,k,p,q,trials):
 	distribution = {}
 	
 	for i in range(trials):
-		graph = makeGroupGraph(m,k,p,q)
+		graph = make_group_graph(m,k,p,q)
 
 		degrees = []
 		for node in graph:
@@ -104,7 +104,7 @@ def plot_diameter_vs_p(m, k, q, trials, title):
         diameters = []
         print (p)
         for idx in range(trials):
-            graph = makeGroupGraph(m, k, p, q)
+            graph = make_group_graph(m, k, p, q)
             diam = diameter(graph)
             diameters += [diam]
         xdata += [p]
@@ -148,10 +148,10 @@ def question1(part1=True, part2=True):
 # print("Graph")
 
 # print("Diameter")
-# print(diameter(makeGroupGraph(100,10,0.4,0.1)))
+# print(diameter(make_group_graph(100,10,0.4,0.1)))
 
 # print("Plotting")
-# plotDegreeDistribution(makeGroupGraph(100,10,0.4,0.1))
+# plotDegreeDistribution(make_group_graph(100,10,0.4,0.1))
 
 question1()
 
