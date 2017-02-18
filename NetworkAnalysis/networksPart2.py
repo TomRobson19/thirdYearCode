@@ -32,9 +32,9 @@ def load_coauthorship_graph(graph_txt):
     return graph
 
 #############################################################################################################################
+random.seed()
 
 def make_group_graph(m,k,p,q):
-	random.seed(m*k)
 	numberOfNodes = m*k
 	graph = {}
 	group = {}
@@ -69,13 +69,13 @@ def make_random_graph(num_nodes, prob):
     #consider each vertex
     for vertex in range(num_nodes):
         out_neighbours = []
-        for neighbour in range(num_nodes):
-            if vertex != neighbour:
-                random_number = random.random()
-                if random_number < prob:
-                    out_neighbours += [neighbour]        
+        for neighbour in range(vertex+1, num_nodes):
+            random_number = random.random()
+            if random_number < prob:
+                random_graph[vertex] += neighbour
+                random_graph[neighbour] += vertex        
         #add vertex with list of out_ neighbours
-        random_graph[vertex] = set(out_neighbours)
+
     return random_graph
 
 #############################################################################################################################
@@ -181,26 +181,50 @@ def five_cycles(graph, vertex):
 
 #############################################################################################################################
 
-def q2_plot():
+def four_cycles_plot():
     plt.clf() #clears plot
-    ydata = [1 for i in range(10)] + [2 for i in range(10)] + [3 for i in range(10)] + [4 for i in range(10)] + [5 for i in range(10)]
+    ydata = [1 for i in range(10)] + [2 for i in range(10)] + [3 for i in range(10)] + [4 for i in range(10)]
     random = [1, 10, 100, 20000, 10000, 100000, 500000, 700000, 1000000, 5000000]
     pa = [1, 3000, 100, 1000, 2000, 100000, 500000, 700000, 1000000, 5000000]
     group = [10, 10000, 100, 1000, 30000, 100000, 500000, 10000000, 1000000, 5000000]
-    ws = [1000, 10000, 100, 1000, 10000, 100000, 500000, 200000, 1000000, 5000000]
     coauthorship = [5, 10, 100, 1000, 50000, 100000, 500000, 700000, 1000000, 5000000]
-    xdata = random + pa + group + ws + coauthorship
-    plt.ylim(0,6)
-    plt.yticks((1, 2, 3, 4, 5), ('Random', 'PA', 'Group', 'WS', 'Coauthorship'))
+    xdata = random + pa + group + coauthorship
+    plt.ylim(0,5)
+    plt.yticks((1, 2, 3, 4), ('Random', 'PA', 'Group', 'Coauthorship'))
     plt.semilogx(xdata, ydata, marker='.', linestyle = 'None', color='b')
-    plt.savefig("example.png")
+    plt.savefig("four_cycles.png")
+
+def five_cycles_plot():
+    plt.clf() #clears plot
+    ydata = [1 for i in range(10)] + [2 for i in range(10)] + [3 for i in range(10)] + [4 for i in range(10)]
+    random = [1, 10, 100, 20000, 10000, 100000, 500000, 700000, 1000000, 5000000]
+    pa = [1, 3000, 100, 1000, 2000, 100000, 500000, 700000, 1000000, 5000000]
+    group = [10, 10000, 100, 1000, 30000, 100000, 500000, 10000000, 1000000, 5000000]
+    coauthorship = [5, 10, 100, 1000, 50000, 100000, 500000, 700000, 1000000, 5000000]
+    xdata = random + pa + group + coauthorship
+    plt.ylim(0,5)
+    plt.yticks((1, 2, 3, 4), ('Random', 'PA', 'Group', 'Coauthorship'))
+    plt.semilogx(xdata, ydata, marker='.', linestyle = 'None', color='b')
+    plt.savefig("five_cycles.png")
 
 #############################################################################################################################
 
-graph = load_coauthorship_graph("coauthorship.txt")
+# try having more rows in the plots for different parameters for the non txt file graphs
 
-for i in graph:
+coauthorship_graph = load_coauthorship_graph("coauthorship.txt")
+
+random_graph = make_random_graph(1482, 0.3)
+
+PA_graph = make_PA_Graph(1482, 20) ##still need to understand how this works
+
+group_graph = make_group_graph(38, 39, 0.4, 0.1) #38*39=1482
+
+four_cycles_plot()
+
+five_cycles_plot()
+
+#for i in graph:
 	#print(four_cycles(graph,i))
-	print(five_cycles(graph,i))
+#	print(five_cycles(graph,i))
 
 #############################################################################################################################
