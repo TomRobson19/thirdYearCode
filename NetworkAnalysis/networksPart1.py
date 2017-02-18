@@ -9,9 +9,9 @@ import matplotlib.pyplot as plt
 from collections import Counter
 
 #############################################################################################################################
+random.seed()
 
 def make_group_graph(m,k,p,q):
-	random.seed(m*k)
 	numberOfNodes = m*k
 	graph = {}
 	group = {}
@@ -67,17 +67,17 @@ def diameter(graph):
 
 #############################################################################################################################
 
-def average_degree_distribution_group_graphs(m,k,p,q,trials):
+def average_degree_distribution_group_graphs(m,k,p,q,numberOfTrials):
 	distribution = {}
-	
-	for i in range(trials):
+	degrees = []
+
+	for i in range(numberOfTrials):
 		graph = make_group_graph(m,k,p,q)
 
-		degrees = []
 		for node in graph:
 			degrees += [len(graph[node])]
 
-	degreeCount = {x:degrees.count(x)/trials for x in degrees}
+	degreeCount = {x:degrees.count(x)/numberOfTrials for x in degrees}
 
 	return degreeCount
 
@@ -86,7 +86,7 @@ def average_degree_distribution_group_graphs(m,k,p,q,trials):
 
 def plot_degree_distribution(degreeCount, title, filename):
 	plt.clf()
-	plt.vlines(degreeCount.keys(),degreeCount.values(), 1, color='r')
+	plt.bar(degreeCount.keys(),degreeCount.values(), 1, color='r')
 	plt.xlabel("Degree", fontsize = 10)
 	plt.ylabel("Occurances", fontsize = 10)
 	plt.title(title)
@@ -114,7 +114,7 @@ def plot_diameter_vs_p(m, k, q, trials, title):
     plt.ylabel('Diameter')
     plt.title(title)
     plt.plot(xdata, ydata, marker='.', linestyle='-', color='b')
-    plt.savefig('Q1_diameters.png')
+    plt.savefig('Q1/Q1_diameters.png')
 
 #############################################################################################################################
 
@@ -127,13 +127,13 @@ def question1(part1=True, part2=True):
             print ("making the plot for p="+str(p))
             q = 0.5 - p
             dist = average_degree_distribution_group_graphs(20, 20, p, q, 100)
-            plot_degree_distribution(dist, "Degree Distribution of Group Graph with m=k=20, p="+str(p),"Q1_group_graph_p="+str(p)+"_degrees.png")
+            plot_degree_distribution(dist, "Degree Distribution of Group Graph with m=k=20, p="+str(p),"Q1/Q1_group_graph_p="+str(p)+"_degrees.png")
         print ("repeat with graphs on 400 vertices, divided into 200 groups of 2 with p=0.4")
         dist = average_degree_distribution_group_graphs(200, 2, 0.4, 0.1, 100)
-        plot_degree_distribution(dist, "Degree Distribution of Group Graph with m=200, k=2, p=0.4","Q1_group_graph_m=200_degrees.png")
+        plot_degree_distribution(dist, "Degree Distribution of Group Graph with m=200, k=2, p=0.4","Q1/Q1_group_graph_m=200_degrees.png")
         print ("repeat with graphs on 400 vertices, divided into 2 groups of 200 with p=0.4")
         dist = average_degree_distribution_group_graphs(2, 200, 0.4, 0.1, 100)
-        plot_degree_distribution(dist, "Degree Distribution of Group Graph with m=2, k=200, p=0.4","Q1_group_graph_m=2_degrees.png")
+        plot_degree_distribution(dist, "Degree Distribution of Group Graph with m=2, k=200, p=0.4","Q1/Q1_group_graph_m=2_degrees.png")
         print ("looking at the figures produced, notice that the shapes of the distributions are all very similar and the degrees are all very close to the average")
         print ()
     if part2:
@@ -144,14 +144,6 @@ def question1(part1=True, part2=True):
         print ()
 
 #############################################################################################################################
-
-# print("Graph")
-
-# print("Diameter")
-# print(diameter(make_group_graph(100,10,0.4,0.1)))
-
-# print("Plotting")
-# plotDegreeDistribution(make_group_graph(100,10,0.4,0.1))
 
 question1()
 
