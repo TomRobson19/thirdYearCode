@@ -77,7 +77,7 @@ def average_degree_distribution_group_graphs(m,k,p,q,numberOfTrials):
 		for node in graph:
 			degrees += [len(graph[node])]
 
-	degreeCount = {x:degrees.count(x)/numberOfTrials for x in degrees}
+	degreeCount = {x:degrees.count(x)/(m*k)/numberOfTrials for x in degrees}
 
 	return degreeCount
 
@@ -89,6 +89,8 @@ def plot_degree_distribution(degreeCount, title, filename):
 	plt.bar(degreeCount.keys(),degreeCount.values(), 1, color='r')
 	plt.xlabel("Degree", fontsize = 10)
 	plt.ylabel("Occurances", fontsize = 10)
+	plt.xlim([0,140])
+	plt.ylim([0,0.2])
 	plt.title(title)
 	#plt.show()
 	plt.savefig(filename)
@@ -112,6 +114,7 @@ def plot_diameter_vs_p(m, k, q, trials, title):
     plt.clf() #clears plot
     plt.xlabel('Internal Probability')
     plt.ylabel('Diameter')
+    plt.ylim([2,4])
     plt.title(title)
     plt.plot(xdata, ydata, marker='.', linestyle='-', color='b')
     plt.savefig('Q1/Q1_diameters.png')
@@ -145,6 +148,6 @@ def question1(part1=True, part2=True):
 
 #############################################################################################################################
 
-question1()
+question1(True,True)
 
 #############################################################################################################################
