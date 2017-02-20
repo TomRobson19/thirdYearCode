@@ -28,7 +28,7 @@ def load_coauthorship_graph(graph_txt):
                 graph[neighbour] += [node]
             elif neighbour not in graph:
                 graph[neighbour] = [node]
-    print ("Loaded graph with", len(graph), "vertices and", sum([len(graph[vertex]) for vertex in graph])//2 ,"edges")
+    #print ("Loaded graph with", len(graph), "vertices and", sum([len(graph[vertex]) for vertex in graph])//2 ,"edges")
     return graph
 
 #############################################################################################################################
@@ -67,13 +67,15 @@ def make_random_graph(num_nodes, prob):
     #initialize empty graph
     random_graph = {}
     #consider each vertex
+    for i in range(num_nodes):
+        random_graph[i] = []
+
     for vertex in range(num_nodes):
-        out_neighbours = []
         for neighbour in range(vertex+1, num_nodes):
             random_number = random.random()
             if random_number < prob:
-                random_graph[vertex] += neighbour
-                random_graph[neighbour] += vertex        
+                random_graph[vertex] += [neighbour]
+                random_graph[neighbour] += [vertex]        
         #add vertex with list of out_ neighbours
 
     return random_graph
@@ -122,7 +124,7 @@ class PATrial:
         self._node_numbers.extend(list(new_node_neighbors))        
         #update the number of nodes
         self._num_nodes += 1
-        return new_node_neighbors
+        return list(new_node_neighbors)
     
 def make_complete_graph(num_nodes):
     """Takes the number of nodes num_nodes and returns a dictionary
@@ -136,17 +138,26 @@ def make_complete_graph(num_nodes):
     #consider each vertex
     for vertex in range(num_nodes):
         #add vertex with list of neighbours
-        complete_graph[vertex] = set([j for j in range(num_nodes) if j != vertex])
+        complete_graph[vertex] = list(set([j for j in range(num_nodes) if j != vertex]))
     return complete_graph
-    
+
 def make_PA_Graph(total_nodes, out_degree):
-    """creates a PA_Graph on total_nodes where each vertex is iteratively
+    """creates a PA_graph on total_nodes where each vertex is iteratively
     connected to a number of existing nodes equal to out_degree"""
     #initialize graph by creating complete graph and trial object
     PA_graph = make_complete_graph(out_degree)
     trial = PATrial(out_degree)
+    
     for vertex in range(out_degree, total_nodes):
-        PA_graph[vertex] = trial.run_trial(out_degree)
+        neighbours = trial.run_trial(out_degree)
+
+        for x in neighbours:
+            PA_graph[x] += [vertex]
+        PA_graph[vertex] = neighbours
+
+    for x in PA_graph:
+        PA_graph[x] = list(PA_graph[x])
+    
     return PA_graph
 
 #############################################################################################################################
@@ -181,50 +192,73 @@ def five_cycles(graph, vertex):
 
 #############################################################################################################################
 
-def four_cycles_plot():
+def four_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_samples):
     plt.clf() #clears plot
-    ydata = [1 for i in range(10)] + [2 for i in range(10)] + [3 for i in range(10)] + [4 for i in range(10)]
-    random = [1, 10, 100, 20000, 10000, 100000, 500000, 700000, 1000000, 5000000]
-    pa = [1, 3000, 100, 1000, 2000, 100000, 500000, 700000, 1000000, 5000000]
-    group = [10, 10000, 100, 1000, 30000, 100000, 500000, 10000000, 1000000, 5000000]
-    coauthorship = [5, 10, 100, 1000, 50000, 100000, 500000, 700000, 1000000, 5000000]
-    xdata = random + pa + group + coauthorship
-    plt.ylim(0,5)
-    plt.yticks((1, 2, 3, 4), ('Random', 'PA', 'Group', 'Coauthorship'))
-    plt.semilogx(xdata, ydata, marker='.', linestyle = 'None', color='b')
-    plt.savefig("four_cycles.png")
+    ydata = [1 for i in range(num_samples)] + [2 for i in range(num_samples)] + [3 for i in range(num_samples)] + [4 for i in range(num_samples)]
 
-def five_cycles_plot():
-    plt.clf() #clears plot
-    ydata = [1 for i in range(10)] + [2 for i in range(10)] + [3 for i in range(10)] + [4 for i in range(10)]
-    random = [1, 10, 100, 20000, 10000, 100000, 500000, 700000, 1000000, 5000000]
-    pa = [1, 3000, 100, 1000, 2000, 100000, 500000, 700000, 1000000, 5000000]
-    group = [10, 10000, 100, 1000, 30000, 100000, 500000, 10000000, 1000000, 5000000]
-    coauthorship = [5, 10, 100, 1000, 50000, 100000, 500000, 700000, 1000000, 5000000]
-    xdata = random + pa + group + coauthorship
+    random_list = []
+    pa = []
+    group = []
+    coauthorship = []
+
+    counter = 0
+    while counter < num_samples:
+        print(counter)
+        rand = random.randint(0,1560)
+        if rand in coauthorship_graph:
+            random_list += [four_cycles(random_graph,rand)]
+            pa += [four_cycles(PA_graph,rand)]
+            group += [four_cycles(group_graph,rand)]
+            coauthorship += [four_cycles(coauthorship_graph,rand)]
+            counter += 1
+
+    xdata = random_list + pa + group + coauthorship
     plt.ylim(0,5)
     plt.yticks((1, 2, 3, 4), ('Random', 'PA', 'Group', 'Coauthorship'))
     plt.semilogx(xdata, ydata, marker='.', linestyle = 'None', color='b')
-    plt.savefig("five_cycles.png")
+    plt.savefig("Q2/four_cycles.png")
+
+def five_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_samples):
+    plt.clf() #clears plot
+    ydata = [1 for i in range(num_samples)] + [2 for i in range(num_samples)] + [3 for i in range(num_samples)] + [4 for i in range(num_samples)]
+    
+    random_list = []
+    pa = []
+    group = []
+    coauthorship = []
+
+    counter = 0
+    while counter < num_samples:
+        print(counter)
+        rand = random.randint(0,1560)
+        if rand in coauthorship_graph:
+            random_list += [five_cycles(random_graph,rand)]
+            pa += [five_cycles(PA_graph,rand)]
+            group += [five_cycles(group_graph,rand)]
+            coauthorship += [five_cycles(coauthorship_graph,rand)]
+            counter += 1
+
+    xdata = random_list + pa + group + coauthorship
+    plt.ylim(0,5)
+    plt.yticks((1, 2, 3, 4), ('Random', 'PA', 'Group', 'Coauthorship'))
+    plt.semilogx(xdata, ydata, marker='.', linestyle = 'None', color='b')
+    plt.savefig("Q3/five_cycles.png")
 
 #############################################################################################################################
 
 # try having more rows in the plots for different parameters for the non txt file graphs
-
+num_samples = 5
+    
 coauthorship_graph = load_coauthorship_graph("coauthorship.txt")
 
-random_graph = make_random_graph(1482, 0.3)
+random_graph = make_random_graph(1560, 0.035)
 
-PA_graph = make_PA_Graph(1482, 20) ##still need to understand how this works
+PA_graph = make_PA_Graph(1560, 36)
 
-group_graph = make_group_graph(38, 39, 0.4, 0.1) #38*39=1482
+group_graph = make_group_graph(40, 39, 0.45, 0.05)
 
-four_cycles_plot()
+four_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_samples)
 
-five_cycles_plot()
-
-#for i in graph:
-	#print(four_cycles(graph,i))
-#	print(five_cycles(graph,i))
+five_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_samples)
 
 #############################################################################################################################
