@@ -30,7 +30,7 @@ def make_group_graph(m,k,p,q):
                 graph[node] += [neighbour]
                 graph[neighbour] += [node]
 
-    return graph
+    return graph, group
 
 #############################################################################################################################
 
@@ -139,35 +139,31 @@ def make_PA_Graph(total_nodes, out_degree):
 
 #############################################################################################################################
 
-def search(graph, v, w, verbose=False):
-    """number of steps to find w from v in a Kleinberg graph when each step is taken to minimise distance around circle to w"""
+def search_random_graph(graph, v, w):
     num_nodes = (len(graph))
     current = v
     steps = 0
+    visited = []
     while current != w and steps < 20:
-        if verbose: print (current, graph[current])
-        best_neighbour = graph[current][0]
-        shortest_distance = dist(w, best_neighbour, num_nodes)
-        for neighbour in graph[current][1:]:
-            distance = dist(w, neighbour, num_nodes)
-            if distance < shortest_distance:
-                best_neighbour = neighbour
-                shortest_distance = distance
-        current = best_neighbour
+        visited += [current]
+        for neighbour in graph[current]:
+            if neighbour not in visited:
+                current = neighbour
+                break
         steps += 1
     return steps
 
 #############################################################################################################################
 
-"""function to find the search time of a graph"""
+def search_PA_graph(graph, v, w):
+    return 0
 
-def search_time(graph):
-    """finds the average number of steps required to find one vertex from another"""
-    total = 0
-    for start_vertex in graph:
-        for target_vertex in graph:
-            total += search(graph, start_vertex, target_vertex)
-    return total / len(graph) / len(graph)
+#############################################################################################################################
+
+def search_group_graph(graph, groups, v, w):
+    return 0
+
+#############################################################################################################################
 
 """the above function is rather slow, so the next function finds the average search time by looking only at 2000 pairs of vertices;
 is this latter function a reasonable proxy for the former? how could you investigate this?"""
@@ -184,37 +180,11 @@ def approx_search_time(graph):
 
 #############################################################################################################################
 
-
-
-
-
-
-
-
-
-
-
-
-#############################################################################################################################
-
-#def search_random_graph(random_graph,start,end,path=[]):              
-
-#############################################################################################################################
-
-#def search_PA_graph(PA_graph,start,end):
-
-#############################################################################################################################
-
-#get to group that destination is in first
-#def search_group_graph(group_graph,start,end):
-
-#############################################################################################################################
-
 random_graph = make_random_graph(156, 0.035)
 
 PA_graph = make_PA_Graph(1560, 36) 
 
-group_graph = make_group_graph(40, 39, 0.45, 0.05)
+group_graph,groups = make_group_graph(40, 39, 0.45, 0.05)
 
 print(search_random_graph(random_graph,2,9))
 
