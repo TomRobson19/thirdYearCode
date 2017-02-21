@@ -213,6 +213,7 @@ def four_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_sa
             counter += 1
 
     xdata = random_list + pa + group + coauthorship
+    plt.xlim(0,10**10)
     plt.ylim(0,5)
     plt.yticks((1, 2, 3, 4), ('Random', 'PA', 'Group', 'Coauthorship'))
     plt.semilogx(xdata, ydata, marker='.', linestyle = 'None', color='b')
@@ -239,6 +240,7 @@ def five_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_sa
             counter += 1
 
     xdata = random_list + pa + group + coauthorship
+    plt.xlim(0,10**10)
     plt.ylim(0,5)
     plt.yticks((1, 2, 3, 4), ('Random', 'PA', 'Group', 'Coauthorship'))
     plt.semilogx(xdata, ydata, marker='.', linestyle = 'None', color='b')
