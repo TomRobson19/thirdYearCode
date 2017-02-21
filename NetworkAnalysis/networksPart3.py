@@ -6,6 +6,7 @@ import random
 import queue
 import numpy as np
 import matplotlib.pyplot as plt
+from collections import Counter
 
 #############################################################################################################################
 
@@ -140,11 +141,10 @@ def make_PA_Graph(total_nodes, out_degree):
 #############################################################################################################################
 
 def search_random_graph(graph, v, w):
-    num_nodes = (len(graph))
     current = v
     steps = 0
     visited = []
-    while current != w and steps < 20:
+    while current != w and steps < 100:
         previous_current = current
         visited += [current]
         if w in graph[current]:
@@ -166,7 +166,7 @@ def search_PA_graph(graph, out_degree, v, w):
     current = v
     steps = 0
     visited = []
-    while current != w and steps < 20:
+    while current != w and steps < 100:
         previous_current = current
         visited += [current]
         if w in graph[current]:
@@ -200,7 +200,7 @@ def search_group_graph(graph, groups, v, w):
     current = v
     steps = 0
     visited = []
-    while current != w and steps < 20:
+    while current != w and steps < 100:
         previous_current = current
         visited += [current]
         if w in graph[current]:
@@ -245,46 +245,93 @@ def search_group_graph(graph, groups, v, w):
 
 #############################################################################################################################
 
-"""the above function is rather slow, so the next function finds the average search time by looking only at 2000 pairs of vertices;
-is this latter function a reasonable proxy for the former? how could you investigate this?"""
-
 def approx_search_time_random(graph):
     """finds the average number of steps required to find one vertex from another by sampling 2000 pairs"""
     num_nodes = len(graph)
     total = 0
+    paths = []
     for i in range(2000):
         random_node1 = random.randint(0, num_nodes-1)
         random_node2 = random.randint(0, num_nodes-1)
-        total += search_random_graph(graph, random_node1, random_node2)
-    return total / 2000
+        this_path = search_random_graph(graph, random_node1, random_node2)
+        paths += [this_path]
+        total += this_path
+
+    full_paths = dict((i, paths.count(i)) for i in paths)
+
+    plt.clf()
+    plt.bar(full_paths.keys(),full_paths.values(), 1, color='r')
+    plt.xlabel("Search Time", fontsize = 10)
+    plt.ylabel("Occurances", fontsize = 10)
+    # plt.xlim([0,140])
+    # plt.ylim([0,0.2])
+    plt.title("Random Search Times")
+    #plt.show()
+    plt.savefig("Q3/Random.png")
+
+    return (total / 2000)
+
+#############################################################################################################################
 
 def approx_search_time_PA(graph,out_degree):
     """finds the average number of steps required to find one vertex from another by sampling 2000 pairs"""
     num_nodes = len(graph)
     total = 0
+    paths = []
     for i in range(2000):
         random_node1 = random.randint(0, num_nodes-1)
         random_node2 = random.randint(0, num_nodes-1)
-        total += search_PA_graph(graph, out_degree, random_node1, random_node2)
+        this_path = search_PA_graph(graph, out_degree, random_node1, random_node2)
+        paths += [this_path]
+        total += this_path
+
+    full_paths = dict((i, paths.count(i)) for i in paths)
+
+    plt.clf()
+    plt.bar(full_paths.keys(),full_paths.values(), 1, color='r')
+    plt.xlabel("Search Time", fontsize = 10)
+    plt.ylabel("Occurances", fontsize = 10)
+    # plt.xlim([0,140])
+    # plt.ylim([0,0.2])
+    plt.title("PA Search Times")
+    #plt.show()
+    plt.savefig("Q3/PA.png")
     return total / 2000
+
+#############################################################################################################################
 
 def approx_search_time_group(graph,groups):
     """finds the average number of steps required to find one vertex from another by sampling 2000 pairs"""
     num_nodes = len(graph)
     total = 0
+    paths = []
     for i in range(2000):
         random_node1 = random.randint(0, num_nodes-1)
         random_node2 = random.randint(0, num_nodes-1)
-        total += search_group_graph(graph, groups, random_node1, random_node2)
+        this_path = search_group_graph(graph, groups, random_node1, random_node2)
+        paths += [this_path]
+        total += this_path
+
+    full_paths = dict((i, paths.count(i)) for i in paths)
+
+    plt.clf()
+    plt.bar(full_paths.keys(),full_paths.values(), 1, color='r')
+    plt.xlabel("Search Time", fontsize = 10)
+    plt.ylabel("Occurances", fontsize = 10)
+    # plt.xlim([0,140])
+    # plt.ylim([0,0.2])
+    plt.title("Group Search Times")
+    #plt.show()
+    plt.savefig("Q3/Group.png")
     return total / 2000
 
 #############################################################################################################################
 
-random_graph = make_random_graph(100, 0.2)
+random_graph = make_random_graph(1000, 0.05)
 
-PA_graph,out_degree = make_PA_Graph(100, 3) 
+PA_graph,out_degree = make_PA_Graph(1000, 10) 
 
-group_graph,groups = make_group_graph(20, 5, 0.4, 0.1)
+group_graph,groups = make_group_graph(100, 10, 0.4, 0.1)
 
 print(approx_search_time_random(random_graph))
 print(approx_search_time_PA(PA_graph,out_degree))
