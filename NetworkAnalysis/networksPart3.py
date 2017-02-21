@@ -155,7 +155,7 @@ def search_random_graph(graph, v, w):
                     current = neighbour
                     break
             if current == previous_current:
-                current = graph[current][random.randint(0,len(graph[current]))]
+                current = graph[current][random.randint(0,len(graph[current])-1)]
         steps += 1
     return steps
 
@@ -177,11 +177,17 @@ def search_PA_graph(graph, out_degree, v, w):
                     current = neighbour
                     break
             if current == previous_current:
-                if neighbour not in visited:
-                    current = neighbour
-                    break
+                for neighbour in graph[current]:
+                    if neighbour < out_degree:
+                        current = neighbour
+                        break
             if current == previous_current:
-                current = graph[current][random.randint(0,len(graph[current]))]
+                for neighbour in graph[current]:
+                    if neighbour not in visited:
+                        current = neighbour
+                        break
+            if current == previous_current:
+                current = graph[current][random.randint(0,len(graph[current])-1)]
         steps += 1
     return steps
 
@@ -202,21 +208,38 @@ def search_group_graph(graph, groups, v, w):
         else:
             if groups[current] == groups[w]:
                 for neighbour in graph[current]:
-                    if neighbour not in visited:
+                    if neighbour not in visited and groups[neighbour] == groups[w]:
                         current = neighbour
                         break
+                if current == previous_current:
+                    for neighbour in graph[current]:
+                        if groups[neighbour] == groups[w]:
+                            current = neighbour
+                            break
+                if current == previous_current:
+                    for neighbour in graph[current]:
+                        if neighbour not in visited:
+                            current = neighbour
+                            break
+                if current == previous_current:
+                    current = graph[current][random.randint(0,len(graph[current])-1)]
             else:
                 for neighbour in graph[current]:
-                    if groups[neighbour] == groups[w]:
+                    if neighbour not in visited and groups[neighbour] == groups[w]:
                         current = neighbour
                         break
-            if current == previous_current:
-                for neighbour in graph[current]:
-                    if groups[neighbour] != groups[current]:
-                        current = neighbour
-                        break
-            if current == previous_current:
-                current = graph[current][random.randint(0,len(graph[current]))]
+                if current == previous_current:
+                    for neighbour in graph[current]:
+                        if groups[neighbour] == groups[w]:
+                            current = neighbour
+                            break
+                if current == previous_current:
+                    for neighbour in graph[current]:
+                        if neighbour not in visited:
+                            current = neighbour
+                            break
+                if current == previous_current:
+                    current = graph[current][random.randint(0,len(graph[current])-1)]
         steps += 1
     return steps
 
@@ -257,16 +280,14 @@ def approx_search_time_group(graph,groups):
 
 #############################################################################################################################
 
-random_graph = make_random_graph(1560, 0.035)
+random_graph = make_random_graph(100, 0.2)
 
-PA_graph,out_degree = make_PA_Graph(1560, 36) 
+PA_graph,out_degree = make_PA_Graph(100, 3) 
 
-group_graph,groups = make_group_graph(40, 39, 0.45, 0.05)
+group_graph,groups = make_group_graph(20, 5, 0.4, 0.1)
 
-approx_search_time_random(random_graph)
-
-approx_search_time_PA(PA_graph,out_degree)
-
-approx_search_time_group(group_graph,groups)
+print(approx_search_time_random(random_graph))
+print(approx_search_time_PA(PA_graph,out_degree))
+print(approx_search_time_group(group_graph,groups))
 
 #############################################################################################################################
