@@ -213,7 +213,7 @@ def four_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_sa
             counter += 1
 
     xdata = random_list + pa + group + coauthorship
-    plt.xlim(0,10**10)
+    plt.xlim(10**1,10**10)
     plt.ylim(0,5)
     plt.yticks((1, 2, 3, 4), ('Random', 'PA', 'Group', 'Coauthorship'))
     plt.semilogx(xdata, ydata, marker='.', linestyle = 'None', color='b')
@@ -240,7 +240,7 @@ def five_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_sa
             counter += 1
 
     xdata = random_list + pa + group + coauthorship
-    plt.xlim(0,10**10)
+    plt.xlim(10**1,10**10)
     plt.ylim(0,5)
     plt.yticks((1, 2, 3, 4), ('Random', 'PA', 'Group', 'Coauthorship'))
     plt.semilogx(xdata, ydata, marker='.', linestyle = 'None', color='b')
@@ -249,7 +249,7 @@ def five_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_sa
 #############################################################################################################################
 
 # try having more rows in the plots for different parameters for the non txt file graphs
-num_samples = 5
+num_samples = 100
     
 coauthorship_graph = load_coauthorship_graph("coauthorship.txt")
 
@@ -259,7 +259,7 @@ PA_graph = make_PA_Graph(1560, 36)
 
 group_graph = make_group_graph(40, 39, 0.45, 0.05)
 
-four_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_samples)
+#four_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_samples)
 
 five_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_samples)
 
