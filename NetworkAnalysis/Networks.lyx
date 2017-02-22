@@ -62,7 +62,7 @@
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation skip
-\defskip smallskip
+\defskip bigskip
 \quotes_language english
 \papercolumns 1
 \papersides 1
@@ -150,7 +150,7 @@ Once the group graph has been implemented as per the specification, we then
 \end_inset
 
 .
- As the figure 1 below shows, this variation causes a reduction in the degree
+ As Figure 1 below shows, this variation causes a reduction in the degree
  as 
 \begin_inset Formula $p$
 \end_inset
@@ -431,6 +431,17 @@ Having experimented with
 \end_inset
 
  nodes.
+ As Figure 2 below shows, the degree distribution is larger for larger groups,
+ as for these values of 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+, making the groups larger will lead to far greater connectivity of the
+ vertices.
  
 \end_layout
 
@@ -439,7 +450,7 @@ Having experimented with
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -458,7 +469,14 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Few large groups
+\begin_inset Formula $2$
+\end_inset
+
+ groups of 
+\begin_inset Formula $200$
+\end_inset
+
+ nodes
 \end_layout
 
 \end_inset
@@ -496,7 +514,14 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Many small groups
+\begin_inset Formula $200$
+\end_inset
+
+ groups of 
+\begin_inset Formula $2$
+\end_inset
+
+ nodes
 \end_layout
 
 \end_inset
@@ -525,6 +550,13 @@ Effect of changing m and k
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+From here, we then experiment with the diameter, varying p.
+ However, as Figure 3 below shows, this variation has very little effect
+ on the diameter when averaged over 100 graphs.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -568,11 +600,15 @@ k-cycles
 \end_layout
 
 \begin_layout Standard
+COMMENT ON GRAPHS HERE
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -654,14 +690,33 @@ Searching
 \end_layout
 
 \begin_layout Standard
+For random graphs, given the limited information that we have, our search
+ strategy is fairly simple.
+ We first check if the destination is a neighbour of the current vertex.
+ If it is, we move to this and end the search, if not, we move to one of
+ the neighbours of the current node, first checking if there are any that
+ we haven't visited, and going to one of these if there are, else going
+ to a random neighbour that has already been visited to backtrack.
+ 
+\end_layout
+
+\begin_layout Standard
+For searching the PA graph, this approach must be ammended to accommodate
+ the fully connected section.
+ We follow the same procedure as the random graph, but prioritise nodes
+ that are in the complete graph, as these nodes are more likely to be connected
+ to the goal.
+\end_layout
+
+\begin_layout Standard
+For searching the group graph, we have to expand this approach 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
 status open
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -672,10 +727,6 @@ status open
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 

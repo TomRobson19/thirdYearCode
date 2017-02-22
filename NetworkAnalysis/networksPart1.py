@@ -142,12 +142,12 @@ def question1(part1=True, part2=True):
     if part2:
         print ("to investigate the relationship between the diameter and p, construct, for each value of p, 20 group graphs with 80 groups, each on 5 vertices with q=0.05")
         print ("doing the calculations for p=")
-        plot_diameter_vs_p(80, 5, 0.05, 20, "Diameter vs p for Group Graphs containing 80 groups of 5 vertices")
+        plot_diameter_vs_p(80, 5, 0.05, 100, "Diameter vs p for Group Graphs containing 80 groups of 5 vertices")
         print ("from the plot we see the relationship is rather uninteresting with the diameter not depending (much) on p")
         print ()
 
 #############################################################################################################################
 
-question1(True,True)
+question1(False,True)
 
 #############################################################################################################################

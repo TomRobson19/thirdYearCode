@@ -194,7 +194,7 @@ def five_cycles(graph, vertex):
 
 def four_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_samples):
     plt.clf() #clears plot
-    ydata = [1 for i in range(num_samples)] + [2 for i in range(num_samples)] + [3 for i in range(num_samples)] + [4 for i in range(num_samples)]
+    ydata = [1 for i in range(num_samples)]+[2 for i in range(num_samples)]+[3 for i in range(num_samples)]+[4 for i in range(num_samples)]
 
     random_list = []
     pa = []
@@ -219,9 +219,11 @@ def four_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_sa
     plt.semilogx(xdata, ydata, marker='.', linestyle = 'None', color='b')
     plt.savefig("Q2/four_cycles.png")
 
+#############################################################################################################################
+
 def five_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_samples):
     plt.clf() #clears plot
-    ydata = [1 for i in range(num_samples)] + [2 for i in range(num_samples)] + [3 for i in range(num_samples)] + [4 for i in range(num_samples)]
+    ydata = [1 for i in range(num_samples)]+[2 for i in range(num_samples)]+[3 for i in range(num_samples)]+[4 for i in range(num_samples)]
     
     random_list = []
     pa = []
