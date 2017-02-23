@@ -93,7 +93,7 @@ def plot_degree_distribution(degreeCount, title, filename):
 	plt.ylim([0,0.2])
 	plt.title(title)
 	#plt.show()
-	plt.savefig(filename)
+	#plt.savefig(filename)
 
 #############################################################################################################################
 
@@ -117,7 +117,7 @@ def plot_diameter_vs_p(m, k, q, trials, title):
     plt.ylim([2,4])
     plt.title(title)
     plt.plot(xdata, ydata, marker='.', linestyle='-', color='b')
-    plt.savefig('Q1/Q1_diameters.png')
+    #plt.savefig('Q1/Q1_diameters.png')
 
 #############################################################################################################################
 

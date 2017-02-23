@@ -249,27 +249,26 @@ def approx_search_time_random(graph):
     """finds the average number of steps required to find one vertex from another by sampling 2000 pairs"""
     num_nodes = len(graph)
     total = 0
-    paths = []
+   # paths = []
     for i in range(2000):
         random_node1 = random.randint(0, num_nodes-1)
         random_node2 = random.randint(0, num_nodes-1)
         this_path = search_random_graph(graph, random_node1, random_node2)
-        paths += [this_path]
+       # paths += [this_path]
         total += this_path
 
-    full_paths = dict((i, paths.count(i)) for i in paths)
+   # full_paths = dict((i, paths.count(i)) for i in paths)
 
-    plt.clf()
-    plt.bar(full_paths.keys(),full_paths.values(), 1, color='r')
-    plt.xlabel("Search Time", fontsize = 10)
-    plt.ylabel("Occurances", fontsize = 10)
-    # plt.xlim([0,140])
-    # plt.ylim([0,0.2])
-    plt.title("Random Search Times")
-    #plt.show()
-    plt.savefig("Q3/Random.png")
-
-    return (total / 2000)
+    # plt.clf()
+    # plt.bar(full_paths.keys(),full_paths.values(), 1, color='r')
+    # plt.xlabel("Search Time", fontsize = 10)
+    # plt.ylabel("Occurances", fontsize = 10)
+    # # plt.xlim([0,140])
+    # # plt.ylim([0,0.2])
+    # plt.title("Random Search Times")
+    # #plt.show()
+    # plt.savefig("Q3/Random.png")
+    return round(total / 2000, 2)
 
 #############################################################################################################################
 
@@ -277,26 +276,26 @@ def approx_search_time_PA(graph,out_degree):
     """finds the average number of steps required to find one vertex from another by sampling 2000 pairs"""
     num_nodes = len(graph)
     total = 0
-    paths = []
+   # paths = []
     for i in range(2000):
         random_node1 = random.randint(0, num_nodes-1)
         random_node2 = random.randint(0, num_nodes-1)
         this_path = search_PA_graph(graph, out_degree, random_node1, random_node2)
-        paths += [this_path]
+       # paths += [this_path]
         total += this_path
 
-    full_paths = dict((i, paths.count(i)) for i in paths)
+    #full_paths = dict((i, paths.count(i)) for i in paths)
 
-    plt.clf()
-    plt.bar(full_paths.keys(),full_paths.values(), 1, color='r')
-    plt.xlabel("Search Time", fontsize = 10)
-    plt.ylabel("Occurances", fontsize = 10)
-    # plt.xlim([0,140])
-    # plt.ylim([0,0.2])
-    plt.title("PA Search Times")
-    #plt.show()
-    plt.savefig("Q3/PA.png")
-    return total / 2000
+    # plt.clf()
+    # plt.bar(full_paths.keys(),full_paths.values(), 1, color='r')
+    # plt.xlabel("Search Time", fontsize = 10)
+    # plt.ylabel("Occurances", fontsize = 10)
+    # # plt.xlim([0,140])
+    # # plt.ylim([0,0.2])
+    # plt.title("PA Search Times")
+    # #plt.show()
+    # plt.savefig("Q3/PA.png")
+    return round(total / 2000, 2)
 
 #############################################################################################################################
 
@@ -304,37 +303,97 @@ def approx_search_time_group(graph,groups):
     """finds the average number of steps required to find one vertex from another by sampling 2000 pairs"""
     num_nodes = len(graph)
     total = 0
-    paths = []
+   # paths = []
     for i in range(2000):
         random_node1 = random.randint(0, num_nodes-1)
         random_node2 = random.randint(0, num_nodes-1)
         this_path = search_group_graph(graph, groups, random_node1, random_node2)
-        paths += [this_path]
+        #paths += [this_path]
         total += this_path
 
-    full_paths = dict((i, paths.count(i)) for i in paths)
+    #full_paths = dict((i, paths.count(i)) for i in paths)
 
-    plt.clf()
-    plt.bar(full_paths.keys(),full_paths.values(), 1, color='r')
-    plt.xlabel("Search Time", fontsize = 10)
-    plt.ylabel("Occurances", fontsize = 10)
-    # plt.xlim([0,140])
-    # plt.ylim([0,0.2])
-    plt.title("Group Search Times")
-    #plt.show()
-    plt.savefig("Q3/Group.png")
-    return total / 2000
+    # plt.clf()
+    # plt.bar(full_paths.keys(),full_paths.values(), 1, color='r')
+    # plt.xlabel("Search Time", fontsize = 10)
+    # plt.ylabel("Occurances", fontsize = 10)
+    # # plt.xlim([0,140])
+    # # plt.ylim([0,0.2])
+    # plt.title("Group Search Times")
+    # #plt.show()
+    # plt.savefig("Q3/Group.png")
+    return round(total / 2000, 2)
 
 #############################################################################################################################
 
-random_graph = make_random_graph(1000, 0.05)
+random_list = []
+PA = []
+group = []
 
-PA_graph,out_degree = make_PA_Graph(1000, 10) 
+num_samples = 100
 
-group_graph,groups = make_group_graph(100, 10, 0.4, 0.1)
+for i in range(0,num_samples):
+    random_graph = make_random_graph(1600, 0.035)
 
-print(approx_search_time_random(random_graph))
-print(approx_search_time_PA(PA_graph,out_degree))
-print(approx_search_time_group(group_graph,groups))
+    PA_graph,out_degree = make_PA_Graph(1600, 36) 
 
+    group_graph,groups = make_group_graph(40, 40, 0.45, 0.05)
+
+    print(i)
+    
+    random_list += [approx_search_time_random(random_graph)]
+    
+    PA += [approx_search_time_PA(PA_graph,out_degree)]
+    
+    group += [approx_search_time_group(group_graph,groups)]
+
+print(random_list)
+
+print(PA)
+
+print(group)
+
+random_count = {x:random_list.count(x) for x in random_list}
+
+PA_count = {x:PA.count(x) for x in PA}
+
+group_count = {x:group.count(x) for x in group}
+
+print(random_count)
+
+print(PA_count)
+
+print(group_count)
+
+plt.clf()
+plt.bar(random_count.keys(),random_count.values(), 0.01, color='r')
+plt.xlabel("Search Time", fontsize = 10)
+plt.ylabel("Occurances", fontsize = 10)
+# plt.xlim([0,140])
+# plt.ylim([0,0.2])
+plt.title("Random")
+#plt.show()
+plt.savefig("Q3/Random.png")
+
+
+plt.clf()
+plt.bar(PA_count.keys(),PA_count.values(), 0.01, color='r')
+plt.xlabel("Search Time", fontsize = 10)
+plt.ylabel("Occurances", fontsize = 10)
+# plt.xlim([0,140])
+# plt.ylim([0,0.2])
+plt.title("PA")
+#plt.show()
+plt.savefig("Q3/PA.png")
+
+
+plt.clf()
+plt.bar(group_count.keys(),group_count.values(), 0.01, color='r')
+plt.xlabel("Search Time", fontsize = 10)
+plt.ylabel("Occurances", fontsize = 10)
+# plt.xlim([0,140])
+# plt.ylim([0,0.2])
+plt.title("Group")
+#plt.show()
+plt.savefig("Q3/Group.png")
 #############################################################################################################################

@@ -554,7 +554,7 @@ Effect of changing m and k
 
 \begin_layout Standard
 From here, we then experiment with the diameter, varying p.
- However, as Figure 3 below shows, this variation has very little effect
+ However, as Figure 3 below shows, this variation in p has very little effect
  on the diameter when averaged over 100 graphs.
  
 \end_layout
@@ -603,6 +603,9 @@ k-cycles
 For experimenting with cycles, appropriate parameters were chosen for the
  random, PA and group graphs so that they had similar number of vertices
  and edges as the coauthorship graph.
+ Each of these experiments were run on a random sample of 100 vertices from
+ all of the graphs, and the results are given in the figure below.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -687,6 +690,15 @@ Number of four and five cycles per graph
 
 \end_layout
 
+\begin_layout Standard
+As we can see, both four and five cycles have a similar distribution, but
+ there are more five cycles across all of the graphs.
+ The split in the distribution of the PA graph is due to the fully connected
+ region, as there are notably more cycles present in this region.
+ The distribution of random and group graphs are quite narrow.
+ 
+\end_layout
+
 \begin_layout Section
 Searching
 \end_layout
@@ -707,13 +719,16 @@ For searching the PA graph, this approach must be ammended to accommodate
  the fully connected section.
  We follow the same procedure as the random graph, but prioritise nodes
  that are in the complete graph, as these nodes are more likely to be connected
- to the goal.
+ to the goal, leading to much shorter search times than the random graph.
+ 
 \end_layout
 
 \begin_layout Standard
 For searching the group graph, we have to expand this approach again.
- We know what group the target node is in, so if we are already in this
- group, then we must stay in this group.
+ As we know what group the target node is in, we can use this to inform
+ our search strategy.
+ If we are already in the correct group, then we must try to stay in this
+ group.
  Otherwise, we endeavour to move to this group if possible.
  If our current vertex is not in the correct group and does not have a neighbour
  in the correct group, then we follow the same strategy as the random searching
@@ -722,16 +737,117 @@ For searching the group graph, we have to expand this approach again.
 \end_layout
 
 \begin_layout Standard
+The figure below shows the results of these search strategies, run on a
+ large number of graphs, using the same parameters as were used in part
+ 2.
+ The random graph is by far the slowest to search, while the PA graph and
+ group graph are much faster on these parameters due to the adjustment of
+ the search strategy, which gives all of the graphs similar numbers of vertices
+ and edges.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q3/Random.png
+	scale 25
+
+\end_inset
+
+
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+Random
+\end_layout
 
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q3/PA.png
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+PA
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q3/Group.png
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Group
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Results of Searching
 \end_layout
 
 \end_inset

@@ -217,7 +217,7 @@ def four_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_sa
     plt.ylim(0,5)
     plt.yticks((1, 2, 3, 4), ('Random', 'PA', 'Group', 'Coauthorship'))
     plt.semilogx(xdata, ydata, marker='.', linestyle = 'None', color='b')
-    plt.savefig("Q2/four_cycles.png")
+    #plt.savefig("Q2/four_cycles.png")
 
 #############################################################################################################################
 
@@ -246,7 +246,7 @@ def five_cycles_plot(coauthorship_graph,random_graph,PA_graph,group_graph,num_sa
     plt.ylim(0,5)
     plt.yticks((1, 2, 3, 4), ('Random', 'PA', 'Group', 'Coauthorship'))
     plt.semilogx(xdata, ydata, marker='.', linestyle = 'None', color='b')
-    plt.savefig("Q2/five_cycles.png")
+    #plt.savefig("Q2/five_cycles.png")
 
 #############################################################################################################################
 
