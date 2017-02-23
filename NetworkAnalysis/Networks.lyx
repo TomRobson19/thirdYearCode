@@ -600,7 +600,9 @@ k-cycles
 \end_layout
 
 \begin_layout Standard
-COMMENT ON GRAPHS HERE
+For experimenting with cycles, appropriate parameters were chosen for the
+ random, PA and group graphs so that they had similar number of vertices
+ and edges as the coauthorship graph.
 \end_layout
 
 \begin_layout Standard
