@@ -709,7 +709,14 @@ For searching the PA graph, this approach must be ammended to accommodate
 \end_layout
 
 \begin_layout Standard
-For searching the group graph, we have to expand this approach 
+For searching the group graph, we have to expand this approach again.
+ We know what group the target node is in, so if we are already in this
+ group, then we must stay in this group.
+ Otherwise, we endeavour to move to this group if possible.
+ If our current vertex is not in the correct group and does not have a neighbour
+ in the correct group, then we follow the same strategy as the random searching
+ to select a new node.
+ 
 \end_layout
 
 \begin_layout Standard
