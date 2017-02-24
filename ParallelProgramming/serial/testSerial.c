@@ -1,13 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "linearAlgebra.h"
+#include "linearAlgebraSerial.h"
 
 int output_vector(double* vector, int length);
 int output_matrix(double** matrix, int size1, int size2);
 
 int main(int argc, char* argv[]) {
-    srand((unsigned)time(NULL));
+    srand(0);
     if (argc < 2) {
         printf("Syntax: test <size of vector>\n");
         return 1;
@@ -78,9 +78,9 @@ int output_vector(double* vector, int length) {
     printf("[ ");
     for (int i = 0; i < length; i++) {
         if (i < length - 1)
-            printf(" %f ;", vector[i]);
+            printf(" %.0f ;", vector[i]);
         else
-            printf(" %f ", vector[i]);
+            printf(" %.0f ", vector[i]);
     }
     printf(" ]\n");
     return 1;
@@ -90,7 +90,7 @@ int output_matrix(double** matrix, int rows, int columns) {
     printf("[ ");
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            printf(" %f ", matrix[i][j]);
+            printf(" %.0f ", matrix[i][j]);
         }
         if (i < rows - 1)
             printf(";\n");
