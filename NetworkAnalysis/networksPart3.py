@@ -330,7 +330,7 @@ random_list = []
 PA = []
 group = []
 
-num_samples = 100
+num_samples = 1000
 
 for i in range(0,num_samples):
     random_graph = make_random_graph(1600, 0.035)

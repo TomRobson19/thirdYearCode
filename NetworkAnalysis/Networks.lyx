@@ -166,7 +166,7 @@ Once the group graph has been implemented as per the specification, we then
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -555,7 +555,7 @@ Effect of changing m and k
 \begin_layout Standard
 From here, we then experiment with the diameter, varying p.
  However, as Figure 3 below shows, this variation in p has very little effect
- on the diameter when averaged over 100 graphs.
+ on the diameter of the group graph when averaged over 100 graphs.
  
 \end_layout
 
@@ -718,8 +718,9 @@ For random graphs, given the limited information that we have, our search
 For searching the PA graph, this approach must be ammended to accommodate
  the fully connected section.
  We follow the same procedure as the random graph, but prioritise nodes
- that are in the complete graph, as these nodes are more likely to be connected
- to the goal, leading to much shorter search times than the random graph.
+ that are in the complete graph, and move to these whenever possible, as
+ these nodes are more likely to be connected to the goal, leading to much
+ shorter search times than the random graph.
  
 \end_layout
 
@@ -737,13 +738,12 @@ For searching the group graph, we have to expand this approach again.
 \end_layout
 
 \begin_layout Standard
-The figure below shows the results of these search strategies, run on a
- large number of graphs, using the same parameters as were used in part
- 2.
+The figure below shows the results of these search strategies, run on 1000
+ of each type of graph, using the same parameters as were used in part 2.
  The random graph is by far the slowest to search, while the PA graph and
- group graph are much faster on these parameters due to the adjustment of
- the search strategy, which gives all of the graphs similar numbers of vertices
- and edges.
+ group graph are much faster , with PA being the fastest on this set of
+ parameters due to the adjustment of the search strategy, which gives all
+ of the graphs similar numbers of vertices and edges.
  
 \end_layout
 
