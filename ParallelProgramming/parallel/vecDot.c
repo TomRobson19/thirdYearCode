@@ -22,7 +22,7 @@ int main (int argc, char *argv[])
 	int rank;
 	// rank of each process
 	int n_per_proc;
-	// elements per process
+	// elements allocated per process
 	int i;
 	MPI_Status status;
 	//Initialization of MPI environment
@@ -84,6 +84,8 @@ int main (int argc, char *argv[])
 		}
 		MPI_Gather(cp, n_per_proc, MPI_INT, c, n_per_proc, MPI_INT, 0, MPI_COMM_WORLD);
 
+		//MPI_Reduce(&cp, &sum, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+
 		//gathering array c
 		for(i=0;i<n;i++)
 		{
@@ -103,11 +105,15 @@ int main (int argc, char *argv[])
 		//Recieving Scattered a
 		MPI_Scatter(b, n_per_proc, MPI_INT, bp, n_per_proc, MPI_INT, 0, MPI_COMM_WORLD);
 		//Recieving Scattered b
+		int localSum = 0;
 		for(i=0;i<n_per_proc;i++)
 		{
 			cp[i] = ap[i]*bp[i];
+			//localSum += cp[i];
 		}
 		MPI_Gather(cp, n_per_proc, MPI_INT, c, n_per_proc, MPI_INT, 0, MPI_COMM_WORLD);
+		//MPI_Reduce(&localSum, &sum, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+
 	}
 	MPI_Finalize();
 	return 0;

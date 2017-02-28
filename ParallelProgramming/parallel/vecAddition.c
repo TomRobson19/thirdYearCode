@@ -21,7 +21,7 @@ int main (int argc, char *argv[])
 	int rank;
 	// rank of each process
 	int n_per_proc;
-	// elements per process
+	// elements allocated per process
 	int i;
 	MPI_Status status;
 	//Initialization of MPI environment
