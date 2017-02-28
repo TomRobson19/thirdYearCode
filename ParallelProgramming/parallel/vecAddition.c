@@ -44,11 +44,18 @@ int main (int argc, char *argv[])
 		for(i=0;i<n;i++)
 		{
 			a[i] = rand() % 1000;
+			b[i] = rand() % 1000;
 		}
+		printf("Vector1\n");
 		for(i=0;i<n;i++)
 		{
-		    b[i] = rand() % 1000;
-		}
+			printf ("%d\n", a[i]);
+		}	
+		printf("Vector2\n");
+		for(i=0;i<n;i++)
+		{
+			printf ("%d\n", b[i]);
+		}	
 
 		if(n%total_proc != 0)
 		{
@@ -58,6 +65,7 @@ int main (int argc, char *argv[])
 	    		a[n+i] = 0;
 	    		b[n+i] = 0;
 	    	}
+	    	
 		} // to divide data evenly by the number of processors 
 		ap = (int *) malloc(sizeof(int)*n_per_proc);
 		bp = (int *) malloc(sizeof(int)*n_per_proc);
@@ -76,6 +84,7 @@ int main (int argc, char *argv[])
 		}
 		MPI_Gather(cp, n_per_proc, MPI_INT, c, n_per_proc, MPI_INT, 0, MPI_COMM_WORLD);
 		//gathering array c
+		printf("Sum\n");
 		for(i=0;i<n;i++)
 		{
 			printf ("%d\n", c[i]);

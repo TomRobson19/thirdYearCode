@@ -31,7 +31,7 @@ int main (int argc, char *argv[])
 	//total number of processes running in parallel
 	MPI_Comm_rank (MPI_COMM_WORLD, &rank);
 	//rank of the current process
-    int * ap;
+	int * ap;
 	int * bp;
 	int * cp;
 	if (rank == 0)
@@ -39,18 +39,25 @@ int main (int argc, char *argv[])
 		a = (int *) malloc(sizeof(int)*n);
 		b = (int *) malloc(sizeof(int)*n);
 		c = (int *) malloc(sizeof(int)*n);
+
     	MPI_Bcast (&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
     	n_per_proc = n/total_proc;
 
 		for(i=0;i<n;i++)
 		{
 			a[i] = rand() % 1000;
+			b[i] = rand() % 1000;
 		}
+		printf("Vector1\n");
 		for(i=0;i<n;i++)
 		{
-		    b[i] = rand() % 1000;
-		}
-
+			printf ("%d\n", a[i]);
+		}	
+		printf("Vector2\n");
+		for(i=0;i<n;i++)
+		{
+			printf ("%d\n", b[i]);
+		}	
 		if(n%total_proc != 0)
 		{
 	    	n_per_proc+=1;
@@ -76,11 +83,13 @@ int main (int argc, char *argv[])
 			cp[i] = ap[i]*bp[i];
 		}
 		MPI_Gather(cp, n_per_proc, MPI_INT, c, n_per_proc, MPI_INT, 0, MPI_COMM_WORLD);
+
 		//gathering array c
 		for(i=0;i<n;i++)
 		{
 			sum += c[i];
 		}		
+		printf("Dot Product\n");
 		printf("%d\n", sum);
     }
 	else
@@ -96,7 +105,7 @@ int main (int argc, char *argv[])
 		//Recieving Scattered b
 		for(i=0;i<n_per_proc;i++)
 		{
-			cp[i] = ap[i]+bp[i];
+			cp[i] = ap[i]*bp[i];
 		}
 		MPI_Gather(cp, n_per_proc, MPI_INT, c, n_per_proc, MPI_INT, 0, MPI_COMM_WORLD);
 	}

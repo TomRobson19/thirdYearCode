@@ -44,3 +44,5 @@ ParallelProgramming/parallel/test
 GPU/GPU18/
 
 ParallelProgramming/parallel/vecAddition
+
+ParallelProgramming/parallel/vecDot
