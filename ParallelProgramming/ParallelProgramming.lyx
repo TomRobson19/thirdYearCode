@@ -90,11 +90,8 @@ Vector Dot Product
 \end_layout
 
 \begin_layout Standard
-Implemented and works, but need to change the gather to a reduce
-\end_layout
-
-\begin_layout Standard
-Currently rarely gives correct answers, mostly does not
+Implemented and works, but need to change the gather to a reduce - gives
+ correct outcome though
 \end_layout
 
 \begin_layout Section
