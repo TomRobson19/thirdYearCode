@@ -105,7 +105,7 @@ int main (int argc, char *argv[])
 		//Recieving Scattered a
 		MPI_Scatter(b, n_per_proc, MPI_INT, bp, n_per_proc, MPI_INT, 0, MPI_COMM_WORLD);
 		//Recieving Scattered b
-		int localSum = 0;
+		//int localSum = 0;
 		for(i=0;i<n_per_proc;i++)
 		{
 			cp[i] = ap[i]*bp[i];
