@@ -77,6 +77,10 @@ Computing Methodologies - Parallel Programming
 hzwr87
 \end_layout
 
+\begin_layout Standard
+Time with MPI_Wtime
+\end_layout
+
 \begin_layout Section
 Vector Addition
 \end_layout
