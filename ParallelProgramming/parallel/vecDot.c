@@ -15,7 +15,7 @@ int main (int argc, char *argv[])
 	int * a;
 	int * b;
 	int * c;
-	int sum;
+	int sum = 0;
 	// arrays a and b
 	int total_proc;
 	// total nuber of processes
