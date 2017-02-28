@@ -12,7 +12,6 @@ int main (int argc, char *argv[])
         return 1;
     }
     int n = atoi(argv[1]);
-
 	int * a;
 	int * b;
 	int * c;
@@ -23,20 +22,18 @@ int main (int argc, char *argv[])
 	// rank of each process
 	int n_per_proc;
 	// elements per process
-
 	int i;
 	MPI_Status status;
-
-	// Initialization of MPI environment
+	//Initialization of MPI environment
 	MPI_Init (&argc, &argv);
 	MPI_Comm_size (MPI_COMM_WORLD, &total_proc);
-	//Now you know the total number of processes running in parallel
+	//total number of processes running in parallel
 	MPI_Comm_rank (MPI_COMM_WORLD, &rank);
-	//Now you know the rank of the current process
+	//rank of the current process
     int * ap;
 	int * bp;
 	int * cp;
-	if (rank == 0) //you choose process rank 0 to be your root which will be used to perform input output.
+	if (rank == 0)
 	{
 		a = (int *) malloc(sizeof(int)*n);
 		b = (int *) malloc(sizeof(int)*n);
@@ -98,13 +95,9 @@ int main (int argc, char *argv[])
 		for(i=0;i<n_per_proc;i++)
 		{
 			cp[i] = ap[i]+bp[i];
-			//printf("%d from %d\n",ap[i],rank);
-			//printf("%d from %d\n",bp[i],rank);
 		}
 		MPI_Gather(cp, n_per_proc, MPI_INT, c, n_per_proc, MPI_INT, 0, MPI_COMM_WORLD);
-		//To initiate the gathering of computed part of array C
 	}
 	MPI_Finalize();
-	//Terminate MPI Environment
 	return 0;
 }
