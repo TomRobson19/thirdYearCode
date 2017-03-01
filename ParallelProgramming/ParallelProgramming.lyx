@@ -85,17 +85,8 @@ Time with MPI_Wtime
 Vector Addition
 \end_layout
 
-\begin_layout Standard
-Implemented and works - gives correct outcome
-\end_layout
-
 \begin_layout Section
 Vector Dot Product
-\end_layout
-
-\begin_layout Standard
-Implemented and works, but need to change the gather to a reduce - gives
- correct outcome though
 \end_layout
 
 \begin_layout Section
