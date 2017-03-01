@@ -4,10 +4,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	srand(0);
-    if (argc < 2) {
+    if(argc < 2) {
         printf("Syntax: test <size of vector>\n");
         return 1;
     }
@@ -25,11 +25,11 @@ int main (int argc, char *argv[])
 	int i;
 	MPI_Status status;
 
-	MPI_Init (&argc, &argv);
+	MPI_Init(&argc, &argv);
 
-	MPI_Comm_size (MPI_COMM_WORLD, &totalNumberOfProcesses);
+	MPI_Comm_size(MPI_COMM_WORLD, &totalNumberOfProcesses);
 
-	MPI_Comm_rank (MPI_COMM_WORLD, &rank);
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     double * vector1Temporary;
 	double * vector2Temporary;
 	double * sumTemporary;
@@ -49,12 +49,12 @@ int main (int argc, char *argv[])
 		printf("Vector1 :\n");
 		for(i=0;i<vectorSize;i++)
 		{
-			printf ("%f\n", vector1[i]);
+			printf("%f\n", vector1[i]);
 		}	
 		printf("Vector2 :\n");
 		for(i=0;i<vectorSize;i++)
 		{
-			printf ("%f\n", vector2[i]);
+			printf("%f\n", vector2[i]);
 		}	
 
 		if(vectorSize%totalNumberOfProcesses != 0)
@@ -70,7 +70,7 @@ int main (int argc, char *argv[])
 		vector2Temporary = (double *) malloc(sizeof(double)*elementsAllocatedPerProcess);
 		sumTemporary = (double *) malloc(sizeof(double)*elementsAllocatedPerProcess);
 
-		MPI_Bcast (&elementsAllocatedPerProcess, 1, MPI_INT, 0, MPI_COMM_WORLD);
+		MPI_Bcast(&elementsAllocatedPerProcess, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
 		MPI_Scatter(vector1, elementsAllocatedPerProcess, MPI_DOUBLE, vector1Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
@@ -86,13 +86,13 @@ int main (int argc, char *argv[])
 		printf("Sum :\n");
 		for(i=0;i<vectorSize;i++)
 		{
-			printf ("%f\n", sum[i]);
+			printf("%f\n", sum[i]);
 		}		
     }
 	else
 	{
-		MPI_Bcast (&vectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
-		MPI_Bcast (&elementsAllocatedPerProcess, 1, MPI_INT, 0, MPI_COMM_WORLD);
+		MPI_Bcast(&vectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
+		MPI_Bcast(&elementsAllocatedPerProcess, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
 		vector1Temporary = (double *) malloc(sizeof(double)*elementsAllocatedPerProcess);
 		vector2Temporary = (double *) malloc(sizeof(double)*elementsAllocatedPerProcess);
