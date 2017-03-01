@@ -50,3 +50,7 @@ ParallelProgramming/parallel/vecDot
 ParallelProgramming/serial/gold4\.txt
 
 ParallelProgramming/serial/gold5\.txt
+
+ParallelProgramming/parallel/matMat
+
+ParallelProgramming/parallel/matVec
