@@ -48,12 +48,12 @@ int main (int argc, char *argv[])
 			a[i] = rand() % 1000;
 			b[i] = rand() % 1000;
 		}
-		printf("Vector1\n");
+		printf("Vector1 :\n");
 		for(i=0;i<n;i++)
 		{
 			printf ("%d\n", a[i]);
 		}	
-		printf("Vector2\n");
+		printf("Vector2 :\n");
 		for(i=0;i<n;i++)
 		{
 			printf ("%d\n", b[i]);
@@ -91,7 +91,7 @@ int main (int argc, char *argv[])
 		{
 			sum += c[i];
 		}		
-		printf("Dot Product\n");
+		printf("Dot Product :\n");
 		printf("%d\n", sum);
     }
 	else

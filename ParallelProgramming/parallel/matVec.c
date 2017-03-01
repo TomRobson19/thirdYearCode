@@ -58,7 +58,7 @@ int main(int argc, char** argv)
         {
             printf("%3d \n", b[i]);
         }
-        printf("\n\n");
+        printf("\n");
  
         /* (1) Sending B Values to other processes */
         for (int j=1;j<size;j++)
@@ -74,7 +74,7 @@ int main(int argc, char** argv)
         }
  
         /* (3) Gathering the result from other processes*/
-        printf("\nOutput: \n");
+        printf("Output: \n");
         for (int i=0;i<AROW;i++)
         {
             int source_process = proc_map(i, size);

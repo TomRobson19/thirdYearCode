@@ -85,6 +85,11 @@ Time with MPI_Wtime
 Vector Addition
 \end_layout
 
+\begin_layout Standard
+The approach taken to this problem is fairly simple.
+ 
+\end_layout
+
 \begin_layout Section
 Vector Dot Product
 \end_layout
