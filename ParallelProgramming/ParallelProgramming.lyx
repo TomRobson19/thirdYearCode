@@ -110,7 +110,12 @@ Vector Dot Product
 
 \begin_layout Standard
 The dot product is parallelised in a similar manner as the vector addition.
- The difference is that we replace gather from before with a reduce, 
+ The difference is that we replace gather from before with a reduce, because
+ in this case the final result is one value rather than an array.
+ This reduction computes a total value from all of the calculations on each
+ node, without needing to bring these values together on the root and sum
+ them up here, which would have been less efficient.
+ 
 \end_layout
 
 \begin_layout Section
