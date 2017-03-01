@@ -1,5 +1,5 @@
-//mpicc -g3 vecAddition.c -o vecAddition
-//mpirun -n 4 ./vecAddition
+//mpicc -g3 vecAdd.c -o vecAdd
+//mpirun -n 4 ./vecAdd
 #include "mpi.h"
 #include <stdio.h>
 #include <stdlib.h>
