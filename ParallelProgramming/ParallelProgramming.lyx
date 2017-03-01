@@ -3,7 +3,7 @@
 \begin_document
 \begin_header
 \textclass article
-\use_default_options false
+\use_default_options true
 \maintain_unincluded_children false
 \language british
 \language_package none
@@ -28,7 +28,7 @@
 \spacing single
 \use_hyperref false
 \papersize a4paper
-\use_geometry false
+\use_geometry true
 \use_package amsmath 1
 \use_package amssymb 0
 \use_package cancel 0
@@ -52,6 +52,13 @@
 \shortcut idx
 \color #008000
 \end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\headheight 2cm
+\headsep 2cm
+\footskip 1cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation skip
@@ -86,12 +93,24 @@ Vector Addition
 \end_layout
 
 \begin_layout Standard
-The approach taken to this problem is fairly simple.
+First, we setup the MPI environment, so that each processor knows the total
+ number of processes in the system, its own rank and the size of the vectors.
+ Once the vectors have been generated, we inform the other processes of
+ how many elements have been allocated to each of them.
+ From here we scatter the vectors to all the processes, giving them the
+ appropriate data elements to perform their share of the computations.
+ Once these computations have been performed on all processes, including
+ the root, we gather them back together and output the result as a vector.
  
 \end_layout
 
 \begin_layout Section
 Vector Dot Product
+\end_layout
+
+\begin_layout Standard
+The dot product is parallelised in a similar manner as the vector addition.
+ The difference is that we replace gather from before with a reduce, 
 \end_layout
 
 \begin_layout Section
