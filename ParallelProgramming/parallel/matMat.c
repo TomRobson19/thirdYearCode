@@ -5,11 +5,11 @@
 #include <stdlib.h>
 
 #define AROW 3
-#define ACOL 5
-#define BCOL 3
+#define ACOLUMN 5
+#define BCOLUMN 3
 
 /* Process mapping function */
-int proc_map(int i, int size)
+int mapProcesses(int i, int size)
 {
     size = size - 1;
     int r = AROW/size;
@@ -29,20 +29,20 @@ int main(int argc, char** argv)
  
     if (rank == 0)
     {
-        double a[AROW][ACOL];
-        double b[ACOL][BCOL];
-        double c[AROW][BCOL];
+        double a[AROW][ACOLUMN];
+        double b[ACOLUMN][BCOLUMN];
+        double c[AROW][BCOLUMN];
         /* Generating Random Values for A & B Array*/
         for (int i=0;i<AROW;i++)
         {
-            for (int j=0;j<ACOL;j++)
+            for (int j=0;j<ACOLUMN;j++)
             {
                 a[i][j] = rand() % 1000;
             }
         }
-        for (int i=0;i<ACOL;i++)
+        for (int i=0;i<ACOLUMN;i++)
         {
-            for (int j=0;j<BCOL;j++)
+            for (int j=0;j<BCOLUMN;j++)
             {
                 b[i][j] = rand() % 1000;
             }
@@ -51,16 +51,16 @@ int main(int argc, char** argv)
         printf("Matrix A :\n");
         for (int i=0;i<AROW;i++)
         {
-            for (int j=0;j<ACOL;j++)
+            for (int j=0;j<ACOLUMN;j++)
             {
                 printf("%3f ", a[i][j]);
             }
             printf("\n");
         }
         printf("\nMatrix B :\n");
-        for (int i=0;i<ACOL;i++)
+        for (int i=0;i<ACOLUMN;i++)
         {
-            for (int j=0;j<BCOL;j++)
+            for (int j=0;j<BCOLUMN;j++)
             {
                 printf("%3f ", b[i][j]);
             }
@@ -70,29 +70,29 @@ int main(int argc, char** argv)
         /* (1) Sending B Values to other processes */
         for (int j=1;j<size;j++)
         {
-            for (int x=0;x<ACOL;x++)
+            for (int x=0;x<ACOLUMN;x++)
             {
-                MPI_Send(b[x], BCOL, MPI_DOUBLE, j, 1000 + x, MPI_COMM_WORLD);
+                MPI_Send(b[x], BCOLUMN, MPI_DOUBLE, j, 1000 + x, MPI_COMM_WORLD);
             }
         }
         /* (2) Sending Required A Values to specific process */
         for (int i=0;i<AROW;i++)
         {
-            int processor = proc_map(i, size);
-            MPI_Send(a[i], ACOL, MPI_DOUBLE, processor, (100*(i+1)), MPI_COMM_WORLD);
+            int processor = mapProcesses(i, size);
+            MPI_Send(a[i], ACOLUMN, MPI_DOUBLE, processor, (100*(i+1)), MPI_COMM_WORLD);
         }
  
         /* (3) Gathering the result from other processes*/
         for (int i=0;i<AROW;i++)
         {
-            int source_process = proc_map(i, size);
-            MPI_Recv(c[i], BCOL, MPI_DOUBLE, source_process, i, MPI_COMM_WORLD, &Stat);
+            int source_process = mapProcesses(i, size);
+            MPI_Recv(c[i], BCOLUMN, MPI_DOUBLE, source_process, i, MPI_COMM_WORLD, &Stat);
         }
         /* Printing the Result */
         printf("\nMatrix C :\n");
         for (int i=0;i<AROW;i++)
         {
-            for (int x=0;x<BCOL;x++)
+            for (int x=0;x<BCOLUMN;x++)
             {
                 printf("%3f ", c[i][x]);
             }
@@ -101,31 +101,31 @@ int main(int argc, char** argv)
     }
     else
     {
-        double b[ACOL][BCOL];
+        double b[ACOLUMN][BCOLUMN];
         /* (1) Each process get B Values from Master */
-        for (int x=0;x<ACOL;x++)
+        for (int x=0;x<ACOLUMN;x++)
         {
-            MPI_Recv(b[x], BCOL, MPI_DOUBLE, 0, 1000 + x, MPI_COMM_WORLD, &Stat);
+            MPI_Recv(b[x], BCOLUMN, MPI_DOUBLE, 0, 1000 + x, MPI_COMM_WORLD, &Stat);
         }
         /* (2) Get Required A Values from Master then Compute the result */
         for (int i=0;i<AROW;i++)
         {
-            double c[BCOL];
-            int processor = proc_map(i, size);
+            double c[BCOLUMN];
+            int processor = mapProcesses(i, size);
             if (rank == processor)
             {
-                double buffer[ACOL];
-                MPI_Recv(buffer, ACOL, MPI_DOUBLE, 0, (100*(i+1)), MPI_COMM_WORLD, &Stat);
-                for (int j=0;j<BCOL;j++)
+                double buffer[ACOLUMN];
+                MPI_Recv(buffer, ACOLUMN, MPI_DOUBLE, 0, (100*(i+1)), MPI_COMM_WORLD, &Stat);
+                for (int j=0;j<BCOLUMN;j++)
                 {
                     double sum = 0;
-                    for (int z=0;z<ACOL;z++)
+                    for (int z=0;z<ACOLUMN;z++)
                     {
                         sum = sum + (buffer[z] * b[z][j] );
                     }
                     c[j] = sum;
                 }
-                MPI_Send(c, BCOL, MPI_DOUBLE, 0, i, MPI_COMM_WORLD);
+                MPI_Send(c, BCOLUMN, MPI_DOUBLE, 0, i, MPI_COMM_WORLD);
             }
         }
     }
