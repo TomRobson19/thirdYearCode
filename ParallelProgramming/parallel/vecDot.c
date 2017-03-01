@@ -11,109 +11,96 @@ int main (int argc, char *argv[])
         printf("Syntax: test <size of vector>\n");
         return 1;
     }
-    int n = atoi(argv[1]);
-	int * a;
-	int * b;
-	int * c;
-	int sum = 0;
-	// arrays a and b
-	int total_proc;
-	// total nuber of processes
+    int vectorSize = atoi(argv[1]);
+	double * vector1;
+	double * vector2;
+	double dotProduct = 0;
+
+	int totalNumberOfProcesses;
+
 	int rank;
-	// rank of each process
-	int n_per_proc;
-	// elements allocated per process
+
+	int elementsAllocatedPerProcess;
+	
 	int i;
 	MPI_Status status;
-	//Initialization of MPI environment
+
 	MPI_Init (&argc, &argv);
-	MPI_Comm_size (MPI_COMM_WORLD, &total_proc);
-	//total number of processes running in parallel
+
+	MPI_Comm_size (MPI_COMM_WORLD, &totalNumberOfProcesses);
+
 	MPI_Comm_rank (MPI_COMM_WORLD, &rank);
-	//rank of the current process
-	int * ap;
-	int * bp;
-	int * cp;
+	
+	double * vector1Temporary;
+	double * vector2Temporary;
+	double sumTemporary = 0;
 	if (rank == 0)
 	{
-		a = (int *) malloc(sizeof(int)*n);
-		b = (int *) malloc(sizeof(int)*n);
-		c = (int *) malloc(sizeof(int)*n);
+		vector1 = (double *) malloc(sizeof(double)*vectorSize);
+		vector2 = (double *) malloc(sizeof(double)*vectorSize);
 
-    	MPI_Bcast (&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    	n_per_proc = n/total_proc;
+    	MPI_Bcast (&vectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    	elementsAllocatedPerProcess = vectorSize/totalNumberOfProcesses;
 
-		for(i=0;i<n;i++)
+		for(i=0;i<vectorSize;i++)
 		{
-			a[i] = rand() % 1000;
-			b[i] = rand() % 1000;
+			vector1[i] = rand() % 1000;
+			vector2[i] = rand() % 1000;
 		}
-		printf("Vector1 :\n");
-		for(i=0;i<n;i++)
+		printf("Vector1: \n");
+		for(i=0;i<vectorSize;i++)
 		{
-			printf ("%d\n", a[i]);
+			printf ("%f\n", vector1[i]);
 		}	
-		printf("Vector2 :\n");
-		for(i=0;i<n;i++)
+		printf("Vector2: \n");
+		for(i=0;i<vectorSize;i++)
 		{
-			printf ("%d\n", b[i]);
+			printf ("%f\n", vector2[i]);
 		}	
-		if(n%total_proc != 0)
+		if(vectorSize%totalNumberOfProcesses != 0)
 		{
-	    	n_per_proc+=1;
-	    	for(i=0;i<(n_per_proc*total_proc - n);i++)
+	    	elementsAllocatedPerProcess+=1;
+	    	for(i=0;i<(elementsAllocatedPerProcess*totalNumberOfProcesses - vectorSize);i++)
 	    	{
-	    		a[n+i] = 0;
-	    		b[n+i] = 0;
+	    		vector1[vectorSize+i] = 0;
+	    		vector2[vectorSize+i] = 0;
 	    	}
-		} // to divide data evenly by the number of processors 
-		ap = (int *) malloc(sizeof(int)*n_per_proc);
-		bp = (int *) malloc(sizeof(int)*n_per_proc);
-		cp = (int *) malloc(sizeof(int)*n_per_proc);
-
-		MPI_Bcast (&n_per_proc, 1, MPI_INT, 0, MPI_COMM_WORLD);
-		//Broadcast element per process
-		MPI_Scatter(a, n_per_proc, MPI_INT, ap, n_per_proc, MPI_INT, 0, MPI_COMM_WORLD);
-		//scattering array a  
-		MPI_Scatter(b, n_per_proc, MPI_INT, bp, n_per_proc, MPI_INT, 0, MPI_COMM_WORLD);
-		//scattering array b	
-
-		for(i=0;i<n_per_proc;i++)
-		{
-			cp[i] = ap[i]*bp[i];
 		}
-		MPI_Gather(cp, n_per_proc, MPI_INT, c, n_per_proc, MPI_INT, 0, MPI_COMM_WORLD);
+		vector1Temporary = (double *) malloc(sizeof(double)*elementsAllocatedPerProcess);
+		vector2Temporary = (double *) malloc(sizeof(double)*elementsAllocatedPerProcess);
 
-		//MPI_Reduce(&cp, &sum, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+		MPI_Bcast (&elementsAllocatedPerProcess, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
-		//gathering array c
-		for(i=0;i<n;i++)
+		MPI_Scatter(vector1, elementsAllocatedPerProcess, MPI_DOUBLE, vector1Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+
+		MPI_Scatter(vector2, elementsAllocatedPerProcess, MPI_DOUBLE, vector2Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+
+		for(i=0;i<elementsAllocatedPerProcess;i++)
 		{
-			sum += c[i];
-		}		
-		printf("Dot Product :\n");
-		printf("%d\n", sum);
+			sumTemporary = vector1Temporary[i]*vector2Temporary[i];
+		}
+
+		MPI_Reduce(&sumTemporary, &dotProduct, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+
+		printf("Dot Product\n");
+		printf("%f\n", dotProduct);
     }
 	else
-	{ // Non-master tasks
-		MPI_Bcast (&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
-		MPI_Bcast (&n_per_proc, 1, MPI_INT, 0, MPI_COMM_WORLD);
-		ap = (int *) malloc(sizeof(int)*n_per_proc);
-		bp = (int *) malloc(sizeof(int)*n_per_proc);
-		cp = (int *) malloc(sizeof(int)*n_per_proc);
-		MPI_Scatter(a, n_per_proc, MPI_INT, ap, n_per_proc, MPI_INT, 0, MPI_COMM_WORLD);
-		//Recieving Scattered a
-		MPI_Scatter(b, n_per_proc, MPI_INT, bp, n_per_proc, MPI_INT, 0, MPI_COMM_WORLD);
-		//Recieving Scattered b
-		//int localSum = 0;
-		for(i=0;i<n_per_proc;i++)
-		{
-			cp[i] = ap[i]*bp[i];
-			//localSum += cp[i];
-		}
-		MPI_Gather(cp, n_per_proc, MPI_INT, c, n_per_proc, MPI_INT, 0, MPI_COMM_WORLD);
-		//MPI_Reduce(&localSum, &sum, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+	{
+		MPI_Bcast (&vectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
+		MPI_Bcast (&elementsAllocatedPerProcess, 1, MPI_INT, 0, MPI_COMM_WORLD);
+		
+		vector1Temporary = (double *) malloc(sizeof(double)*elementsAllocatedPerProcess);
+		vector2Temporary = (double *) malloc(sizeof(double)*elementsAllocatedPerProcess);
+		
+		MPI_Scatter(vector1, elementsAllocatedPerProcess, MPI_DOUBLE, vector1Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+		MPI_Scatter(vector2, elementsAllocatedPerProcess, MPI_DOUBLE, vector2Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
+		for(i=0;i<elementsAllocatedPerProcess;i++)
+		{
+			sumTemporary = vector1Temporary[i]*vector2Temporary[i];
+		}
+		MPI_Reduce(&sumTemporary, &dotProduct, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 	}
 	MPI_Finalize();
 	return 0;
