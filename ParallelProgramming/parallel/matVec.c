@@ -4,14 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ROW 3
-#define COLUMN 5
-
 /* Process mapping function */
-int mapProcesses(int i, int size)
+int mapProcesses(int i, int size, int row)
 {
     size = size - 1;
-    int r = ROW/size;
+    int r = row/size;
     int proc = i / r;
     return proc + 1;
 }
@@ -19,6 +16,10 @@ int mapProcesses(int i, int size)
 int main(int argc, char** argv)
 {
 	srand(0);
+
+	int row = atoi(argv[1]);
+	int column = atoi(argv[2]);
+
     int size, rank;
     MPI_Status Stat;
  
@@ -28,14 +29,13 @@ int main(int argc, char** argv)
  
     if (rank == 0)
     {
-        double a[ROW][COLUMN];
-        double b[COLUMN];
-        double c[ROW];
- 
+        double a[row][column];
+        double b[column];
+        double c[row];
         /* Generating Random Values for A & B Array*/
-        for (int i=0;i<ROW;i++)
+        for (int i=0;i<row;i++)
         {
-            for (int j=0;j<COLUMN;j++)
+            for (int j=0;j<column;j++)
             {
                 if (i==0) 
             	{
@@ -44,20 +44,18 @@ int main(int argc, char** argv)
                 a[i][j] = rand() % 1000;
             }
         }
- 
         /* Printing the Matrix*/
- 
         printf("Matrix :\n");
-        for (int i=0;i<ROW;i++)
+        for (int i=0;i<row;i++)
         {
-            for (int j=0;j<COLUMN;j++)
+            for (int j=0;j<column;j++)
             {
                 printf("%3f ", a[i][j]);
             }
             printf("\n");
         }
         printf("\nVector :\n");
-        for (int i=0;i<COLUMN;i++)
+        for (int i=0;i<column;i++)
         {
             printf("%3f \n", b[i]);
         }
@@ -66,42 +64,42 @@ int main(int argc, char** argv)
         /* (1) Sending B Values to other processes */
         for (int j=1;j<size;j++)
         {
-            MPI_Send(b, COLUMN, MPI_DOUBLE, j, 99, MPI_COMM_WORLD);
+            MPI_Send(b, column, MPI_DOUBLE, j, 99, MPI_COMM_WORLD);
         }
  
         /* (2) Sending Required A Values to specific process */
-        for (int i=0;i<ROW;i++)
+        for (int i=0;i<row;i++)
         {
-            int processor = mapProcesses(i, size);
-            MPI_Send(a[i], COLUMN, MPI_DOUBLE, processor, (100*(i+1)), MPI_COMM_WORLD);
+            int processor = mapProcesses(i, size, row);
+            MPI_Send(a[i], column, MPI_DOUBLE, processor, (100*(i+1)), MPI_COMM_WORLD);
         }
  
         /* (3) Gathering the result from other processes*/
         printf("Output: \n");
-        for (int i=0;i<ROW;i++)
+        for (int i=0;i<row;i++)
         {
-            int source_process = mapProcesses(i, size);
+            int source_process = mapProcesses(i, size, row);
             MPI_Recv(&c[i], 1, MPI_DOUBLE, source_process, i, MPI_COMM_WORLD, &Stat);
             printf("%f\n",c[i]);
         }
     }
     else
     {
-        double b[COLUMN];
+        double b[column];
  
         /* (1) Each process get B Values from Master */
-        MPI_Recv(b, COLUMN, MPI_DOUBLE, 0, 99, MPI_COMM_WORLD, &Stat);
+        MPI_Recv(b, column, MPI_DOUBLE, 0, 99, MPI_COMM_WORLD, &Stat);
  
         /* (2) Get Required A Values from Master then Compute the result */
-        for (int i=0;i<ROW;i++)
+        for (int i=0;i<row;i++)
         {
-            int processor = mapProcesses(i, size);
+            int processor = mapProcesses(i, size, row);
             if (rank == processor)
             {
-                double buffer[COLUMN];
-                MPI_Recv(buffer, COLUMN, MPI_DOUBLE, 0, (100*(i+1)), MPI_COMM_WORLD, &Stat);
+                double buffer[column];
+                MPI_Recv(buffer, column, MPI_DOUBLE, 0, (100*(i+1)), MPI_COMM_WORLD, &Stat);
                 double sum = 0;
-                for (int j=0;j<COLUMN;j++)
+                for (int j=0;j<column;j++)
                 {
                     sum = sum + (buffer[j] * b[j] );
                 }
