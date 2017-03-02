@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     double totalTime = 0;
 
     int vectorSize = atoi(argv[1]);
+    int paddedVectorSize = atoi(argv[1]);
 	double * vector1;
 	double * vector2;
 	double dotProduct = 0;
@@ -39,8 +40,12 @@ int main(int argc, char *argv[])
 	double sumTemporary = 0;
 	if (rank == 0)
 	{
-		vector1 = (double *) malloc(sizeof(double)*vectorSize);
-		vector2 = (double *) malloc(sizeof(double)*vectorSize);
+		if (vectorSize%totalNumberOfProcesses != 0)
+		{
+			paddedVectorSize += (totalNumberOfProcesses-(vectorSize%totalNumberOfProcesses));
+		}
+		vector1 = (double *) calloc(paddedVectorSize,sizeof(double));
+		vector2 = (double *) calloc(paddedVectorSize,sizeof(double));
 
     	MPI_Bcast (&vectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
     	elementsAllocatedPerProcess = vectorSize/totalNumberOfProcesses;
@@ -60,71 +65,41 @@ int main(int argc, char *argv[])
 		{
 			printf ("%f\n", vector2[i]);
 		}	
-		if(vectorSize%totalNumberOfProcesses != 0)
-		{
-	    	elementsAllocatedPerProcess+=1;
-	    	for(i=0;i<(elementsAllocatedPerProcess*totalNumberOfProcesses - vectorSize);i++)
-	    	{
-	    		vector1[vectorSize+i] = 0;
-	    		vector2[vectorSize+i] = 0;
-	    	}
-		}
-		vector1Temporary = (double *) malloc(sizeof(double)*elementsAllocatedPerProcess);
-		vector2Temporary = (double *) malloc(sizeof(double)*elementsAllocatedPerProcess);
+		
+	}
+	MPI_Bcast(&vectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
+	MPI_Bcast(&elementsAllocatedPerProcess, 1, MPI_INT, 0, MPI_COMM_WORLD);
+	
+	vector1Temporary = (double *) calloc(elementsAllocatedPerProcess,sizeof(double));
+	vector2Temporary = (double *) calloc(elementsAllocatedPerProcess,sizeof(double));
+	
+	MPI_Scatter(vector1, elementsAllocatedPerProcess, MPI_DOUBLE, vector1Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+	MPI_Scatter(vector2, elementsAllocatedPerProcess, MPI_DOUBLE, vector2Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-		MPI_Bcast(&elementsAllocatedPerProcess, 1, MPI_INT, 0, MPI_COMM_WORLD);
+	double startTime = MPI_Wtime();
 
-		MPI_Scatter(vector1, elementsAllocatedPerProcess, MPI_DOUBLE, vector1Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+	for(i=0;i<elementsAllocatedPerProcess;i++)
+	{
+		sumTemporary += vector1Temporary[i]*vector2Temporary[i];
+	}
 
-		MPI_Scatter(vector2, elementsAllocatedPerProcess, MPI_DOUBLE, vector2Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+	MPI_Reduce(&sumTemporary, &dotProduct, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
-		double startTime = MPI_Wtime();
+	double endTime = MPI_Wtime();
 
-		for(i=0;i<elementsAllocatedPerProcess;i++)
-		{
-			sumTemporary = vector1Temporary[i]*vector2Temporary[i];
-		}
+	double temporaryTime = endTime - startTime;
 
-		MPI_Reduce(&sumTemporary, &dotProduct, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-
-		double endTime = MPI_Wtime();
-
-		double temporaryTime = endTime - startTime;
-
-		MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-
+	MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+	
+	if(rank == 0)
+	{
 		printf("Dot Product\n");
 		printf("%f\n", dotProduct);
 
 		printf("Time\n");
 		printf("%f\n", totalTime);
-    }
-	else
-	{
-		MPI_Bcast(&vectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
-		MPI_Bcast(&elementsAllocatedPerProcess, 1, MPI_INT, 0, MPI_COMM_WORLD);
-		
-		vector1Temporary = (double *) malloc(sizeof(double)*elementsAllocatedPerProcess);
-		vector2Temporary = (double *) malloc(sizeof(double)*elementsAllocatedPerProcess);
-		
-		MPI_Scatter(vector1, elementsAllocatedPerProcess, MPI_DOUBLE, vector1Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-		MPI_Scatter(vector2, elementsAllocatedPerProcess, MPI_DOUBLE, vector2Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-
-		double startTime = MPI_Wtime();
-
-		for(i=0;i<elementsAllocatedPerProcess;i++)
-		{
-			sumTemporary = vector1Temporary[i]*vector2Temporary[i];
-		}
-
-		MPI_Reduce(&sumTemporary, &dotProduct, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
-
-		double endTime = MPI_Wtime();
-
-		double temporaryTime = endTime - startTime;
-
-		MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 	}
+
 	MPI_Finalize();
 	return 0;
 }
