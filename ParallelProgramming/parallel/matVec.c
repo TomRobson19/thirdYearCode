@@ -1,8 +1,9 @@
-//mpicc -g3 vecDot.c -o vecDot
-//mpirun -n 4 ./vecDot
+//mpicc -g3 matVec.c -o matVec
+//mpirun -lm -n 4 ./matVec
 #include "mpi.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 int main(int argc, char *argv[])
 {
@@ -28,8 +29,6 @@ int main(int argc, char *argv[])
 	int totalNumberOfProcesses;
 
 	int rank;
-
-	int elementsAllocatedPerProcess;
 	
 	int i;
 	MPI_Status status;
@@ -39,10 +38,14 @@ int main(int argc, char *argv[])
 	MPI_Comm_size(MPI_COMM_WORLD, &totalNumberOfProcesses);
 
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	
+
+	int rowsPerProcess = (int) (ceil( ( (double) row)/( (double) totalNumberOfProcesses)));
+
+	int totalRows = rowsPerProcess*totalNumberOfProcesses;
+
 	vector = (double *) calloc(column,sizeof(double));
-	matrix = (double *) calloc(column*row,sizeof(double));
-	output = (double *) calloc(row,sizeof(double));
+	matrix = (double *) calloc(column*totalRows,sizeof(double));
+	output = (double *) calloc(totalRows,sizeof(double));
 
 	if (rank == 0)
 	{	
@@ -70,23 +73,26 @@ int main(int argc, char *argv[])
         }
     }
 
-	matrixTemporary = (double *) calloc(column,sizeof(double));
-	outputTemporary = (double *) calloc(1,sizeof(double));
+	matrixTemporary = (double *) calloc(column*rowsPerProcess,sizeof(double));
+	outputTemporary = (double *) calloc(totalRows,sizeof(double));
 	
 	MPI_Bcast(vector, column, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-	MPI_Scatter(matrix, column, MPI_DOUBLE, matrixTemporary, column, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+	MPI_Scatter(matrix, column*rowsPerProcess, MPI_DOUBLE, matrixTemporary, column*rowsPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
 	double startTime = MPI_Wtime();
 
-	for (int j=0;j<column;j++)
-    {
-        outputTemporary[0] += (matrixTemporary[j] * vector[j]);
-    }
+	for(int i=0;i<rowsPerProcess;i++)
+	{
+		for (int j=0;j<column;j++)
+	    {
+	        outputTemporary[i] += (matrixTemporary[(i*column)+j] * vector[j]);
+	    }
+	}
 
 	double endTime = MPI_Wtime();
 
-	MPI_Gather(outputTemporary, 1, MPI_DOUBLE, output, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+	MPI_Gather(outputTemporary, rowsPerProcess, MPI_DOUBLE, output, rowsPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
 	double temporaryTime = endTime - startTime;
 
@@ -96,11 +102,11 @@ int main(int argc, char *argv[])
 	{
 		printf("\nOutput :\n");
         for (int i=0;i<row;i++)
-        {
+        {	
             printf("%3f \n", output[i]);
         }
 
-		printf("Time\n");
+		printf("\nTime\n");
 		printf("%f\n", totalTime);
 	}
 
