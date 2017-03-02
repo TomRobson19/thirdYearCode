@@ -53,9 +53,9 @@ int main(int argc, char *argv[])
         {
             if (i<column) 
         	{
-        		vector[i] = rand() % 10;
+        		vector[i] = rand() % 1000;
         	}
-            matrix[i] = rand() % 10;
+            matrix[i] = rand() % 1000;
         }
 		printf("Matrix :");
         for (int i=0;i<row*column;i++)
