@@ -10,7 +10,7 @@ int mapProcesses(int i, int size, int row)
     size = size - 1;
     int r = row/size;
     int proc = i / r;
-    return proc + 1;
+    return proc;
 }
 
 int main(int argc, char** argv)
@@ -39,9 +39,9 @@ int main(int argc, char** argv)
             {
                 if (i==0) 
             	{
-            		b[j] = rand() % 1000;
+            		b[j] = rand() % 10;
             	}
-                a[i][j] = rand() % 1000;
+                a[i][j] = rand() % 10;
             }
         }
         /* Printing the Matrix*/
@@ -68,19 +68,27 @@ int main(int argc, char** argv)
         }
  
         /* (2) Sending Required A Values to specific process */
-        for (int i=0;i<row;i++)
+        for (int i=1;i<row;i++)
         {
             int processor = mapProcesses(i, size, row);
             MPI_Send(a[i], column, MPI_DOUBLE, processor, (100*(i+1)), MPI_COMM_WORLD);
         }
+
+        for (int j=0;j<column;j++)
+        {
+            c[0] = c[0] + (a[0][j] * b[j] );
+        }
  
         /* (3) Gathering the result from other processes*/
         printf("Output: \n");
-        for (int i=0;i<row;i++)
+        for (int i=1;i<row;i++)
         {
             int source_process = mapProcesses(i, size, row);
             MPI_Recv(&c[i], 1, MPI_DOUBLE, source_process, i, MPI_COMM_WORLD, &Stat);
-            printf("%f\n",c[i]);
+        }
+        for (int i=0;i<row;i++)
+        {
+        	printf("%f\n",c[i]);
         }
     }
     else
@@ -91,7 +99,7 @@ int main(int argc, char** argv)
         MPI_Recv(b, column, MPI_DOUBLE, 0, 99, MPI_COMM_WORLD, &Stat);
  
         /* (2) Get Required A Values from Master then Compute the result */
-        for (int i=0;i<row;i++)
+        for (int i=1;i<row;i++)
         {
             int processor = mapProcesses(i, size, row);
             if (rank == processor)

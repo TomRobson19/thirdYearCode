@@ -10,7 +10,7 @@ int mapProcesses(int i, int size, int arow)
     size = size - 1;
     int r = arow/size;
     int proc = i / r;
-    return proc + 1;
+    return proc;
 }
 
 int main(int argc, char** argv)
@@ -77,20 +77,30 @@ int main(int argc, char** argv)
             }
         }
         /* (2) Sending Required A Values to specific process */
-        for (int i=0;i<arow;i++)
+        for (int i=1;i<arow;i++)
         {
             int processor = mapProcesses(i, size, arow);
             MPI_Send(a[i], acolumn, MPI_DOUBLE, processor, (100*(i+1)), MPI_COMM_WORLD);
         }
+
+        for (int j=0;j<bcolumn;j++)
+        {
+            double sum = 0;
+            for (int z=0;z<acolumn;z++)
+            {
+                sum = sum + (a[0][z] * b[z][j] );
+            }
+            c[0][j] = sum;
+        }
  
         /* (3) Gathering the result from other processes*/
-        for (int i=0;i<arow;i++)
+        for (int i=1;i<arow;i++)
         {
             int source_process = mapProcesses(i, size, arow);
             MPI_Recv(c[i], bcolumn, MPI_DOUBLE, source_process, i, MPI_COMM_WORLD, &Stat);
         }
         /* Printing the Result */
-        printf("\nMatrix C :\n");
+        printf("\nOutput :\n");
         for (int i=0;i<arow;i++)
         {
             for (int x=0;x<bcolumn;x++)
@@ -109,7 +119,7 @@ int main(int argc, char** argv)
             MPI_Recv(b[x], bcolumn, MPI_DOUBLE, 0, 1000 + x, MPI_COMM_WORLD, &Stat);
         }
         /* (2) Get Required A Values from Master then Compute the result */
-        for (int i=0;i<arow;i++)
+        for (int i=1;i<arow;i++)
         {
             double c[bcolumn];
             int processor = mapProcesses(i, size, arow);
