@@ -4,13 +4,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main (int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	srand(0);
     if (argc < 2) {
         printf("Syntax: test <size of vector>\n");
         return 1;
     }
+
+    double totalTime = 0;
+
     int vectorSize = atoi(argv[1]);
 	double * vector1;
 	double * vector2;
@@ -75,6 +78,8 @@ int main (int argc, char *argv[])
 
 		MPI_Scatter(vector2, elementsAllocatedPerProcess, MPI_DOUBLE, vector2Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
+		double startTime = MPI_Wtime();
+
 		for(i=0;i<elementsAllocatedPerProcess;i++)
 		{
 			sumTemporary = vector1Temporary[i]*vector2Temporary[i];
@@ -82,8 +87,17 @@ int main (int argc, char *argv[])
 
 		MPI_Reduce(&sumTemporary, &dotProduct, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
+		double endTime = MPI_Wtime();
+
+		double temporaryTime = endTime - startTime;
+
+		MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+
 		printf("Dot Product\n");
 		printf("%f\n", dotProduct);
+
+		printf("Time\n");
+		printf("%f\n", totalTime);
     }
 	else
 	{
@@ -96,11 +110,20 @@ int main (int argc, char *argv[])
 		MPI_Scatter(vector1, elementsAllocatedPerProcess, MPI_DOUBLE, vector1Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 		MPI_Scatter(vector2, elementsAllocatedPerProcess, MPI_DOUBLE, vector2Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
+		double startTime = MPI_Wtime();
+
 		for(i=0;i<elementsAllocatedPerProcess;i++)
 		{
 			sumTemporary = vector1Temporary[i]*vector2Temporary[i];
 		}
+
 		MPI_Reduce(&sumTemporary, &dotProduct, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+
+		double endTime = MPI_Wtime();
+
+		double temporaryTime = endTime - startTime;
+
+		MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 	}
 	MPI_Finalize();
 	return 0;
