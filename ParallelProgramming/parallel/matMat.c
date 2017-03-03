@@ -39,9 +39,9 @@ int main(int argc, char *argv[])
 
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-	// int rowsPerProcess = (int) (ceil( ( (double) row)/( (double) totalNumberOfProcesses)));
+	int rowsPerProcess = (int) (ceil( ( (double) row)/( (double) totalNumberOfProcesses)));
 
-	// int totalRows = rowsPerProcess*totalNumberOfProcesses;
+	int totalRows = rowsPerProcess*totalNumberOfProcesses;
 
 	matrix1 = (double *) calloc(arow*acolumn,sizeof(double));
 	matrix2 = (double *) calloc(acolumn*bcolumn,sizeof(double));
@@ -86,3 +86,8 @@ int main(int argc, char *argv[])
 	}
 
 }
+
+
+////row of A x column of B
+
+////broadcast A to all processes, send out B row by row
