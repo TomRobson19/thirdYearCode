@@ -21,6 +21,9 @@ int main(int argc, char* argv[]) {
         v_size = atoi(argv[1]);
         v_size2 = atoi(argv[2]);
     }
+
+    clock_t start, end;
+    double addTime, dotTime, matVecTime, matMatTime;
     
     printf("Creating two vectors of size %d\n", v_size);
     double* vector1 = (double*) malloc(sizeof(double) * v_size);
@@ -55,10 +58,22 @@ int main(int argc, char* argv[]) {
     
     printf("Vector addition is : \n");
     
-    output_vector(vector_vector_addition(vector1, vector2, v_size), v_size);
+    start = clock();
+    double* addResult = vector_vector_addition(vector1, vector2, v_size);
+    end = clock();
+    addTime = ((double) (end - start)) / CLOCKS_PER_SEC;;
+
+    output_vector(addResult, v_size);
     
-    printf("Vector dot product is : %f \n", vector_vector_dot_prod(vector1, vector2, v_size));
+    printf("Vector dot product is : \n");
+
+    start = clock();
+    double dotProd = vector_vector_dot_prod(vector1, vector2, v_size);
+    end = clock();
+    dotTime = ((double) (end - start)) / CLOCKS_PER_SEC;
     
+    printf("%f\n", dotProd);
+
     printf("Matrix1 is : \n");
     output_matrix(matrix1, v_size, v_size2);
     
@@ -67,11 +82,21 @@ int main(int argc, char* argv[]) {
     
     printf("Matrix2 * vector1 is : \n");
     
-    output_vector(matrix_vector_multiplication(matrix2, vector1, v_size2, v_size), v_size2);
+    start = clock();
+    double* matVecResult = matrix_vector_multiplication(matrix2, vector1, v_size2, v_size);
+    end = clock();
+    matVecTime = ((double) (end - start)) / CLOCKS_PER_SEC;
+    
+    output_vector(matVecResult, v_size2);
     
     printf("Matrix matrix multiplication is : \n");
     
-    output_matrix(matrix_matrix_multiplication(matrix1, matrix2, v_size, v_size2, v_size), v_size, v_size);
+    start = clock();
+    double** matMatResult = matrix_matrix_multiplication(matrix1, matrix2, v_size, v_size2, v_size);
+    end = clock();
+    matMatTime = ((double) (end - start)) / CLOCKS_PER_SEC;
+    
+    output_matrix(matMatResult, v_size, v_size);
 }
 
 int output_vector(double* vector, int length) {
