@@ -97,6 +97,8 @@ int main(int argc, char* argv[]) {
     matMatTime = ((double) (end - start)) / CLOCKS_PER_SEC;
     
     output_matrix(matMatResult, v_size, v_size);
+
+    printf("Time Taken %f, %f, %f, %f\n",addTime,dotTime,matVecTime,matMatTime);
 }
 
 int output_vector(double* vector, int length) {
