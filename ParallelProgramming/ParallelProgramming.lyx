@@ -85,7 +85,7 @@ hzwr87
 \end_layout
 
 \begin_layout Standard
-Timed with MPI_Wtime
+Timed with MPI_Wtime, results in seconds
 \end_layout
 
 \begin_layout Standard
