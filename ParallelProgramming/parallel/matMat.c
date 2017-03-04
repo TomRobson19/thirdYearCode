@@ -44,9 +44,9 @@ int main(int argc, char *argv[])
 
 	int totalRows = rowsPerProcess*totalNumberOfProcesses;
 
-	matrix1 = (double *) calloc(arow*acolumnbrow,sizeof(double));
+	matrix1 = (double *) calloc(totalRows*acolumnbrow,sizeof(double));
 	matrix2 = (double *) calloc(acolumnbrow*bcolumn,sizeof(double));
-	output = (double *) calloc(arow*bcolumn,sizeof(double));
+	output = (double *) calloc(totalRows*bcolumn,sizeof(double));
 
 	if (rank == 0)
 	{
@@ -81,29 +81,35 @@ int main(int argc, char *argv[])
         printf("\n");
 	}
 
-	matrix1Temporary = (double *) calloc(arow*acolumnbrow,sizeof(double));
-	matrix2Temporary = (double *) calloc(acolumnbrow*bcolumn,sizeof(double));
+	matrix1Temporary = (double *) calloc(acolumnbrow*bcolumn,sizeof(double));
 	outputTemporary = (double *) calloc(arow*bcolumn,sizeof(double));
 
-	MPI_Bcast(matrix1, arow*totalRows, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+	MPI_Bcast(matrix2, acolumnbrow*bcolumn, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-	MPI_Scatter(matrix2, acolumnbrow*rowsPerProcess, MPI_DOUBLE, matrix2Temporary, acolumnbrow*rowsPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+	MPI_Scatter(matrix1, acolumnbrow*rowsPerProcess, MPI_DOUBLE, matrix1Temporary, acolumnbrow*rowsPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
 	double startTime = MPI_Wtime();
 
-	///MATHS GOES HERE
-
-
-
-
+	for(int i=0;i<rowsPerProcess;i++)
+	{
+		for(int j=0;j<bcolumn;j++)
+	    {
+	    	double dotProduct = 0;
+	    	for(int k=0;k<acolumnbrow;k++)
+	    	{
+	    		dotProduct += matrix1Temporary[(i*acolumnbrow)+k] * matrix2[(k*bcolumn)+j];
+	    	}
+	    	outputTemporary[(i*bcolumn)+j] = dotProduct;
+	    }
+	}
 
 	double endTime = MPI_Wtime();
 
-	//MPI_Gather(outputTemporary, rowsPerProcess, MPI_DOUBLE, output, rowsPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+	MPI_Gather(outputTemporary, rowsPerProcess*bcolumn, MPI_DOUBLE, output, rowsPerProcess*bcolumn, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
 	double temporaryTime = endTime - startTime;
 
-	//MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+	MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
 	if(rank == 0)
 	{
@@ -125,8 +131,3 @@ int main(int argc, char *argv[])
 	MPI_Finalize();
 	return 0;
 }
-
-
-////row of A x column of B
-
-////broadcast A to all processes, send out B row by row
