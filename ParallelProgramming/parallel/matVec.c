@@ -30,7 +30,6 @@ int main(int argc, char *argv[])
 
 	int rank;
 	
-	int i;
 	MPI_Status status;
 
 	MPI_Init(&argc, &argv);

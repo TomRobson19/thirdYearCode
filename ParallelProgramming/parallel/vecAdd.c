@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
 
 	int elementsAllocatedPerProcess;
 
-	int i;
 	MPI_Status status;
 
 	MPI_Init(&argc, &argv);
@@ -52,18 +51,18 @@ int main(int argc, char *argv[])
     	MPI_Bcast (&vectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
     	elementsAllocatedPerProcess = paddedVectorSize/totalNumberOfProcesses;
 
-		for(i=0;i<vectorSize;i++)
+		for(int i=0;i<vectorSize;i++)
 		{
 			vector1[i] = rand() % 1000;
 			vector2[i] = rand() % 1000;
 		}
 		printf("Vector1 :\n");
-		for(i=0;i<vectorSize;i++)
+		for(int i=0;i<vectorSize;i++)
 		{
 			printf("%f\n", vector1[i]);
 		}	
 		printf("Vector2 :\n");
-		for(i=0;i<vectorSize;i++)
+		for(int i=0;i<vectorSize;i++)
 		{
 			printf("%f\n", vector2[i]);
 		}
@@ -81,7 +80,7 @@ int main(int argc, char *argv[])
 
 	double startTime = MPI_Wtime();
 
-	for(i=0;i<elementsAllocatedPerProcess;i++)
+	for(int i=0;i<elementsAllocatedPerProcess;i++)
 	{
 		sumTemporary[i] = vector1Temporary[i]+vector2Temporary[i];
 	}
@@ -97,7 +96,7 @@ int main(int argc, char *argv[])
 	if(rank == 0)
 	{
 		printf("Sum :\n");
-		for(i=0;i<vectorSize;i++)
+		for(int i=0;i<vectorSize;i++)
 		{
 			printf("%f\n", sum[i]);
 		}
