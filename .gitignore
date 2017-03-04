@@ -60,3 +60,5 @@ ParallelProgramming/parallel/vecAdd
 ParallelProgramming/parallel/matVecOld
 
 ParallelProgramming/parallel/matMatOld
+
+ParallelProgramming/parallel/vecDotOld

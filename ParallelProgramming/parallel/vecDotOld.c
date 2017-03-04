@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     int paddedVectorSize = atoi(argv[1]);
 	double * vector1;
 	double * vector2;
-	double dotProduct = 0;
+	double * sum;
 
 	int totalNumberOfProcesses;
 
@@ -26,7 +26,6 @@ int main(int argc, char *argv[])
 
 	int elementsAllocatedPerProcess;
 	
-	int i;
 	MPI_Status status;
 
 	MPI_Init(&argc, &argv);
@@ -37,7 +36,7 @@ int main(int argc, char *argv[])
 	
 	double * vector1Temporary;
 	double * vector2Temporary;
-	double sumTemporary = 0;
+	double * sumTemporary;
 	if (rank == 0)
 	{
 		if (vectorSize%totalNumberOfProcesses != 0)
@@ -46,22 +45,23 @@ int main(int argc, char *argv[])
 		}
 		vector1 = (double *) calloc(paddedVectorSize,sizeof(double));
 		vector2 = (double *) calloc(paddedVectorSize,sizeof(double));
+		sum = (double *) calloc(paddedVectorSize,sizeof(double));
 
     	MPI_Bcast (&vectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
     	elementsAllocatedPerProcess = vectorSize/totalNumberOfProcesses;
 
-		for(i=0;i<vectorSize;i++)
+		for(int i=0;i<vectorSize;i++)
 		{
 			vector1[i] = rand() % 1000;
 			vector2[i] = rand() % 1000;
 		}
 		printf("Vector1: \n");
-		for(i=0;i<vectorSize;i++)
+		for(int i=0;i<vectorSize;i++)
 		{
 			printf ("%f\n", vector1[i]);
 		}	
 		printf("Vector2: \n");
-		for(i=0;i<vectorSize;i++)
+		for(int i=0;i<vectorSize;i++)
 		{
 			printf ("%f\n", vector2[i]);
 		}	
@@ -72,18 +72,19 @@ int main(int argc, char *argv[])
 	
 	vector1Temporary = (double *) calloc(elementsAllocatedPerProcess,sizeof(double));
 	vector2Temporary = (double *) calloc(elementsAllocatedPerProcess,sizeof(double));
+	sumTemporary = (double *) calloc(paddedVectorSize,sizeof(double));
 	
 	MPI_Scatter(vector1, elementsAllocatedPerProcess, MPI_DOUBLE, vector1Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 	MPI_Scatter(vector2, elementsAllocatedPerProcess, MPI_DOUBLE, vector2Temporary, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
 	double startTime = MPI_Wtime();
 
-	for(i=0;i<elementsAllocatedPerProcess;i++)
+	for(int i=0;i<elementsAllocatedPerProcess;i++)
 	{
-		sumTemporary += vector1Temporary[i]*vector2Temporary[i];
+		sumTemporary[i] = vector1Temporary[i]*vector2Temporary[i];
 	}
 
-	MPI_Reduce(&sumTemporary, &dotProduct, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+	MPI_Gather(sumTemporary, elementsAllocatedPerProcess, MPI_DOUBLE, sum, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
 	double endTime = MPI_Wtime();
 
@@ -93,6 +94,20 @@ int main(int argc, char *argv[])
 	
 	if(rank == 0)
 	{
+		double startTime = MPI_Wtime();
+		
+		double dotProduct = 0;
+		for (int i=0;i<vectorSize;i++)
+		{
+			dotProduct += sum[i];
+		}
+
+		double endTime = MPI_Wtime();
+
+		double temporaryTime = endTime - startTime;
+		
+		totalTime += temporaryTime;	
+
 		printf("Dot Product\n");
 		printf("%f\n", dotProduct);
 
