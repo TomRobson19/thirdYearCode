@@ -1,5 +1,5 @@
-//mpicc -g3 matMat.c -o matMat
-//mpirun -n 4 ./matMat
+//mpicc -g3 matMatOld.c -o matMatOld
+//mpirun -n 4 ./matMatOld
 #include "mpi.h"
 #include <stdio.h>
 #include <stdlib.h>

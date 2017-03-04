@@ -1,5 +1,5 @@
-//mpicc -g3 matVec.c -o matVec
-//mpirun -n 4 ./matVec
+//mpicc -g3 matVecOld.c -o matVecOld
+//mpirun -n 4 ./matVecOld
 #include "mpi.h"
 #include <stdio.h>
 #include <stdlib.h>
