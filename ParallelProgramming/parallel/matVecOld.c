@@ -17,6 +17,8 @@ int main(int argc, char** argv)
 {
 	srand(0);
 
+    double totalTime = 0;
+
 	int row = atoi(argv[1]);
 	int column = atoi(argv[2]);
 
@@ -74,11 +76,16 @@ int main(int argc, char** argv)
             MPI_Send(a[i], column, MPI_DOUBLE, processor, (100*(i+1)), MPI_COMM_WORLD);
         }
 
+        double startTime = MPI_Wtime();
         for (int j=0;j<column;j++)
         {
             c[0] = c[0] + (a[0][j] * b[j] );
         }
- 
+        double endTime = MPI_Wtime();
+
+        double temporaryTime = endTime - startTime;
+        
+        MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
         /* (3) Gathering the result from other processes*/
         printf("Output: \n");
         for (int i=1;i<row;i++)
@@ -106,11 +113,21 @@ int main(int argc, char** argv)
             {
                 double buffer[column];
                 MPI_Recv(buffer, column, MPI_DOUBLE, 0, (100*(i+1)), MPI_COMM_WORLD, &Stat);
+ 
+                double startTime = MPI_Wtime();
+ 
                 double sum = 0;
                 for (int j=0;j<column;j++)
                 {
                     sum = sum + (buffer[j] * b[j] );
                 }
+
+                double endTime = MPI_Wtime();
+
+                double temporaryTime = endTime - startTime;
+        
+                MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+
                 MPI_Send(&sum, 1, MPI_DOUBLE, 0, i, MPI_COMM_WORLD);
             }
         }
