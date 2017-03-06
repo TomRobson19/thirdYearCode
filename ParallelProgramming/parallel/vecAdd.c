@@ -56,15 +56,15 @@ int main(int argc, char *argv[])
 			vector1[i] = rand() % 1000;
 			vector2[i] = rand() % 1000;
 		}
-		//printf("Vector1 :\n");
+		// printf("Vector1 :\n");
 		// for(int i=0;i<vectorSize;i++)
 		// {
-		// 	//printf("%f\n", vector1[i]);
+		// 	printf("%f\n", vector1[i]);
 		// }	
-		// //printf("Vector2 :\n");
+		// printf("Vector2 :\n");
 		// for(int i=0;i<vectorSize;i++)
 		// {
-		// 	//printf("%f\n", vector2[i]);
+		// 	printf("%f\n", vector2[i]);
 		// }
 	}
 
@@ -95,10 +95,10 @@ int main(int argc, char *argv[])
 
 	if(rank == 0)
 	{
-		//printf("Sum :\n");
+		// printf("Sum :\n");
 		// for(int i=0;i<vectorSize;i++)
 		// {
-		// 	//printf("%f\n", sum[i]);
+		// 	printf("%f\n", sum[i]);
 		// }
 		printf("Time vecAdd size %d\n",vectorSize);
 		printf("%f\n", totalTime);
