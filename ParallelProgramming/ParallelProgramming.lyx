@@ -86,9 +86,6 @@ hzwr87
 
 \begin_layout Standard
 Timed with MPI_Wtime, results in seconds
-\end_layout
-
-\begin_layout Standard
 Calculate speedup using 
 \begin_inset Formula $S(p)=\frac{1}{f+\frac{(1-f)}{p}}$
 \end_inset
@@ -114,6 +111,7 @@ First, we setup the MPI environment, so that each processor knows the total
 
 \begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status collapsed
@@ -219,6 +217,7 @@ The dot product has been parallelised in a similar manner as the vector
 
 \begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status collapsed
@@ -293,6 +292,7 @@ Matrix Vector Multiplication
 
 \begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status collapsed
@@ -367,6 +367,7 @@ Matrix Matrix Multiplication
 
 \begin_layout Standard
 \begin_inset Float figure
+placement H
 wide false
 sideways false
 status collapsed
