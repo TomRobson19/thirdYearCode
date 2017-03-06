@@ -85,7 +85,6 @@ hzwr87
 \end_layout
 
 \begin_layout Standard
-Timed with MPI_Wtime, results in seconds
 Calculate speedup using 
 \begin_inset Formula $S(p)=\frac{1}{f+\frac{(1-f)}{p}}$
 \end_inset
@@ -106,6 +105,8 @@ First, we setup the MPI environment, so that each processor knows the total
  the appropriate data elements to perform their share of the computations.
  Once these computations have been performed on all processes, including
  the root, we gather them back together and output the result as a vector.
+ To ensure that each process is given the same number of elements, each
+ vector is padded when it is allocated.
  
 \end_layout
 
@@ -212,6 +213,7 @@ The dot product has been parallelised in a similar manner as the vector
  This reduction computes a total value from all of the calculations on each
  node, without needing to bring these values together on the root and sum
  them up here, which would have been less efficient.
+ As before, the vectors are padded.
  
 \end_layout
 
@@ -291,6 +293,16 @@ Matrix Vector Multiplication
 \end_layout
 
 \begin_layout Standard
+This calculation is performed by broadcasting the whole vector to all of
+ the processes, and then determining the number of rows of the matrix that
+ should be sent to each process.
+ As before, the matrix is padded with extra rows.
+ From here, the dot product of the vector and each row is calculated.
+ These results are then gathered together in the output array.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 placement H
 wide false
@@ -363,6 +375,18 @@ status collapsed
 
 \begin_layout Section
 Matrix Matrix Multiplication
+\end_layout
+
+\begin_layout Standard
+The procedure of matrix multiplication is performed in a very similar manner
+ as the matrix vector calculation.
+ In this instance, instead of broadcasting the vector, we broadcast one
+ of the matrices, and scatter the other matrix between the processes in
+ the same manner as before.
+ From here we find the dot product of each row and all of the columns of
+ the other matrix, and gather these responses in the pre-allocated output
+ matrix as before.
+ 
 \end_layout
 
 \begin_layout Standard
