@@ -1,0 +1,16 @@
+#!/bin/csh
+#SBATCH -p par6.q
+#SBATCH -N 2
+#SBATCH --ntasks-per-node=16
+#SBATCH -t 24:00:00
+#SBATCH --exclusive
+
+module purge
+module load slurm
+module load intelmpi/intel/5.0.3
+
+mpirun ./matVec 10 10
+mpirun ./matVec 100 100
+mpirun ./matVec 1000 1000
+mpirun ./matVec 10000 10000
+mpirun ./matVec 100000 100000 
