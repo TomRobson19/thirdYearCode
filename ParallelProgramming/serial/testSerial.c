@@ -9,7 +9,7 @@ int output_matrix(double** matrix, int size1, int size2);
 int main(int argc, char* argv[]) {
     srand(0);
     if (argc < 2) {
-        printf("Syntax: test <size of vector>\n");
+        //printf("Syntax: test <size of vector>\n");
         return 1;
     }
     int v_size = 0;
@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     clock_t start, end;
     double addTime, dotTime, matVecTime, matMatTime;
     
-    printf("Creating two vectors of size %d\n", v_size);
+    //printf("Creating two vectors of size %d\n", v_size);
     double* vector1 = (double*) malloc(sizeof(double) * v_size);
     double* vector2 = (double*) malloc(sizeof(double) * v_size);
     
@@ -51,52 +51,52 @@ int main(int argc, char* argv[]) {
         }
     }
     
-    printf("Vectors are : \n");
+    //printf("Vectors are : \n");
     
-    output_vector(vector1, v_size);
-    output_vector(vector2, v_size);
+    // output_vector(vector1, v_size);
+    // output_vector(vector2, v_size);
     
-    printf("Vector addition is : \n");
+    // printf("Vector addition is : \n");
     
     start = clock();
     double* addResult = vector_vector_addition(vector1, vector2, v_size);
     end = clock();
     addTime = ((double) (end - start)) / CLOCKS_PER_SEC;;
 
-    output_vector(addResult, v_size);
+    // output_vector(addResult, v_size);
     
-    printf("Vector dot product is : \n");
+    // printf("Vector dot product is : \n");
 
     start = clock();
     double dotProd = vector_vector_dot_prod(vector1, vector2, v_size);
     end = clock();
     dotTime = ((double) (end - start)) / CLOCKS_PER_SEC;
     
-    printf("%f\n", dotProd);
+    // printf("%f\n", dotProd);
 
-    printf("Matrix1 is : \n");
-    output_matrix(matrix1, v_size, v_size2);
+    // //printf("Matrix1 is : \n");
+    // output_matrix(matrix1, v_size, v_size2);
     
-    printf("Matrix2 is : \n");
-    output_matrix(matrix2, v_size2, v_size);
+    // printf("Matrix2 is : \n");
+    // output_matrix(matrix2, v_size2, v_size);
     
-    printf("Matrix2 * vector1 is : \n");
+    // printf("Matrix2 * vector1 is : \n");
     
     start = clock();
     double* matVecResult = matrix_vector_multiplication(matrix2, vector1, v_size2, v_size);
     end = clock();
     matVecTime = ((double) (end - start)) / CLOCKS_PER_SEC;
     
-    output_vector(matVecResult, v_size2);
+    // output_vector(matVecResult, v_size2);
     
-    printf("Matrix matrix multiplication is : \n");
+    // printf("Matrix matrix multiplication is : \n");
     
     start = clock();
     double** matMatResult = matrix_matrix_multiplication(matrix1, matrix2, v_size, v_size2, v_size);
     end = clock();
     matMatTime = ((double) (end - start)) / CLOCKS_PER_SEC;
     
-    output_matrix(matMatResult, v_size, v_size);
+    //output_matrix(matMatResult, v_size, v_size);
 
     printf("Time Taken %f, %f, %f, %f\n",addTime,dotTime,matVecTime,matMatTime);
 }

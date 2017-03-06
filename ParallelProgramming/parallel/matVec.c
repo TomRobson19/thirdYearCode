@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
 	srand(0);
     if (argc < 2) {
-        printf("Syntax: test <size of vector>\n");
+        //printf("Syntax: test <size of vector>\n");
         return 1;
     }
 
@@ -56,20 +56,20 @@ int main(int argc, char *argv[])
         	}
             matrix[i] = rand() % 1000;
         }
-		printf("Matrix :");
-        for (int i=0;i<row*column;i++)
-        {
-            if(i%column == 0)
-            {
-                printf("\n");
-            }
-            printf("%3f ", matrix[i]);
-        }
-        printf("\n\nVector :\n");
-        for (int i=0;i<column;i++)
-        {
-            printf("%3f \n", vector[i]);
-        }
+		// printf("Matrix :");
+  //       for (int i=0;i<row*column;i++)
+  //       {
+  //           if(i%column == 0)
+  //           {
+  //               printf("\n");
+  //           }
+  //           printf("%3f ", matrix[i]);
+  //       }
+  //       printf("\n\nVector :\n");
+  //       for (int i=0;i<column;i++)
+  //       {
+  //           printf("%3f \n", vector[i]);
+  //       }
     }
 
 	matrixTemporary = (double *) calloc(column*rowsPerProcess,sizeof(double));
@@ -99,13 +99,13 @@ int main(int argc, char *argv[])
 
 	if(rank == 0)
 	{
-		printf("\nOutput :\n");
-        for (int i=0;i<row;i++)
-        {	
-            printf("%3f \n", output[i]);
-        }
+		// printf("\nOutput :\n");
+  //       for (int i=0;i<row;i++)
+  //       {	
+  //           printf("%3f \n", output[i]);
+  //       }
 
-		printf("\nTime\n");
+		printf("Time matVec size %d %d\n",row,column);
 		printf("%f\n", totalTime);
 	}
 

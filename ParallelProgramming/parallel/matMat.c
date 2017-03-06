@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
 	srand(0);
     if (argc < 2) {
-        printf("Syntax: test <size of vector>\n");
+        //printf("Syntax: test <size of vector>\n");
         return 1;
     }
 
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
 	int arow = atoi(argv[1]);
 	int acolumnbrow = atoi(argv[2]);
-	int bcolumn = atoi(argv[3]);
+	int bcolumn = arow;
 
 	double * matrix1;
 	double * matrix2;
@@ -58,26 +58,26 @@ int main(int argc, char *argv[])
             matrix2[i] = rand() % 1000;
         }
         /* Printing the Matrix*/
-        printf("Matrix A :\n");
-        for (int i=0;i<arow*acolumnbrow;i++)
-        {
-            if(i%acolumnbrow == 0)
-            {
-                printf("\n");
-            }
-            printf("%3f ", matrix1[i]);
-        }
-        printf("\n");
-        printf("\nMatrix B :\n");
-        for (int i=0;i<acolumnbrow*bcolumn;i++)
-        {
-            if(i%bcolumn == 0)
-            {
-                printf("\n");
-            }
-            printf("%3f ", matrix2[i]);
-        }
-        printf("\n");
+        // printf("Matrix A :\n");
+        // for (int i=0;i<arow*acolumnbrow;i++)
+        // {
+        //     if(i%acolumnbrow == 0)
+        //     {
+        //         printf("\n");
+        //     }
+        //     printf("%3f ", matrix1[i]);
+        // }
+        // printf("\n");
+        // printf("\nMatrix B :\n");
+        // for (int i=0;i<acolumnbrow*bcolumn;i++)
+        // {
+        //     if(i%bcolumn == 0)
+        //     {
+        //         printf("\n");
+        //     }
+        //     printf("%3f ", matrix2[i]);
+        // }
+        // printf("\n");
 	}
 
 	matrix1Temporary = (double *) calloc(acolumnbrow*bcolumn,sizeof(double));
@@ -112,18 +112,18 @@ int main(int argc, char *argv[])
 
 	if(rank == 0)
 	{
-		printf("\nOutput :\n");
-        for (int i=0;i<arow*bcolumn;i++)
-        {
-            if(i%bcolumn == 0)
-            {
-                printf("\n");
-            }
-            printf("%3f ", output[i]);
-        }
-        printf("\n");
+		// printf("\nOutput :\n");
+  //       for (int i=0;i<arow*bcolumn;i++)
+  //       {
+  //           if(i%bcolumn == 0)
+  //           {
+  //               printf("\n");
+  //           }
+  //           printf("%3f ", output[i]);
+  //       }
+  //       printf("\n");
 
-		printf("\nTime\n");
+		printf("Time matMat size %d %d\n",arow,acolumnbrow);
 		printf("%f\n", totalTime);
 	}
 

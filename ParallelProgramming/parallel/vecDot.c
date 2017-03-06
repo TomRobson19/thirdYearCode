@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
 	srand(0);
     if (argc < 2) {
-        printf("Syntax: test <size of vector>\n");
+        //printf("Syntax: test <size of vector>\n");
         return 1;
     }
 
@@ -54,16 +54,16 @@ int main(int argc, char *argv[])
 			vector1[i] = rand() % 1000;
 			vector2[i] = rand() % 1000;
 		}
-		printf("Vector1: \n");
-		for(int i=0;i<vectorSize;i++)
-		{
-			printf ("%f\n", vector1[i]);
-		}	
-		printf("Vector2: \n");
-		for(int i=0;i<vectorSize;i++)
-		{
-			printf ("%f\n", vector2[i]);
-		}	
+		// printf("Vector1: \n");
+		// for(int i=0;i<vectorSize;i++)
+		// {
+		// 	printf ("%f\n", vector1[i]);
+		// }	
+		// printf("Vector2: \n");
+		// for(int i=0;i<vectorSize;i++)
+		// {
+		// 	printf ("%f\n", vector2[i]);
+		// }	
 		
 	}
 	MPI_Bcast(&vectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
@@ -92,10 +92,10 @@ int main(int argc, char *argv[])
 	
 	if(rank == 0)
 	{
-		printf("Dot Product\n");
-		printf("%f\n", dotProduct);
+		// printf("Dot Product\n");
+		// printf("%f\n", dotProduct);
 
-		printf("Time\n");
+		printf("Time vecDot size %d\n",vectorSize);
 		printf("%f\n", totalTime);
 	}
 
