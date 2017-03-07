@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
 
 	for(int i=0;i<elementsAllocatedPerProcess;i++)
 	{
-		sumTemporary[i] = vector1Temporary[i]+vector2Temporary[i];
+		sumTemporary[i] += vector1Temporary[i]+vector2Temporary[i];
 	}
 
 	double endTime = MPI_Wtime();
