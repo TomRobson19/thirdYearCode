@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 
 	double temporaryTime = endTime - startTime;
 
-	MPI_Gather(sumTemporary, elementsAllocatedPerProcess, MPI_DOUBLE, sum, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+	MPI_Gather(sumTemporary, elementsAllocatedPerProcess, MPI_DOUBLE, sum, elementsAllocatedPerProcess+2, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
 	MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
