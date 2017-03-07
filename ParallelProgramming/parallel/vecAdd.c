@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 		sum = (double *) calloc(paddedVectorSize,sizeof(double));
 
     	MPI_Bcast (&vectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    	elementsAllocatedPerProcess = paddedVectorSize/totalNumberOfProcesses +1;
+    	elementsAllocatedPerProcess = paddedVectorSize/totalNumberOfProcesses;
 
 		for(int i=0;i<vectorSize;i++)
 		{
