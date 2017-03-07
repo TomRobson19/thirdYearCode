@@ -84,7 +84,6 @@ int main(int argc, char *argv[])
 	}
 
 	double endTime = MPI_Wtime();
-
 	double temporaryTime = endTime - startTime;
 
 	//MPI_Gather(sumTemporary, elementsAllocatedPerProcess, MPI_DOUBLE, sum, elementsAllocatedPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
