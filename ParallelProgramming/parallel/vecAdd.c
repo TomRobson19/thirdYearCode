@@ -37,19 +37,20 @@ int main(int argc, char *argv[])
     double * vector1Temporary;
 	double * vector2Temporary;
 	double * sumTemporary;
+
+	if (vectorSize%totalNumberOfProcesses != 0)
+	{
+		paddedVectorSize += (totalNumberOfProcesses-(vectorSize%totalNumberOfProcesses));
+	}
+   	elementsAllocatedPerProcess = paddedVectorSize/totalNumberOfProcesses;
+
 	if (rank == 0)
 	{
-		if (vectorSize%totalNumberOfProcesses != 0)
-		{
-			paddedVectorSize += (totalNumberOfProcesses-(vectorSize%totalNumberOfProcesses));
-		}
-
 		vector1 = (double *) calloc(paddedVectorSize,sizeof(double));
 		vector2 = (double *) calloc(paddedVectorSize,sizeof(double));
 		sum = (double *) calloc(paddedVectorSize,sizeof(double));
 
     	MPI_Bcast (&vectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
-    	elementsAllocatedPerProcess = paddedVectorSize/totalNumberOfProcesses;
 
 		for(int i=0;i<vectorSize;i++)
 		{
@@ -68,8 +69,8 @@ int main(int argc, char *argv[])
 		// }
 	}
 
-	MPI_Bcast(&paddedVectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
-	MPI_Bcast(&elementsAllocatedPerProcess, 1, MPI_INT, 0, MPI_COMM_WORLD);
+	// MPI_Bcast(&paddedVectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
+	// MPI_Bcast(&elementsAllocatedPerProcess, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
 	vector1Temporary = (double *) calloc(elementsAllocatedPerProcess,sizeof(double));
 	vector2Temporary = (double *) calloc(elementsAllocatedPerProcess,sizeof(double));
