@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-	int rowsPerProcess = (int) (ceil( ( (double) acolumnbrow)/( (double) totalNumberOfProcesses)));
+	int rowsPerProcess = (int) (ceil( ( (double) arow)/( (double) totalNumberOfProcesses)));
 
 	int totalRows = rowsPerProcess*totalNumberOfProcesses;
 
@@ -49,11 +49,11 @@ int main(int argc, char *argv[])
 
 	if (rank == 0)
 	{
-		for (int i=0;i<arow*totalRows;i++)
+		for (int i=0;i<arow*acolumnbrow;i++)
         {
             matrix1[i] = rand() % 1000;
         }
-        for (int i=0;i<totalRows*bcolumn;i++)
+        for (int i=0;i<acolumnbrow*bcolumn;i++)
         {
             matrix2[i] = rand() % 1000;
         }
@@ -80,12 +80,12 @@ int main(int argc, char *argv[])
         // printf("\n");
 	}
 
-	matrix1Temporary = (double *) calloc(acolumnbrow*bcolumn,sizeof(double));
-	outputTemporary = (double *) calloc(arow*bcolumn,sizeof(double));
+	matrix1Temporary = (double *) calloc(totalRows*acolumnbrow,sizeof(double));
+	outputTemporary = (double *) calloc(totalRows*bcolumn,sizeof(double));
 
 	MPI_Bcast(matrix2, acolumnbrow*bcolumn, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-	MPI_Scatter(matrix1, acolumnbrow*rowsPerProcess, MPI_DOUBLE, matrix1Temporary, acolumnbrow*rowsPerProcess, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+	MPI_Scatter(matrix1,acolumnbrow*rowsPerProcess,MPI_DOUBLE,matrix1Temporary,acolumnbrow*rowsPerProcess,MPI_DOUBLE,0,MPI_COMM_WORLD);
 
 	double startTime = MPI_Wtime();
 
