@@ -69,9 +69,6 @@ int main(int argc, char *argv[])
 		// }
 	}
 
-	// MPI_Bcast(&paddedVectorSize, 1, MPI_INT, 0, MPI_COMM_WORLD);
-	// MPI_Bcast(&elementsAllocatedPerProcess, 1, MPI_INT, 0, MPI_COMM_WORLD);
-
 	vector1Temporary = (double *) calloc(elementsAllocatedPerProcess,sizeof(double));
 	vector2Temporary = (double *) calloc(elementsAllocatedPerProcess,sizeof(double));
 	sumTemporary = (double *) calloc(elementsAllocatedPerProcess,sizeof(double));
@@ -83,7 +80,7 @@ int main(int argc, char *argv[])
 
 	for(int i=0;i<elementsAllocatedPerProcess;i++)
 	{
-		sumTemporary[i] += vector1Temporary[i]+vector2Temporary[i];
+		sumTemporary[i] = vector1Temporary[i]+vector2Temporary[i];
 	}
 
 	double endTime = MPI_Wtime();
