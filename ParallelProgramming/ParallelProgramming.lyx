@@ -92,6 +92,10 @@ Calculate speedup using
 , f is serial code, 1-f is parallel, p is processes/threads.
 \end_layout
 
+\begin_layout Standard
+GET SERIAL TIMING BY RUNNING PARALLEL CODE ON 1 PROCESS
+\end_layout
+
 \begin_layout Section
 Vector Addition
 \end_layout
