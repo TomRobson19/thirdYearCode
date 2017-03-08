@@ -3,8 +3,8 @@
 #include <time.h>
 #include "linearAlgebraSerial.h"
 
-int output_vector(double* vector, int length);
-int output_matrix(double** matrix, int size1, int size2);
+// int output_vector(double* vector, int length);
+// int output_matrix(double** matrix, int size1, int size2);
 
 int main(int argc, char* argv[]) {
     srand(0);
@@ -82,46 +82,46 @@ int main(int argc, char* argv[]) {
     
     // printf("Matrix2 * vector1 is : \n");
     
-    start = clock();
-    double* matVecResult = matrix_vector_multiplication(matrix2, vector1, v_size2, v_size);
-    end = clock();
-    matVecTime = ((double) (end - start)) / CLOCKS_PER_SEC;
+    // start = clock();
+    // double* matVecResult = matrix_vector_multiplication(matrix2, vector1, v_size2, v_size);
+    // end = clock();
+    // matVecTime = ((double) (end - start)) / CLOCKS_PER_SEC;
     
-    // output_vector(matVecResult, v_size2);
+    // // output_vector(matVecResult, v_size2);
     
-    // printf("Matrix matrix multiplication is : \n");
+    // // printf("Matrix matrix multiplication is : \n");
     
-    start = clock();
-    double** matMatResult = matrix_matrix_multiplication(matrix1, matrix2, v_size, v_size2, v_size);
-    end = clock();
-    matMatTime = ((double) (end - start)) / CLOCKS_PER_SEC;
+    // start = clock();
+    // double** matMatResult = matrix_matrix_multiplication(matrix1, matrix2, v_size, v_size2, v_size);
+    // end = clock();
+    // matMatTime = ((double) (end - start)) / CLOCKS_PER_SEC;
     
     //output_matrix(matMatResult, v_size, v_size);
 
     printf("Time Taken %f, %f, %f, %f\n",addTime,dotTime,matVecTime,matMatTime);
 }
 
-int output_vector(double* vector, int length) {
-    printf("[ ");
-    for (int i = 0; i < length; i++) {
-        if (i < length - 1)
-            printf(" %.0f ;", vector[i]);
-        else
-            printf(" %.0f ", vector[i]);
-    }
-    printf(" ]\n");
-    return 1;
-}
+// int output_vector(double* vector, int length) {
+//     printf("[ ");
+//     for (int i = 0; i < length; i++) {
+//         if (i < length - 1)
+//             printf(" %.0f ;", vector[i]);
+//         else
+//             printf(" %.0f ", vector[i]);
+//     }
+//     printf(" ]\n");
+//     return 1;
+// }
 
-int output_matrix(double** matrix, int rows, int columns) {
-    printf("[ ");
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < columns; j++) {
-            printf(" %.0f ", matrix[i][j]);
-        }
-        if (i < rows - 1)
-            printf(";\n");
-    }
-    printf(" ]\n");
-    return 1;
-}
+// int output_matrix(double** matrix, int rows, int columns) {
+//     printf("[ ");
+//     for (int i = 0; i < rows; i++) {
+//         for (int j = 0; j < columns; j++) {
+//             printf(" %.0f ", matrix[i][j]);
+//         }
+//         if (i < rows - 1)
+//             printf(";\n");
+//     }
+//     printf(" ]\n");
+//     return 1;
+// }

@@ -13,4 +13,3 @@ mpirun ./matMat 10 10
 mpirun ./matMat 100 100
 mpirun ./matMat 1000 1000
 mpirun ./matMat 10000 10000
-mpirun ./matMat 100000 100000
