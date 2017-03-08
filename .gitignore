@@ -64,3 +64,7 @@ ParallelProgramming/parallel/matMatOld
 ParallelProgramming/parallel/vecDotOld
 
 ParallelProgramming/serial/test
+
+ParallelProgramming/serial/testMat
+
+ParallelProgramming/serial/testVec
