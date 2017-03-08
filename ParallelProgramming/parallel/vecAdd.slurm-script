@@ -9,4 +9,4 @@ module purge
 module load slurm
 module load intelmpi/intel/5.0.3
 
-mpirun ./vecAdd 100000
+mpirun ./vecAdd 10000
