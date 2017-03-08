@@ -19,3 +19,7 @@ mpirun ./vecDot 10000000
 mpirun ./vecDot 100000000
 mpirun ./vecDot 1000000000
 mpirun ./vecDot 10000000000
+mpirun ./vecDot 100000000000
+mpirun ./vecDot 1000000000000
+mpirun ./vecDot 10000000000000
+mpirun ./vecDot 100000000000000
