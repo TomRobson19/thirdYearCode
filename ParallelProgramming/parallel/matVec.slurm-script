@@ -2,7 +2,7 @@
 #SBATCH -p par6.q
 #SBATCH -N 2
 #SBATCH --ntasks-per-node=16
-#SBATCH -t 24:00:00
+#SBATCH -t 2:00:00
 #SBATCH --exclusive
 
 module purge
@@ -14,5 +14,3 @@ mpirun ./matVec 100 100
 mpirun ./matVec 1000 1000
 mpirun ./matVec 10000 10000
 mpirun ./matVec 100000 100000 
-mpirun ./matVec 1000000 1000000
-
