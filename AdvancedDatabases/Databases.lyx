@@ -191,7 +191,7 @@ status open
 
 \begin_layout Plain Layout
 
-<title lang=italian> Spaghetti Ricette </title>
+<title lang="italian"> Spaghetti Ricette </title>
 \end_layout
 
 \begin_layout Plain Layout
@@ -224,7 +224,7 @@ status open
 
 \begin_layout Plain Layout
 
-/bookstore/book[@category = 'Web']/author[1]
+/bookstore/book[@category = "Web"]/author[1]
 \end_layout
 
 \end_inset
@@ -329,12 +329,17 @@ status open
 
 \begin_layout Plain Layout
 
-let $average := avg(/bookstore/book[year='2005']/price)
+let $average := avg(/bookstore/book[year=2005]/price)
 \end_layout
 
 \begin_layout Plain Layout
 
-for $i in /bookstore/book where $i/price > $average 
+for $i in /bookstore/book 
+\end_layout
+
+\begin_layout Plain Layout
+
+where $i/price > $average 
 \end_layout
 
 \begin_layout Plain Layout
