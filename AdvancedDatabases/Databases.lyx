@@ -191,17 +191,17 @@ status open
 
 \begin_layout Plain Layout
 
-<title lang=italian>Spaghetti Ricette</title>
+<title lang=italian> Spaghetti Ricette </title>
 \end_layout
 
 \begin_layout Plain Layout
 
-<title>XQuery Start</title>
+<title> XQuery Start </title>
 \end_layout
 
 \begin_layout Plain Layout
 
-<title>Learning XML</title>
+<title> Learning XML </title>
 \end_layout
 
 \end_inset
@@ -243,12 +243,12 @@ status open
 
 \begin_layout Plain Layout
 
-<author>Per Bothner</author> 
+<author> Per Bothner </author> 
 \end_layout
 
 \begin_layout Plain Layout
 
-<author>Erik Ray</author>
+<author> Erik Ray </author>
 \end_layout
 
 \end_inset
@@ -271,22 +271,22 @@ status open
 
 \begin_layout Plain Layout
 
-for $x in /bookstore/book 
+for $i in /bookstore/book 
 \end_layout
 
 \begin_layout Plain Layout
 
-where $x/price>40 and $x/year=2003 
+where $i/price>40 and $i/year=2003 
 \end_layout
 
 \begin_layout Plain Layout
 
-order by $x/author[2] 
+order by $i/author[2] 
 \end_layout
 
 \begin_layout Plain Layout
 
-return $x/author[2]
+return $i/author[2]
 \end_layout
 
 \end_inset
@@ -305,7 +305,7 @@ status open
 
 \begin_layout Plain Layout
 
-<author>Kurt Cagle</author>
+<author> Kurt Cagle </author>
 \end_layout
 
 \end_inset
@@ -334,12 +334,12 @@ let $average := avg(/bookstore/book[year='2005']/price)
 
 \begin_layout Plain Layout
 
-for $x in /bookstore/book where $x/price > $average 
+for $i in /bookstore/book where $i/price > $average 
 \end_layout
 
 \begin_layout Plain Layout
 
-return $x/author[$x]
+return $i/author[$x]
 \end_layout
 
 \end_inset
@@ -358,32 +358,32 @@ status open
 
 \begin_layout Plain Layout
 
-<author>Giada Laurentis</author> 
+<author> Giada Laurentis </author> 
 \end_layout
 
 \begin_layout Plain Layout
 
-<author>Per Bothner</author> 
+<author> Per Bothner </author> 
 \end_layout
 
 \begin_layout Plain Layout
 
-<author>Kurt Cagle</author> 
+<author> Kurt Cagle </author> 
 \end_layout
 
 \begin_layout Plain Layout
 
-<author>James Linn</author> 
+<author> James Linn </author> 
 \end_layout
 
 \begin_layout Plain Layout
 
-<author>Vaidy Nagar</author> 
+<author> Vaidy Nagar </author> 
 \end_layout
 
 \begin_layout Plain Layout
 
-<author>Erik Ray</author>
+<author> Erik Ray </author>
 \end_layout
 
 \end_inset
