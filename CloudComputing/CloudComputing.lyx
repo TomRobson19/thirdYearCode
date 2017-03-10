@@ -89,7 +89,15 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-For this scenario the product we will consider is 
+For this scenario the product we will consider is an internet enabled car.
+ This would record data about how the various components of the car are
+ functioning under various conditions.
+ This would also monitor the mileage covered by the user and their driving
+ style, in order to inform the manufacturer if components are easily damaged
+ by certain driving styles.
+ Below, we shall examine the considerations this company should make for
+ implementing an IT infrastructure for this purpose.
+ 
 \end_layout
 
 \begin_layout Section*
@@ -142,6 +150,17 @@ How do the IaaS, PaaS and SaaS offerings differ between your selected providers
 Note: multiple services can be bought/implemented from different sources
  if it is the most efficient (financial and technical) solution.
  (35% [10% each consideration + 5% for any other considerations])
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "cloud"
+options "plain"
+
+\end_inset
+
+
 \end_layout
 
 \end_body
