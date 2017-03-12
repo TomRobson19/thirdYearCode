@@ -92,10 +92,6 @@ Calculate speedup using
 , f is serial code, 1-f is parallel, p is processes/threads.
 \end_layout
 
-\begin_layout Standard
-GET SERIAL TIMING BY RUNNING PARALLEL CODE ON 1 PROCESS
-\end_layout
-
 \begin_layout Section
 Vector Addition
 \end_layout
@@ -212,8 +208,9 @@ Vector Dot Product
 \begin_layout Standard
 The dot product has been parallelised in a similar manner as the vector
  addition.
- The difference is that we replace gather from before with a reduce, because
- in this case the final result is one value rather than an array.
+ The difference is that we replace the gather from before with a reduce,
+ because in this case the final result that we need to bring together from
+ all processes is one value rather than an array.
  This reduction computes a total value from all of the calculations on each
  node, without needing to bring these values together on the root and sum
  them up here, which would have been less efficient.
@@ -293,16 +290,19 @@ status collapsed
 \end_layout
 
 \begin_layout Section
-Matrix Vector Multiplication
+Matrix-Vector Multiplication
 \end_layout
 
 \begin_layout Standard
-This calculation is performed by broadcasting the whole vector to all of
- the processes, and then determining the number of rows of the matrix that
- should be sent to each process.
- As before, the matrix is padded with extra rows.
- From here, the dot product of the vector and each row is calculated.
- These results are then gathered together in the output array.
+The parallel calculation of matrix-vector multiplication is performed by
+ first broadcasting the whole vector to all of the processes, then determining
+ the number of rows of the matrix that should be sent to each process.
+ As before, the matrix is padded with extra rows to ensure that the call
+ to scatter works correctly.
+ From here, the matrix-vector multiplication is performed by calculating
+ the dot product of the vector and each row.
+ The results of these dot products are then gathered together in the output
+ array.
  
 \end_layout
 
@@ -378,7 +378,7 @@ status collapsed
 \end_layout
 
 \begin_layout Section
-Matrix Matrix Multiplication
+Matrix-Matrix Multiplication
 \end_layout
 
 \begin_layout Standard
