@@ -10,4 +10,11 @@ module load slurm
 module load intelmpi/intel/5.0.3
 
 mpirun ./vecAdd 10
+mpirun ./vecAdd 100
+mpirun ./vecAdd 1000
+mpirun ./vecAdd 10000
+mpirun ./vecAdd 100000
 mpirun ./vecAdd 1000000
+mpirun ./vecAdd 10000000
+mpirun ./vecAdd 100000000
+mpirun ./vecAdd 1000000000
