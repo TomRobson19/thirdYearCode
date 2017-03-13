@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
 
 	double temporaryTime = endTime - startTime;
 
-	MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+	MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
 
 	if(rank == 0)
 	{
