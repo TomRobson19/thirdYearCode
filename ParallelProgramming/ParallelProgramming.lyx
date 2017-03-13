@@ -84,14 +84,6 @@ Computing Methodologies - Parallel Programming
 hzwr87
 \end_layout
 
-\begin_layout Standard
-Calculate speedup using 
-\begin_inset Formula $S(p)=\frac{1}{f+\frac{(1-f)}{p}}$
-\end_inset
-
-, f is serial code, 1-f is parallel, p is processes/threads.
-\end_layout
-
 \begin_layout Section
 Vector Addition
 \end_layout
@@ -111,21 +103,25 @@ First, we setup the MPI environment, so that each processor knows the total
 \end_layout
 
 \begin_layout Standard
+This method of distribution seems to be the only efficient way to perform
+ this calculation.
+ Another way to do it would be looping through each element of the vectors
+ and using MPI send and recieve to transmit the data, but that would be
+ less efficient than scatter and gather.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
 status collapsed
-
-\begin_layout Plain Layout
-
-\end_layout
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
@@ -184,7 +180,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
+Vector Addition Graphs
 \end_layout
 
 \end_inset
@@ -219,11 +215,22 @@ The dot product has been parallelised in a similar manner as the vector
 \end_layout
 
 \begin_layout Standard
+As with the previous approach, this method of distribution seems to be the
+ only efficient way to perform this calculation.
+ Another way to do it would be looping through each element of the vectors
+ and using MPI send and recieve to transmit the data, but that would be
+ less efficient than scatter and reduce.
+ Scatter and gather could also be used again as before, and then the sum
+ could be calculated on the root process.
+ However, this would be less efficient than using a reduce.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -276,7 +283,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
+Vector Dot Product Graphs
 \end_layout
 
 \end_inset
@@ -307,11 +314,18 @@ The parallel calculation of matrix-vector multiplication is performed by
 \end_layout
 
 \begin_layout Standard
+This method is more efficient than simply broadcasting the entire matrix
+ to all processes, as it leads to less data transfer and superior allocation
+ of calculations amongst the processes.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -364,7 +378,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
+Matrix-Vector Multiplication Graphs
 \end_layout
 
 \end_inset
@@ -394,11 +408,18 @@ The procedure of matrix multiplication is performed in a very similar manner
 \end_layout
 
 \begin_layout Standard
+As mentioned above, this scattering of the second matrix rather than simply
+ broadcasting both leads to less data transfer and superior allocation of
+ calculations amongst the processes.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Float figure
@@ -451,7 +472,7 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-
+Matrix-Matrix Multiplication Graphs
 \end_layout
 
 \end_inset
