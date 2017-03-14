@@ -109,7 +109,8 @@ The speedup over number of threads was calculated on an input size of 1000000000
  on between 1 and 5 Hamilton nodes, with 16 threads per node.
  The execution time was calculated over a range of input sizes on 2 Hamilton
  nodes on 16 threads per node.
- 
+ The average efficiency of my approach over the full range of threads was
+ 0.92.
 \end_layout
 
 \begin_layout Standard
@@ -212,7 +213,8 @@ The speedup over number of threads was calculated on an input size of 1000000000
  on between 1 and 5 Hamilton nodes, with 16 threads per node.
  The execution time was calculated over a range of input sizes on 2 Hamilton
  nodes on 16 threads per node.
- 
+ The average efficiency of my approach over the full range of threads was
+ 0.11.
 \end_layout
 
 \begin_layout Standard
@@ -312,7 +314,8 @@ The speedup over number of threads was calculated on an input size of 10000
  on between 1 and 5 Hamilton nodes, with 16 threads per node.
  The execution time was calculated over a range of input sizes on 2 Hamilton
  nodes on 16 threads per node.
- 
+ The average efficiency of my approach over the full range of threads was
+ 0.51.
 \end_layout
 
 \begin_layout Standard
@@ -411,7 +414,8 @@ The speedup over number of threads was calculated on an input size of 10000
  on between 1 and 5 Hamilton nodes, with 16 threads per node.
  The execution time was calculated over a range of input sizes on 2 Hamilton
  nodes on 16 threads per node.
- 
+ The average efficiency of my approach over the full range of threads was
+ 0.47.
 \end_layout
 
 \begin_layout Standard
