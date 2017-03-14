@@ -85,7 +85,7 @@ int main(int argc, char** argv)
 
         double temporaryTime = endTime - startTime;
         
-        MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+        MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
         /* (3) Gathering the result from other processes*/
         printf("Output: \n");
         for (int i=1;i<row;i++)
@@ -126,7 +126,7 @@ int main(int argc, char** argv)
 
                 double temporaryTime = endTime - startTime;
         
-                MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+                MPI_Reduce(&temporaryTime, &totalTime, 1, MPI_DOUBLE, MPI_MAX, 0, MPI_COMM_WORLD);
 
                 MPI_Send(&sum, 1, MPI_DOUBLE, 0, i, MPI_COMM_WORLD);
             }
