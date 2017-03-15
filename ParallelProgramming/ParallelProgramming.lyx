@@ -89,7 +89,7 @@ Vector Addition
 \end_layout
 
 \begin_layout Standard
-First, we setup the MPI environment, so that each processor knows the total
+First, we setup the MPI environment, so that each process knows the total
  number of processes in the system, its own rank and the size of the vectors.
  Once the vectors have been generated, we inform the other processes of
  how many elements have been allocated to each of them.
@@ -118,15 +118,22 @@ The speedup over number of threads was calculated on an input size of 1000000000
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/vecAddThreads.png
+	scale 40
+
+\end_inset
+
+
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -148,9 +155,16 @@ Graph of Speedup over Number of Threads
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/vecAddInput.png
+	scale 40
+
+\end_inset
+
+
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -176,6 +190,13 @@ Vector Addition Graphs
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
 \end_inset
 
 
@@ -215,6 +236,12 @@ The speedup over number of threads was calculated on an input size of 1000000000
  nodes on 16 threads per node.
  The average efficiency of my approach over the full range of threads was
  0.11.
+ This relatively low speedup value compared to the other functions, as well
+ as the strange shape of the graph, is due to the fact that as we are using
+ a reduce here, we do not know the answer until this has been calculated.
+ Therefore, unlike in the other functions, this part of the MPI communication
+ must be included in our timing.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -222,15 +249,22 @@ The speedup over number of threads was calculated on an input size of 1000000000
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/vecDotThreads.png
+	scale 40
+
+\end_inset
+
+
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -252,9 +286,16 @@ Graph of Speedup over Number of Threads
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/vecDotInput.png
+	scale 40
+
+\end_inset
+
+
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -285,6 +326,13 @@ Vector Dot Product Graphs
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Matrix-Vector Multiplication
 \end_layout
@@ -306,6 +354,11 @@ The parallel calculation of matrix-vector multiplication is performed by
 This method is more efficient than simply broadcasting the entire matrix
  to all processes, as it leads to less data transfer and superior allocation
  of calculations amongst the processes.
+ Another alternative approach would be not to break down the problem by
+ rows of the matrix, but breaking down each dot product and caluclating
+ this across multiple processes using the method described in part 2.
+ Due to the increased need for MPI communication that this method would
+ entail however, this method would be less efficient.
  
 \end_layout
 
@@ -323,15 +376,22 @@ The speedup over number of threads was calculated on an input size of 10000
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/matVecThreads.png
+	scale 40
+
+\end_inset
+
+
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -353,9 +413,16 @@ Graph of Speedup over Number of Threads
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/matVecInput.png
+	scale 40
+
+\end_inset
+
+
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -386,6 +453,13 @@ Matrix-Vector Multiplication Graphs
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Matrix-Matrix Multiplication
 \end_layout
@@ -398,7 +472,7 @@ The procedure of matrix multiplication is performed in a very similar manner
  the same manner as before.
  From here we find the dot product of each row and all of the columns of
  the other matrix, and gather these responses in the pre-allocated output
- matrix as before.
+ matrix in a similar manner to before.
  
 \end_layout
 
@@ -406,6 +480,13 @@ The procedure of matrix multiplication is performed in a very similar manner
 As mentioned above, this scattering of the second matrix rather than simply
  broadcasting both leads to less data transfer and superior allocation of
  calculations amongst the processes.
+ The matrix could have been scattered by column instead of by row, and the
+ effectiveness of this compared to the implemented version provided and
+ described above would depend on whether there are more rows or columns
+ in the matrices.
+ Another option would be to break the matrix into smaller matrices, and
+ perform the full matrix multiplication of each of these smaller matrices
+ on each process before bringing them together to get the final output.
  
 \end_layout
 
@@ -423,15 +504,22 @@ The speedup over number of threads was calculated on an input size of 10000
 placement H
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/matMatThreads.png
+	scale 40
+
+\end_inset
+
+
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -453,9 +541,16 @@ Graph of Speedup over Number of Threads
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/matMatInput.png
+	scale 40
+
+\end_inset
+
+
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
