@@ -344,7 +344,7 @@ where $i/price > $average
 
 \begin_layout Plain Layout
 
-return $i/author[$x]
+return $i/author[$i]
 \end_layout
 
 \end_inset
@@ -411,17 +411,17 @@ status open
 
 \begin_layout Plain Layout
 
-let $categories := fn:distinct-values(doc("books.xml")bookstore/book/[@category])
+let $cats := fn:distinct-values(doc("books.xml")bookstore/book/[@category])
 \end_layout
 
 \begin_layout Plain Layout
 
-for $category in $categories 
+for $category in $cats
 \end_layout
 
 \begin_layout Plain Layout
 
-let $count := fn:count(doc("books.xml")bookstore/book[@category = $category])
+let $count := fn:count(doc("books.xml")bookstore/book[@category=$category])
  
 \end_layout
 
