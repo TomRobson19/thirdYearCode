@@ -147,6 +147,15 @@ Another advantage of using a cloud provider to provide this functionality
 \end_layout
 
 \begin_layout Standard
+############
+\end_layout
+
+\begin_layout Standard
+One of the major focuses of the major cloud providers currently is security.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 bibfiles "cloud"
