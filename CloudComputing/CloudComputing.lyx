@@ -62,7 +62,7 @@
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation skip
-\defskip smallskip
+\defskip bigskip
 \quotes_language english
 \papercolumns 1
 \papersides 1
@@ -84,72 +84,66 @@ Software, Systems and Applications - Cloud Computing
 hzwr87
 \end_layout
 
-\begin_layout Section*
-Introduction
-\end_layout
-
 \begin_layout Standard
 For this scenario the product we will consider is an internet enabled car.
  This would record data about how the various components of the car are
  functioning under various conditions.
  This would also monitor the mileage covered by the user and their driving
  style, in order to inform the manufacturer if components are easily damaged
- by certain driving styles.
+ in certain circumstances that they may not have been able to produce in
+ testing.
  Below, we shall examine the considerations this company should make for
  implementing an IT infrastructure for this purpose.
  
 \end_layout
 
-\begin_layout Section*
-Should everything be handled in house or pushed to the cloud? Explain why,
- while outlining are the technological requirements? (20%) 
+\begin_layout Standard
+MAYBE PRIVATE CLOUD, THIS IS A BIG COMPANY AND THE HARDWARE WILL BE USED
+ FOR ALL FUTURE CARS
 \end_layout
 
-\begin_layout Section*
-What are the critical points of failure within a cloud infrastructure? How
- many of these failures are client-facing? How are these mitigated? (15%)
+\begin_layout Standard
+In this scenario, pushing the majority of this functionality to the public
+ cloud has many advantages.
+ The first of these is mass storage.
+ For the car company we are discussing here, this would be very important,
+ as they would have a huge amount of cars on the road all sending back a
+ large amount of data on the status of the car and how it has been driven.
+ If the company were to purchase sufficient hardware to perform the functionalit
+y they require, it would cost them a huge amount in hardware, and they would
+ need somewhere to store it.
+ As a consequence of this, it would be far better to utilise the hardware
+ of a cloud service provider.
  
 \end_layout
 
-\begin_layout Section*
-Briefly discuss the security and data considerations that the company needs
- to consider.
- (15%) 
-\end_layout
-
-\begin_layout Section*
-What cost considerations will need to be taken? How can the company a) minimise
- these costs b) predict expenditure? (15%) 
-\end_layout
-
-\begin_layout Section*
-Using 2-3 cloud providers or middleware’s as examples, discuss the tools,
- services and API’s that are available to construct a solution.
- Use diagrams where appropriate and your answers should include (but not
- be limited to) the following considerations: 
-\end_layout
-
-\begin_layout Subsection*
-What levels of security are guaranteed? What level of security needs to
- be managed in-house? 
-\end_layout
-
-\begin_layout Subsection*
-What are their up time guarantees? How do the providers state that these
- are achieved? If self-hosted, then what tools are available to guarantee
- up time.
+\begin_layout Standard
+Also, the amount of hardware required for this purpose is variable.
+ Once the model of car with this capability on board is released, for the
+ first few weeks and months the number of cars with this technology in them
+ will be relatively few, so the number of servers and databases that will
+ be required will also be relatively few.
+ As more of the cars are sold, more data will be sent and received, and
+ thus more hardware will be required.
+ The amount of communication will also vary at different times of the day,
+ being much higher at rush hour when people are commuting, and at the weekend.
+ The cloud approach will mean that the amount of hardware needed will be
+ able to vary to respond to demand, which is a far more efficient use of
+ money than the company buying their own hardware and having it always running
+ irrespective of demand.
  
 \end_layout
 
-\begin_layout Subsection*
-How do the IaaS, PaaS and SaaS offerings differ between your selected providers
- or middleware’s? 
-\end_layout
-
-\begin_layout Subsubsection*
-Note: multiple services can be bought/implemented from different sources
- if it is the most efficient (financial and technical) solution.
- (35% [10% each consideration + 5% for any other considerations])
+\begin_layout Standard
+Another advantage of using a cloud provider to provide this functionality
+ is the availability of data.
+ A company like the one we are considering here is likely to have many offices
+ all around the world, and if they handled this in house, it would have
+ to be either all at one location or split into smaller chunks around multiple
+ locations.
+ This could lead to a problem of lack of availability of data to some locations,
+ which would be mitigated by using a cloud system.
+ 
 \end_layout
 
 \begin_layout Standard
