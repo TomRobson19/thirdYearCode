@@ -90,16 +90,28 @@ For this scenario the product we will consider is an internet enabled car.
  functioning under various conditions.
  This would also monitor the mileage covered by the user and their driving
  style, in order to inform the manufacturer if components are easily damaged
- in certain circumstances that they may not have been able to produce in
- testing.
+ in certain conditions that they may not have been able to produce in testing.
  Below, we shall examine the considerations this company should make for
  implementing an IT infrastructure for this purpose.
  
 \end_layout
 
 \begin_layout Standard
-MAYBE PRIVATE CLOUD, THIS IS A BIG COMPANY AND THE HARDWARE WILL BE USED
- FOR ALL FUTURE CARS
+This system will require involve each car sending condition updates and
+ data regarding the driving style of the owner  back to the manufacturer
+ at regular intervals.
+ This means that the manufacturer will require a server of some kind to
+ handle this communication, and a large database to store the data sent
+ back .
+ Once this data has been received, it must then be processed effectively
+ using a machine learning algorithm to provide the company with effective
+ statistics for the condition of their cars in different real world circumstance
+s.
+ 
+\end_layout
+
+\begin_layout Standard
+TALK ABOUT BENEFITS OF CLOUD FOR SERVERS, DATABASES AND PROCESSING SEPARATELY
 \end_layout
 
 \begin_layout Standard
@@ -119,10 +131,10 @@ y they require, it would cost them a huge amount in hardware, and they would
 
 \begin_layout Standard
 Also, the amount of hardware required for this purpose is variable.
- Once the model of car with this capability on board is released, for the
- first few weeks and months the number of cars with this technology in them
- will be relatively few, so the number of servers and databases that will
- be required will also be relatively few.
+ Once the first model of car with this capability on board is released,
+ for the first few weeks and months the number of cars with this technology
+ in them will be relatively few, so the number of servers and databases
+ that will be required will also be relatively few.
  As more of the cars are sold, more data will be sent and received, and
  thus more hardware will be required.
  The amount of communication will also vary at different times of the day,
@@ -152,6 +164,78 @@ Another advantage of using a cloud provider to provide this functionality
 
 \begin_layout Standard
 One of the major focuses of the major cloud providers currently is security.
+ As a result of this, they are investing large amounts of their resources
+ in developing their security capabilities, and as such are considered a
+ safe bet to provide the functionality that many companies require.
+ Developing effective security requires a tremendous investment, and given
+ that this investment has been made by the public cloud providers, this
+ means that companies like our car company do not have to incur these costs
+ themselves.
+ This is another clear advantage of using the public cloud.
+ 
+\end_layout
+
+\begin_layout Standard
+In this situation, security is very important as some personal data is being
+ recorded.
+ Even if the system does not directly store information about who the owners
+ of the cars are, it will have information such as registration plates or
+ internal company car IDs that could be used to map cars to owners.
+ As the data being recorded is based on positional data, if the aforementioned
+ association between the cars and people can be made then the data can be
+ used to track people, which leads to legal and ethical problems.
+ It is therefore very important for the car company that they ensure that
+ this data is secured appropriately, both by them and their choice of cloud
+ provider, as the customer is responsible for security in the cloud, whereas
+ the provider is responsible for the cloud 
+\series bold
+(Amazon, find proper reference)
+\series default
+.
+ They must ensure that the provider that they select has an appropriate
+ data protection policy in place, with particular emphasis on the data only
+ being made available to the company, or those that they have approved.
+ 
+\end_layout
+
+\begin_layout Standard
+############
+\end_layout
+
+\begin_layout Standard
+Critical points of failure
+\end_layout
+
+\begin_layout Standard
+Client Facing?? - not much
+\end_layout
+
+\begin_layout Standard
+############
+\end_layout
+
+\begin_layout Standard
+Cost considerations
+\end_layout
+
+\begin_layout Standard
+HOW TO MINIMISE AND PREDICT
+\end_layout
+
+\begin_layout Standard
+############
+\end_layout
+
+\begin_layout Standard
+Pick the provider
+\end_layout
+
+\begin_layout Standard
+############
+\end_layout
+
+\begin_layout Standard
+Conclusion - The internet of things and cloud computing are inherently linked.
  
 \end_layout
 
