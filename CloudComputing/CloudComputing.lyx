@@ -24,6 +24,7 @@
 \output_sync 0
 \bibtex_command default
 \index_command default
+\float_placement H
 \paperfontsize 12
 \spacing single
 \use_hyperref false
@@ -211,7 +212,8 @@ Critical points of failure
 \end_layout
 
 \begin_layout Standard
-Client Facing?? - not much
+Client Facing?? - may mean company as client of provider rather than client
+ of company
 \end_layout
 
 \begin_layout Standard
@@ -245,11 +247,29 @@ In addition to this, it would also be preferable for our company to be charged
 \end_layout
 
 \begin_layout Standard
-only pay for execution time (don't pay for uptime if it isn't doing anything)
+In addition to the servers, similar cost considerations should be taken
+ into account for the virtual machines that perform the processing of the
+ data.
+ Such processing is only necessary when the analysts for the company wish
+ to examine the data and draw conclusions from this.
+ As a result of this, the company will only want to pay for the amount of
+ time that their analysis software is actually running.
+ 
 \end_layout
 
 \begin_layout Standard
-HOW TO MINIMISE AND PREDICT
+Assuming that a provider can be found that satisfies the above conditions,
+ it will be fairly simple to predict the costs.
+ As the company will know how many cars they have sold, they can make a
+ fair estimate based on national driving statisitics of what proportion
+ of their cars will be on the road at certain times, and therefore how many
+ cloud resources they will need at different times of the day.
+ They will also have set up a schedule for when they will analyse the data,
+ and this can be adjusted 
+\end_layout
+
+\begin_layout Standard
+opex rather than capex
 \end_layout
 
 \begin_layout Standard
@@ -272,6 +292,7 @@ Conclusion - The internet of things and cloud computing are inherently linked.
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
+btprint "btPrintAll"
 bibfiles "cloud"
 options "plain"
 
