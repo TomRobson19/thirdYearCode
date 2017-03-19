@@ -116,6 +116,10 @@ TALK ABOUT BENEFITS OF CLOUD FOR SERVERS, DATABASES AND PROCESSING SEPARATELY
 \end_layout
 
 \begin_layout Standard
+Object storage or block storage
+\end_layout
+
+\begin_layout Standard
 In this scenario, pushing the majority of this functionality to the public
  cloud has many advantages.
  The first of these is mass storage for the database component of the system.
@@ -208,7 +212,38 @@ In this situation, security is very important as some personal data is being
 \end_layout
 
 \begin_layout Standard
-Critical points of failure
+Despite these advantages, there are some critical points of failure associated
+ with a public cloud system.
+ When purchasing a cloud solution, the customer must have trust in the provider
+ to give them appropriate performance, availability and storage capacity
+ as agreed upon in a the contract between our car company and the provider.
+ In this contract, there must be clear stipulation of what should be and
+ will be done if any of the cloud components fail.
+ One of the critical points of failure will always be one of the components
+ failing for a variety of reasons, from powercuts to failure in the components
+ themselves.
+ This failure should be mitigated by the provider, with the functionality
+ the failed service was providing being seamlessly switched to another piece
+ of hardware.
+ This failure will not end up being client facing unless the failure is
+ catastrophic enough to affect enough of the cloud facilities that the functiona
+lity cannot be transferred across.
+ Due to the size of the cloud providers that we will discuss later in this
+ document, this eventuality is very unlikely to come to pass.
+\end_layout
+
+\begin_layout Standard
+Another potential point of failure, further up the stack, is the data processing
+ software.
+ Any problems with this would normally be the responsibility of the customer
+ rather than the provider, but within certain cloud infrastructures, many
+ machine learning algorithms are included as part of their software offerings.
+ Whilst in the majority of cases problems will indeed have been caused by
+ the customer, the potential for failure does still exist, and should be
+ mitigated by extensive testing.
+ If such an error was to occur, it could cause incorrect results, inefficient
+ use of resources and even data corruption.
+ These consequences would definitely be client facing 
 \end_layout
 
 \begin_layout Standard
@@ -261,15 +296,14 @@ In addition to the servers, similar cost considerations should be taken
 Assuming that a provider can be found that satisfies the above conditions,
  it will be fairly simple to predict the costs.
  As the company will know how many cars they have sold, they can make a
- fair estimate based on national driving statisitics of what proportion
- of their cars will be on the road at certain times, and therefore how many
+ fair estimate based on national driving statistics of what proportion of
+ their cars will be on the road at certain times, and therefore how many
  cloud resources they will need at different times of the day.
  They will also have set up a schedule for when they will analyse the data,
- and this can be adjusted 
-\end_layout
-
-\begin_layout Standard
-opex rather than capex
+ and this can be adjusted to find the balance between cost of the cloud
+ resources required to analyse the data, and the frequency of analysis required
+ to get meaningful results.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -277,7 +311,13 @@ opex rather than capex
 \end_layout
 
 \begin_layout Standard
-Pick the provider
+Taking all these considerations into account, we must now select a cloud
+ provider that best fits the needs of the company.
+ 
+\end_layout
+
+\begin_layout Standard
+IOT services from AWS are apparently good
 \end_layout
 
 \begin_layout Standard
