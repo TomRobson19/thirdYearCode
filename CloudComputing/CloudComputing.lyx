@@ -117,15 +117,15 @@ TALK ABOUT BENEFITS OF CLOUD FOR SERVERS, DATABASES AND PROCESSING SEPARATELY
 \begin_layout Standard
 In this scenario, pushing the majority of this functionality to the public
  cloud has many advantages.
- The first of these is mass storage.
+ The first of these is mass storage for the database component of the system.
  For the car company we are discussing here, this would be very important,
  as they would have a huge amount of cars on the road all sending back a
  large amount of data on the status of the car and how it has been driven.
  If the company were to purchase sufficient hardware to perform the functionalit
-y they require, it would cost them a huge amount in hardware, and they would
- need somewhere to store it.
- As a consequence of this, it would be far better to utilise the hardware
- of a cloud service provider.
+y they require, it would cost them a huge amount.
+ As a consequence of this, it would be better to utilise the hardware of
+ a cloud service provider, as this functionality, while useful to the company,
+ it not business critical.
  
 \end_layout
 
@@ -138,7 +138,8 @@ Also, the amount of hardware required for this purpose is variable.
  As more of the cars are sold, more data will be sent and received, and
  thus more hardware will be required.
  The amount of communication will also vary at different times of the day,
- being much higher at rush hour when people are commuting, and at the weekend.
+ being much higher at rush hour when people are commuting, and at the weekend
+ when people are travelling.
  The cloud approach will mean that the amount of hardware needed will be
  able to vary to respond to demand, which is a far more efficient use of
  money than the company buying their own hardware and having it always running
@@ -155,6 +156,9 @@ Another advantage of using a cloud provider to provide this functionality
  locations.
  This could lead to a problem of lack of availability of data to some locations,
  which would be mitigated by using a cloud system.
+ Cloud providers also have servers based all around the world, so for our
+ car company, that would operate globally, this distribution of servers
+ would streamline the process of gathering data from many locations.
  
 \end_layout
 
@@ -215,7 +219,33 @@ Client Facing?? - not much
 \end_layout
 
 \begin_layout Standard
-Cost considerations
+When selecting a cloud provider, there are many cost considerations that
+ should be taken into account.
+ The first of these is whether they charge for use over a period of time,
+ or just for usage.
+ For instance, in our example, if all the cars that are currently in operation
+ transmit their information every hour, then the servers are only required
+ for this short time slot rather than being operational all of the time.
+ Therefore, in the scenario that we are considering here, a provider that
+ can accommodate this demand in their pricing scheme would be preferable.
+ 
+\end_layout
+
+\begin_layout Standard
+In addition to this, it would also be preferable for our company to be charged
+ only based on the amount of data that is being transmitted at any one time.
+ As mentioned previously, if the data is only transmitted for active cars
+ every hour, then during busy times of the day when people are commuting
+ to and from work or at weekends, there will be far more active cars than
+ at other times of the day.
+ Therefore, as before it would be preferable for the company to only be
+ charged for as much traffic and storage as they need at certain times of
+ the day.
+ 
+\end_layout
+
+\begin_layout Standard
+only pay for execution time (don't pay for uptime if it isn't doing anything)
 \end_layout
 
 \begin_layout Standard
