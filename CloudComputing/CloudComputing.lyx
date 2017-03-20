@@ -209,7 +209,7 @@ key "IaaSSecurity"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -268,8 +268,9 @@ Despite these advantages, there are some critical points of failure associated
  This failure will not end up being client facing unless the failure is
  catastrophic enough to affect enough of the cloud facilities that the functiona
 lity cannot be transferred across.
- Due to the size of the cloud providers that we will discuss later in this
- document, this eventuality is very unlikely to come to pass.
+ Due to the size and number of datacentres of the cloud providers that we
+ will discuss later in this document, this eventuality is very unlikely
+ to come to pass.
 \end_layout
 
 \begin_layout Standard
@@ -342,10 +343,6 @@ Assuming that a provider can be found that satisfies the above conditions,
 \end_layout
 
 \begin_layout Standard
-############
-\end_layout
-
-\begin_layout Standard
 Taking all these considerations into account, we must now select a cloud
  provider that best fits the needs of the company.
  The providers that we will consider here are Amazon Web Services (AWS),
@@ -401,16 +398,23 @@ key "MarketShare"
 \end_layout
 
 \begin_layout Standard
-IOT services from AWS are apparently good
+We will first consider what levels of security each provider promises.
+ 
 \end_layout
 
 \begin_layout Standard
-############
+Next, we will consider the uptime guarantees of each provider.
+ 
+\end_layout
+
+\begin_layout Standard
+Finally, we will consider how the IaaS, PaaS and SaaS offerings differ.
+ 
 \end_layout
 
 \begin_layout Standard
 Conclusion - The internet of things and cloud computing are inherently linked.
- 
+ The best provider is....
 \end_layout
 
 \begin_layout Standard
