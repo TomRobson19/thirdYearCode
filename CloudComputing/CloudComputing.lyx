@@ -108,21 +108,20 @@ This system will require involve each car sending condition updates and
  using a machine learning algorithm to provide the company with effective
  statistics for the condition of their cars in different real world circumstance
 s.
- 
-\end_layout
-
-\begin_layout Standard
-TALK ABOUT BENEFITS OF CLOUD FOR SERVERS, DATABASES AND PROCESSING SEPARATELY
-\end_layout
-
-\begin_layout Standard
-Object storage or block storage
+ The servers and databases should be handled by Infrastructure as a Service
+ (IaaS), and the processing of the data could be handled by Software as
+ a Service (SaaS) if the selected cloud provider has software that would
+ fill the requirements, it the provider does not have appropriate software
+ available then this requirement could be filled by purchasing Platform
+ as a Service (PaaS) from the provider and implementing the company's own
+ analysis software on top of this.
 \end_layout
 
 \begin_layout Standard
 In this scenario, pushing the majority of this functionality to the public
  cloud has many advantages.
- The first of these is mass storage for the database component of the system.
+ The first of these is mass storage for the database component of the system,
+ as this can be considered a Big Data system.
  For the car company we are discussing here, this would be very important,
  as they would have a huge amount of cars on the road all sending back a
  large amount of data on the status of the car and how it has been driven.
@@ -168,10 +167,6 @@ Another advantage of using a cloud provider to provide this functionality
 \end_layout
 
 \begin_layout Standard
-############
-\end_layout
-
-\begin_layout Standard
 One of the major focuses of the major cloud providers currently is security.
  As a result of this, they are investing large amounts of their resources
  in developing their security capabilities, and as such are considered a
@@ -197,9 +192,12 @@ In this situation, security is very important as some personal data is being
  this data is secured appropriately, both by them and their choice of cloud
  provider, as the customer is responsible for security in the cloud, whereas
  the provider is responsible for the cloud 
-\series bold
-(Amazon, find proper reference)
-\series default
+\begin_inset CommandInset citation
+LatexCommand cite
+key "IaaSSecurity"
+
+\end_inset
+
 .
  They must ensure that the provider that they select has an appropriate
  data protection policy in place, with particular emphasis on the data only
@@ -208,7 +206,49 @@ In this situation, security is very important as some personal data is being
 \end_layout
 
 \begin_layout Standard
-############
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename AWS.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Security Responsibilities According to Amazon
+\begin_inset CommandInset citation
+LatexCommand cite
+key "IaaSSecurity"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -235,24 +275,19 @@ lity cannot be transferred across.
 \begin_layout Standard
 Another potential point of failure, further up the stack, is the data processing
  software.
- Any problems with this would normally be the responsibility of the customer
- rather than the provider, but within certain cloud infrastructures, many
- machine learning algorithms are included as part of their software offerings.
+ Any problems with this would normally be thought to be the responsibility
+ of the customer rather than the provider, but within certain cloud infrastructu
+res, many machine learning algorithms are included as part of their software
+ offerings.
  Whilst in the majority of cases problems will indeed have been caused by
- the customer, the potential for failure does still exist, and should be
- mitigated by extensive testing.
+ the customer, the potential for failure on the side of the provider does
+ still exist, and should be mitigated by extensive testing.
  If such an error was to occur, it could cause incorrect results, inefficient
  use of resources and even data corruption.
- These consequences would definitely be client facing 
-\end_layout
-
-\begin_layout Standard
-Client Facing?? - may mean company as client of provider rather than client
- of company
-\end_layout
-
-\begin_layout Standard
-############
+ These consequences would definitely be client facing as they would potentially
+ recieve incorrect data, leading them to make changes to their cars that
+ may not actually be needed.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -313,7 +348,56 @@ Assuming that a provider can be found that satisfies the above conditions,
 \begin_layout Standard
 Taking all these considerations into account, we must now select a cloud
  provider that best fits the needs of the company.
- 
+ The providers that we will consider here are Amazon Web Services (AWS),
+ IBM Bluemix and Microsoft Azure, as these are three of the market leading
+ providers at the time of writing.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename /home/tom/Pictures/cloud-market-share-2017.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Current Cloud Market Share 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "MarketShare"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
