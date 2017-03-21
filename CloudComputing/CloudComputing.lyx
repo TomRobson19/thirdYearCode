@@ -262,20 +262,20 @@ Despite these advantages, there are some critical points of failure associated
  One of the critical points of failure will always be one of the components
  failing for a variety of reasons, from powercuts to failure in the components
  themselves.
- This failure should be mitigated by the provider, with the functionality
- the failed service was providing being seamlessly switched to another piece
- of hardware.
- This failure will not end up being client facing unless the failure is
- catastrophic enough to affect enough of the cloud facilities that the functiona
-lity cannot be transferred across.
- Due to the size and number of datacentres of the cloud providers that we
- will discuss later in this document, this eventuality is very unlikely
- to come to pass.
+ This failure should be mitigated by the provider, as for some products
+ the functionality the failed service was providing is switched to another
+ piece of hardware.
+ This failure will not end up being client facing unless the service being
+ used does not support being transferred across to other hardware.
+ As most mainstream providers have an uptime of close to 99.9% however, this
+ is unlikely to cause a huge problem given that thus functionality is not
+ business critical.
+ 
 \end_layout
 
 \begin_layout Standard
 Another potential point of failure, further up the stack, is the data processing
- software.
+ software, if a SaaS product is being considered.
  Any problems with this would normally be thought to be the responsibility
  of the customer rather than the provider, but within certain cloud infrastructu
 res, many machine learning algorithms are included as part of their software
@@ -318,9 +318,8 @@ In addition to this, it would also be preferable for our company to be charged
 \end_layout
 
 \begin_layout Standard
-In addition to the servers, similar cost considerations should be taken
- into account for the virtual machines that perform the processing of the
- data.
+Similar cost considerations should be taken into account for the virtual
+ machines that perform the processing of the data.
  Such processing is only necessary when the analysts for the company wish
  to examine the data and draw conclusions from this.
  As a result of this, the company will only want to pay for the amount of
@@ -489,14 +488,7 @@ key "BluemixSecurity"
 
 \begin_layout Standard
 Next, we will consider the uptime guarantees of each provider.
- AWS..
-\end_layout
-
-\begin_layout Standard
-IBM guarantees an uptime of 99.95% for instances configured for high availability
- and are spread across Bluemix regions over the course of a month.
- Downtime is defined here as the total minutes where Client is unable to
- connect to at least one of two instances.
+ AWS guarantees an uptime of 99.9% in their Service Level Agreement (SLA).
  However, over the last 30 days, the CloudHarmony comparison website 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -504,12 +496,37 @@ key "CloudHarmony"
 
 \end_inset
 
+ states that the uptime of AWS services was 99.9708%.
+ IBM guarantees an uptime of 99.95% in their SLA for instances configured
+ for high availability and are spread across Bluemix regions over the course
+ of a month.
+ Downtime is defined here as the total minutes where Client is unable to
+ connect to at least one of two instances.
+ However, as mentioned before, the CloudHarmony comparison website 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "CloudHarmony"
+
+\end_inset
+
  states that the uptime of Bluemix services was 99.7721%.
+ As we can clearly see, both of the cloud providers promise very high uptimes,
+ and although IBM have not quite achieved their promise in the last month,
+ the uptime is still impressive, especially as the functionality being considere
+d here is not business critical, and the cars will be unaffected by outages,
+ they will just not be able to send any data back.
  
 \end_layout
 
 \begin_layout Standard
 Finally, we will consider how the IaaS, PaaS and SaaS offerings differ.
+ In IaaS, Amazon is by far the market leader, with their EC2 service.
+ This service supports the flexible payment plans discussed above that would
+ be desirable in this scenario.
+ Spot instances would also be appropriate, as this is not business critical
+ functionality, the company could specify how much they would be willing
+ to pay for data collection, and then only get it when hardware is available
+ for this price.
  
 \end_layout
 
