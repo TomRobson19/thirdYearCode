@@ -347,7 +347,7 @@ Taking all these considerations into account, we must now select a cloud
  provider that best fits the needs of the company.
  The providers that we will consider here are Amazon Web Services (AWS),
  IBM Bluemix and Microsoft Azure, as these are three of the market leading
- providers at the time of writing.
+ providers at the time of writing, as can be seen in the figure below.
 \end_layout
 
 \begin_layout Standard
@@ -399,6 +399,45 @@ key "MarketShare"
 
 \begin_layout Standard
 We will first consider what levels of security each provider promises.
+ Amazon considers security their 
+\begin_inset Quotes eld
+\end_inset
+
+highest priority
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "AWSSecurity"
+
+\end_inset
+
+, and claim that all of their datacentres are secured with strong safeguards
+ in place, and no matter the amount of data that a client needs to store,
+ they will benefit from the full secure package that AWS provides.
+ Amazon has complete commitment to securing the data of their customers,
+ and will never disclose it unless required to by a legally valid and binding
+ order.
+ IBM provide similar guarantees for their Bluemix system, stating that all
+ Bluemix systems adhere to 
+\begin_inset Quotes eld
+\end_inset
+
+security policies that are driven by best practices in IBM for systems,
+ networking, and secure engineering
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+With all of these providers however, once the data has been brought out
+ of the cloud and on to local systems, then it is completely the responsibility
+ of the customer to ensure that the data continues to be secured.
  
 \end_layout
 
