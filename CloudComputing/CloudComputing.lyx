@@ -345,9 +345,9 @@ Assuming that a provider can be found that satisfies the above conditions,
 \begin_layout Standard
 Taking all these considerations into account, we must now select a cloud
  provider that best fits the needs of the company.
- The providers that we will consider here are Amazon Web Services (AWS),
- IBM Bluemix and Microsoft Azure, as these are three of the market leading
- providers at the time of writing, as can be seen in the figure below.
+ The providers that we will consider here are Amazon Web Services (AWS)
+ and IBM Bluemix, as these are two of the market leading providers at the
+ time of writing, as can be seen in the figure below.
 \end_layout
 
 \begin_layout Standard
@@ -432,17 +432,79 @@ security policies that are driven by best practices in IBM for systems,
 
 .
  
-\end_layout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BluemixSecurity"
 
-\begin_layout Standard
-With all of these providers however, once the data has been brought out
+\end_inset
+
+ More detail on how this is ensured is provided in the figure below.
+ With both of these providers however, once the data has been brought out
  of the cloud and on to local systems, then it is completely the responsibility
  of the customer to ensure that the data continues to be secured.
  
 \end_layout
 
 \begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename BluemixSecurity.png
+	scale 50
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Bluemix Security 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "BluemixSecurity"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Next, we will consider the uptime guarantees of each provider.
+ AWS..
+\end_layout
+
+\begin_layout Standard
+IBM guarantees an uptime of 99.95% for instances configured for high availability
+ and are spread across Bluemix regions over the course of a month.
+ Downtime is defined here as the total minutes where Client is unable to
+ connect to at least one of two instances.
+ However, over the last 30 days, the CloudHarmony comparison website 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "CloudHarmony"
+
+\end_inset
+
+ states that the uptime of Bluemix services was 99.7721%.
  
 \end_layout
 
@@ -452,8 +514,21 @@ Finally, we will consider how the IaaS, PaaS and SaaS offerings differ.
 \end_layout
 
 \begin_layout Standard
-Conclusion - The internet of things and cloud computing are inherently linked.
+The need for Watson is key for whether Bluemix is the preferable option
+ or not.
+ 
+\end_layout
+
+\begin_layout Standard
+In Conclusion, as both technologies develop we can observe that the internet
+ of things and cloud computing are naturally joined together.
+ We believe that the use of a public cloud solution for the scenario being
+ discussed here would be highly advantageous.
  The best provider is....
+\end_layout
+
+\begin_layout Standard
+Lambda -> S3 -> EC2 Spot Instance
 \end_layout
 
 \begin_layout Standard
