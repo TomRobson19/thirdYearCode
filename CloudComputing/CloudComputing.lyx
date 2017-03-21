@@ -519,14 +519,116 @@ d here is not business critical, and the cars will be unaffected by outages,
 \end_layout
 
 \begin_layout Standard
+######IaaS 
+\end_layout
+
+\begin_layout Standard
 Finally, we will consider how the IaaS, PaaS and SaaS offerings differ.
- In IaaS, Amazon is by far the market leader, with their EC2 service.
+ In IaaS, Amazon is by far the market leader in this area, with their EC2
+ service.
  This service supports the flexible payment plans discussed above that would
  be desirable in this scenario.
  Spot instances would also be appropriate, as this is not business critical
  functionality, the company could specify how much they would be willing
  to pay for data collection, and then only get it when hardware is available
- for this price.
+ for this price 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "EC2"
+
+\end_inset
+
+.
+ This would be a good way of getting an appropriate amount of data for the
+ price that the company is willing to pay, rather than what Amazon is charging.
+ IBM's counterpart to this is their virtual servers system 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "VirtualServers"
+
+\end_inset
+
+, which functions in a fairly similar way, but does not support spot instances
+ payment.
+ This makes it difficult to compare the price, as with spot instance AWS
+ should be cheaper, but this greatly depends on demand.
+ Even so, without considering spot instances, EC2 is cheaper for the vast
+ majority of configurations.
+ This currently seems to be the best choice to handle the server requirements.
+\end_layout
+
+\begin_layout Standard
+To staisfy the Big Data storage needs of the customer, AWS also provides
+ the Simple Storage Service (S3) 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "S3"
+
+\end_inset
+
+.
+ This will provide a cheap and flexible interface to store and retrieve
+ large amounts of data, which will be ideal for storing the data which will
+ be sent back by the large amount of cars that this company will have on
+ the road.
+ IBM's alternative to this is their Object Storage Service......
+\end_layout
+
+\begin_layout Standard
+######PaaS
+\end_layout
+
+\begin_layout Standard
+Amazon Lambda is a good PaaS offering, built on top of EC2, that abstracts
+ away all of the virtual machine (VM) components, as it just requires code
+ that needs to be run, and the Lambda platform takes care of the rest.
+ This is a good service to use because it enables migration of services
+ in case of failure and avoids the company having to deal with provisioning,
+ configuration, monitoring, managing, and maintaining VMs that they use.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lambda"
+
+\end_inset
+
+ IBM have a comparable PaaS offering to AWS Lambda, called OpenWhisk, that
+ is also built on top of their virtual servers, and abstracts away the lower
+ level functionality to speed up and simplify use for customers.
+ It also offers easy access and integration with IBMs SaaS offerings such
+ as Watson.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "OpenWhisk"
+
+\end_inset
+
+ In this scenario these services would be useful to facilitate the communication
+s coming from the cars and passing the data on to a database to be stored
+ and analysed, as well as for potentially performing the analysis if an
+ appropriate SaaS offering is not available.
+ 
+\end_layout
+
+\begin_layout Standard
+######SaaS
+\end_layout
+
+\begin_layout Standard
+Both of the providers that we are considering here have an extensive range
+ of SaaS offerings in their marketplace, built to satisfy a wide variety
+ of requirements.
+ For our scenario, we are mainly interested in the machine learning functionalit
+y that SaaS can provide to enable the company to effectively process the
+ data that their cars are sending back, and trying to map driving style
+ to the condition of the car compenents is a problem that can be solved
+ using Machine Learning.
+ AWS...
+\end_layout
+
+\begin_layout Standard
+For IBM, one of their major selling points can be found in their SaaS, found
+ in the Watson API, which brings state-of-the-art cognitive technologies
+ to the cloud.
  
 \end_layout
 
@@ -537,15 +639,15 @@ The need for Watson is key for whether Bluemix is the preferable option
 \end_layout
 
 \begin_layout Standard
+The solution that we are suggesting is ......
+\end_layout
+
+\begin_layout Standard
 In Conclusion, as both technologies develop we can observe that the internet
  of things and cloud computing are naturally joined together.
  We believe that the use of a public cloud solution for the scenario being
  discussed here would be highly advantageous.
  The best provider is....
-\end_layout
-
-\begin_layout Standard
-Lambda -> S3 -> EC2 Spot Instance
 \end_layout
 
 \begin_layout Standard
