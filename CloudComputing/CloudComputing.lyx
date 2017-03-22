@@ -613,10 +613,6 @@ key "OpenWhisk"
 \end_layout
 
 \begin_layout Standard
-######SaaS
-\end_layout
-
-\begin_layout Standard
 Both of the providers that we are considering here have an extensive range
  of SaaS offerings in their marketplace, built to satisfy a wide variety
  of requirements.
@@ -625,24 +621,38 @@ y that SaaS can provide to enable the company to effectively process the
  data that their cars are sending back, and trying to map driving style
  to the condition of the car compenents is a problem that can be solved
  using Machine Learning.
- AWS...
-\end_layout
-
-\begin_layout Standard
-For IBM, one of their major selling points can be found in their SaaS, found
- in the Watson API, which brings state-of-the-art cognitive technologies
- to the cloud.
+ The AWS marketplace has a wide variety of machine learning based offerings,
+ partnered with 47Lining and NorthBay, to solve a wide range of machine
+ learning related problems.
+ For IBM, one of their major selling points in terms of cloud services can
+ be found in their SaaS, in the form of the Watson API, which brings state-of-th
+e-art cognitive technologies to the cloud to solve a large range of problems.
+ However, after searching through the marketplaces and documentation, neither
+ of them appears to have a SaaS offering that would fully fill the data
+ processing needs of our car company.
  
 \end_layout
 
 \begin_layout Standard
-The need for Watson is key for whether Bluemix is the preferable option
- or not.
- 
+REFERENCE ML STUFF
 \end_layout
 
 \begin_layout Standard
-The solution that we are suggesting is ......
+Therefore, the solution that we are suggesting is to use an Amazon system
+ to solve this problem.
+ As they are the market leader in cloud services, and have been for many
+ years, they can afford to have their pricing set cheaper than their competitors
+ and invest huge amounts of money into research and development, improving
+ their own system.
+ The economies of scale caused by this mean that many of their services
+ remian the best, for the cheapest price.
+ With regards to IBM, the need for Watson is key for whether their service
+ is the preferable option or not, as this is the best offering they bring
+ to the market.
+ Their other services are still good, and provide similar functionality
+ to Amazon, but are more expensive.
+ In terms of components for the solution, we recommend using S3 for the
+ Big Data requirements, 
 \end_layout
 
 \begin_layout Standard
@@ -650,7 +660,7 @@ In Conclusion, as both technologies develop we can observe that the internet
  of things and cloud computing are naturally joined together.
  We believe that the use of a public cloud solution for the scenario being
  discussed here would be highly advantageous.
- The best provider is....
+ 
 \end_layout
 
 \begin_layout Standard
