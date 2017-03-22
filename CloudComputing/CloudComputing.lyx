@@ -88,12 +88,14 @@ hzwr87
 \begin_layout Standard
 For this scenario the product we will consider is an internet enabled car.
  This would record data about how the various components of the car are
- functioning under various conditions.
- This would also monitor the mileage covered by the user and their driving
- style, in order to inform the manufacturer if components are easily damaged
- in certain conditions that they may not have been able to produce in testing.
- Below, we shall examine the considerations this company should make for
- implementing an IT infrastructure for this purpose.
+ functioning under various conditions, while also monitoring the mileage
+ covered by the user and analysing their driving style, in order to provide
+ information to the manufacturer as to why some components are easily damaged,
+ perhaps when used in certain conditions that the manufacturer may not have
+ been able to produce in testing.
+ In this document, we shall examine the considerations this company should
+ make for implementing an IT infrastructure for this purpose, and recommend
+ a system for them to use.
  
 \end_layout
 
@@ -623,10 +625,24 @@ y that SaaS can provide to enable the company to effectively process the
  using Machine Learning.
  The AWS marketplace has a wide variety of machine learning based offerings,
  partnered with 47Lining and NorthBay, to solve a wide range of machine
- learning related problems.
+ learning related problems 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "ML"
+
+\end_inset
+
+.
  For IBM, one of their major selling points in terms of cloud services can
  be found in their SaaS, in the form of the Watson API, which brings state-of-th
-e-art cognitive technologies to the cloud to solve a large range of problems.
+e-art cognitive technologies to the cloud to solve a large range of problems
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Watson"
+
+\end_inset
+
+.
  However, after searching through the marketplaces and documentation, neither
  of them appears to have a SaaS offering that would fully fill the data
  processing needs of our car company.
@@ -634,12 +650,12 @@ e-art cognitive technologies to the cloud to solve a large range of problems.
 \end_layout
 
 \begin_layout Standard
-REFERENCE ML STUFF
-\end_layout
-
-\begin_layout Standard
-Therefore, the solution that we are suggesting is to use an Amazon system
- to solve this problem.
+In Conclusion, as both technologies develop we can observe that the internet
+ of things and cloud computing are naturally joined together.
+ We believe that the use of a public cloud solution for the scenario being
+ discussed here would be highly advantageous.
+ Therefore, following the analysis of the offerings provided, the solution
+ that we are suggesting is to use an Amazon system to solve this problem.
  As they are the market leader in cloud services, and have been for many
  years, they can afford to have their pricing set cheaper than their competitors
  and invest huge amounts of money into research and development, improving
@@ -652,14 +668,10 @@ Therefore, the solution that we are suggesting is to use an Amazon system
  Their other services are still good, and provide similar functionality
  to Amazon, but are more expensive.
  In terms of components for the solution, we recommend using S3 for the
- Big Data requirements, 
-\end_layout
-
-\begin_layout Standard
-In Conclusion, as both technologies develop we can observe that the internet
- of things and cloud computing are naturally joined together.
- We believe that the use of a public cloud solution for the scenario being
- discussed here would be highly advantageous.
+ Big Data requirements, EC2 spot instances for the servers and potentially
+ Lambda for controlling the servers at a higher level, as well as providing
+ a platform that the company's own data analysis system can be implemented
+ on top of.
  
 \end_layout
 
