@@ -519,10 +519,6 @@ d here is not business critical, and the cars will be unaffected by outages,
 \end_layout
 
 \begin_layout Standard
-######IaaS 
-\end_layout
-
-\begin_layout Standard
 Finally, we will consider how the IaaS, PaaS and SaaS offerings differ.
  In IaaS, Amazon is by far the market leader in this area, with their EC2
  service.
@@ -571,11 +567,18 @@ key "S3"
  large amounts of data, which will be ideal for storing the data which will
  be sent back by the large amount of cars that this company will have on
  the road.
- IBM's alternative to this is their Object Storage Service......
-\end_layout
+ IBM's alternative to this is their Object Storage Service.
+ Both of these systems appear to use the same storage protocol, that of
+ Amazon S3, so the choice here should be made to align with the rest of
+ the system.
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "WhatsNew"
 
-\begin_layout Standard
-######PaaS
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -602,8 +605,8 @@ key "OpenWhisk"
 
 \end_inset
 
- In this scenario these services would be useful to facilitate the communication
-s coming from the cars and passing the data on to a database to be stored
+ In this scenario these services would be useful to handle the communications
+ coming from the cars and passing the data on to a database to be stored
  and analysed, as well as for potentially performing the analysis if an
  appropriate SaaS offering is not available.
  
