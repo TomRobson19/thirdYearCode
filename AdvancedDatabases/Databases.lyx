@@ -191,17 +191,17 @@ status open
 
 \begin_layout Plain Layout
 
-<title lang=italian>Spaghetti Ricette</title>
+<title lang="italian"> Spaghetti Ricette </title>
 \end_layout
 
 \begin_layout Plain Layout
 
-<title>XQuery Start</title>
+<title> XQuery Start </title>
 \end_layout
 
 \begin_layout Plain Layout
 
-<title>Learning XML</title>
+<title> Learning XML </title>
 \end_layout
 
 \end_inset
@@ -224,7 +224,7 @@ status open
 
 \begin_layout Plain Layout
 
-/bookstore/book[@category = 'Web']/author[1]
+/bookstore/book[@category = "Web"]/author[1]
 \end_layout
 
 \end_inset
@@ -243,12 +243,12 @@ status open
 
 \begin_layout Plain Layout
 
-<author>Per Bothner</author> 
+<author> Per Bothner </author> 
 \end_layout
 
 \begin_layout Plain Layout
 
-<author>Erik Ray</author>
+<author> Erik Ray </author>
 \end_layout
 
 \end_inset
@@ -271,22 +271,22 @@ status open
 
 \begin_layout Plain Layout
 
-for $x in /bookstore/book 
+for $i in doc("books.xml")/bookstore/book 
 \end_layout
 
 \begin_layout Plain Layout
 
-where $x/price>40 and $x/year=2003 
+where $i/price>40 and $i/year=2003 
 \end_layout
 
 \begin_layout Plain Layout
 
-order by $x/author[2] 
+order by $i/author[2] 
 \end_layout
 
 \begin_layout Plain Layout
 
-return $x/author[2]
+return $i/author[2]
 \end_layout
 
 \end_inset
@@ -305,7 +305,7 @@ status open
 
 \begin_layout Plain Layout
 
-<author>Kurt Cagle</author>
+<author> Kurt Cagle </author>
 \end_layout
 
 \end_inset
@@ -329,17 +329,22 @@ status open
 
 \begin_layout Plain Layout
 
-let $average := avg(/bookstore/book[year='2005']/price)
+let $average := avg(doc("books.xml")/bookstore/book[year=2005]/price)
 \end_layout
 
 \begin_layout Plain Layout
 
-for $x in /bookstore/book where $x/price > $average 
+for $i in doc("books.xml")/bookstore/book 
 \end_layout
 
 \begin_layout Plain Layout
 
-return $x/author[$x]
+where $i/price > $average 
+\end_layout
+
+\begin_layout Plain Layout
+
+return $i/author[$i]
 \end_layout
 
 \end_inset
@@ -358,32 +363,32 @@ status open
 
 \begin_layout Plain Layout
 
-<author>Giada Laurentis</author> 
+<author> Giada Laurentis </author> 
 \end_layout
 
 \begin_layout Plain Layout
 
-<author>Per Bothner</author> 
+<author> Per Bothner </author> 
 \end_layout
 
 \begin_layout Plain Layout
 
-<author>Kurt Cagle</author> 
+<author> Kurt Cagle </author> 
 \end_layout
 
 \begin_layout Plain Layout
 
-<author>James Linn</author> 
+<author> James Linn </author> 
 \end_layout
 
 \begin_layout Plain Layout
 
-<author>Vaidy Nagar</author> 
+<author> Vaidy Nagar </author> 
 \end_layout
 
 \begin_layout Plain Layout
 
-<author>Erik Ray</author>
+<author> Erik Ray </author>
 \end_layout
 
 \end_inset
@@ -406,17 +411,18 @@ status open
 
 \begin_layout Plain Layout
 
-let $categories := fn:distinct-values(bookstore/book/[@category])
+let $cats := fn:distinct-values(doc("books.xml")bookstore/book/[@category])
 \end_layout
 
 \begin_layout Plain Layout
 
-for $category in $categories 
+for $category in $cats
 \end_layout
 
 \begin_layout Plain Layout
 
-let $count := fn:count(bookstore/book[@category = $category]) 
+let $count := fn:count(doc("books.xml")bookstore/book[@category=$category])
+ 
 \end_layout
 
 \begin_layout Plain Layout

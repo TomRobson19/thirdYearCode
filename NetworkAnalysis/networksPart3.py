@@ -6,6 +6,7 @@ import random
 import queue
 import numpy as np
 import matplotlib.pyplot as plt
+from collections import Counter
 
 #############################################################################################################################
 
@@ -30,7 +31,7 @@ def make_group_graph(m,k,p,q):
                 graph[node] += [neighbour]
                 graph[neighbour] += [node]
 
-    return graph
+    return graph, group
 
 #############################################################################################################################
 
@@ -135,87 +136,264 @@ def make_PA_Graph(total_nodes, out_degree):
     for x in PA_graph:
         PA_graph[x] = list(PA_graph[x])
     
-    return PA_graph
+    return PA_graph,out_degree
 
 #############################################################################################################################
 
-def search(graph, v, w, verbose=False):
-    """number of steps to find w from v in a Kleinberg graph when each step is taken to minimise distance around circle to w"""
-    num_nodes = (len(graph))
+def search_random_graph(graph, v, w):
     current = v
     steps = 0
-    while current != w and steps < 20:
-        if verbose: print (current, graph[current])
-        best_neighbour = graph[current][0]
-        shortest_distance = dist(w, best_neighbour, num_nodes)
-        for neighbour in graph[current][1:]:
-            distance = dist(w, neighbour, num_nodes)
-            if distance < shortest_distance:
-                best_neighbour = neighbour
-                shortest_distance = distance
-        current = best_neighbour
+    visited = []
+    while current != w and steps < 100:
+        previous_current = current
+        visited += [current]
+        if w in graph[current]:
+            w = current
+        else:
+            for neighbour in graph[current]:
+                if neighbour not in visited:
+                    current = neighbour
+                    break
+            if current == previous_current:
+                current = graph[current][random.randint(0,len(graph[current])-1)]
         steps += 1
     return steps
 
 #############################################################################################################################
 
-"""function to find the search time of a graph"""
+def search_PA_graph(graph, out_degree, v, w):
+    num_nodes = (len(graph))
+    current = v
+    steps = 0
+    visited = []
+    while current != w and steps < 100:
+        previous_current = current
+        visited += [current]
+        if w in graph[current]:
+            w = current
+        else:
+            for neighbour in graph[current]:
+                if neighbour not in visited and neighbour < out_degree:
+                    current = neighbour
+                    break
+            if current == previous_current:
+                for neighbour in graph[current]:
+                    if neighbour < out_degree:
+                        current = neighbour
+                        break
+            if current == previous_current:
+                for neighbour in graph[current]:
+                    if neighbour not in visited:
+                        current = neighbour
+                        break
+            if current == previous_current:
+                current = graph[current][random.randint(0,len(graph[current])-1)]
+        steps += 1
+    return steps
 
-def search_time(graph):
-    """finds the average number of steps required to find one vertex from another"""
-    total = 0
-    for start_vertex in graph:
-        for target_vertex in graph:
-            total += search(graph, start_vertex, target_vertex)
-    return total / len(graph) / len(graph)
+#############################################################################################################################
 
-"""the above function is rather slow, so the next function finds the average search time by looking only at 2000 pairs of vertices;
-is this latter function a reasonable proxy for the former? how could you investigate this?"""
+#we know which group the target is in
 
-def approx_search_time(graph):
+def search_group_graph(graph, groups, v, w):
+    num_nodes = (len(graph))
+    current = v
+    steps = 0
+    visited = []
+    while current != w and steps < 100:
+        previous_current = current
+        visited += [current]
+        if w in graph[current]:
+            w = current
+        else:
+            if groups[current] == groups[w]:
+                for neighbour in graph[current]:
+                    if neighbour not in visited and groups[neighbour] == groups[w]:
+                        current = neighbour
+                        break
+                if current == previous_current:
+                    for neighbour in graph[current]:
+                        if groups[neighbour] == groups[w]:
+                            current = neighbour
+                            break
+                if current == previous_current:
+                    for neighbour in graph[current]:
+                        if neighbour not in visited:
+                            current = neighbour
+                            break
+                if current == previous_current:
+                    current = graph[current][random.randint(0,len(graph[current])-1)]
+            else:
+                for neighbour in graph[current]:
+                    if neighbour not in visited and groups[neighbour] == groups[w]:
+                        current = neighbour
+                        break
+                if current == previous_current:
+                    for neighbour in graph[current]:
+                        if groups[neighbour] == groups[w]:
+                            current = neighbour
+                            break
+                if current == previous_current:
+                    for neighbour in graph[current]:
+                        if neighbour not in visited:
+                            current = neighbour
+                            break
+                if current == previous_current:
+                    current = graph[current][random.randint(0,len(graph[current])-1)]
+        steps += 1
+    return steps
+
+#############################################################################################################################
+
+def approx_search_time_random(graph):
     """finds the average number of steps required to find one vertex from another by sampling 2000 pairs"""
     num_nodes = len(graph)
     total = 0
+   # paths = []
     for i in range(2000):
         random_node1 = random.randint(0, num_nodes-1)
         random_node2 = random.randint(0, num_nodes-1)
-        total += search(graph, random_node1, random_node2)
-    return total / 2000
+        this_path = search_random_graph(graph, random_node1, random_node2)
+       # paths += [this_path]
+        total += this_path
+
+   # full_paths = dict((i, paths.count(i)) for i in paths)
+
+    # plt.clf()
+    # plt.bar(full_paths.keys(),full_paths.values(), 1, color='r')
+    # plt.xlabel("Search Time", fontsize = 10)
+    # plt.ylabel("Occurances", fontsize = 10)
+    # # plt.xlim([0,140])
+    # # plt.ylim([0,0.2])
+    # plt.title("Random Search Times")
+    # #plt.show()
+    # plt.savefig("Q3/Random.png")
+    return round(total / 2000, 2)
 
 #############################################################################################################################
 
+def approx_search_time_PA(graph,out_degree):
+    """finds the average number of steps required to find one vertex from another by sampling 2000 pairs"""
+    num_nodes = len(graph)
+    total = 0
+   # paths = []
+    for i in range(2000):
+        random_node1 = random.randint(0, num_nodes-1)
+        random_node2 = random.randint(0, num_nodes-1)
+        this_path = search_PA_graph(graph, out_degree, random_node1, random_node2)
+       # paths += [this_path]
+        total += this_path
 
+    #full_paths = dict((i, paths.count(i)) for i in paths)
 
-
-
-
-
-
-
-
-
+    # plt.clf()
+    # plt.bar(full_paths.keys(),full_paths.values(), 1, color='r')
+    # plt.xlabel("Search Time", fontsize = 10)
+    # plt.ylabel("Occurances", fontsize = 10)
+    # # plt.xlim([0,140])
+    # # plt.ylim([0,0.2])
+    # plt.title("PA Search Times")
+    # #plt.show()
+    # plt.savefig("Q3/PA.png")
+    return round(total / 2000, 2)
 
 #############################################################################################################################
 
-#def search_random_graph(random_graph,start,end,path=[]):              
+def approx_search_time_group(graph,groups):
+    """finds the average number of steps required to find one vertex from another by sampling 2000 pairs"""
+    num_nodes = len(graph)
+    total = 0
+   # paths = []
+    for i in range(2000):
+        random_node1 = random.randint(0, num_nodes-1)
+        random_node2 = random.randint(0, num_nodes-1)
+        this_path = search_group_graph(graph, groups, random_node1, random_node2)
+        #paths += [this_path]
+        total += this_path
+
+    #full_paths = dict((i, paths.count(i)) for i in paths)
+
+    # plt.clf()
+    # plt.bar(full_paths.keys(),full_paths.values(), 1, color='r')
+    # plt.xlabel("Search Time", fontsize = 10)
+    # plt.ylabel("Occurances", fontsize = 10)
+    # # plt.xlim([0,140])
+    # # plt.ylim([0,0.2])
+    # plt.title("Group Search Times")
+    # #plt.show()
+    # plt.savefig("Q3/Group.png")
+    return round(total / 2000, 2)
 
 #############################################################################################################################
 
-#def search_PA_graph(PA_graph,start,end):
+random_list = []
+PA = []
+group = []
 
-#############################################################################################################################
+num_samples = 1000
 
-#get to group that destination is in first
-#def search_group_graph(group_graph,start,end):
+for i in range(0,num_samples):
+    random_graph = make_random_graph(1600, 0.035)
 
-#############################################################################################################################
+    PA_graph,out_degree = make_PA_Graph(1600, 36) 
 
-random_graph = make_random_graph(156, 0.035)
+    group_graph,groups = make_group_graph(40, 40, 0.45, 0.05)
 
-PA_graph = make_PA_Graph(1560, 36) 
+    print(i)
+    
+    random_list += [approx_search_time_random(random_graph)]
+    
+    PA += [approx_search_time_PA(PA_graph,out_degree)]
+    
+    group += [approx_search_time_group(group_graph,groups)]
 
-group_graph = make_group_graph(40, 39, 0.45, 0.05)
+print(random_list)
 
-print(search_random_graph(random_graph,2,9))
+print(PA)
 
+print(group)
+
+random_count = {x:random_list.count(x) for x in random_list}
+
+PA_count = {x:PA.count(x) for x in PA}
+
+group_count = {x:group.count(x) for x in group}
+
+print(random_count)
+
+print(PA_count)
+
+print(group_count)
+
+plt.clf()
+plt.bar(random_count.keys(),random_count.values(), 0.01, color='r')
+plt.xlabel("Search Time", fontsize = 10)
+plt.ylabel("Occurances", fontsize = 10)
+# plt.xlim([0,140])
+# plt.ylim([0,0.2])
+plt.title("Random")
+#plt.show()
+plt.savefig("Q3/Random.png")
+
+
+plt.clf()
+plt.bar(PA_count.keys(),PA_count.values(), 0.01, color='r')
+plt.xlabel("Search Time", fontsize = 10)
+plt.ylabel("Occurances", fontsize = 10)
+# plt.xlim([0,140])
+# plt.ylim([0,0.2])
+plt.title("PA")
+#plt.show()
+plt.savefig("Q3/PA.png")
+
+
+plt.clf()
+plt.bar(group_count.keys(),group_count.values(), 0.01, color='r')
+plt.xlabel("Search Time", fontsize = 10)
+plt.ylabel("Occurances", fontsize = 10)
+# plt.xlim([0,140])
+# plt.ylim([0,0.2])
+plt.title("Group")
+#plt.show()
+plt.savefig("Q3/Group.png")
 #############################################################################################################################

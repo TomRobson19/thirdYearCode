@@ -28,7 +28,7 @@
 \spacing single
 \use_hyperref false
 \papersize a4paper
-\use_geometry false
+\use_geometry true
 \use_package amsmath 1
 \use_package amssymb 0
 \use_package cancel 0
@@ -52,10 +52,17 @@
 \shortcut idx
 \color #008000
 \end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\headheight 2cm
+\headsep 2cm
+\footskip 1cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation skip
-\defskip smallskip
+\defskip bigskip
 \quotes_language english
 \papercolumns 1
 \papersides 1
@@ -81,12 +88,776 @@ hzwr87
 Group Graphs
 \end_layout
 
+\begin_layout Standard
+Once the group graph has been implemented as per the specification, we then
+ move on to examining the effect of changing the parameters.
+ All experiments for this are conducted on a graph with 
+\begin_inset Formula $400$
+\end_inset
+
+ vertices.
+ While examining the effect of changing 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+, we set 
+\begin_inset Formula $m=20$
+\end_inset
+
+ and 
+\begin_inset Formula $k=20$
+\end_inset
+
+ to create 
+\begin_inset Formula $20$
+\end_inset
+
+ groups of 
+\begin_inset Formula $20$
+\end_inset
+
+ vertices.
+ We vary 
+\begin_inset Formula $p$
+\end_inset
+
+ between 
+\begin_inset Formula $0.25$
+\end_inset
+
+ and 
+\begin_inset Formula $0.50$
+\end_inset
+
+, and vary 
+\begin_inset Formula $q$
+\end_inset
+
+ between 
+\begin_inset Formula $0.25$
+\end_inset
+
+ and 
+\begin_inset Formula $0.00$
+\end_inset
+
+ to satisfy the constraint 
+\begin_inset Formula $p+q=0.5$
+\end_inset
+
+.
+ As Figure 1 below shows, this variation causes a reduction in the degree
+ as 
+\begin_inset Formula $p$
+\end_inset
+
+ increases.
+ This variation also reduces the spread of the distribution, and therefore
+ an increase in the height of the peaks.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q1/Q1_group_graph_p=0.25_degrees.png
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q1/Q1_group_graph_p=0.3_degrees.png
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q1/Q1_group_graph_p=0.35_degrees.png
+	scale 25
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace bigskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q1/Q1_group_graph_p=0.4_degrees.png
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q1/Q1_group_graph_p=0.45_degrees.png
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q1/Q1_group_graph_p=0.5_degrees.png
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Effect of changing p and q
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Having experimented with 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+, we now fix 
+\begin_inset Formula $p=0.4$
+\end_inset
+
+ and 
+\begin_inset Formula $q=0.1$
+\end_inset
+
+ and vary 
+\begin_inset Formula $m$
+\end_inset
+
+ and 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ To get an idea of the effect of this variation, we have run experiments
+ with 
+\begin_inset Formula $2$
+\end_inset
+
+ groups of 
+\begin_inset Formula $200$
+\end_inset
+
+ nodes, and 
+\begin_inset Formula $200$
+\end_inset
+
+ groups of 
+\begin_inset Formula $2$
+\end_inset
+
+ nodes.
+ As Figure 2 below shows, the degree distribution is larger for larger groups,
+ as for these values of 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+, making the groups larger will lead to far greater connectivity of the
+ vertices.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q1/Q1_group_graph_m=2_degrees.png
+	scale 30
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $2$
+\end_inset
+
+ groups of 
+\begin_inset Formula $200$
+\end_inset
+
+ nodes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q1/Q1_group_graph_m=200_degrees.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Formula $200$
+\end_inset
+
+ groups of 
+\begin_inset Formula $2$
+\end_inset
+
+ nodes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Effect of changing m and k
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From here, we then experiment with the diameter, varying p.
+ However, as Figure 3 below shows, this variation in p has very little effect
+ on the diameter of the group graph when averaged over 100 graphs.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename Q1/Q1_diameters.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Diameter
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 k-cycles
 \end_layout
 
+\begin_layout Standard
+For experimenting with cycles, appropriate parameters were chosen for the
+ random, PA and group graphs so that they had similar number of vertices
+ and edges as the coauthorship graph.
+ Each of these experiments were run on a random sample of 100 vertices from
+ all of the graphs, and the results are given in the figure below.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q2/four_cycles.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Four Cycles
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q2/five_cycles.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Five Cycles
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Number of four and five cycles per graph
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As we can see, both four and five cycles have a similar distribution, but
+ there are more five cycles across all of the graphs.
+ The split in the distribution of the PA graph is due to the fully connected
+ region, as there are notably more cycles present in this region.
+ The distribution of random and group graphs are quite narrow.
+ 
+\end_layout
+
 \begin_layout Section
 Searching
+\end_layout
+
+\begin_layout Standard
+For random graphs, given the limited information that we have, our search
+ strategy is fairly simple.
+ We first check if the destination is a neighbour of the current vertex.
+ If it is, we move to this and end the search, if not, we move to one of
+ the neighbours of the current node, first checking if there are any that
+ we haven't visited, and going to one of these if there are, else going
+ to a random neighbour that has already been visited to backtrack.
+ 
+\end_layout
+
+\begin_layout Standard
+For searching the PA graph, this approach must be ammended to accommodate
+ the fully connected section.
+ We follow the same procedure as the random graph, but prioritise nodes
+ that are in the complete graph, and move to these whenever possible, as
+ these nodes are more likely to be connected to the goal, leading to much
+ shorter search times than the random graph.
+ 
+\end_layout
+
+\begin_layout Standard
+For searching the group graph, we have to expand this approach again.
+ As we know what group the target node is in, we can use this to inform
+ our search strategy.
+ If we are already in the correct group, then we must try to stay in this
+ group.
+ Otherwise, we endeavour to move to this group if possible.
+ If our current vertex is not in the correct group and does not have a neighbour
+ in the correct group, then we follow the same strategy as the random searching
+ to select a new node.
+ 
+\end_layout
+
+\begin_layout Standard
+The figure below shows the results of these search strategies, run on 1000
+ of each type of graph, using the same parameters as were used in part 2.
+ The random graph is by far the slowest to search, while the PA graph and
+ group graph are much faster , with PA being the fastest on this set of
+ parameters due to the adjustment of the search strategy, which gives all
+ of the graphs similar numbers of vertices and edges.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q3/Random.png
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Random
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q3/PA.png
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+PA
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Q3/Group.png
+	scale 25
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Group
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Results of Searching
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

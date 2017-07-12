@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include "linearAlgebraSerial.h"
 
 double* vector_vector_addition(double* a, double *b, int length) {
     // in matrix form: result = a + b

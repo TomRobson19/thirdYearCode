@@ -3,7 +3,7 @@
 \begin_document
 \begin_header
 \textclass article
-\use_default_options false
+\use_default_options true
 \maintain_unincluded_children false
 \language british
 \language_package none
@@ -28,7 +28,7 @@
 \spacing single
 \use_hyperref false
 \papersize a4paper
-\use_geometry false
+\use_geometry true
 \use_package amsmath 1
 \use_package amssymb 0
 \use_package cancel 0
@@ -52,10 +52,17 @@
 \shortcut idx
 \color #008000
 \end_index
+\leftmargin 2cm
+\topmargin 2cm
+\rightmargin 2cm
+\bottommargin 2cm
+\headheight 2cm
+\headsep 2cm
+\footskip 1cm
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation skip
-\defskip smallskip
+\defskip bigskip
 \quotes_language english
 \papercolumns 1
 \papersides 1
@@ -75,6 +82,503 @@ Computing Methodologies - Parallel Programming
 
 \begin_layout Author
 hzwr87
+\end_layout
+
+\begin_layout Section
+Vector Addition
+\end_layout
+
+\begin_layout Standard
+First, we setup the MPI environment, so that each process knows the total
+ number of processes in the system, its own rank and the size of the vectors.
+ Once the vectors have been generated, we inform the other processes of
+ how many elements have been allocated to each of them.
+ From here we scatter both of the vectors to all the processes, giving them
+ the appropriate data elements to perform their share of the computations.
+ Once these computations have been performed on all processes, including
+ the root, we gather them back together and output the result as a vector.
+ To ensure that each process is given the same number of elements, each
+ vector is padded when it is allocated.
+ This method of distribution seems to be the only efficient way to perform
+ this calculation.
+ 
+\end_layout
+
+\begin_layout Standard
+The speedup over number of threads was calculated on an input size of 1000000000
+ on between 1 and 5 Hamilton nodes, with 16 threads per node.
+ The execution time was calculated over a range of input sizes on 2 Hamilton
+ nodes on 16 threads per node.
+ The average efficiency of my approach over the full range of threads was
+ 0.92.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/vecAddThreads.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Graph of Speedup over Number of Threads
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/vecAddInput.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Graph of Execution Time over Different Input Sizes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Vector Addition Graphs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Vector Dot Product
+\end_layout
+
+\begin_layout Standard
+The dot product has been parallelised in a similar manner as the vector
+ addition.
+ The difference is that we replace the gather from before with a reduce,
+ because in this case the final result that we need to bring together from
+ all processes is one value rather than an array.
+ This reduction computes a total value from all of the calculations on each
+ node, without needing to bring these values together on the root and sum
+ them up here, which would have been less efficient.
+ As before, the vectors are padded.
+ 
+\end_layout
+
+\begin_layout Standard
+As with the previous approach, this method of distribution seems to be the
+ only efficient way to perform this calculation.
+ Scatter and gather could also be used again as before, and then the sum
+ could be calculated on the root process.
+ However, this would be less efficient than using a reduce, as the time
+ taken by the gather communication and the sum separately would be greater
+ than just by the reduce call.
+\end_layout
+
+\begin_layout Standard
+The speedup over number of threads was calculated on an input size of 1000000000
+ on between 1 and 5 Hamilton nodes, with 16 threads per node.
+ The execution time was calculated over a range of input sizes on 2 Hamilton
+ nodes on 16 threads per node.
+ The average efficiency of my approach over the full range of threads was
+ 0.11.
+ This relatively low speedup value compared to the other functions, as well
+ as the strange shape of the graph, is due to the fact that as we are using
+ a reduce here, we do not know the answer until this has been calculated.
+ Therefore, unlike in the other functions, this part of the MPI communication
+ must be included in our timing.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/vecDotThreads.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Graph of Speedup over Number of Threads
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/vecDotInput.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Graph of Execution Time over Different Input Sizes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Vector Dot Product Graphs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Matrix-Vector Multiplication
+\end_layout
+
+\begin_layout Standard
+The parallel calculation of matrix-vector multiplication is performed by
+ first broadcasting the whole vector to all of the processes, then determining
+ the number of rows of the matrix that should be sent to each process.
+ As before, the matrix is padded with extra rows to ensure that the call
+ to scatter works correctly.
+ From here, the matrix-vector multiplication is performed by calculating
+ the dot product of the vector and each row.
+ The results of these dot products are then gathered together in the output
+ array.
+ 
+\end_layout
+
+\begin_layout Standard
+This method is more efficient than simply broadcasting the entire matrix
+ to all processes, as it leads to less data transfer and superior allocation
+ of calculations amongst the processes.
+ Another alternative approach would be not to break down the problem by
+ rows of the matrix, but breaking down each dot product and caluclating
+ this across multiple processes using the method described in part 2.
+ Due to the increased need for MPI communication that this method would
+ entail however, this method would be less efficient.
+ 
+\end_layout
+
+\begin_layout Standard
+The speedup over number of threads was calculated on an input size of 10000
+ on between 1 and 5 Hamilton nodes, with 16 threads per node.
+ The execution time was calculated over a range of input sizes on 2 Hamilton
+ nodes on 16 threads per node.
+ The average efficiency of my approach over the full range of threads was
+ 0.51.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/matVecThreads.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Graph of Speedup over Number of Threads
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/matVecInput.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Graph of Execution Time over Different Input Sizes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Matrix-Vector Multiplication Graphs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Matrix-Matrix Multiplication
+\end_layout
+
+\begin_layout Standard
+The procedure of matrix multiplication is performed in a very similar manner
+ as the matrix vector calculation.
+ In this instance, instead of broadcasting the vector, we broadcast one
+ of the matrices, and scatter the other matrix between the processes in
+ the same manner as before.
+ From here we find the dot product of each row and all of the columns of
+ the other matrix, and gather these responses in the pre-allocated output
+ matrix in a similar manner to before.
+ 
+\end_layout
+
+\begin_layout Standard
+As mentioned above, this scattering of the second matrix rather than simply
+ broadcasting both leads to less data transfer and superior allocation of
+ calculations amongst the processes.
+ The matrix could have been scattered by column instead of by row, and the
+ effectiveness of this compared to the implemented version provided and
+ described above would depend on whether there are more rows or columns
+ in the matrices.
+ Another option would be to break the matrix into smaller matrices, and
+ perform the full matrix multiplication of each of these smaller matrices
+ on each process before bringing them together to get the final output.
+ 
+\end_layout
+
+\begin_layout Standard
+The speedup over number of threads was calculated on an input size of 10000
+ on between 1 and 5 Hamilton nodes, with 16 threads per node.
+ The execution time was calculated over a range of input sizes on 2 Hamilton
+ nodes on 16 threads per node.
+ The average efficiency of my approach over the full range of threads was
+ 0.47.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/matMatThreads.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Graph of Speedup over Number of Threads
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset space \hfill{}
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename images/matMatInput.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Graph of Execution Time over Different Input Sizes
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Matrix-Matrix Multiplication Graphs
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_body

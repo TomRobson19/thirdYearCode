@@ -1,0 +1,18 @@
+#!/bin/csh
+#SBATCH -p par6.q
+#SBATCH -N 1
+#SBATCH -t 4:00:00
+#SBATCH --exclusive
+
+module purge
+module load slurm
+
+./testVec 10
+./testVec 100
+./testVec 1000
+./testVec 10000
+./testVec 100000
+./testVec 1000000
+./testVec 10000000
+./testVec 100000000
+./testVec 1000000000
